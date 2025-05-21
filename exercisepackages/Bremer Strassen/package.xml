@@ -1,0 +1,1827 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Daten>
+    <Übungen name="bremer strassen" sequentiell="false" umgekehrt="false">
+        <MainÜbungsliste>
+            <FrageText>Wie heißt die rot gekennzeichnete Strasse?</FrageText>
+            <FrageTextUmgekehrt></FrageTextUmgekehrt>
+            <Übung nummer="1">
+                <FrageSubjekt>Frage_1</FrageSubjekt>
+                <AntwortSubjekt>Alwinenstrasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>02 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>02 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>1020,511,248,21,102</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="2">
+                <FrageSubjekt>Frage_2</FrageSubjekt>
+                <AntwortSubjekt>Alexanderstrasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>01 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>01 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>665,673,141,18,10</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="3">
+                <FrageSubjekt>Frage_3</FrageSubjekt>
+                <AntwortSubjekt>Albrechtstrasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>01 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>01 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>716,140,183,22,118</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="4">
+                <FrageSubjekt>Frage_4</FrageSubjekt>
+                <AntwortSubjekt>Am Bredenkamp</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>02 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>02 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>669,84,189,20,13</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="5">
+                <FrageSubjekt>Frage_5</FrageSubjekt>
+                <AntwortSubjekt>Am schwarzen Meer</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>02 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>02 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>1517,1046,258,20,-20</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="6">
+                <FrageSubjekt>Frage_6</FrageSubjekt>
+                <AntwortSubjekt>Am Wall</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>01 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>01 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>113,412,189,23,24</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="7">
+                <FrageSubjekt>Frage_7</FrageSubjekt>
+                <AntwortSubjekt>Auf der Kuhlen</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>02 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>02 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>378,1074,227,26,41</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="8">
+                <FrageSubjekt>Frage_8</FrageSubjekt>
+                <AntwortSubjekt>Auwigstrasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>01 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>01 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>950,783,126,19,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="9">
+                <FrageSubjekt>Frage_9</FrageSubjekt>
+                <AntwortSubjekt>Bauernstrasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>01 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>01 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>798,358,117,20,56</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="10">
+                <FrageSubjekt>Frage_10</FrageSubjekt>
+                <AntwortSubjekt>Beim Paulskloster</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>01 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>01 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>425,626,96,20,11</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="11">
+                <FrageSubjekt>Frage_11</FrageSubjekt>
+                <AntwortSubjekt>Berliner Strasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>02 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>02 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>554,1068,44,-238,0|672,951,194,19,-78|945,886,-121,159,-71|628,1142,159,23,-66|535,1474,223,27,97</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="12">
+                <FrageSubjekt>Frage_12</FrageSubjekt>
+                <AntwortSubjekt>Bernhardstrasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>01 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>01 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>924,507,89,21,170</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="13">
+                <FrageSubjekt>Frage_13</FrageSubjekt>
+                <AntwortSubjekt>Bleicherstrasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>01 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>01 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>365,738,99,23,9</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="14">
+                <FrageSubjekt>Frage_14</FrageSubjekt>
+                <AntwortSubjekt>Blumenstrasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>01 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>01 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>752,354,129,19,83</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="15">
+                <FrageSubjekt>Frage_15</FrageSubjekt>
+                <AntwortSubjekt>Blücherstrasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>01 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>01 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>925,738,130,23,2</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="16">
+                <FrageSubjekt>Frage_16</FrageSubjekt>
+                <AntwortSubjekt>Bolzplatz Vasmerstrasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>01 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>01 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>693,40,144,20,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="17">
+                <FrageSubjekt>Frage_17</FrageSubjekt>
+                <AntwortSubjekt>Borchersweg</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>01 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>01 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>978,895,113,21,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="18">
+                <FrageSubjekt>Frage_18</FrageSubjekt>
+                <AntwortSubjekt>Braunschweigerstrasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>02 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>02 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>1703,1425,266,34,15</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="19">
+                <FrageSubjekt>Frage_19</FrageSubjekt>
+                <AntwortSubjekt>Bremer Strasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>02 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>02 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>720,1208,165,31,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="20">
+                <FrageSubjekt>Frage_20</FrageSubjekt>
+                <AntwortSubjekt>Brok Strasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>02 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>02 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>428,1406,145,28,5</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="21">
+                <FrageSubjekt>Frage_21</FrageSubjekt>
+                <AntwortSubjekt>Brunnenstrasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>02 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>02 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>689,764,139,23,0|560,978,210,20,102|760,912,-121,69,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="22">
+                <FrageSubjekt>Frage_22</FrageSubjekt>
+                <AntwortSubjekt>Cellerstrasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>02 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>02 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>1607,1514,189,28,-165</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="23">
+                <FrageSubjekt>Frage_23</FrageSubjekt>
+                <AntwortSubjekt>Charlottenstrasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>01 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>01 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>538,327,156,20,26</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="24">
+                <FrageSubjekt>Frage_24</FrageSubjekt>
+                <AntwortSubjekt>Contrescarpe</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>01 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>01 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>266,315,131,35,55</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="25">
+                <FrageSubjekt>Frage_25</FrageSubjekt>
+                <AntwortSubjekt>Deichstrasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>01 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>01 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>525,815,130,20,106</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="26">
+                <FrageSubjekt>Frage_26</FrageSubjekt>
+                <AntwortSubjekt>Erich Klabunde Strasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>02 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>02 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>948,1411,160,35,-151</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="27">
+                <FrageSubjekt>Frage_27</FrageSubjekt>
+                <AntwortSubjekt>Fehrfeld</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>02 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>02 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>206,374,122,28,-49</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="28">
+                <FrageSubjekt>Frage_28</FrageSubjekt>
+                <AntwortSubjekt>Fesenfeld</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>02 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>02 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>1139,651,146,26,-77</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="29">
+                <FrageSubjekt>Frage_29</FrageSubjekt>
+                <AntwortSubjekt>Friedenskirche</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>02 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>02 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>1481,417,125,23,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="30">
+                <FrageSubjekt>Frage_30</FrageSubjekt>
+                <AntwortSubjekt>Friedrichstrasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>01 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>01 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>473,573,128,23,95</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="31">
+                <FrageSubjekt>Frage_31</FrageSubjekt>
+                <AntwortSubjekt>Friesenstrasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>02 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>02 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>669,630,168,37,0|1409,767,162,28,14</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="32">
+                <FrageSubjekt>Frage_32</FrageSubjekt>
+                <AntwortSubjekt>Gleimstrasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>02 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>02 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>711,527,158,28,100</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="33">
+                <FrageSubjekt>Frage_33</FrageSubjekt>
+                <AntwortSubjekt>Goethestrasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>02 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>02 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>827,457,191,25,102</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="34">
+                <FrageSubjekt>Frage_34</FrageSubjekt>
+                <AntwortSubjekt>Grundstrasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>02 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>02 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>460,893,179,27,98</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="35">
+                <FrageSubjekt>Frage_35</FrageSubjekt>
+                <AntwortSubjekt>Hamburgerstrasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>02 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>02 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>1634,986,-925,54,0|1459,1230,190,27,-162|1619,1235,147,16,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="36">
+                <FrageSubjekt>Frage_36</FrageSubjekt>
+                <AntwortSubjekt>Hartungstrasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>02 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>02 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>847,42,106,23,103</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="37">
+                <FrageSubjekt>Frage_37</FrageSubjekt>
+                <AntwortSubjekt>Heidelbergerstrasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>02 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>02 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>1115,1242,247,29,123</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="38">
+                <FrageSubjekt>Frage_38</FrageSubjekt>
+                <AntwortSubjekt>Heinrichstrasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>01 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>01 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>545,46,132,24,-48</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="39">
+                <FrageSubjekt>Frage_39</FrageSubjekt>
+                <AntwortSubjekt>Helenen Strasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>02 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>02 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>353,762,174,30,90</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="40">
+                <FrageSubjekt>Frage_40</FrageSubjekt>
+                <AntwortSubjekt>Hohenpfad</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>01 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>01 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>503,410,114,24,10|394,398,86,20,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="41">
+                <FrageSubjekt>Frage_41</FrageSubjekt>
+                <AntwortSubjekt>Holler Strasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>02 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>02 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>229,724,91,20,175</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="42">
+                <FrageSubjekt>Frage_42</FrageSubjekt>
+                <AntwortSubjekt>Hornerstrasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>02 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>02 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>958,507,158,28,102</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="43">
+                <FrageSubjekt>Frage_43</FrageSubjekt>
+                <AntwortSubjekt>Humboldstrasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>01 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>01 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>890,33,113,24,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="44">
+                <FrageSubjekt>Frage_44</FrageSubjekt>
+                <AntwortSubjekt>Humboldstrasse00</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>02 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>02 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>267,133,177,27,11|1204,335,191,27,12</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="45">
+                <FrageSubjekt>Frage_45</FrageSubjekt>
+                <AntwortSubjekt>Im krummen Arm</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>02 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>02 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>136,1005,191,23,-16</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="46">
+                <FrageSubjekt>Frage_46</FrageSubjekt>
+                <AntwortSubjekt>Im Ring</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>02 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>02 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>893,1002,98,24,120</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="47">
+                <FrageSubjekt>Frage_47</FrageSubjekt>
+                <AntwortSubjekt>In der Runken</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>01 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>01 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>855,730,106,32,56</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="48">
+                <FrageSubjekt>Frage_48</FrageSubjekt>
+                <AntwortSubjekt>Keplerstrasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>02 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>02 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>587,54,130,25,101</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="49">
+                <FrageSubjekt>Frage_49</FrageSubjekt>
+                <AntwortSubjekt>Kohlhökerstrasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>01 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>01 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>396,64,134,26,41</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="50">
+                <FrageSubjekt>Frage_50</FrageSubjekt>
+                <AntwortSubjekt>Kreftingstrasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>01 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>01 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>818,240,139,25,-38</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="51">
+                <FrageSubjekt>Frage_51</FrageSubjekt>
+                <AntwortSubjekt>Kreuzstrasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>01 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>01 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>737,819,108,15,36|971,878,92,16,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="52">
+                <FrageSubjekt>Frage_52</FrageSubjekt>
+                <AntwortSubjekt>Köpkenstrasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>01 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>01 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>575,654,73,18,13</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="53">
+                <FrageSubjekt>Frage_53</FrageSubjekt>
+                <AntwortSubjekt>Körnerwall</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>01 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>01 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>976,671,78,15,-10</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="54">
+                <FrageSubjekt>Frage_54</FrageSubjekt>
+                <AntwortSubjekt>Landweg</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>01 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>01 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>350,329,325,23,-155</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="55">
+                <FrageSubjekt>Frage_55</FrageSubjekt>
+                <AntwortSubjekt>Lessingstrasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>02 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>02 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>1352,882,195,22,102</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="56">
+                <FrageSubjekt>Frage_56</FrageSubjekt>
+                <AntwortSubjekt>Lienienstrasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>01 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>01 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>1061,523,107,19,-96</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="57">
+                <FrageSubjekt>Frage_57</FrageSubjekt>
+                <AntwortSubjekt>Lindhornstrasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>02 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>02 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>1346,128,195,21,84</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="58">
+                <FrageSubjekt>Frage_58</FrageSubjekt>
+                <AntwortSubjekt>Linienstrasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>02 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>02 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>57,826,201,23,81</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="59">
+                <FrageSubjekt>Frage_59</FrageSubjekt>
+                <AntwortSubjekt>Luisenstrasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>01 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>01 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>938,555,86,14,-17</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="60">
+                <FrageSubjekt>Frage_60</FrageSubjekt>
+                <AntwortSubjekt>Lübecker Strasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>02 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>02 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>911,1279,197,21,119</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="61">
+                <FrageSubjekt>Frage_61</FrageSubjekt>
+                <AntwortSubjekt>Lüneburgerstrasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>02 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>02 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>1187,1466,275,25,-68</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="62">
+                <FrageSubjekt>Frage_62</FrageSubjekt>
+                <AntwortSubjekt>Mecklenburger Platz</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>02 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>02 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>753,1085,202,33,22</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="63">
+                <FrageSubjekt>Frage_63</FrageSubjekt>
+                <AntwortSubjekt>Meinkenstrasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>01 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>01 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>304,101,149,19,137</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="64">
+                <FrageSubjekt>Frage_64</FrageSubjekt>
+                <AntwortSubjekt>Meyer-Buer-Weg</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>01 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>01 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>179,286,112,22,55</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="65">
+                <FrageSubjekt>Frage_65</FrageSubjekt>
+                <AntwortSubjekt>Mittelstrasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>01 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>01 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>441,563,114,19,100</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="66">
+                <FrageSubjekt>Frage_66</FrageSubjekt>
+                <AntwortSubjekt>Mozartstrasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>01 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>01 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>349,674,127,19,98</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="67">
+                <FrageSubjekt>Frage_67</FrageSubjekt>
+                <AntwortSubjekt>Myrtenstrasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>02 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>02 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>1705,1152,162,24,-109|1809,1214,-4,8,80</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="68">
+                <FrageSubjekt>Frage_68</FrageSubjekt>
+                <AntwortSubjekt>Oberweserstrasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>01 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>01 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>587,823,166,20,102</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="69">
+                <FrageSubjekt>Frage_69</FrageSubjekt>
+                <AntwortSubjekt>Oranienstrasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>02 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>02 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>1814,1147,164,22,71</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="70">
+                <FrageSubjekt>Frage_70</FrageSubjekt>
+                <AntwortSubjekt>Osterdeich</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>01 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>01 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>48,719,108,19,27|410,872,102,18,22|790,987,101,17,13|925,1016,159,22,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="71">
+                <FrageSubjekt>Frage_71</FrageSubjekt>
+                <AntwortSubjekt>Ostertorsteinweg</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>01 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>01 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>462,493,121,15,-8|722,444,101,15,-9|805,442,1,-1,0|880,417,128,15,-10</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="72">
+                <FrageSubjekt>Frage_72</FrageSubjekt>
+                <AntwortSubjekt>Pagentornerstrasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>02 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>02 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>1434,284,234,32,15</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="73">
+                <FrageSubjekt>Frage_73</FrageSubjekt>
+                <AntwortSubjekt>Poststrasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>01 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>01 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>584,504,52,17,90|551,597,92,16,105</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="74">
+                <FrageSubjekt>Frage_74</FrageSubjekt>
+                <AntwortSubjekt>Prangen Strasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>02 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>02 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>399,1290,177,26,6</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="75">
+                <FrageSubjekt>Frage_75</FrageSubjekt>
+                <AntwortSubjekt>Reederstrasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>01 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>01 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>666,838,111,22,-73</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="76">
+                <FrageSubjekt>Frage_76</FrageSubjekt>
+                <AntwortSubjekt>Ritterstrasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>02 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>02 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>278,481,178,23,102</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="77">
+                <FrageSubjekt>Frage_77</FrageSubjekt>
+                <AntwortSubjekt>Römerstrasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>02 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>02 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>383,415,174,22,101</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="78">
+                <FrageSubjekt>Frage_78</FrageSubjekt>
+                <AntwortSubjekt>Rütenstrasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>01 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>01 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>458,275,123,20,-46</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="79">
+                <FrageSubjekt>Frage_79</FrageSubjekt>
+                <AntwortSubjekt>Sachsenstrasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>02 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>02 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>1113,955,157,25,22|1279,1002,130,27,19</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="80">
+                <FrageSubjekt>Frage_80</FrageSubjekt>
+                <AntwortSubjekt>Salvadorstrasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>01 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>01 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>435,22,63,14,136</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="81">
+                <FrageSubjekt>Frage_81</FrageSubjekt>
+                <AntwortSubjekt>Sankt Jürgen Strasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>02 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>02 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>1773,107,241,25,111|1739,382,100,-274,0|1583,571,252,26,-68</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="82">
+                <FrageSubjekt>Frage_82</FrageSubjekt>
+                <AntwortSubjekt>Sankt-Pauli-Strasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>01 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>01 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>555,540,135,17,23</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="83">
+                <FrageSubjekt>Frage_83</FrageSubjekt>
+                <AntwortSubjekt>Schildstrasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>01 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>01 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>872,481,93,16,74</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="84">
+                <FrageSubjekt>Frage_84</FrageSubjekt>
+                <AntwortSubjekt>Schmidtstrasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>02 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>02 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>228,813,223,24,-97</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="85">
+                <FrageSubjekt>Frage_85</FrageSubjekt>
+                <AntwortSubjekt>Schweizerstrasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>02 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>02 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>543,399,207,22,12</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="86">
+                <FrageSubjekt>Frage_86</FrageSubjekt>
+                <AntwortSubjekt>Seiler Strasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>02 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>02 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>367,1155,148,22,97</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="87">
+                <FrageSubjekt>Frage_87</FrageSubjekt>
+                <AntwortSubjekt>Sielpfad</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>01 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>01 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>917,878,87,18,79</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="88">
+                <FrageSubjekt>Frage_88</FrageSubjekt>
+                <AntwortSubjekt>Sielwall</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>01 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>01 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>1053,980,64,15,110</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="89">
+                <FrageSubjekt>Frage_89</FrageSubjekt>
+                <AntwortSubjekt>Sophienstrasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>02 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>02 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>840,1212,161,23,122</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="90">
+                <FrageSubjekt>Frage_90</FrageSubjekt>
+                <AntwortSubjekt>Stedingerstrasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>02 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>02 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>1279,767,187,25,102|1468,662,-121,121,121</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="91">
+                <FrageSubjekt>Frage_91</FrageSubjekt>
+                <AntwortSubjekt>Taubenstrasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>02 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>02 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>166,1136,172,27,69</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="92">
+                <FrageSubjekt>Frage_92</FrageSubjekt>
+                <AntwortSubjekt>Theodor-Körnerstrasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>01 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>01 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>692,577,169,31,19</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="93">
+                <FrageSubjekt>Frage_93</FrageSubjekt>
+                <AntwortSubjekt>Ulrichsplatz</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>01 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>01 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>674,427,92,20,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="94">
+                <FrageSubjekt>Frage_94</FrageSubjekt>
+                <AntwortSubjekt>Vagtstrasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>02 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>02 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>1232,658,155,26,102</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="95">
+                <FrageSubjekt>Frage_95</FrageSubjekt>
+                <AntwortSubjekt>Vasmerstrasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>01 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>01 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>703,173,72,18,110</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="96">
+                <FrageSubjekt>Frage_96</FrageSubjekt>
+                <AntwortSubjekt>Vor dem Steintor</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>02 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>02 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>291,625,204,40,17|1042,962,-1,-1,0|866,942,252,32,31</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="97">
+                <FrageSubjekt>Frage_97</FrageSubjekt>
+                <AntwortSubjekt>Weberstrasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>01 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>01 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>861,524,-2,50,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="98">
+                <FrageSubjekt>Frage_98</FrageSubjekt>
+                <AntwortSubjekt>Wendtstrasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>02 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>02 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>1614,213,196,25,113</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="99">
+                <FrageSubjekt>Frage_99</FrageSubjekt>
+                <AntwortSubjekt>Wernerstrasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>02 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>02 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>1498,134,166,29,86</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="100">
+                <FrageSubjekt>Frage_100</FrageSubjekt>
+                <AntwortSubjekt>Wielandstrasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>02 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>02 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>445,500,221,29,-78|561,428,2,1,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+            <Übung nummer="101">
+                <FrageSubjekt>Frage_101</FrageSubjekt>
+                <AntwortSubjekt>Wulwestrasse</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>01 Strassen Mitte.jpg</ImagefileFrage>
+                <ImagefileAntwort>01 Strassen Mitte.jpg</ImagefileAntwort>
+                <InfoURLFrage></InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>644,324,143,22,111</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+            </Übung>
+        </MainÜbungsliste>
+    </Übungen>
+</Daten>

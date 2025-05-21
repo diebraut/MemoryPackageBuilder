@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Daten>
+    <Übungen name="Bundeskanzler BRD" sequentiell="true" umgekehrt="true">
+        <MainÜbungsliste>
+            <FrageText>Wann war [FrageSubjekt] Bundeskanzler</FrageText>
+            <FrageTextUmgekehrt>[FrageSubjekt] war wer Bundeskanzler?</FrageTextUmgekehrt>
+            <Übung nummer="1">
+                <FrageSubjekt>Konrad Adenauer</FrageSubjekt>
+                <AntwortSubjekt>Von 1949 bis 1963</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Konrad Adenauer.jpg</ImagefileFrage>
+                <ImagefileAntwort></ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Konrad_Adenauer</InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor>Young, Katherine</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0 de[https://creativecommons.org/licenses/by-sa/3.0/de/deed.en]</ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers>18.11.2023</WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Bundesarchiv_B_145_Bild-F078072-0004,_Konrad_Adenauer.jpg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription></ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Bundesarchiv_B_145_Bild-F078072-0004%2C_Konrad_Adenauer.jpg/220px-Bundesarchiv_B_145_Bild-F078072-0004%2C_Konrad_Adenauer.jpg</ImageFrageUrl>
+                <ImageAntwortUrl></ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="2">
+                <FrageSubjekt>Ludwig Erhard</FrageSubjekt>
+                <AntwortSubjekt>Von 1963 bis 1966</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Ludwig Erhard.jpg</ImagefileFrage>
+                <ImagefileAntwort></ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Ludwig_Erhard</InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor>Eric Koch [//commons.wikimedia.org/wiki/Category:Eric_Koch]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC0[http://creativecommons.org/publicdomain/zero/1.0/deed.en]</ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers>19.12.2017</WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Einde_bezoek_bondskanselier_dr_Ludwig_Erhard_en_gaf_persconferentie_in_het_Haag,_Bestanddeelnr_916-1325_(cropped).jpg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription></ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Einde_bezoek_bondskanselier_dr_Ludwig_Erhard_en_gaf_persconferentie_in_het_Haag%2C_Bestanddeelnr_916-1325_%28cropped%29.jpg/220px-Einde_bezoek_bondskanselier_dr_Ludwig_Erhard_en_gaf_persconferentie_in_het_Haag%2C_Bestanddeelnr_916-1325_%28cropped%29.jpg</ImageFrageUrl>
+                <ImageAntwortUrl></ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="3">
+                <FrageSubjekt>Kurt Georg Kiesinger</FrageSubjekt>
+                <AntwortSubjekt>Von 1963 bis 1966</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Kurt Georg Kiesinger.jpg</ImagefileFrage>
+                <ImagefileAntwort></ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Kurt_Georg_Kiesinger</InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor>Lothar Schaack [https://www.wikidata.org/wiki/Q66104232]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0 de[https://creativecommons.org/licenses/by-sa/3.0/de/deed.en]</ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers>12.05.2014</WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Bundesarchiv_B_145_Bild-F029561-0008,_Essen,_CDU-Bundestagswahlkongress_(cropped).jpg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription></ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Bundesarchiv_B_145_Bild-F029561-0008%2C_Essen%2C_CDU-Bundestagswahlkongress_%28cropped%29.jpg/220px-Bundesarchiv_B_145_Bild-F029561-0008%2C_Essen%2C_CDU-Bundestagswahlkongress_%28cropped%29.jpg</ImageFrageUrl>
+                <ImageAntwortUrl></ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="4">
+                <FrageSubjekt>Willy Brandt</FrageSubjekt>
+                <AntwortSubjekt>Von 1969 bis 1974</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Willy Brandt.jpg</ImagefileFrage>
+                <ImagefileAntwort></ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Willy_Brandt</InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor>Engelbert Reineke [https://www.wikidata.org/wiki/Q18508147]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0 de[https://creativecommons.org/licenses/by-sa/3.0/de/deed.en]</ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers>25.11.2014</WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Bundesarchiv_B_145_Bild-F057884-0009,_Willy_Brandt.jpg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription></ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Bundesarchiv_B_145_Bild-F057884-0009%2C_Willy_Brandt.jpg/220px-Bundesarchiv_B_145_Bild-F057884-0009%2C_Willy_Brandt.jpg</ImageFrageUrl>
+                <ImageAntwortUrl></ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="5">
+                <FrageSubjekt>Walter Scheel</FrageSubjekt>
+                <AntwortSubjekt>Von 1974 bis 1974 (10 Tage)</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Walter Scheel.jpg</ImagefileFrage>
+                <ImagefileAntwort></ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Walter_Scheel</InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor>unbekannt</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0 de[https://creativecommons.org/licenses/by-sa/3.0/de/deed.en]</ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers>08.01.2019</WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Bundesarchiv_Bild_146-1989-047-20,_Walter_Scheel.jpg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription></ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bundesarchiv_Bild_146-1989-047-20%2C_Walter_Scheel.jpg/220px-Bundesarchiv_Bild_146-1989-047-20%2C_Walter_Scheel.jpg</ImageFrageUrl>
+                <ImageAntwortUrl></ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="6">
+                <FrageSubjekt>Helmut Schmidt</FrageSubjekt>
+                <AntwortSubjekt>Von 1974 bis 1982</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Helmut Schmidt.jpg</ImagefileFrage>
+                <ImagefileAntwort></ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Helmut_Schmidt</InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor>Hans Schafgans</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 2.0[https://creativecommons.org/licenses/by-sa/2.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers>20.09.2024</WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Bundeskanzler_Helmut_Schmidt.jpg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription></ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/Bundeskanzler_Helmut_Schmidt.jpg/220px-Bundeskanzler_Helmut_Schmidt.jpg</ImageFrageUrl>
+                <ImageAntwortUrl></ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="7">
+                <FrageSubjekt>Helmut Kohl</FrageSubjekt>
+                <AntwortSubjekt>Von 1982 bis 1998</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Helmut Kohl.jpg</ImagefileFrage>
+                <ImagefileAntwort></ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Helmut_Kohl</InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor>Christian Lambiotte [https://www.wikidata.org/wiki/Q99970903]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY 4.0[https://creativecommons.org/licenses/by/4.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers>20.09.2024</WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Helmut_Kohl_(1996).jpg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription></ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Helmut_Kohl_%281996%29.jpg/220px-Helmut_Kohl_%281996%29.jpg</ImageFrageUrl>
+                <ImageAntwortUrl></ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="8">
+                <FrageSubjekt>Gerhard Schröder</FrageSubjekt>
+                <AntwortSubjekt>Von 1998 bis 2005</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Gerhard Schröder.jpg</ImagefileFrage>
+                <ImagefileAntwort></ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Gerhard_Schr%C3%B6der</InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor>unbekannt</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 4.0[https://creativecommons.org/licenses/by-sa/4.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers>15.03.2024</WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Wahlkampffoto_Schröder_CL_2005_(cropped).jpg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription></ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Wahlkampffoto_Schr%C3%B6der_CL_2005_%28cropped%29.jpg/170px-Wahlkampffoto_Schr%C3%B6der_CL_2005_%28cropped%29.jpg</ImageFrageUrl>
+                <ImageAntwortUrl></ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="9">
+                <FrageSubjekt>Angela Merkel</FrageSubjekt>
+                <AntwortSubjekt>Von 1998 bis 2005</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Angela Merkel.jpg</ImagefileFrage>
+                <ImagefileAntwort></ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Angela_Merkel</InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor>Raimond Spekking [https://www.wikidata.org/wiki/Q108103612]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 4.0[https://creativecommons.org/licenses/by-sa/4.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers>15.03.2024</WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Angela_Merkel_2023.jpg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription></ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Angela_Merkel_2023.jpg/220px-Angela_Merkel_2023.jpg</ImageFrageUrl>
+                <ImageAntwortUrl></ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="10">
+                <FrageSubjekt>Olaf Scholz</FrageSubjekt>
+                <AntwortSubjekt>Von 2021 bis heute</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Olaf Scholz.jpg</ImagefileFrage>
+                <ImagefileAntwort></ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Olaf_Scholz</InfoURLFrage>
+                <InfoURLAntwort></InfoURLAntwort>
+                <ImageFrageAuthor>Vlada Republike Slovenije [https://www.flickr.com/people/141163381@N04]</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers>07.08.2024</WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Olaf_Scholz_2024.jpg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription></ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Olaf_Scholz_2024.jpg/220px-Olaf_Scholz_2024.jpg</ImageFrageUrl>
+                <ImageAntwortUrl></ImageAntwortUrl>
+            </Übung>
+        </MainÜbungsliste>
+    </Übungen>
+</Daten>

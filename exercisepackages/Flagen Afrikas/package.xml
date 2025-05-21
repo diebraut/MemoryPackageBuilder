@@ -1,0 +1,1089 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Daten>
+    <Übungen name="Flaggen Afrikas" sequentiell="true" umgekehrt="false">
+        <MainÜbungsliste>
+            <FrageText>Welches Land gehört zu dieser Flagge</FrageText>
+            <FrageTextUmgekehrt></FrageTextUmgekehrt>
+            <Übung nummer="1">
+                <FrageSubjekt>Frage_1</FrageSubjekt>
+                <AntwortSubjekt>Ägypten</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Frage_1.jpg</ImagefileFrage>
+                <ImagefileAntwort>Ägypten.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/%C3%84gypten</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/%C3%84gypten</InfoURLAntwort>
+                <ImageFrageAuthor>Open Clip Art [http://openclipart.org/]</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers>07.10.2022</WikiPageFraVers>
+                <WikiPageAntVers>07.10.2022</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt>718,118,190,27,113</ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Flag_of_Egypt.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Egypt_on_the_globe_(de-facto_+_disputed_hatched)_(North_Africa_centered).svg</ImageAntwortBildDescription>
+            </Übung>
+            <Übung nummer="2">
+                <FrageSubjekt>Frage_2</FrageSubjekt>
+                <AntwortSubjekt>Algerien</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Frage_2.jpg</ImagefileFrage>
+                <ImagefileAntwort>Algerien.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Algerien</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Algerien</InfoURLAntwort>
+                <ImageFrageAuthor>SKopp [//commons.wikimedia.org/wiki/User:SKopp]</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>10.05.2023</WikiPageFraVers>
+                <WikiPageAntVers>10.05.2023</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Flag_of_Algeria.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Algeria_on_the_globe_(North_Africa_centered).svg</ImageAntwortBildDescription>
+            </Übung>
+            <Übung nummer="3">
+                <FrageSubjekt>Frage_3</FrageSubjekt>
+                <AntwortSubjekt>Angola</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Frage_3.jpg</ImagefileFrage>
+                <ImagefileAntwort>Angola.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Angola</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Angola</InfoURLAntwort>
+                <ImageFrageAuthor>SKopp [//commons.wikimedia.org/wiki/User:SKopp]</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>15.11.2023</WikiPageFraVers>
+                <WikiPageAntVers>15.11.2023</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Flag_of_Angola.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Angola_on_the_globe_(Africa_centered).svg</ImageAntwortBildDescription>
+            </Übung>
+            <Übung nummer="4">
+                <FrageSubjekt>Frage_4</FrageSubjekt>
+                <AntwortSubjekt>Äquatorialguinea</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Frage_4.jpg</ImagefileFrage>
+                <ImagefileAntwort>Äquatorialguinea.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/%C3%84quatorialguinea</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/%C3%84quatorialguinea</InfoURLAntwort>
+                <ImageFrageAuthor>unbekannt</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>06.09.2015</WikiPageFraVers>
+                <WikiPageAntVers>06.09.2015</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Flag_of_Equatorial_Guinea.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Equatorial_Guinea_in_its_region.svg</ImageAntwortBildDescription>
+            </Übung>
+            <Übung nummer="5">
+                <FrageSubjekt>Frage_5</FrageSubjekt>
+                <AntwortSubjekt>Äthiopien</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Frage_5.jpg</ImagefileFrage>
+                <ImagefileAntwort>Äthiopien.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/%C3%84thiopien</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/%C3%84thiopien</InfoURLAntwort>
+                <ImageFrageAuthor>Drawn by User:SKopp</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>01.12.2011</WikiPageFraVers>
+                <WikiPageAntVers>01.12.2011</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Flag_of_Ethiopia.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Ethiopia_on_the_globe_(Africa_centered).svg</ImageAntwortBildDescription>
+            </Übung>
+            <Übung nummer="6">
+                <FrageSubjekt>Frage_6</FrageSubjekt>
+                <AntwortSubjekt>Benin</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Frage_6.jpg</ImagefileFrage>
+                <ImagefileAntwort>Benin.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Benin</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Benin</InfoURLAntwort>
+                <ImageFrageAuthor>Drawn by (SKopp [//commons.wikimedia.org/wiki/User:SKopp])</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>06.01.2008</WikiPageFraVers>
+                <WikiPageAntVers>06.01.2008</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Flag_of_Benin.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Benin_in_its_region.svg</ImageAntwortBildDescription>
+            </Übung>
+            <Übung nummer="7">
+                <FrageSubjekt>Frage_7</FrageSubjekt>
+                <AntwortSubjekt>Botswana</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Frage_7.jpg</ImagefileFrage>
+                <ImagefileAntwort>Botswana.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Botswana</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Botswana</InfoURLAntwort>
+                <ImageFrageAuthor>SKopp [//commons.wikimedia.org/wiki/User:SKopp]</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>16.11.2023</WikiPageFraVers>
+                <WikiPageAntVers>16.11.2023</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Flag_of_Botswana.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Botswana_on_the_globe_(Africa_centered).svg</ImageAntwortBildDescription>
+            </Übung>
+            <Übung nummer="8">
+                <FrageSubjekt>Frage_8</FrageSubjekt>
+                <AntwortSubjekt>Burkina Faso</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Frage_8.jpg</ImagefileFrage>
+                <ImagefileAntwort>Burkina Faso.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Burkina_Faso</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Burkina_Faso</InfoURLAntwort>
+                <ImageFrageAuthor>Drawn by (SKopp [//commons.wikimedia.org/wiki/User:SKopp])</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>08.09.2024</WikiPageFraVers>
+                <WikiPageAntVers>08.09.2024</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Flag_of_Burkina_Faso.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Burkina_Faso_on_the_globe_(Africa_centered).svg</ImageAntwortBildDescription>
+            </Übung>
+            <Übung nummer="9">
+                <FrageSubjekt>Frage_9</FrageSubjekt>
+                <AntwortSubjekt>Burundi</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Frage_9.jpg</ImagefileFrage>
+                <ImagefileAntwort>Burundi.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Burundi</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Burundi</InfoURLAntwort>
+                <ImageFrageAuthor>unbekannt</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>21.04.2024</WikiPageFraVers>
+                <WikiPageAntVers>21.04.2024</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Flag_of_Burundi.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Burundi_in_its_region.svg</ImageAntwortBildDescription>
+            </Übung>
+            <Übung nummer="10">
+                <FrageSubjekt>Frage_10</FrageSubjekt>
+                <AntwortSubjekt>Dschibuti</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Frage_10.jpg</ImagefileFrage>
+                <ImagefileAntwort>Dschibuti.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Dschibuti</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Dschibuti</InfoURLAntwort>
+                <ImageFrageAuthor>ErrrrrWhat [//commons.wikimedia.org/wiki/User:ErrrrrWhat]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 4.0[https://creativecommons.org/licenses/by-sa/4.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>No revisions found</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Flag_of_Djibouti.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Djibouti_on_the_globe_(special_marker)_(Africa_centered).svg</ImageAntwortBildDescription>
+            </Übung>
+            <Übung nummer="11">
+                <FrageSubjekt>Frage_11</FrageSubjekt>
+                <AntwortSubjekt>Elfenbeinküste</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Frage_11.jpg</ImagefileFrage>
+                <ImagefileAntwort>Elfenbeinküste.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Elfenbeink%C3%BCste</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Elfenbeink%C3%BCste</InfoURLAntwort>
+                <ImageFrageAuthor>Jon Harald Søby [//commons.wikimedia.org/wiki/User:Jon_Harald_S%C3%B8by]</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>01.12.2005</WikiPageFraVers>
+                <WikiPageAntVers>01.12.2005</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Flag_of_Côte_d'Ivoire.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Cote_d_Ivoire_on_the_globe_(Africa_centered).svg</ImageAntwortBildDescription>
+            </Übung>
+            <Übung nummer="12">
+                <FrageSubjekt>Frage_12</FrageSubjekt>
+                <AntwortSubjekt>Eritrea</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Frage_12.jpg</ImagefileFrage>
+                <ImagefileAntwort>Eritrea.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Eritrea</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Eritrea</InfoURLAntwort>
+                <ImageFrageAuthor>unbekannt</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>07.07.2024</WikiPageFraVers>
+                <WikiPageAntVers>07.07.2024</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Flag_of_Eritrea.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Eritrea_on_the_globe_(Africa_centered).svg</ImageAntwortBildDescription>
+            </Übung>
+            <Übung nummer="13">
+                <FrageSubjekt>Frage_13</FrageSubjekt>
+                <AntwortSubjekt>Eswatini</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Frage_13.jpg</ImagefileFrage>
+                <ImagefileAntwort>Eswatini.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Eswatini</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Eswatini</InfoURLAntwort>
+                <ImageFrageAuthor>See Upload History</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor>Rei-artur [//commons.wikimedia.org/wiki/User:Rei-artur]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[http://creativecommons.org/licenses/by-sa/3.0/]</ImageAntwortLizenz>
+                <WikiPageFraVers>06.08.2024</WikiPageFraVers>
+                <WikiPageAntVers>06.08.2024</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Flag_of_Eswatini.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:LocationEswatini.svg</ImageAntwortBildDescription>
+            </Übung>
+            <Übung nummer="14">
+                <FrageSubjekt>Frage_14</FrageSubjekt>
+                <AntwortSubjekt>Gabun</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Frage_14.jpg</ImagefileFrage>
+                <ImagefileAntwort>Gabun.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Gabun</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Gabun</InfoURLAntwort>
+                <ImageFrageAuthor>unbekannt</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>No revisions found</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Flag_of_Gabon.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Gabon_on_the_globe_(Africa_centered).svg</ImageAntwortBildDescription>
+            </Übung>
+            <Übung nummer="15">
+                <FrageSubjekt>Frage_15</FrageSubjekt>
+                <AntwortSubjekt>Gambia</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Frage_15.jpg</ImagefileFrage>
+                <ImagefileAntwort>Gambia.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Gambia</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Gambia</InfoURLAntwort>
+                <ImageFrageAuthor>unbekannt</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>09.09.2020</WikiPageFraVers>
+                <WikiPageAntVers>09.09.2020</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Flag_of_The_Gambia.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Gambia_in_its_region.svg</ImageAntwortBildDescription>
+            </Übung>
+            <Übung nummer="16">
+                <FrageSubjekt>Frage_16</FrageSubjekt>
+                <AntwortSubjekt>Ghana</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Frage_16.jpg</ImagefileFrage>
+                <ImagefileAntwort>Ghana.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Ghana</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Ghana</InfoURLAntwort>
+                <ImageFrageAuthor>unbekannt</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>21.04.2024</WikiPageFraVers>
+                <WikiPageAntVers>21.04.2024</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Flag_of_Ghana.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Ghana_on_the_globe_(Africa_centered).svg</ImageAntwortBildDescription>
+            </Übung>
+            <Übung nummer="17">
+                <FrageSubjekt>Frage_17</FrageSubjekt>
+                <AntwortSubjekt>Guinea</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Frage_17.jpg</ImagefileFrage>
+                <ImagefileAntwort>Guinea.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Guinea</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Guinea</InfoURLAntwort>
+                <ImageFrageAuthor>unbekannt</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>02.01.2008</WikiPageFraVers>
+                <WikiPageAntVers>02.01.2008</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Flag_of_Guinea.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Guinea_on_the_globe_(Africa_centered).svg</ImageAntwortBildDescription>
+            </Übung>
+            <Übung nummer="18">
+                <FrageSubjekt>Frage_18</FrageSubjekt>
+                <AntwortSubjekt>Guinea-Bissau</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Frage_18.jpg</ImagefileFrage>
+                <ImagefileAntwort>Guinea-Bissau.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Guinea-Bissau</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Guinea-Bissau</InfoURLAntwort>
+                <ImageFrageAuthor>unbekannt</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>14.04.2005</WikiPageFraVers>
+                <WikiPageAntVers>14.04.2005</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Flag_of_Guinea-Bissau.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Guinea-Bissau_on_the_globe_(Cape_Verde_centered).svg</ImageAntwortBildDescription>
+            </Übung>
+            <Übung nummer="19">
+                <FrageSubjekt>Frage_19</FrageSubjekt>
+                <AntwortSubjekt>Kamerun</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Frage_19.jpg</ImagefileFrage>
+                <ImagefileAntwort>Kamerun.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Kamerun</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Kamerun</InfoURLAntwort>
+                <ImageFrageAuthor>(of code) (-xfi- [https://cs.wikipedia.org/wiki/User:-xfi-])</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>07.10.2022</WikiPageFraVers>
+                <WikiPageAntVers>07.10.2022</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Flag_of_Cameroon.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Cameroon_on_the_globe_(Africa_centered).svg</ImageAntwortBildDescription>
+            </Übung>
+            <Übung nummer="20">
+                <FrageSubjekt>Frage_20</FrageSubjekt>
+                <AntwortSubjekt>Kap Verde</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Frage_20.jpg</ImagefileFrage>
+                <ImagefileAntwort>Kap Verde.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Kap_Verde</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Kap_Verde</InfoURLAntwort>
+                <ImageFrageAuthor>Drawn by (SKopp [//commons.wikimedia.org/wiki/User:SKopp])</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>No revisions found</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Flag_of_Cape_Verde.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Cape_Verde_on_the_globe_(Cape_Verde_centered).svg</ImageAntwortBildDescription>
+            </Übung>
+            <Übung nummer="21">
+                <FrageSubjekt>Frage_21</FrageSubjekt>
+                <AntwortSubjekt>Kenia</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Frage_21.jpg</ImagefileFrage>
+                <ImagefileAntwort>Kenia.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Kenia</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Kenia</InfoURLAntwort>
+                <ImageFrageAuthor>Pumbaa80 [//commons.wikimedia.org/wiki/User:Pumbaa80]</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>30.08.2008</WikiPageFraVers>
+                <WikiPageAntVers>30.08.2008</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Flag_of_Kenya.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Kenya_on_the_globe_(Africa_centered).svg</ImageAntwortBildDescription>
+            </Übung>
+            <Übung nummer="22">
+                <FrageSubjekt>Frage_22</FrageSubjekt>
+                <AntwortSubjekt>Komoren</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Frage_22.jpg</ImagefileFrage>
+                <ImagefileAntwort>Komoren.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Komoren</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Komoren</InfoURLAntwort>
+                <ImageFrageAuthor>unbekannt</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>No revisions found</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Flag_of_the_Comoros.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Comoros_on_the_globe_(Africa_centered).svg</ImageAntwortBildDescription>
+            </Übung>
+            <Übung nummer="23">
+                <FrageSubjekt>Frage_23</FrageSubjekt>
+                <AntwortSubjekt>Kongo, Demokratische Republik</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Frage_23.jpg</ImagefileFrage>
+                <ImagefileAntwort>Kongo, Demokratische Republik.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Demokratische_Republik_Kongo</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Demokratische_Republik_Kongo</InfoURLAntwort>
+                <ImageFrageAuthor>Nightstallion [//commons.wikimedia.org/wiki/User:Nightstallion]</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>No revisions found</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Flag_of_the_Democratic_Republic_of_the_Congo.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Democratic_Republic_of_the_Congo_on_the_globe_(Africa_centered).svg</ImageAntwortBildDescription>
+            </Übung>
+            <Übung nummer="24">
+                <FrageSubjekt>Frage_24</FrageSubjekt>
+                <AntwortSubjekt>Kongo, Republik</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Frage_24.jpg</ImagefileFrage>
+                <ImagefileAntwort>Kongo, Republik.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Republik_Kongo</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Republik_Kongo</InfoURLAntwort>
+                <ImageFrageAuthor>unbekannt</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>No revisions found</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Flag_of_the_Republic_of_the_Congo.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Republic_of_the_Congo_on_the_globe_(Africa_centered).svg</ImageAntwortBildDescription>
+            </Übung>
+            <Übung nummer="25">
+                <FrageSubjekt>Frage_25</FrageSubjekt>
+                <AntwortSubjekt>Lesotho</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Frage_25.jpg</ImagefileFrage>
+                <ImagefileAntwort>Lesotho.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Lesotho</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Lesotho</InfoURLAntwort>
+                <ImageFrageAuthor>unbekannt</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>03.05.2024</WikiPageFraVers>
+                <WikiPageAntVers>03.05.2024</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Flag_of_Lesotho.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Lesotho_on_the_globe_(Zambia_centered).svg</ImageAntwortBildDescription>
+            </Übung>
+            <Übung nummer="26">
+                <FrageSubjekt>Frage_26</FrageSubjekt>
+                <AntwortSubjekt>Liberia</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Frage_26.jpg</ImagefileFrage>
+                <ImagefileAntwort>Liberia.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Liberia</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Liberia</InfoURLAntwort>
+                <ImageFrageAuthor>Government of (Liberia [https://en.wikipedia.org/wiki/Liberia])</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor>Rei-artur [//commons.wikimedia.org/wiki/User:Rei-artur]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[http://creativecommons.org/licenses/by-sa/3.0/]</ImageAntwortLizenz>
+                <WikiPageFraVers>24.04.2024</WikiPageFraVers>
+                <WikiPageAntVers>24.04.2024</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Flag_of_Liberia.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:LocationLiberia.svg</ImageAntwortBildDescription>
+            </Übung>
+            <Übung nummer="27">
+                <FrageSubjekt>Frage_27</FrageSubjekt>
+                <AntwortSubjekt>Libyen</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Frage_27.jpg</ImagefileFrage>
+                <ImagefileAntwort>Libyen.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Libyen</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Libyen</InfoURLAntwort>
+                <ImageFrageAuthor>This (vector image [https://en.wikipedia.org/wiki/Vector_graphics])</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>18.06.2007</WikiPageFraVers>
+                <WikiPageAntVers>18.06.2007</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Flag_of_Libya.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Libya_on_the_globe_(North_Africa_centered).svg</ImageAntwortBildDescription>
+            </Übung>
+            <Übung nummer="28">
+                <FrageSubjekt>Frage_28</FrageSubjekt>
+                <AntwortSubjekt>Madagaskar</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Frage_28.jpg</ImagefileFrage>
+                <ImagefileAntwort>Madagaskar.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Madagaskar</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Madagaskar</InfoURLAntwort>
+                <ImageFrageAuthor>unbekannt</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>07.10.2022</WikiPageFraVers>
+                <WikiPageAntVers>07.10.2022</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Flag_of_Madagascar.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Madagascar_on_the_globe_(Madagascar_centered).svg</ImageAntwortBildDescription>
+            </Übung>
+            <Übung nummer="29">
+                <FrageSubjekt>Frage_29</FrageSubjekt>
+                <AntwortSubjekt>Malawi</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Frage_29.jpg</ImagefileFrage>
+                <ImagefileAntwort>Malawi.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Malawi</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Malawi</InfoURLAntwort>
+                <ImageFrageAuthor>Achim1999 [//commons.wikimedia.org/wiki/User:Achim1999]</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>06.10.2022</WikiPageFraVers>
+                <WikiPageAntVers>06.10.2022</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Flag_of_Malawi.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Malawi_on_the_globe_(Africa_centered).svg</ImageAntwortBildDescription>
+            </Übung>
+            <Übung nummer="30">
+                <FrageSubjekt>Frage_30</FrageSubjekt>
+                <AntwortSubjekt>Mali</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Frage_30.jpg</ImagefileFrage>
+                <ImagefileAntwort>Mali.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Mali</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Mali</InfoURLAntwort>
+                <ImageFrageAuthor>SKopp [//commons.wikimedia.org/wiki/User:SKopp]</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>21.04.2024</WikiPageFraVers>
+                <WikiPageAntVers>21.04.2024</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Flag_of_Mali.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Mali_on_the_globe_(Africa_centered).svg</ImageAntwortBildDescription>
+            </Übung>
+            <Übung nummer="31">
+                <FrageSubjekt>Frage_31</FrageSubjekt>
+                <AntwortSubjekt>Marokko</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Frage_31.jpg</ImagefileFrage>
+                <ImagefileAntwort>Marokko.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Marokko</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Marokko</InfoURLAntwort>
+                <ImageFrageAuthor>Denelson83 [//commons.wikimedia.org/wiki/User:Denelson83]</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>10.11.2023</WikiPageFraVers>
+                <WikiPageAntVers>10.11.2023</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Flag_of_Morocco.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Morocco_on_the_globe_(de-facto_and_claimed_hatched)_(Cape_Verde_centered).svg</ImageAntwortBildDescription>
+            </Übung>
+            <Übung nummer="32">
+                <FrageSubjekt>Frage_32</FrageSubjekt>
+                <AntwortSubjekt>Mauretanien</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Frage_32.jpg</ImagefileFrage>
+                <ImagefileAntwort>Mauretanien.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Mauretanien</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Mauretanien</InfoURLAntwort>
+                <ImageFrageAuthor>unbekannt</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>No revisions found</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Flag_of_Mauritania.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Mauritania_on_the_globe_(Cape_Verde_centered).svg</ImageAntwortBildDescription>
+            </Übung>
+            <Übung nummer="33">
+                <FrageSubjekt>Frage_33</FrageSubjekt>
+                <AntwortSubjekt>Mauritius</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Frage_33.jpg</ImagefileFrage>
+                <ImagefileAntwort>Mauritius.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Mauritius</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Mauritius</InfoURLAntwort>
+                <ImageFrageAuthor>Zscout370 [//commons.wikimedia.org/wiki/User:Zscout370]</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>06.10.2022</WikiPageFraVers>
+                <WikiPageAntVers>06.10.2022</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Flag_of_Mauritius.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Mauritius_on_the_globe_(Zambia_centered).svg</ImageAntwortBildDescription>
+            </Übung>
+            <Übung nummer="34">
+                <FrageSubjekt>Frage_34</FrageSubjekt>
+                <AntwortSubjekt>Mosambik</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Frage_34.jpg</ImagefileFrage>
+                <ImagefileAntwort>Mosambik.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Mosambik</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Mosambik</InfoURLAntwort>
+                <ImageFrageAuthor>Nightstallion [//commons.wikimedia.org/wiki/User:Nightstallion]</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>30.08.2008</WikiPageFraVers>
+                <WikiPageAntVers>30.08.2008</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Flag_of_Mozambique.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Mozambique_on_the_globe_(Africa_centered).svg</ImageAntwortBildDescription>
+            </Übung>
+            <Übung nummer="35">
+                <FrageSubjekt>Frage_35</FrageSubjekt>
+                <AntwortSubjekt>Namibia</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Frage_35.jpg</ImagefileFrage>
+                <ImagefileAntwort>Namibia.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Namibia</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Namibia</InfoURLAntwort>
+                <ImageFrageAuthor>SVG by (Vzb83~commonswiki [//commons.wikimedia.org/wiki/User:Vzb83~commonswiki])</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>21.04.2024</WikiPageFraVers>
+                <WikiPageAntVers>21.04.2024</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Flag_of_Namibia.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Namibia_on_the_globe_(Africa_centered).svg</ImageAntwortBildDescription>
+            </Übung>
+            <Übung nummer="36">
+                <FrageSubjekt>Frage_36</FrageSubjekt>
+                <AntwortSubjekt>Niger</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Frage_36.jpg</ImagefileFrage>
+                <ImagefileAntwort>Niger.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Niger</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Niger</InfoURLAntwort>
+                <ImageFrageAuthor>Made by: Philippe Verdy (verdy_p [//commons.wikimedia.org/wiki/User:Verdy_p])</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>21.04.2024</WikiPageFraVers>
+                <WikiPageAntVers>21.04.2024</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Flag_of_Niger.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Niger_on_the_globe_(North_Africa_centered).svg</ImageAntwortBildDescription>
+            </Übung>
+            <Übung nummer="37">
+                <FrageSubjekt>Frage_37</FrageSubjekt>
+                <AntwortSubjekt>Nigeria</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Frage_37.jpg</ImagefileFrage>
+                <ImagefileAntwort>Nigeria.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Nigeria</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Nigeria</InfoURLAntwort>
+                <ImageFrageAuthor>unbekannt</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>20.09.2024</WikiPageFraVers>
+                <WikiPageAntVers>20.09.2024</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Flag_of_Nigeria.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Nigeria_on_the_globe_(Africa_centered).svg</ImageAntwortBildDescription>
+            </Übung>
+            <Übung nummer="38">
+                <FrageSubjekt>Frage_38</FrageSubjekt>
+                <AntwortSubjekt>Ruanda</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Frage_38.jpg</ImagefileFrage>
+                <ImagefileAntwort>Ruanda.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Ruanda</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Ruanda</InfoURLAntwort>
+                <ImageFrageAuthor>Original:</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>22.06.2006</WikiPageFraVers>
+                <WikiPageAntVers>22.06.2006</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Flag_of_Rwanda.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Rwanda_in_its_region.svg</ImageAntwortBildDescription>
+            </Übung>
+            <Übung nummer="39">
+                <FrageSubjekt>Frage_39</FrageSubjekt>
+                <AntwortSubjekt>Sambia</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Frage_39.jpg</ImagefileFrage>
+                <ImagefileAntwort>Sambia.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Sambia</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Sambia</InfoURLAntwort>
+                <ImageFrageAuthor>unbekannt</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>No revisions found</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Flag_of_Zambia.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Zambia_on_the_globe_(Africa_centered).svg</ImageAntwortBildDescription>
+            </Übung>
+            <Übung nummer="40">
+                <FrageSubjekt>Frage_40</FrageSubjekt>
+                <AntwortSubjekt>Sao Tome und Principe</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Frage_40.jpg</ImagefileFrage>
+                <ImagefileAntwort>Sao Tome und Principe.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/S%C3%A3o_Tom%C3%A9_und_Pr%C3%ADncipe</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/S%C3%A3o_Tom%C3%A9_und_Pr%C3%ADncipe</InfoURLAntwort>
+                <ImageFrageAuthor>unbekannt</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>No revisions found</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Flag_of_São_Tomé_and_Príncipe.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Sao_Tome_and_Principe_on_the_globe_(Africa_centered).svg</ImageAntwortBildDescription>
+            </Übung>
+            <Übung nummer="41">
+                <FrageSubjekt>Frage_41</FrageSubjekt>
+                <AntwortSubjekt>Senegal</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Frage_41.jpg</ImagefileFrage>
+                <ImagefileAntwort>Senegal.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Senegal</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Senegal</InfoURLAntwort>
+                <ImageFrageAuthor>Original upload by (Nightstallion [//commons.wikimedia.org/wiki/User:Nightstallion])</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>09.09.2020</WikiPageFraVers>
+                <WikiPageAntVers>09.09.2020</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Flag_of_Senegal.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Senegal_on_the_globe_(Africa_centered).svg</ImageAntwortBildDescription>
+            </Übung>
+            <Übung nummer="42">
+                <FrageSubjekt>Frage_42</FrageSubjekt>
+                <AntwortSubjekt>Seychellen</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Frage_42.jpg</ImagefileFrage>
+                <ImagefileAntwort>Seychellen.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Seychellen</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Seychellen</InfoURLAntwort>
+                <ImageFrageAuthor>User:Vxb83</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>07.10.2022</WikiPageFraVers>
+                <WikiPageAntVers>07.10.2022</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Flag_of_Seychelles.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Seychelles_on_the_globe_(Zambia_centered).svg</ImageAntwortBildDescription>
+            </Übung>
+            <Übung nummer="43">
+                <FrageSubjekt>Frage_43</FrageSubjekt>
+                <AntwortSubjekt>Sierra Leone</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Frage_43.jpg</ImagefileFrage>
+                <ImagefileAntwort>Sierra Leone.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Sierra_Leone</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Sierra_Leone</InfoURLAntwort>
+                <ImageFrageAuthor>Zscout370</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>12.09.2024</WikiPageFraVers>
+                <WikiPageAntVers>12.09.2024</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Flag_of_Sierra_Leone.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Sierra_Leone_on_the_globe_(Africa_centered).svg</ImageAntwortBildDescription>
+            </Übung>
+            <Übung nummer="44">
+                <FrageSubjekt>Frage_44</FrageSubjekt>
+                <AntwortSubjekt>Simbabwe</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Frage_44.jpg</ImagefileFrage>
+                <ImagefileAntwort>Simbabwe.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Simbabwe</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Simbabwe</InfoURLAntwort>
+                <ImageFrageAuthor>unbekannt</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>11.05.2005</WikiPageFraVers>
+                <WikiPageAntVers>11.05.2005</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Flag_of_Zimbabwe.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Zimbabwe_on_the_globe_(Africa_centered).svg</ImageAntwortBildDescription>
+            </Übung>
+            <Übung nummer="45">
+                <FrageSubjekt>Frage_45</FrageSubjekt>
+                <AntwortSubjekt>Somalia</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Frage_45.jpg</ImagefileFrage>
+                <ImagefileAntwort>Somalia.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Somalia</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Somalia</InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>12.09.2024</WikiPageFraVers>
+                <WikiPageAntVers>12.09.2024</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Flag_of_Somalia.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Somalia_on_the_globe_(Africa_centered).svg</ImageAntwortBildDescription>
+            </Übung>
+            <Übung nummer="46">
+                <FrageSubjekt>Frage_46</FrageSubjekt>
+                <AntwortSubjekt>Südafrika</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Frage_46.jpg</ImagefileFrage>
+                <ImagefileAntwort>Südafrika.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/S%C3%BCdafrika</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/S%C3%BCdafrika</InfoURLAntwort>
+                <ImageFrageAuthor>Frederick Brownell [https://en.wikipedia.org/wiki/Frederick_Brownell]</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>No revisions found</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Flag_of_South_Africa.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:South_Africa_on_the_globe_(Africa_centered).svg</ImageAntwortBildDescription>
+            </Übung>
+            <Übung nummer="47">
+                <FrageSubjekt>Frage_47</FrageSubjekt>
+                <AntwortSubjekt>Südsudan</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Frage_47.jpg</ImagefileFrage>
+                <ImagefileAntwort>Südsudan.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/S%C3%BCdsudan</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/S%C3%BCdsudan</InfoURLAntwort>
+                <ImageFrageAuthor>Achim1999 [//commons.wikimedia.org/wiki/User:Achim1999]</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>No revisions found</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Flag_of_South_Sudan.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:South_Sudan_on_the_globe_(Africa_centered).svg</ImageAntwortBildDescription>
+            </Übung>
+            <Übung nummer="48">
+                <FrageSubjekt>Frage_48</FrageSubjekt>
+                <AntwortSubjekt>Sudan</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Frage_48.jpg</ImagefileFrage>
+                <ImagefileAntwort>Sudan.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Sudan</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Sudan</InfoURLAntwort>
+                <ImageFrageAuthor>unbekannt</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>07.10.2022</WikiPageFraVers>
+                <WikiPageAntVers>07.10.2022</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Flag_of_Sudan.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Sudan_on_the_globe_(claimed)_(North_Africa_centered).svg</ImageAntwortBildDescription>
+            </Übung>
+            <Übung nummer="49">
+                <FrageSubjekt>Frage_49</FrageSubjekt>
+                <AntwortSubjekt>Tansania</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Frage_49.jpg</ImagefileFrage>
+                <ImagefileAntwort>Tansania.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Tansania</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Tansania</InfoURLAntwort>
+                <ImageFrageAuthor>unbekannt</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>30.08.2008</WikiPageFraVers>
+                <WikiPageAntVers>30.08.2008</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Flag_of_Tanzania.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Tanzania_on_the_globe_(Africa_centered).svg</ImageAntwortBildDescription>
+            </Übung>
+            <Übung nummer="50">
+                <FrageSubjekt>Frage_50</FrageSubjekt>
+                <AntwortSubjekt>Togo</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Frage_50.jpg</ImagefileFrage>
+                <ImagefileAntwort>Togo.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Togo</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Togo</InfoURLAntwort>
+                <ImageFrageAuthor>unbekannt</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>21.04.2024</WikiPageFraVers>
+                <WikiPageAntVers>21.04.2024</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Flag_of_Togo.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Togo_on_the_globe_(Africa_centered).svg</ImageAntwortBildDescription>
+            </Übung>
+            <Übung nummer="51">
+                <FrageSubjekt>Frage_51</FrageSubjekt>
+                <AntwortSubjekt>Tschad</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Frage_51.jpg</ImagefileFrage>
+                <ImagefileAntwort>Tschad.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Tschad</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Tschad</InfoURLAntwort>
+                <ImageFrageAuthor>SKopp [//commons.wikimedia.org/wiki/User:SKopp]</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>08.05.2015</WikiPageFraVers>
+                <WikiPageAntVers>08.05.2015</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Flag_of_Chad.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Chad_on_the_globe_(North_Africa_centered).svg</ImageAntwortBildDescription>
+            </Übung>
+            <Übung nummer="52">
+                <FrageSubjekt>Frage_52</FrageSubjekt>
+                <AntwortSubjekt>Tunesien</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Frage_52.jpg</ImagefileFrage>
+                <ImagefileAntwort>Tunesien.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Tunesien</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Tunesien</InfoURLAntwort>
+                <ImageFrageAuthor>Various Wikimedia Commons' contributors</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>07.10.2022</WikiPageFraVers>
+                <WikiPageAntVers>07.10.2022</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Flag_of_Tunisia.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Tunisia_on_the_globe_(North_Africa_centered).svg</ImageAntwortBildDescription>
+            </Übung>
+            <Übung nummer="53">
+                <FrageSubjekt>Frage_53</FrageSubjekt>
+                <AntwortSubjekt>Uganda</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Frage_53.jpg</ImagefileFrage>
+                <ImagefileAntwort>Uganda.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Uganda</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Uganda</InfoURLAntwort>
+                <ImageFrageAuthor>tobias [http://openclipart.org/user-detail/tobias]</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>21.04.2024</WikiPageFraVers>
+                <WikiPageAntVers>21.04.2024</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Flag_of_Uganda.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Uganda_on_the_globe_(Africa_centered).svg</ImageAntwortBildDescription>
+            </Übung>
+            <Übung nummer="54">
+                <FrageSubjekt>Frage_54</FrageSubjekt>
+                <AntwortSubjekt>Zentralafrikanische Republik</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Frage_54.jpg</ImagefileFrage>
+                <ImagefileAntwort>Zentralafrikanische Republik.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Zentralafrikanische_Republik</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Zentralafrikanische_Republik</InfoURLAntwort>
+                <ImageFrageAuthor>Nightstallion [//commons.wikimedia.org/wiki/User:Nightstallion]</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>No revisions found</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Flag_of_the_Central_African_Republic.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Central_African_Republic_on_the_globe_(Africa_centered).svg</ImageAntwortBildDescription>
+            </Übung>
+        </MainÜbungsliste>
+    </Übungen>
+</Daten>

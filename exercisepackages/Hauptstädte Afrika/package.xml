@@ -1,0 +1,1197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Daten>
+    <Übungen name="Haupstädte Afrika" sequentiell="true" umgekehrt="true">
+        <MainÜbungsliste>
+            <FrageText>Wie heißt die Hauptstadt von [FrageSubjekt]</FrageText>
+            <FrageTextUmgekehrt>In welchem Land ist die Hauptstadt [FrageSubjekt]</FrageTextUmgekehrt>
+            <Übung nummer="1">
+                <FrageSubjekt>Ägypten</FrageSubjekt>
+                <AntwortSubjekt>Kairo</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Ägypten.jpg</ImagefileFrage>
+                <ImagefileAntwort>Kairo.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/%C3%84gypten</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Kairo</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>Ahmed Photographer</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 4.0[https://creativecommons.org/licenses/by-sa/4.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>07.10.2022</WikiPageFraVers>
+                <WikiPageAntVers>08.05.2007</WikiPageAntVers>
+                <ExcludeAereaFra>294,604,273,42,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Egypt_on_the_globe_(de-facto_+_disputed_hatched)_(North_Africa_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Cairo_Form_Top.JPG</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Egypt_on_the_globe_%28de-facto_%2B_disputed_hatched%29_%28North_Africa_centered%29.svg/324px-Egypt_on_the_globe_%28de-facto_%2B_disputed_hatched%29_%28North_Africa_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/Cairo_Form_Top.JPG/260px-Cairo_Form_Top.JPG</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="2">
+                <FrageSubjekt>Algerien</FrageSubjekt>
+                <AntwortSubjekt>Algier</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Algerien.jpg</ImagefileFrage>
+                <ImagefileAntwort>Algier.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Algerien</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Algier</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>Eric Gaba ( (Sting [//commons.wikimedia.org/wiki/User:Sting])</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>10.05.2023</WikiPageFraVers>
+                <WikiPageAntVers>10.02.2013</WikiPageAntVers>
+                <ExcludeAereaFra>249,763,412,46,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Algeria_on_the_globe_(North_Africa_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Algeria_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Algeria_on_the_globe_%28North_Africa_centered%29.svg/324px-Algeria_on_the_globe_%28North_Africa_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Algeria_location_map.svg/250px-Algeria_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="3">
+                <FrageSubjekt>Angola</FrageSubjekt>
+                <AntwortSubjekt>Luanda</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Angola.jpg</ImagefileFrage>
+                <ImagefileAntwort>Luanda.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Angola</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Luanda</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>NordNordWest [//commons.wikimedia.org/wiki/User:NordNordWest]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>15.11.2023</WikiPageFraVers>
+                <WikiPageAntVers>24.04.2024</WikiPageAntVers>
+                <ExcludeAereaFra>162,506,166,21,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Angola_on_the_globe_(Africa_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Angola_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Angola_on_the_globe_%28Africa_centered%29.svg/324px-Angola_on_the_globe_%28Africa_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Angola_location_map.svg/228px-Angola_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="4">
+                <FrageSubjekt>Äquatorialguinea</FrageSubjekt>
+                <AntwortSubjekt>Malabo</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Äquatorialguinea.jpg</ImagefileFrage>
+                <ImagefileAntwort>Malabo.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/%C3%84quatorialguinea</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Malabo</InfoURLAntwort>
+                <ImageFrageAuthor>unbekannt</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor>NordNordWest [//commons.wikimedia.org/wiki/User:NordNordWest]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0 de[https://creativecommons.org/licenses/by-sa/3.0/de/deed.en]</ImageAntwortLizenz>
+                <WikiPageFraVers>06.09.2015</WikiPageFraVers>
+                <WikiPageAntVers>03.08.2024</WikiPageAntVers>
+                <ExcludeAereaFra>139,282,206,23,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Flag_of_Equatorial_Guinea.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Equatorial_Guinea_adm_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Flag_of_Equatorial_Guinea.svg/180px-Flag_of_Equatorial_Guinea.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Equatorial_Guinea_adm_location_map.svg/250px-Equatorial_Guinea_adm_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="5">
+                <FrageSubjekt>Äthiopien</FrageSubjekt>
+                <AntwortSubjekt>Addis Abeba</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Äthiopien.jpg</ImagefileFrage>
+                <ImagefileAntwort>Addis Abeba.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/%C3%84thiopien</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Addis_Abeba</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>NordNordWest [//commons.wikimedia.org/wiki/User:NordNordWest]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0 de[https://creativecommons.org/licenses/by-sa/3.0/de/deed.en]</ImageAntwortLizenz>
+                <WikiPageFraVers>01.12.2011</WikiPageFraVers>
+                <WikiPageAntVers>29.04.2007</WikiPageAntVers>
+                <ExcludeAereaFra>138,355,216,26,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Ethiopia_on_the_globe_(Africa_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Ethiopia_adm_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Ethiopia_on_the_globe_%28Africa_centered%29.svg/324px-Ethiopia_on_the_globe_%28Africa_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Ethiopia_adm_location_map.svg/260px-Ethiopia_adm_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="6">
+                <FrageSubjekt>Benin</FrageSubjekt>
+                <AntwortSubjekt>Porto-Novo</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Benin.jpg</ImagefileFrage>
+                <ImagefileAntwort>Porto-Novo.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Benin</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Porto-Novo</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>NordNordWest [//commons.wikimedia.org/wiki/User:NordNordWest]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>06.01.2008</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra>140,258,225,29,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Benin_in_its_region.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Benin_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Benin_in_its_region.svg/324px-Benin_in_its_region.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Benin_location_map.svg/100px-Benin_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="7">
+                <FrageSubjekt>Botswana</FrageSubjekt>
+                <AntwortSubjekt>Gaborone</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Botswana.jpg</ImagefileFrage>
+                <ImagefileAntwort>Gaborone.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Botswana</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Gaborone</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>NordNordWest [//commons.wikimedia.org/wiki/User:NordNordWest]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0 de[https://creativecommons.org/licenses/by-sa/3.0/de/deed.en]</ImageAntwortLizenz>
+                <WikiPageFraVers>16.11.2023</WikiPageFraVers>
+                <WikiPageAntVers>23.04.2024</WikiPageAntVers>
+                <ExcludeAereaFra>137,400,228,28,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Botswana_on_the_globe_(Africa_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Botswana_adm_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Botswana_on_the_globe_%28Africa_centered%29.svg/324px-Botswana_on_the_globe_%28Africa_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Botswana_adm_location_map.svg/240px-Botswana_adm_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="8">
+                <FrageSubjekt>Burkina Faso</FrageSubjekt>
+                <AntwortSubjekt>Ouagadougou</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Burkina Faso.jpg</ImagefileFrage>
+                <ImagefileAntwort>Ouagadougou.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Burkina_Faso</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Ouagadougou</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>Uwe Dedering [//commons.wikimedia.org/wiki/User:Uwe_Dedering]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>08.09.2024</WikiPageFraVers>
+                <WikiPageAntVers>09.05.2010</WikiPageAntVers>
+                <ExcludeAereaFra>139,404,227,24,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Burkina_Faso_on_the_globe_(Africa_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Burkina_Faso_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Burkina_Faso_on_the_globe_%28Africa_centered%29.svg/324px-Burkina_Faso_on_the_globe_%28Africa_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Burkina_Faso_location_map.svg/250px-Burkina_Faso_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="9">
+                <FrageSubjekt>Burundi</FrageSubjekt>
+                <AntwortSubjekt>Gitega</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Burundi.jpg</ImagefileFrage>
+                <ImagefileAntwort>Gitega.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Burundi</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Gitega</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>NordNordWest [//commons.wikimedia.org/wiki/User:NordNordWest]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0 de[https://creativecommons.org/licenses/by-sa/3.0/de/deed.en]</ImageAntwortLizenz>
+                <WikiPageFraVers>21.04.2024</WikiPageFraVers>
+                <WikiPageAntVers>24.04.2024</WikiPageAntVers>
+                <ExcludeAereaFra>182,278,150,29,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Burundi_in_its_region.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Burundi_adm_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Burundi_in_its_region.svg/324px-Burundi_in_its_region.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/Burundi_adm_location_map.svg/229px-Burundi_adm_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="10">
+                <FrageSubjekt>Dschibuti</FrageSubjekt>
+                <AntwortSubjekt>Dschibuti-Stadt</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Dschibuti.jpg</ImagefileFrage>
+                <ImagefileAntwort>Dschibuti-Stadt.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Dschibuti</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Dschibuti_(Stadt)</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>NordNordWest [//commons.wikimedia.org/wiki/User:NordNordWest]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0 de[https://creativecommons.org/licenses/by-sa/3.0/de/deed.en]</ImageAntwortLizenz>
+                <WikiPageFraVers>No revisions found</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra>140,404,228,22,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Djibouti_on_the_globe_(special_marker)_(Africa_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Djibouti_adm_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Djibouti_on_the_globe_%28special_marker%29_%28Africa_centered%29.svg/324px-Djibouti_on_the_globe_%28special_marker%29_%28Africa_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/Djibouti_adm_location_map.svg/250px-Djibouti_adm_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="11">
+                <FrageSubjekt>Elfenbeinküste</FrageSubjekt>
+                <AntwortSubjekt>Yamoussoukro</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Elfenbeinküste.jpg</ImagefileFrage>
+                <ImagefileAntwort>Yamoussoukro.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Elfenbeink%C3%BCste</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Yamoussoukro</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>NordNordWest [//commons.wikimedia.org/wiki/User:NordNordWest]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0 de[https://creativecommons.org/licenses/by-sa/3.0/de/deed.en]</ImageAntwortLizenz>
+                <WikiPageFraVers>01.12.2005</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra>173,402,158,27,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Cote_d_Ivoire_on_the_globe_(Africa_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Côte_d'Ivoire_adm_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Cote_d_Ivoire_on_the_globe_%28Africa_centered%29.svg/324px-Cote_d_Ivoire_on_the_globe_%28Africa_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/C%C3%B4te_d%27Ivoire_adm_location_map.svg/140px-C%C3%B4te_d%27Ivoire_adm_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="12">
+                <FrageSubjekt>Eritrea</FrageSubjekt>
+                <AntwortSubjekt>Asmara</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Eritrea.jpg</ImagefileFrage>
+                <ImagefileAntwort>Asmara.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Eritrea</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Asmara</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>NordNordWest [//commons.wikimedia.org/wiki/User:NordNordWest]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0 de[https://creativecommons.org/licenses/by-sa/3.0/de/deed.en]</ImageAntwortLizenz>
+                <WikiPageFraVers>07.07.2024</WikiPageFraVers>
+                <WikiPageAntVers>08.09.2024</WikiPageAntVers>
+                <ExcludeAereaFra>139,463,229,26,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Eritrea_on_the_globe_(Africa_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Eritrea_adm_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Eritrea_on_the_globe_%28Africa_centered%29.svg/324px-Eritrea_on_the_globe_%28Africa_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Eritrea_adm_location_map.svg/250px-Eritrea_adm_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="13">
+                <FrageSubjekt>Eswatini</FrageSubjekt>
+                <AntwortSubjekt>Mbabane</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Eswatini.jpg</ImagefileFrage>
+                <ImagefileAntwort>Mbabane.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Eswatini</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Mbabane</InfoURLAntwort>
+                <ImageFrageAuthor>Rei-artur [//commons.wikimedia.org/wiki/User:Rei-artur]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[http://creativecommons.org/licenses/by-sa/3.0/]</ImageFrageLizenz>
+                <ImageAntwortAuthor>NordNordWest [//commons.wikimedia.org/wiki/User:NordNordWest]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0 de[https://creativecommons.org/licenses/by-sa/3.0/de/deed.en]</ImageAntwortLizenz>
+                <WikiPageFraVers>06.08.2024</WikiPageFraVers>
+                <WikiPageAntVers>06.08.2024</WikiPageAntVers>
+                <ExcludeAereaFra>138,239,231,26,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:LocationEswatini.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Eswatini_adm_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/LocationEswatini.svg/324px-LocationEswatini.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Eswatini_adm_location_map.svg/203px-Eswatini_adm_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="14">
+                <FrageSubjekt>Gabun</FrageSubjekt>
+                <AntwortSubjekt>Libreville</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Gabun.jpg</ImagefileFrage>
+                <ImagefileAntwort>Libreville.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Gabun</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Libreville</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>Uwe Dedering [//commons.wikimedia.org/wiki/User:Uwe_Dedering]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>No revisions found</WikiPageFraVers>
+                <WikiPageAntVers>06.07.2024</WikiPageAntVers>
+                <ExcludeAereaFra>137,402,228,27,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Gabon_on_the_globe_(Africa_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Gabon_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Gabon_on_the_globe_%28Africa_centered%29.svg/324px-Gabon_on_the_globe_%28Africa_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Gabon_location_map.svg/250px-Gabon_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="15">
+                <FrageSubjekt>Gambia</FrageSubjekt>
+                <AntwortSubjekt>Banjul</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Gambia.jpg</ImagefileFrage>
+                <ImagefileAntwort>Banjul.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Gambia</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Banjul</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>NordNordWest [//commons.wikimedia.org/wiki/User:NordNordWest]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0 de[https://creativecommons.org/licenses/by-sa/3.0/de/deed.en]</ImageAntwortLizenz>
+                <WikiPageFraVers>09.09.2020</WikiPageFraVers>
+                <WikiPageAntVers>01.07.2024</WikiPageAntVers>
+                <ExcludeAereaFra>139,259,208,26,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Gambia_in_its_region.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Gambia_adm_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Gambia_in_its_region.svg/324px-Gambia_in_its_region.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Gambia_adm_location_map.svg/240px-Gambia_adm_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="16">
+                <FrageSubjekt>Ghana</FrageSubjekt>
+                <AntwortSubjekt>Accra</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Ghana.jpg</ImagefileFrage>
+                <ImagefileAntwort>Accra.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Ghana</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Accra</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>NordNordWest [//commons.wikimedia.org/wiki/User:NordNordWest]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0 de[https://creativecommons.org/licenses/by-sa/3.0/de/deed.en]</ImageAntwortLizenz>
+                <WikiPageFraVers>21.04.2024</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra>135,390,200,18,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Ghana_on_the_globe_(Africa_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Ghana_adm_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Ghana_on_the_globe_%28Africa_centered%29.svg/324px-Ghana_on_the_globe_%28Africa_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Ghana_adm_location_map.svg/185px-Ghana_adm_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="17">
+                <FrageSubjekt>Guinea</FrageSubjekt>
+                <AntwortSubjekt>Conakry</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Guinea.jpg</ImagefileFrage>
+                <ImagefileAntwort>Conakry.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Guinea</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Conakry</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>NordNordWest [//commons.wikimedia.org/wiki/User:NordNordWest]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0 de[https://creativecommons.org/licenses/by-sa/3.0/de/deed.en]</ImageAntwortLizenz>
+                <WikiPageFraVers>02.01.2008</WikiPageFraVers>
+                <WikiPageAntVers>03.08.2024</WikiPageAntVers>
+                <ExcludeAereaFra>139,401,203,21,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Guinea_on_the_globe_(Africa_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Guinea_adm_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Guinea_on_the_globe_%28Africa_centered%29.svg/324px-Guinea_on_the_globe_%28Africa_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Guinea_adm_location_map.svg/250px-Guinea_adm_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="18">
+                <FrageSubjekt>Guinea-Bissau</FrageSubjekt>
+                <AntwortSubjekt>Bissau</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Guinea-Bissau.jpg</ImagefileFrage>
+                <ImagefileAntwort>Bissau.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Guinea-Bissau</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Bissau</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>NordNordWest [//commons.wikimedia.org/wiki/User:NordNordWest]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0 de[https://creativecommons.org/licenses/by-sa/3.0/de/deed.en]</ImageAntwortLizenz>
+                <WikiPageFraVers>14.04.2005</WikiPageFraVers>
+                <WikiPageAntVers>27.04.2024</WikiPageAntVers>
+                <ExcludeAereaFra>169,402,163,25,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Guinea-Bissau_on_the_globe_(Cape_Verde_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Guinea-Bissau_adm_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Guinea-Bissau_on_the_globe_%28Cape_Verde_centered%29.svg/324px-Guinea-Bissau_on_the_globe_%28Cape_Verde_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Guinea-Bissau_adm_location_map.svg/250px-Guinea-Bissau_adm_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="19">
+                <FrageSubjekt>Kamerun</FrageSubjekt>
+                <AntwortSubjekt>Yaoundé</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Kamerun.jpg</ImagefileFrage>
+                <ImagefileAntwort>Yaoundé.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Kamerun</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Yaounde</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>NordNordWest [//commons.wikimedia.org/wiki/User:NordNordWest]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0 de[https://creativecommons.org/licenses/by-sa/3.0/de/deed.en]</ImageAntwortLizenz>
+                <WikiPageFraVers>07.10.2022</WikiPageFraVers>
+                <WikiPageAntVers>23.08.2015</WikiPageAntVers>
+                <ExcludeAereaFra>163,423,159,24,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Cameroon_on_the_globe_(Africa_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Cameroon_adm_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Cameroon_on_the_globe_%28Africa_centered%29.svg/324px-Cameroon_on_the_globe_%28Africa_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Cameroon_adm_location_map.svg/173px-Cameroon_adm_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="20">
+                <FrageSubjekt>Kap Verde</FrageSubjekt>
+                <AntwortSubjekt>Praia</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Kap Verde.jpg</ImagefileFrage>
+                <ImagefileAntwort>Praia.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Kap_Verde</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Praia</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>NordNordWest [//commons.wikimedia.org/wiki/User:NordNordWest]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>No revisions found</WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>138,435,223,26,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Cape_Verde_on_the_globe_(Cape_Verde_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Cape_Verde_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Cape_Verde_on_the_globe_%28Cape_Verde_centered%29.svg/324px-Cape_Verde_on_the_globe_%28Cape_Verde_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Cape_Verde_location_map.svg/250px-Cape_Verde_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="21">
+                <FrageSubjekt>Kenia</FrageSubjekt>
+                <AntwortSubjekt>Nairobi</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Kenia.jpg</ImagefileFrage>
+                <ImagefileAntwort>Nairobi.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Kenia</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Nairobi</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>NordNordWest [//commons.wikimedia.org/wiki/User:NordNordWest]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0 de[https://creativecommons.org/licenses/by-sa/3.0/de/deed.en]</ImageAntwortLizenz>
+                <WikiPageFraVers>30.08.2008</WikiPageFraVers>
+                <WikiPageAntVers>24.04.2024</WikiPageAntVers>
+                <ExcludeAereaFra>141,402,230,27,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Kenya_on_the_globe_(Africa_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Kenya_adm_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Kenya_on_the_globe_%28Africa_centered%29.svg/324px-Kenya_on_the_globe_%28Africa_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Kenya_adm_location_map.svg/227px-Kenya_adm_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="22">
+                <FrageSubjekt>Komoren</FrageSubjekt>
+                <AntwortSubjekt>Moroni</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Komoren.jpg</ImagefileFrage>
+                <ImagefileAntwort>Moroni.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Komoren</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Moroni_(Komoren)</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>NordNordWest [//commons.wikimedia.org/wiki/User:NordNordWest]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>No revisions found</WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra>139,447,212,22,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Comoros_on_the_globe_(Africa_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Comoros_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Comoros_on_the_globe_%28Africa_centered%29.svg/324px-Comoros_on_the_globe_%28Africa_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Comoros_location_map.svg/250px-Comoros_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="23">
+                <FrageSubjekt>Kongo, Demokratische Republik</FrageSubjekt>
+                <AntwortSubjekt>Kinshasa</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Kongo, Demokratische Republik.jpg</ImagefileFrage>
+                <ImagefileAntwort>Kinshasa.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Demokratische_Republik_Kongo</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Kinshasa</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>Derivative work: (Profoss [//commons.wikimedia.org/wiki/User:Profoss])</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>No revisions found</WikiPageFraVers>
+                <WikiPageAntVers>24.04.2024</WikiPageAntVers>
+                <ExcludeAereaFra>140,442,218,26,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Democratic_Republic_of_the_Congo_on_the_globe_(Africa_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Kinshasa_in_Democratic_Republic_of_the_Congo.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Democratic_Republic_of_the_Congo_on_the_globe_%28Africa_centered%29.svg/324px-Democratic_Republic_of_the_Congo_on_the_globe_%28Africa_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Kinshasa_in_Democratic_Republic_of_the_Congo.svg/250px-Kinshasa_in_Democratic_Republic_of_the_Congo.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="24">
+                <FrageSubjekt>Kongo, Republik</FrageSubjekt>
+                <AntwortSubjekt>Brazzaville</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Kongo, Republik.jpg</ImagefileFrage>
+                <ImagefileAntwort>Brazzaville.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Republik_Kongo</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Brazzaville</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>Gvf [//commons.wikimedia.org/wiki/User:Gvf]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY 2.5[https://creativecommons.org/licenses/by/2.5]</ImageAntwortLizenz>
+                <WikiPageFraVers>No revisions found</WikiPageFraVers>
+                <WikiPageAntVers>15.05.2024</WikiPageAntVers>
+                <ExcludeAereaFra>140,441,219,24,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Republic_of_the_Congo_on_the_globe_(Africa_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Congo_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Republic_of_the_Congo_on_the_globe_%28Africa_centered%29.svg/324px-Republic_of_the_Congo_on_the_globe_%28Africa_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Congo_location_map.svg/232px-Congo_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="25">
+                <FrageSubjekt>Lesotho</FrageSubjekt>
+                <AntwortSubjekt>Maseru</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Lesotho.jpg</ImagefileFrage>
+                <ImagefileAntwort>Maseru.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Lesotho</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Maseru</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>NordNordWest [//commons.wikimedia.org/wiki/User:NordNordWest]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0 de[https://creativecommons.org/licenses/by-sa/3.0/de/deed.en]</ImageAntwortLizenz>
+                <WikiPageFraVers>03.05.2024</WikiPageFraVers>
+                <WikiPageAntVers>03.05.2024</WikiPageAntVers>
+                <ExcludeAereaFra>139,403,210,25,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Lesotho_on_the_globe_(Zambia_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Lesotho_adm_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Lesotho_on_the_globe_%28Zambia_centered%29.svg/324px-Lesotho_on_the_globe_%28Zambia_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Lesotho_adm_location_map.svg/250px-Lesotho_adm_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="26">
+                <FrageSubjekt>Liberia</FrageSubjekt>
+                <AntwortSubjekt>Monrovia</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Liberia.jpg</ImagefileFrage>
+                <ImagefileAntwort>Monrovia.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Liberia</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Monrovia</InfoURLAntwort>
+                <ImageFrageAuthor>Rei-artur [//commons.wikimedia.org/wiki/User:Rei-artur]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[http://creativecommons.org/licenses/by-sa/3.0/]</ImageFrageLizenz>
+                <ImageAntwortAuthor>Uwe Dedering [//commons.wikimedia.org/wiki/User:Uwe_Dedering]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>24.04.2024</WikiPageFraVers>
+                <WikiPageAntVers>15.05.2024</WikiPageAntVers>
+                <ExcludeAereaFra>138,257,224,29,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:LocationLiberia.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Liberia_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/LocationLiberia.svg/324px-LocationLiberia.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Liberia_location_map.svg/248px-Liberia_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="27">
+                <FrageSubjekt>Libyen</FrageSubjekt>
+                <AntwortSubjekt>Tripolis</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Libyen.jpg</ImagefileFrage>
+                <ImagefileAntwort>Tripolis.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Libyen</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Tripolis</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>NordNordWest [//commons.wikimedia.org/wiki/User:NordNordWest]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY 3.0[https://creativecommons.org/licenses/by/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>18.06.2007</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra>140,356,195,24,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Libya_on_the_globe_(North_Africa_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Libya_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Libya_on_the_globe_%28North_Africa_centered%29.svg/324px-Libya_on_the_globe_%28North_Africa_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Libya_location_map.svg/250px-Libya_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="28">
+                <FrageSubjekt>Madagaskar</FrageSubjekt>
+                <AntwortSubjekt>Antananarivo</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Madagaskar.jpg</ImagefileFrage>
+                <ImagefileAntwort>Antananarivo.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Madagaskar</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Antananarivo</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>NordNordWest [//commons.wikimedia.org/wiki/User:NordNordWest]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0 de[https://creativecommons.org/licenses/by-sa/3.0/de/deed.en]</ImageAntwortLizenz>
+                <WikiPageFraVers>07.10.2022</WikiPageFraVers>
+                <WikiPageAntVers>24.04.2024</WikiPageAntVers>
+                <ExcludeAereaFra>138,402,207,25,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Madagascar_on_the_globe_(Madagascar_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Madagascar_adm_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Madagascar_on_the_globe_%28Madagascar_centered%29.svg/324px-Madagascar_on_the_globe_%28Madagascar_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Madagascar_adm_location_map.svg/137px-Madagascar_adm_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="29">
+                <FrageSubjekt>Malawi</FrageSubjekt>
+                <AntwortSubjekt>Lilongwe</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Malawi.jpg</ImagefileFrage>
+                <ImagefileAntwort>Lilongwe.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Malawi</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Lilongwe</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>NordNordWest [//commons.wikimedia.org/wiki/User:NordNordWest]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0 de[https://creativecommons.org/licenses/by-sa/3.0/de/deed.en]</ImageAntwortLizenz>
+                <WikiPageFraVers>06.10.2022</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra>138,401,202,24,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Malawi_on_the_globe_(Africa_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Malawi_adm_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Malawi_on_the_globe_%28Africa_centered%29.svg/324px-Malawi_on_the_globe_%28Africa_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Malawi_adm_location_map.svg/122px-Malawi_adm_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="30">
+                <FrageSubjekt>Mali</FrageSubjekt>
+                <AntwortSubjekt>Bamako</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Mali.jpg</ImagefileFrage>
+                <ImagefileAntwort>Bamako.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Mali</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Bamako</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>NordNordWest [//commons.wikimedia.org/wiki/User:NordNordWest]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0 de[https://creativecommons.org/licenses/by-sa/3.0/de/deed.en]</ImageAntwortLizenz>
+                <WikiPageFraVers>21.04.2024</WikiPageFraVers>
+                <WikiPageAntVers>24.04.2024</WikiPageAntVers>
+                <ExcludeAereaFra>139,461,228,27,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Mali_on_the_globe_(Africa_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Mali_adm_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Mali_on_the_globe_%28Africa_centered%29.svg/324px-Mali_on_the_globe_%28Africa_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Mali_adm_location_map.svg/250px-Mali_adm_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="31">
+                <FrageSubjekt>Marokko</FrageSubjekt>
+                <AntwortSubjekt>Rabat</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Marokko.jpg</ImagefileFrage>
+                <ImagefileAntwort>Rabat.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Marokko</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Rabat</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>Eric Gaba ( (Sting [//commons.wikimedia.org/wiki/User:Sting])</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>10.11.2023</WikiPageFraVers>
+                <WikiPageAntVers>14.10.2024</WikiPageAntVers>
+                <ExcludeAereaFra>139,441,227,25,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Morocco_on_the_globe_(de-facto_and_claimed_hatched)_(Cape_Verde_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Morocco_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Morocco_on_the_globe_%28de-facto_and_claimed_hatched%29_%28Cape_Verde_centered%29.svg/324px-Morocco_on_the_globe_%28de-facto_and_claimed_hatched%29_%28Cape_Verde_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Morocco_location_map.svg/180px-Morocco_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="32">
+                <FrageSubjekt>Mauretanien</FrageSubjekt>
+                <AntwortSubjekt>Nouakchott</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Mauretanien.jpg</ImagefileFrage>
+                <ImagefileAntwort>Nouakchott.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Mauretanien</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Nouakchott</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>Eric Gaba ( (Sting [//commons.wikimedia.org/wiki/User:Sting])</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>No revisions found</WikiPageFraVers>
+                <WikiPageAntVers>24.04.2024</WikiPageAntVers>
+                <ExcludeAereaFra>165,449,168,25</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Mauritania_on_the_globe_(Cape_Verde_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Mauritania_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Mauritania_on_the_globe_%28Cape_Verde_centered%29.svg/324px-Mauritania_on_the_globe_%28Cape_Verde_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Mauritania_location_map.svg/220px-Mauritania_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="33">
+                <FrageSubjekt>Mauritius</FrageSubjekt>
+                <AntwortSubjekt>Port Louis</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Mauritius.jpg</ImagefileFrage>
+                <ImagefileAntwort>Port Louis.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Mauritius</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Port_Louis</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>Uwe Dedering [https://de.wikipedia.org/wiki/Benutzer:Uwe_Dedering]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>06.10.2022</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra>139,444,226,26,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Mauritius_on_the_globe_(Zambia_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Mauritius_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Mauritius_on_the_globe_%28Zambia_centered%29.svg/324px-Mauritius_on_the_globe_%28Zambia_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Mauritius_location_map.svg/183px-Mauritius_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="34">
+                <FrageSubjekt>Mosambik</FrageSubjekt>
+                <AntwortSubjekt>Maputo</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Mosambik.jpg</ImagefileFrage>
+                <ImagefileAntwort>Maputo.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Mosambik</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Maputo</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>NordNordWest [//commons.wikimedia.org/wiki/User:NordNordWest]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0 de[https://creativecommons.org/licenses/by-sa/3.0/de/deed.en]</ImageAntwortLizenz>
+                <WikiPageFraVers>30.08.2008</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra>140,356,213,26,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Mozambique_on_the_globe_(Africa_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Mozambique_adm_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Mozambique_on_the_globe_%28Africa_centered%29.svg/324px-Mozambique_on_the_globe_%28Africa_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Mozambique_adm_location_map.svg/166px-Mozambique_adm_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="35">
+                <FrageSubjekt>Namibia</FrageSubjekt>
+                <AntwortSubjekt>Windhoek</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Namibia.jpg</ImagefileFrage>
+                <ImagefileAntwort>Windhoek.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Namibia</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Windhoek</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>Uwe Dedering [https://de.wikipedia.org/wiki/Benutzer:Uwe_Dedering]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>21.04.2024</WikiPageFraVers>
+                <WikiPageAntVers>24.04.2024</WikiPageAntVers>
+                <ExcludeAereaFra>162,443,151,26,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Namibia_on_the_globe_(Africa_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Namibia_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Namibia_on_the_globe_%28Africa_centered%29.svg/324px-Namibia_on_the_globe_%28Africa_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Namibia_location_map.svg/200px-Namibia_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="36">
+                <FrageSubjekt>Niger</FrageSubjekt>
+                <AntwortSubjekt>Niamey</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Niger.jpg</ImagefileFrage>
+                <ImagefileAntwort>Niamey.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Niger</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Niamey</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>Carport [//commons.wikimedia.org/wiki/User:Carport]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 2.0[https://creativecommons.org/licenses/by-sa/2.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>21.04.2024</WikiPageFraVers>
+                <WikiPageAntVers>09.09.2024</WikiPageAntVers>
+                <ExcludeAereaFra>159,402,172,26,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Niger_on_the_globe_(North_Africa_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Niger_relief_location_map.jpg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Niger_on_the_globe_%28North_Africa_centered%29.svg/324px-Niger_on_the_globe_%28North_Africa_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Niger_relief_location_map.jpg/250px-Niger_relief_location_map.jpg</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="37">
+                <FrageSubjekt>Nigeria</FrageSubjekt>
+                <AntwortSubjekt>Abuja</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Nigeria.jpg</ImagefileFrage>
+                <ImagefileAntwort>Abuja.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Nigeria</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Abuja</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>Uwe Dedering [https://de.wikipedia.org/wiki/User:Uwe_Dedering]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY 3.0[https://creativecommons.org/licenses/by/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>20.09.2024</WikiPageFraVers>
+                <WikiPageAntVers>04.06.2024</WikiPageAntVers>
+                <ExcludeAereaFra>&gt;162,401,162,24,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Nigeria_on_the_globe_(Africa_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Nigeria_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Nigeria_on_the_globe_%28Africa_centered%29.svg/324px-Nigeria_on_the_globe_%28Africa_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Nigeria_location_map.svg/250px-Nigeria_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="38">
+                <FrageSubjekt>Ruanda</FrageSubjekt>
+                <AntwortSubjekt>Kigali</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Ruanda.jpg</ImagefileFrage>
+                <ImagefileAntwort>Kigali.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Ruanda</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Kigali</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>NordNordWest [//commons.wikimedia.org/wiki/User:NordNordWest]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0 de[https://creativecommons.org/licenses/by-sa/3.0/de/deed.en]</ImageAntwortLizenz>
+                <WikiPageFraVers>22.06.2006</WikiPageFraVers>
+                <WikiPageAntVers>30.09.2024</WikiPageAntVers>
+                <ExcludeAereaFra>137,280,222,26,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Rwanda_in_its_region.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Rwanda_adm_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Rwanda_in_its_region.svg/324px-Rwanda_in_its_region.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Rwanda_adm_location_map.svg/260px-Rwanda_adm_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="39">
+                <FrageSubjekt>Sambia</FrageSubjekt>
+                <AntwortSubjekt>Lusaka</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Sambia.jpg</ImagefileFrage>
+                <ImagefileAntwort>Lusaka.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Sambia</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Lusaka</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>NordNordWest [//commons.wikimedia.org/wiki/User:NordNordWest]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0 de[https://creativecommons.org/licenses/by-sa/3.0/de/deed.en]</ImageAntwortLizenz>
+                <WikiPageFraVers>No revisions found</WikiPageFraVers>
+                <WikiPageAntVers>01.05.2024</WikiPageAntVers>
+                <ExcludeAereaFra>139,399,219,27,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Zambia_on_the_globe_(Africa_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Zambia_adm_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Zambia_on_the_globe_%28Africa_centered%29.svg/324px-Zambia_on_the_globe_%28Africa_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Zambia_adm_location_map.svg/250px-Zambia_adm_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="40">
+                <FrageSubjekt>Sao Tome und Principe</FrageSubjekt>
+                <AntwortSubjekt>São Tomé</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Sao Tome und Principe.jpg</ImagefileFrage>
+                <ImagefileAntwort>São Tomé.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/S%C3%A3o_Tom%C3%A9_und_Pr%C3%ADncipe</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/S%C3%A3o_Tom%C3%A9</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>NordNordWest [//commons.wikimedia.org/wiki/User:NordNordWest]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>No revisions found</WikiPageFraVers>
+                <WikiPageAntVers>24.04.2024</WikiPageAntVers>
+                <ExcludeAereaFra>140,357,158,18,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Sao_Tome_and_Principe_on_the_globe_(Africa_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:São_Tomé_and_Príncipe_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Sao_Tome_and_Principe_on_the_globe_%28Africa_centered%29.svg/324px-Sao_Tome_and_Principe_on_the_globe_%28Africa_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/S%C3%A3o_Tom%C3%A9_and_Pr%C3%ADncipe_location_map.svg/179px-S%C3%A3o_Tom%C3%A9_and_Pr%C3%ADncipe_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="41">
+                <FrageSubjekt>Senegal</FrageSubjekt>
+                <AntwortSubjekt>Dakar</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Senegal.jpg</ImagefileFrage>
+                <ImagefileAntwort>Dakar.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Senegal</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Dakar</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>NordNordWest [//commons.wikimedia.org/wiki/User:NordNordWest]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0 de[https://creativecommons.org/licenses/by-sa/3.0/de/deed.en]</ImageAntwortLizenz>
+                <WikiPageFraVers>09.09.2020</WikiPageFraVers>
+                <WikiPageAntVers>27.04.2024</WikiPageAntVers>
+                <ExcludeAereaFra>141,401,204,27,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Senegal_on_the_globe_(Africa_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Senegal_adm_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Senegal_on_the_globe_%28Africa_centered%29.svg/324px-Senegal_on_the_globe_%28Africa_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Senegal_adm_location_map.svg/250px-Senegal_adm_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="42">
+                <FrageSubjekt>Seychellen</FrageSubjekt>
+                <AntwortSubjekt>Victoria</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Seychellen.jpg</ImagefileFrage>
+                <ImagefileAntwort>Victoria.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Seychellen</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Victoria_(Seychellen)</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>NordNordWest [//commons.wikimedia.org/wiki/User:NordNordWest]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>07.10.2022</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra>141,422,230,26,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Seychelles_on_the_globe_(Zambia_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Seychelles_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Seychelles_on_the_globe_%28Zambia_centered%29.svg/324px-Seychelles_on_the_globe_%28Zambia_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Seychelles_location_map.svg/250px-Seychelles_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="43">
+                <FrageSubjekt>Sierra Leone</FrageSubjekt>
+                <AntwortSubjekt>Freetown</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Sierra Leone.jpg</ImagefileFrage>
+                <ImagefileAntwort>Freetown.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Sierra_Leone</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Freetown</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>NordNordWest [//commons.wikimedia.org/wiki/User:NordNordWest]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0 de[https://creativecommons.org/licenses/by-sa/3.0/de/deed.en]</ImageAntwortLizenz>
+                <WikiPageFraVers>12.09.2024</WikiPageFraVers>
+                <WikiPageAntVers>14.09.2024</WikiPageAntVers>
+                <ExcludeAereaFra>161,402,170,27,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Sierra_Leone_on_the_globe_(Africa_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Sierra_Leone_adm_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Sierra_Leone_on_the_globe_%28Africa_centered%29.svg/324px-Sierra_Leone_on_the_globe_%28Africa_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Sierra_Leone_adm_location_map.svg/250px-Sierra_Leone_adm_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="44">
+                <FrageSubjekt>Simbabwe</FrageSubjekt>
+                <AntwortSubjekt>Harare</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Simbabwe.jpg</ImagefileFrage>
+                <ImagefileAntwort>Harare.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Simbabwe</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Harare</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>NordNordWest [//commons.wikimedia.org/wiki/User:NordNordWest]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0 de[https://creativecommons.org/licenses/by-sa/3.0/de/deed.en]</ImageAntwortLizenz>
+                <WikiPageFraVers>11.05.2005</WikiPageFraVers>
+                <WikiPageAntVers>29.05.2024</WikiPageAntVers>
+                <ExcludeAereaFra>141,483,219,24,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Zimbabwe_on_the_globe_(Africa_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Zimbabwe_adm_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Zimbabwe_on_the_globe_%28Africa_centered%29.svg/324px-Zimbabwe_on_the_globe_%28Africa_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Zimbabwe_adm_location_map.svg/250px-Zimbabwe_adm_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="45">
+                <FrageSubjekt>Somalia</FrageSubjekt>
+                <AntwortSubjekt>Mogadischu</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Somalia.jpg</ImagefileFrage>
+                <ImagefileAntwort>Mogadischu.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Somalia</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Mogadischu</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>Eric Gaba ( (Sting [//commons.wikimedia.org/wiki/User:Sting])</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>12.09.2024</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra>141,356,206,27,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Somalia_on_the_globe_(Africa_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Somalia_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Somalia_on_the_globe_%28Africa_centered%29.svg/324px-Somalia_on_the_globe_%28Africa_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Somalia_location_map.svg/196px-Somalia_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="46">
+                <FrageSubjekt>Südafrika</FrageSubjekt>
+                <AntwortSubjekt>Pretoria</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Südafrika.jpg</ImagefileFrage>
+                <ImagefileAntwort>Pretoria.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/S%C3%BCdafrika</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Pretoria</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>NordNordWest [//commons.wikimedia.org/wiki/User:NordNordWest]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0 de[https://creativecommons.org/licenses/by-sa/3.0/de/deed.en]</ImageAntwortLizenz>
+                <WikiPageFraVers>No revisions found</WikiPageFraVers>
+                <WikiPageAntVers>24.04.2024</WikiPageAntVers>
+                <ExcludeAereaFra>161,526,169,21,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:South_Africa_on_the_globe_(Africa_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:South_Africa_adm_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/South_Africa_on_the_globe_%28Africa_centered%29.svg/324px-South_Africa_on_the_globe_%28Africa_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/South_Africa_adm_location_map.svg/250px-South_Africa_adm_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="47">
+                <FrageSubjekt>Südsudan</FrageSubjekt>
+                <AntwortSubjekt>Juba</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Südsudan.jpg</ImagefileFrage>
+                <ImagefileAntwort>Juba.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/S%C3%BCdsudan</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Juba</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>NordNordWest [//commons.wikimedia.org/wiki/User:NordNordWest]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0 de[https://creativecommons.org/licenses/by-sa/3.0/de/deed.en]</ImageAntwortLizenz>
+                <WikiPageFraVers>No revisions found</WikiPageFraVers>
+                <WikiPageAntVers>03.05.2024</WikiPageAntVers>
+                <ExcludeAereaFra>143,454,203,26,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:South_Sudan_on_the_globe_(Africa_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:South_Sudan_adm_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/South_Sudan_on_the_globe_%28Africa_centered%29.svg/324px-South_Sudan_on_the_globe_%28Africa_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/South_Sudan_adm_location_map.svg/250px-South_Sudan_adm_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="48">
+                <FrageSubjekt>Sudan</FrageSubjekt>
+                <AntwortSubjekt>Khartum</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Sudan.jpg</ImagefileFrage>
+                <ImagefileAntwort>Khartum.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Sudan</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Khartum</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>NordNordWest [//commons.wikimedia.org/wiki/User:NordNordWest]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0 de[https://creativecommons.org/licenses/by-sa/3.0/de/deed.en]</ImageAntwortLizenz>
+                <WikiPageFraVers>07.10.2022</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra>138,446,228,26,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Sudan_on_the_globe_(claimed)_(North_Africa_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Sudan_adm_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Sudan_on_the_globe_%28claimed%29_%28North_Africa_centered%29.svg/324px-Sudan_on_the_globe_%28claimed%29_%28North_Africa_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Sudan_adm_location_map.svg/250px-Sudan_adm_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="49">
+                <FrageSubjekt>Tansania</FrageSubjekt>
+                <AntwortSubjekt>Dodoma</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Tansania.jpg</ImagefileFrage>
+                <ImagefileAntwort>Dodoma.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Tansania</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Dodoma</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>Sémhur[//commons.wikimedia.org/wiki/User:S%C3%A9mhur]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 4.0[https://creativecommons.org/licenses/by-sa/4.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>30.08.2008</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra>139,421,203,25,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Tanzania_on_the_globe_(Africa_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Tanzania_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Tanzania_on_the_globe_%28Africa_centered%29.svg/324px-Tanzania_on_the_globe_%28Africa_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Tanzania_location_map.svg/250px-Tanzania_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="50">
+                <FrageSubjekt>Togo</FrageSubjekt>
+                <AntwortSubjekt>Lomé</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Togo.jpg</ImagefileFrage>
+                <ImagefileAntwort>Lomé.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Togo</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Lom%C3%A9</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>Daryona [//commons.wikimedia.org/w/index.php?title=User:Daryona&amp;amp;action=edit&amp;amp;redlink=1]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>21.04.2024</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra>179,443,152,27,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Togo_on_the_globe_(Africa_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Togo_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Togo_on_the_globe_%28Africa_centered%29.svg/324px-Togo_on_the_globe_%28Africa_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Togo_location_map.svg/240px-Togo_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="51">
+                <FrageSubjekt>Tschad</FrageSubjekt>
+                <AntwortSubjekt>N’Djamena</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Tschad.jpg</ImagefileFrage>
+                <ImagefileAntwort>N’Djamena.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Tschad</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/N%E2%80%99Djamena</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>NordNordWest [//commons.wikimedia.org/wiki/User:NordNordWest]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0 de[https://creativecommons.org/licenses/by-sa/3.0/de/deed.en]</ImageAntwortLizenz>
+                <WikiPageFraVers>08.05.2015</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra>138,426,221,26,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Chad_on_the_globe_(North_Africa_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Chad_adm_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Chad_on_the_globe_%28North_Africa_centered%29.svg/324px-Chad_on_the_globe_%28North_Africa_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Chad_adm_location_map.svg/166px-Chad_adm_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="52">
+                <FrageSubjekt>Tunesien</FrageSubjekt>
+                <AntwortSubjekt>Tunis</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Tunesien.jpg</ImagefileFrage>
+                <ImagefileAntwort>Tunis.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Tunesien</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Tunis</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>NordNordWest [//commons.wikimedia.org/wiki/User:NordNordWest]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0 de[https://creativecommons.org/licenses/by-sa/3.0/de/deed.en]</ImageAntwortLizenz>
+                <WikiPageFraVers>07.10.2022</WikiPageFraVers>
+                <WikiPageAntVers>07.10.2022</WikiPageAntVers>
+                <ExcludeAereaFra>172,405,162,27,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Tunisia_on_the_globe_(North_Africa_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Tunisia_adm_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Tunisia_on_the_globe_%28North_Africa_centered%29.svg/324px-Tunisia_on_the_globe_%28North_Africa_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Tunisia_adm_location_map.svg/200px-Tunisia_adm_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="53">
+                <FrageSubjekt>Uganda</FrageSubjekt>
+                <AntwortSubjekt>Kampala</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Uganda.jpg</ImagefileFrage>
+                <ImagefileAntwort>Kampala.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Uganda</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Kampala</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>NordNordWest [//commons.wikimedia.org/wiki/User:NordNordWest]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>21.04.2024</WikiPageFraVers>
+                <WikiPageAntVers>11.12.2014</WikiPageAntVers>
+                <ExcludeAereaFra>140,424,219,23,0</ExcludeAereaFra>
+                <ExcludeAereaAnt>352,638,317,59,0</ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Uganda_on_the_globe_(Africa_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Kampala_District_in_Uganda.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Uganda_on_the_globe_%28Africa_centered%29.svg/324px-Uganda_on_the_globe_%28Africa_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Kampala_District_in_Uganda.svg/225px-Kampala_District_in_Uganda.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="54">
+                <FrageSubjekt>Zentralafrikanische Republik</FrageSubjekt>
+                <AntwortSubjekt>Bangui</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Zentralafrikanische Republik.jpg</ImagefileFrage>
+                <ImagefileAntwort>Bangui.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Zentralafrikanische_Republik</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Bangui</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>NordNordWest [//commons.wikimedia.org/wiki/User:NordNordWest]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0 de[https://creativecommons.org/licenses/by-sa/3.0/de/deed.en]</ImageAntwortLizenz>
+                <WikiPageFraVers>No revisions found</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra>159,403,172,25,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Central_African_Republic_on_the_globe_(Africa_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Central_African_Republic_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/Central_African_Republic_on_the_globe_%28Africa_centered%29.svg/324px-Central_African_Republic_on_the_globe_%28Africa_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Central_African_Republic_location_map.svg/250px-Central_African_Republic_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+        </MainÜbungsliste>
+    </Übungen>
+</Daten>

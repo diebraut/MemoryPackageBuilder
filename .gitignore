@@ -1,0 +1,23 @@
+# Qt Creator
+*.user
+*.user.*
+*.autosave
+*.pro.user
+*.qmake.stash
+
+# Build & temp
+build-*/
+*.o
+*.obj
+*.exe
+*.dll
+*.so
+*.a
+*.log
+*.tmp
+Makefile*
+moc_*
+ui_*
+qrc_*
+*.qmlc
+*.jsc

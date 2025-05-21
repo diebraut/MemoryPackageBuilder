@@ -1,0 +1,1791 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Daten>
+    <Übungen name="Hauptstädte Asien Australien Ozeanien" sequentiell="true" umgekehrt="true">
+        <MainÜbungsliste>
+            <FrageText>Wie heißt die Hauptstadt von [FrageSubjekt]</FrageText>
+            <FrageTextUmgekehrt>In welchem Land ist die Hauptstadt [FrageSubjekt]</FrageTextUmgekehrt>
+            <Übung nummer="1">
+                <FrageSubjekt>Abchasien</FrageSubjekt>
+                <AntwortSubjekt>Sochumi</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Abchasien.jpg</ImagefileFrage>
+                <ImagefileAntwort>Sukhumi.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Abchasien</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Sukhumi</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>unbekannt</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 4.0[https://creativecommons.org/licenses/by-sa/4.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>No revisions found</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Abkhazia_in_its_region_(less_biased).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Sokhumi_Collage.jpg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Abkhazia_in_its_region_%28less_biased%29.svg/330px-Abkhazia_in_its_region_%28less_biased%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Sokhumi_Collage.jpg/300px-Sokhumi_Collage.jpg</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="2">
+                <FrageSubjekt>Afghanistan</FrageSubjekt>
+                <AntwortSubjekt>Kabul</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Afghanistan.jpg</ImagefileFrage>
+                <ImagefileAntwort>Kabul.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Afghanistan</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Kabul</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>NordNordWest [//commons.wikimedia.org/wiki/User:NordNordWest]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0 de[https://creativecommons.org/licenses/by-sa/3.0/de/deed.en]</ImageAntwortLizenz>
+                <WikiPageFraVers>01.06.2015</WikiPageFraVers>
+                <WikiPageAntVers>29.04.2007</WikiPageAntVers>
+                <ExcludeAereaFra>227,650,218,40,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Afghanistan_on_the_globe_(Afro-Eurasia_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Afghanistan_adm_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Afghanistan_on_the_globe_%28Afro-Eurasia_centered%29.svg/324px-Afghanistan_on_the_globe_%28Afro-Eurasia_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Afghanistan_adm_location_map.svg/250px-Afghanistan_adm_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="3">
+                <FrageSubjekt>Ägypten</FrageSubjekt>
+                <AntwortSubjekt>Kairo</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Ägypten.jpg</ImagefileFrage>
+                <ImagefileAntwort>Kairo.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Ägypten</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Kairo</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>Berthold Werner [//commons.wikimedia.org/wiki/User:Berthold_Werner]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>07.10.2022</WikiPageFraVers>
+                <WikiPageAntVers>08.05.2007</WikiPageAntVers>
+                <ExcludeAereaFra>242,500,180,35,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Egypt_on_the_globe_(de-facto_+_disputed_hatched)_(North_Africa_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Kairo_BW_1.jpg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Egypt_on_the_globe_%28de-facto_%2B_disputed_hatched%29_%28North_Africa_centered%29.svg/324px-Egypt_on_the_globe_%28de-facto_%2B_disputed_hatched%29_%28North_Africa_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Kairo_BW_1.jpg/250px-Kairo_BW_1.jpg</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="4">
+                <FrageSubjekt>Amerikanisch-Samoa</FrageSubjekt>
+                <AntwortSubjekt>Pago Pago</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Amerikanisch-Samoa.jpg</ImagefileFrage>
+                <ImagefileAntwort>Pago Pago.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Amerikanisch-Samoa</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Pago_Pago</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>unbekannt</ImageAntwortAuthor>
+                <ImageAntwortLizenz>Public domain</ImageAntwortLizenz>
+                <WikiPageFraVers>No revisions found</WikiPageFraVers>
+                <WikiPageAntVers>24.04.2024</WikiPageAntVers>
+                <ExcludeAereaFra>183,560,272,37,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:United_States_on_the_globe_(American_Samoa_special)_(small_islands_magnified)_(Polynesia_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:American_Samoa-CIA_WFB_Map.png</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/United_States_on_the_globe_%28American_Samoa_special%29_%28small_islands_magnified%29_%28Polynesia_centered%29.svg/324px-United_States_on_the_globe_%28American_Samoa_special%29_%28small_islands_magnified%29_%28Polynesia_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/American_Samoa-CIA_WFB_Map.png/300px-American_Samoa-CIA_WFB_Map.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="5">
+                <FrageSubjekt>Armenien</FrageSubjekt>
+                <AntwortSubjekt>Jerewan</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Armenien.jpg</ImagefileFrage>
+                <ImagefileAntwort>Jerewan.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Armenien</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Jerewan</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>NordNordWest [//commons.wikimedia.org/wiki/User:NordNordWest]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0 de[https://creativecommons.org/licenses/by-sa/3.0/de/deed.en]</ImageAntwortLizenz>
+                <WikiPageFraVers>No revisions found</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra>199,500,273,29,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Armenia_on_the_globe_(Afro-Eurasia_centered)_(zoomed).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Armenia_adm_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Armenia_on_the_globe_%28Afro-Eurasia_centered%29_%28zoomed%29.svg/324px-Armenia_on_the_globe_%28Afro-Eurasia_centered%29_%28zoomed%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Armenia_adm_location_map.svg/240px-Armenia_adm_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="6">
+                <FrageSubjekt>Arzach</FrageSubjekt>
+                <AntwortSubjekt>Stepanakert</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Arzach.jpg</ImagefileFrage>
+                <ImagefileAntwort>Stepanakert.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Republik_Arzach</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Stepanakert</InfoURLAntwort>
+                <ImageFrageAuthor>unbekannt</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor>NordNordWest [//commons.wikimedia.org/wiki/User:NordNordWest]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0 de[https://creativecommons.org/licenses/by-sa/3.0/de/deed.en]</ImageAntwortLizenz>
+                <WikiPageFraVers>No revisions found</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra>250,426,171,22,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Flag_of_Artsakh.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Azerbaijan_adm_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Flag_of_Artsakh.svg/150px-Flag_of_Artsakh.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Azerbaijan_adm_location_map.svg/250px-Azerbaijan_adm_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="7">
+                <FrageSubjekt>Aserbaidschan</FrageSubjekt>
+                <AntwortSubjekt>Baku</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Aserbaidschan.jpg</ImagefileFrage>
+                <ImagefileAntwort>Baku.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Aserbaidschan</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Baku</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>NordNordWest [//commons.wikimedia.org/wiki/User:NordNordWest]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0 de[https://creativecommons.org/licenses/by-sa/3.0/de/deed.en]</ImageAntwortLizenz>
+                <WikiPageFraVers>18.03.2011</WikiPageFraVers>
+                <WikiPageAntVers>24.04.2024</WikiPageAntVers>
+                <ExcludeAereaFra>196,497,276,38,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Azerbaijan_on_the_globe_(Europe_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Baku_City_in_Azerbaijan_(2020–2023).svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Azerbaijan_on_the_globe_%28Europe_centered%29.svg/324px-Azerbaijan_on_the_globe_%28Europe_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Baku_City_in_Azerbaijan_%282020%E2%80%932023%29.svg/250px-Baku_City_in_Azerbaijan_%282020%E2%80%932023%29.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="8">
+                <FrageSubjekt>Australien</FrageSubjekt>
+                <AntwortSubjekt>Canberra</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Australien.jpg</ImagefileFrage>
+                <ImagefileAntwort>Canberra.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Australien</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Canberra</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>Tim J Keegan [https://www.flickr.com/people/49333819@N00]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 2.0[https://creativecommons.org/licenses/by-sa/2.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>12.06.2006</WikiPageFraVers>
+                <WikiPageAntVers>24.04.2024</WikiPageAntVers>
+                <ExcludeAereaFra>222,531,200,24,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Australia_on_the_globe_(Antarctic_claims_hatched)_(Oceania_centered)_with_borders.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Canberra_from_Mt_Ainslie_(5642431515).jpg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Australia_on_the_globe_%28Antarctic_claims_hatched%29_%28Oceania_centered%29_with_borders.svg/324px-Australia_on_the_globe_%28Antarctic_claims_hatched%29_%28Oceania_centered%29_with_borders.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Canberra_from_Mt_Ainslie_%285642431515%29.jpg/280px-Canberra_from_Mt_Ainslie_%285642431515%29.jpg</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="9">
+                <FrageSubjekt>Bahrain</FrageSubjekt>
+                <AntwortSubjekt>Manama</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Bahrain.jpg</ImagefileFrage>
+                <ImagefileAntwort>Manama.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Bahrain</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Manama</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>NordNordWest [//commons.wikimedia.org/wiki/User:NordNordWest]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 2.0[https://creativecommons.org/licenses/by-sa/2.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>07.10.2022</WikiPageFraVers>
+                <WikiPageAntVers>13.09.2024</WikiPageAntVers>
+                <ExcludeAereaFra>194,297,281,35,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Bahrain_in_its_region.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Bahrain_adm_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Bahrain_in_its_region.svg/324px-Bahrain_in_its_region.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Bahrain_adm_location_map.svg/172px-Bahrain_adm_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="10">
+                <FrageSubjekt>Bangladesch</FrageSubjekt>
+                <AntwortSubjekt>Dhaka</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Bangladesch.jpg</ImagefileFrage>
+                <ImagefileAntwort>Dhaka.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Bangladesch</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Dhaka</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>ASaber91 [https://www.flickr.com/people/84891020@N03]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY 2.0[https://creativecommons.org/licenses/by/2.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>01.12.2014</WikiPageFraVers>
+                <WikiPageAntVers>09.06.2024</WikiPageAntVers>
+                <ExcludeAereaFra>195,568,287,23,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Bangladesh_on_the_globe_(Asia_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Dhaka_April_(33274941853).jpg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Bangladesh_on_the_globe_%28Asia_centered%29.svg/324px-Bangladesh_on_the_globe_%28Asia_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Dhaka_April_%2833274941853%29.jpg/280px-Dhaka_April_%2833274941853%29.jpg</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="11">
+                <FrageSubjekt>Bhutan</FrageSubjekt>
+                <AntwortSubjekt>Thimphu</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Bhutan.jpg</ImagefileFrage>
+                <ImagefileAntwort>Thimphu.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Bhutan</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Thimphu</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>Christopher Fynn [//commons.wikimedia.org/wiki/User:Cfynn]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>29.04.2007</WikiPageFraVers>
+                <WikiPageAntVers>23.10.2022</WikiPageAntVers>
+                <ExcludeAereaFra>267,569,1,2,0|238,567,181,24,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Bhutan_on_the_globe_(Asia_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Thimphu_view_080907.JPG</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Bhutan_on_the_globe_%28Asia_centered%29.svg/324px-Bhutan_on_the_globe_%28Asia_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Thimphu_view_080907.JPG/250px-Thimphu_view_080907.JPG</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="12">
+                <FrageSubjekt>Brunei</FrageSubjekt>
+                <AntwortSubjekt>Banda Seri Begawan</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Brunei.jpg</ImagefileFrage>
+                <ImagefileAntwort>Banda Seri Begawan.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Brunei</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Bandar_Seri_Begawan</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>NordNordWest [//commons.wikimedia.org/wiki/User:NordNordWest]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0 de[https://creativecommons.org/licenses/by-sa/3.0/de/deed.en]</ImageAntwortLizenz>
+                <WikiPageFraVers>01.09.2024</WikiPageFraVers>
+                <WikiPageAntVers>01.09.2024</WikiPageAntVers>
+                <ExcludeAereaFra>225,459,202,29,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Brunei_on_the_globe_(Southeast_Asia_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Brunei_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Brunei_on_the_globe_%28Southeast_Asia_centered%29.svg/324px-Brunei_on_the_globe_%28Southeast_Asia_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Brunei_location_map.svg/250px-Brunei_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="13">
+                <FrageSubjekt>Chile</FrageSubjekt>
+                <AntwortSubjekt>Hanga Roa</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Chile.jpg</ImagefileFrage>
+                <ImagefileAntwort>Hanga Roa.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Chile</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Hanga_Roa</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>Easter_Island_map-fr.svg [//commons.wikimedia.org/wiki/File:Easter_Island_map-fr.svg]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 2.5[https://creativecommons.org/licenses/by-sa/2.5]</ImageAntwortLizenz>
+                <WikiPageFraVers>19.04.2024</WikiPageFraVers>
+                <WikiPageAntVers>29.03.2013</WikiPageAntVers>
+                <ExcludeAereaFra>193,564,280,33,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Chile_on_the_globe_(South_America_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Easter_Island_relief_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Chile_on_the_globe_%28South_America_centered%29.svg/324px-Chile_on_the_globe_%28South_America_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Easter_Island_relief_map.svg/250px-Easter_Island_relief_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="14">
+                <FrageSubjekt>China</FrageSubjekt>
+                <AntwortSubjekt>Peking</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>China.jpg</ImagefileFrage>
+                <ImagefileAntwort>Peking.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Volksrepublik_China</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Peking</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>Montage by (ASDFGH [https://en.wikipedia.org/wiki/User:ASDFGH])</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 4.0[https://creativecommons.org/licenses/by-sa/4.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>01.12.2011</WikiPageFraVers>
+                <WikiPageAntVers>16.02.2006</WikiPageAntVers>
+                <ExcludeAereaFra>219,561,201,24,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:China_on_the_globe_(de-facto)_(Asia_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Beijing_montage_2019.png</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/China_on_the_globe_%28de-facto%29_%28Asia_centered%29.svg/324px-China_on_the_globe_%28de-facto%29_%28Asia_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Beijing_montage_2019.png/290px-Beijing_montage_2019.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="15">
+                <FrageSubjekt>Cookinseln</FrageSubjekt>
+                <AntwortSubjekt>Avarua</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Cookinseln.jpg</ImagefileFrage>
+                <ImagefileAntwort>Avarua.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Cookinseln</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Avarua</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>unbekannt</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY 2.5[https://creativecommons.org/licenses/by/2.5]</ImageAntwortLizenz>
+                <WikiPageFraVers>No revisions found</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra>184,503,311,23,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Cook_Islands_on_the_globe_(French_Polynesia_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Avarua,_february_2006.jpg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Cook_Islands_on_the_globe_%28French_Polynesia_centered%29.svg/324px-Cook_Islands_on_the_globe_%28French_Polynesia_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Avarua%2C_february_2006.jpg/250px-Avarua%2C_february_2006.jpg</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="16">
+                <FrageSubjekt>Fidschi</FrageSubjekt>
+                <AntwortSubjekt>Suva</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Fidschi.jpg</ImagefileFrage>
+                <ImagefileAntwort>Suva.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Fidschi</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Suva</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>NordNordWest [//commons.wikimedia.org/wiki/User:NordNordWest]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>No revisions found</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra>195,559,-1,5,0|195,567,281,21,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Fiji_on_the_globe_(Polynesia_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Fiji_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Fiji_on_the_globe_%28Polynesia_centered%29.svg/324px-Fiji_on_the_globe_%28Polynesia_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Fiji_location_map.svg/195px-Fiji_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="17">
+                <FrageSubjekt>Französisch-Polynesien</FrageSubjekt>
+                <AntwortSubjekt>Papeete</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Französisch-Polynesien.jpg</ImagefileFrage>
+                <ImagefileAntwort>Papeete.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Französisch-Polynesien</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Papeete</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>Remi Jouan [//commons.wikimedia.org/wiki/User:CaptainHaddock]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[http://creativecommons.org/licenses/by-sa/3.0/]</ImageAntwortLizenz>
+                <WikiPageFraVers>No revisions found</WikiPageFraVers>
+                <WikiPageAntVers>02.11.2022</WikiPageAntVers>
+                <ExcludeAereaFra>195,632,318,38,0</ExcludeAereaFra>
+                <ExcludeAereaAnt>1,38,350,32,0</ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:France_on_the_globe_(French_Polynesia_special)_(small_islands_magnified)_(Polynesia_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Papeete_-_Marina_Taina.JPG</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/France_on_the_globe_%28French_Polynesia_special%29_%28small_islands_magnified%29_%28Polynesia_centered%29.svg/324px-France_on_the_globe_%28French_Polynesia_special%29_%28small_islands_magnified%29_%28Polynesia_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Papeete_-_Marina_Taina.JPG/250px-Papeete_-_Marina_Taina.JPG</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="18">
+                <FrageSubjekt>Georgien</FrageSubjekt>
+                <AntwortSubjekt>Tiflis</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Georgien.jpg</ImagefileFrage>
+                <ImagefileAntwort>Tbilisi.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Georgien</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Tbilisi</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>NordNordWest [//commons.wikimedia.org/wiki/User:NordNordWest]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0 de[https://creativecommons.org/licenses/by-sa/3.0/de/deed.en]</ImageAntwortLizenz>
+                <WikiPageFraVers>22.11.2007</WikiPageFraVers>
+                <WikiPageAntVers>01.04.2006</WikiPageAntVers>
+                <ExcludeAereaFra>194,609,318,35,0|367,631,-3,-21,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Georgia_on_the_globe_(claimed_hatched)_(Afro-Eurasia_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Georgia_adm_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Georgia_on_the_globe_%28claimed_hatched%29_%28Afro-Eurasia_centered%29.svg/324px-Georgia_on_the_globe_%28claimed_hatched%29_%28Afro-Eurasia_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Georgia_adm_location_map.svg/280px-Georgia_adm_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="19">
+                <FrageSubjekt>Guam</FrageSubjekt>
+                <AntwortSubjekt>Hagatna</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Guam.jpg</ImagefileFrage>
+                <ImagefileAntwort>Hagatna.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Guam</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Hagatna</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>Abasaa [//commons.wikimedia.org/wiki/User:%E3%81%82%E3%81%B0%E3%81%95%E3%83%BC]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>Public domain</ImageAntwortLizenz>
+                <WikiPageFraVers>21.04.2024</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra>209,533,217,21,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Guam_on_the_globe_(Southeast_Asia_centered)_(small_islands_magnified).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Hagatna_from_Fort_Santa_Agueda.JPG</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Guam_on_the_globe_%28Southeast_Asia_centered%29_%28small_islands_magnified%29.svg/324px-Guam_on_the_globe_%28Southeast_Asia_centered%29_%28small_islands_magnified%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Hagatna_from_Fort_Santa_Agueda.JPG/250px-Hagatna_from_Fort_Santa_Agueda.JPG</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="20">
+                <FrageSubjekt>Indien</FrageSubjekt>
+                <AntwortSubjekt>Neu-Delhi</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Indien.jpg</ImagefileFrage>
+                <ImagefileAntwort>Neu-Delhi.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Indien</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Neu-Delhi</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>AshwiniKalantri [//commons.wikimedia.org/wiki/User:AshwiniKalantri]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>16.08.2015</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra>200,1000,227,21,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:India_on_the_globe_(claimed_and_de-facto_hatched)_(Asia_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:India_location_map2.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/India_on_the_globe_%28claimed_and_de-facto_hatched%29_%28Asia_centered%29.svg/324px-India_on_the_globe_%28claimed_and_de-facto_hatched%29_%28Asia_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/India_location_map2.svg/250px-India_location_map2.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="21">
+                <FrageSubjekt>Indonesien</FrageSubjekt>
+                <AntwortSubjekt>Nusantra</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Indonesien.jpg</ImagefileFrage>
+                <ImagefileAntwort>Nusantra.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Indonesien</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Nusantara_(Stadt)</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>Uwe Dedering [//commons.wikimedia.org/wiki/User:Uwe_Dedering]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>15.11.2007</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra>199,570,273,21,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Indonesia_on_the_globe_(Southeast_Asia_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Indonesia_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Indonesia_on_the_globe_%28Southeast_Asia_centered%29.svg/324px-Indonesia_on_the_globe_%28Southeast_Asia_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Indonesia_location_map.svg/250px-Indonesia_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="22">
+                <FrageSubjekt>Irak</FrageSubjekt>
+                <AntwortSubjekt>Bagdad</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Irak.jpg</ImagefileFrage>
+                <ImagefileAntwort>Bagdad.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Irak</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Bagdad</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>NordNordWest [//commons.wikimedia.org/wiki/User:NordNordWest]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0 de[https://creativecommons.org/licenses/by-sa/3.0/de/deed.en]</ImageAntwortLizenz>
+                <WikiPageFraVers>02.07.2006</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra>196,605,278,18,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Iraq_on_the_globe_(Afro-Eurasia_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Iraq_adm_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Iraq_on_the_globe_%28Afro-Eurasia_centered%29.svg/324px-Iraq_on_the_globe_%28Afro-Eurasia_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Iraq_adm_location_map.svg/270px-Iraq_adm_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="23">
+                <FrageSubjekt>Iran</FrageSubjekt>
+                <AntwortSubjekt>Tehran</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Iran.jpg</ImagefileFrage>
+                <ImagefileAntwort>Tehran.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Iran</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Tehran</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>Ninara [https://www.flickr.com/people/37583176@N00]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY 2.0[https://creativecommons.org/licenses/by/2.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>25.06.2006</WikiPageFraVers>
+                <WikiPageAntVers>25.06.2006</WikiPageAntVers>
+                <ExcludeAereaFra>199,627,248,24,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Iran_on_the_globe_(Afro-Eurasia_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Nature_Bridge_and_Parks,_Tehran_(27589907407).jpg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Iran_on_the_globe_%28Afro-Eurasia_centered%29.svg/324px-Iran_on_the_globe_%28Afro-Eurasia_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Nature_Bridge_and_Parks%2C_Tehran_%2827589907407%29.jpg/300px-Nature_Bridge_and_Parks%2C_Tehran_%2827589907407%29.jpg</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="24">
+                <FrageSubjekt>Israel</FrageSubjekt>
+                <AntwortSubjekt>Jerusalem</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Israel.jpg</ImagefileFrage>
+                <ImagefileAntwort>Jerusalem.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Israel</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Jerusalem</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>NordNordWest [//commons.wikimedia.org/wiki/User:NordNordWest]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0 de[https://creativecommons.org/licenses/by-sa/3.0/de/deed.en]</ImageAntwortLizenz>
+                <WikiPageFraVers>06.10.2022</WikiPageFraVers>
+                <WikiPageAntVers>23.12.2023</WikiPageAntVers>
+                <ExcludeAereaFra>209,559,217,22,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Israel_on_the_globe_(de-facto)_(Europe_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Israel_adm_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Israel_on_the_globe_%28de-facto%29_%28Europe_centered%29.svg/324px-Israel_on_the_globe_%28de-facto%29_%28Europe_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Israel_adm_location_map.svg/220px-Israel_adm_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="25">
+                <FrageSubjekt>Jamaika</FrageSubjekt>
+                <AntwortSubjekt>Kingston</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Jamaika.jpg</ImagefileFrage>
+                <ImagefileAntwort>Kingston.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Jamaika</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Kingston_(Jamaika)</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>NordNordWest [//commons.wikimedia.org/wiki/User:NordNordWest]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0 de[https://creativecommons.org/licenses/by-sa/3.0/de/deed.en]</ImageAntwortLizenz>
+                <WikiPageFraVers>31.08.2008</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra>201,567,274,25,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Jamaica_on_the_globe_(Caribbean_special)_(Americas_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Jamaica_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Jamaica_on_the_globe_%28Caribbean_special%29_%28Americas_centered%29.svg/324px-Jamaica_on_the_globe_%28Caribbean_special%29_%28Americas_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Jamaica_location_map.svg/250px-Jamaica_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="26">
+                <FrageSubjekt>Japan</FrageSubjekt>
+                <AntwortSubjekt>Tokyo</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Japan.jpg</ImagefileFrage>
+                <ImagefileAntwort>Tokyo.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Japan</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Tokyo</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>Maximilian Dörrbecker [https://de.wikipedia.org/wiki/User:Chumwa]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>06.12.2021</WikiPageFraVers>
+                <WikiPageAntVers>11.11.2010</WikiPageAntVers>
+                <ExcludeAereaFra>228,504,235,78,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Japan_on_the_globe_(claimed)_(Japan_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Japan_location_map_with_side_map_of_the_Ryukyu_Islands.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Japan_on_the_globe_%28claimed%29_%28Japan_centered%29.svg/324px-Japan_on_the_globe_%28claimed%29_%28Japan_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Japan_location_map_with_side_map_of_the_Ryukyu_Islands.svg/250px-Japan_location_map_with_side_map_of_the_Ryukyu_Islands.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="27">
+                <FrageSubjekt>Jemen</FrageSubjekt>
+                <AntwortSubjekt>Sanaa</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Jemen.jpg</ImagefileFrage>
+                <ImagefileAntwort>Sanaa.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Jemen</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Sanaa</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>Antti Salonen [//commons.wikimedia.org/wiki/User:SalonenA]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>19.02.2007</WikiPageFraVers>
+                <WikiPageAntVers>24.08.2024</WikiPageAntVers>
+                <ExcludeAereaFra>205,495,217,62,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Yemen_on_the_globe_(Afro-Eurasia_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Old_sanaa.jpg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Yemen_on_the_globe_%28Afro-Eurasia_centered%29.svg/324px-Yemen_on_the_globe_%28Afro-Eurasia_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/Old_sanaa.jpg/300px-Old_sanaa.jpg</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="28">
+                <FrageSubjekt>Jordanien</FrageSubjekt>
+                <AntwortSubjekt>Amman</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Jordanien.jpg</ImagefileFrage>
+                <ImagefileAntwort>Amman.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Jordanien</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Amman</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>NordNordWest [//commons.wikimedia.org/wiki/User:NordNordWest]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0 de[https://creativecommons.org/licenses/by-sa/3.0/de/deed.en]</ImageAntwortLizenz>
+                <WikiPageFraVers>22.09.2006</WikiPageFraVers>
+                <WikiPageAntVers>03.10.2010</WikiPageAntVers>
+                <ExcludeAereaFra>196,570,282,34,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Jordan_on_the_globe_(Afro-Eurasia_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Jordan_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Jordan_on_the_globe_%28Afro-Eurasia_centered%29.svg/324px-Jordan_on_the_globe_%28Afro-Eurasia_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Jordan_location_map.svg/227px-Jordan_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="29">
+                <FrageSubjekt>Kambodscha</FrageSubjekt>
+                <AntwortSubjekt>Phnom Penh</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Kambodscha.jpg</ImagefileFrage>
+                <ImagefileAntwort>Phnom Penh.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Kambodscha</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Phnom_Penh</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>NordNordWest [//commons.wikimedia.org/wiki/User:NordNordWest]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0 de[https://creativecommons.org/licenses/by-sa/3.0/de/deed.en]</ImageAntwortLizenz>
+                <WikiPageFraVers>27.02.2008</WikiPageFraVers>
+                <WikiPageAntVers>23.10.2022</WikiPageAntVers>
+                <ExcludeAereaFra>201,597,274,22,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Cambodia_on_the_globe_(Southeast_Asia_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Cambodia_adm_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Cambodia_on_the_globe_%28Southeast_Asia_centered%29.svg/324px-Cambodia_on_the_globe_%28Southeast_Asia_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Cambodia_adm_location_map.svg/250px-Cambodia_adm_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="30">
+                <FrageSubjekt>Kasachstan</FrageSubjekt>
+                <AntwortSubjekt>Astana</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Kasachstan.jpg</ImagefileFrage>
+                <ImagefileAntwort>Astana.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Kasachstan</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Astana</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>NordNordWest [//commons.wikimedia.org/wiki/User:NordNordWest]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0 de[https://creativecommons.org/licenses/by-sa/3.0/de/deed.en]</ImageAntwortLizenz>
+                <WikiPageFraVers>10.06.2023</WikiPageFraVers>
+                <WikiPageAntVers>24.04.2024</WikiPageAntVers>
+                <ExcludeAereaFra>196,532,276,23,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Kazakhstan_on_the_globe_(Eurasia_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Kazakhstan_adm_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Kazakhstan_on_the_globe_%28Eurasia_centered%29.svg/324px-Kazakhstan_on_the_globe_%28Eurasia_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Kazakhstan_adm_location_map.svg/300px-Kazakhstan_adm_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="31">
+                <FrageSubjekt>Katar</FrageSubjekt>
+                <AntwortSubjekt>Doha</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Katar.jpg</ImagefileFrage>
+                <ImagefileAntwort>Doha.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Katar</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Doha</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>Francisco Anzola [https://www.flickr.com/people/10345599@N03]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY 2.0[https://creativecommons.org/licenses/by/2.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>13.02.2024</WikiPageFraVers>
+                <WikiPageAntVers>11.01.2008</WikiPageAntVers>
+                <ExcludeAereaFra>196,298,249,26,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Qatar_in_its_region.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Doha_skyline_in_the_morning_(12544910974).jpg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Qatar_in_its_region.svg/324px-Qatar_in_its_region.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Doha_skyline_in_the_morning_%2812544910974%29.jpg/220px-Doha_skyline_in_the_morning_%2812544910974%29.jpg</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="32">
+                <FrageSubjekt>Kirgisistan</FrageSubjekt>
+                <AntwortSubjekt>Bischkek</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Kirgisistan.jpg</ImagefileFrage>
+                <ImagefileAntwort>Bischkek.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Kirgisistan</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Bischkek</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>Leonid 2 [//commons.wikimedia.org/wiki/User:Leonid_2]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>Public domain</ImageAntwortLizenz>
+                <WikiPageFraVers>No revisions found</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra>212,536,302,27,0</ExcludeAereaFra>
+                <ExcludeAereaAnt>128,86,180,28,0</ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Kyrgyzstan_on_the_globe_(Eurasia_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Coat_of_arms_of_Bishkek_Kyrgyzstan.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Kyrgyzstan_on_the_globe_%28Eurasia_centered%29.svg/324px-Kyrgyzstan_on_the_globe_%28Eurasia_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Coat_of_arms_of_Bishkek_Kyrgyzstan.svg/120px-Coat_of_arms_of_Bishkek_Kyrgyzstan.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="33">
+                <FrageSubjekt>Kiribati</FrageSubjekt>
+                <AntwortSubjekt>South Tarawa</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Kiribati.jpg</ImagefileFrage>
+                <ImagefileAntwort>South Tarawa.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Kiribati</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/South_Tarawa</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>Photo taken by Government of Kiribati employee in the course of their work</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY 3.0[https://creativecommons.org/licenses/by/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>17.04.2024</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra>214,608,285,24,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Kiribati_on_the_globe_(Polynesia_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Household_experiencing_coastal_erosion_on_South_Tarawa.JPG</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Kiribati_on_the_globe_%28Polynesia_centered%29.svg/324px-Kiribati_on_the_globe_%28Polynesia_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Household_experiencing_coastal_erosion_on_South_Tarawa.JPG/250px-Household_experiencing_coastal_erosion_on_South_Tarawa.JPG</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="34">
+                <FrageSubjekt>Kuwait</FrageSubjekt>
+                <AntwortSubjekt>Kuwait Stadt</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Kuwait.jpg</ImagefileFrage>
+                <ImagefileAntwort>Kuwait Stadt.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Kuwait</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Kuwait_(Stadt)</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>unbekannt</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[http://creativecommons.org/licenses/by-sa/3.0/]</ImageAntwortLizenz>
+                <WikiPageFraVers>07.10.2022</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra>186,280,224,23,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Kuwait_in_its_region.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:LiberationTower.jpg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Kuwait_in_its_region.svg/324px-Kuwait_in_its_region.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/LiberationTower.jpg/250px-LiberationTower.jpg</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="35">
+                <FrageSubjekt>Laos</FrageSubjekt>
+                <AntwortSubjekt>Vientiane</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Laos.jpg</ImagefileFrage>
+                <ImagefileAntwort>Vientiane.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Laos</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Vientiane</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>NordNordWest [//commons.wikimedia.org/wiki/User:NordNordWest]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0 de[https://creativecommons.org/licenses/by-sa/3.0/de/deed.en]</ImageAntwortLizenz>
+                <WikiPageFraVers>30.01.2009</WikiPageFraVers>
+                <WikiPageAntVers>23.05.2024</WikiPageAntVers>
+                <ExcludeAereaFra>207,643,311,44,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Laos_on_the_globe_(Southeast_Asia_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Laos_adm_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Laos_on_the_globe_%28Southeast_Asia_centered%29.svg/324px-Laos_on_the_globe_%28Southeast_Asia_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Laos_adm_location_map.svg/212px-Laos_adm_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="36">
+                <FrageSubjekt>Libanon</FrageSubjekt>
+                <AntwortSubjekt>Beirut</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Libanon.jpg</ImagefileFrage>
+                <ImagefileAntwort>Beirut.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Libanon</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Beirut</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>Yoniw</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[http://creativecommons.org/licenses/by-sa/3.0/]</ImageAntwortLizenz>
+                <WikiPageFraVers>07.10.2022</WikiPageFraVers>
+                <WikiPageAntVers>06.01.2008</WikiPageAntVers>
+                <ExcludeAereaFra>210,319,300,24,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Lebanon_in_its_region.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Beirutcity.jpg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Lebanon_in_its_region.svg/324px-Lebanon_in_its_region.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Beirutcity.jpg/280px-Beirutcity.jpg</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="37">
+                <FrageSubjekt>Malaysia</FrageSubjekt>
+                <AntwortSubjekt>Kuala Lumpur</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Malaysia.jpg</ImagefileFrage>
+                <ImagefileAntwort>Kuala Lumpur.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Malaysia</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Kuala_Lumpur</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>Uwe Dedering [//commons.wikimedia.org/wiki/User:Uwe_Dedering]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>20.08.2024</WikiPageFraVers>
+                <WikiPageAntVers>24.04.2024</WikiPageAntVers>
+                <ExcludeAereaFra>205,659,312,40,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Malaysia_on_the_globe_(Southeast_Asia_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Malaysia_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Malaysia_on_the_globe_%28Southeast_Asia_centered%29.svg/324px-Malaysia_on_the_globe_%28Southeast_Asia_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Malaysia_location_map.svg/250px-Malaysia_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="38">
+                <FrageSubjekt>Malediven</FrageSubjekt>
+                <AntwortSubjekt>Male</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Malediven.jpg</ImagefileFrage>
+                <ImagefileAntwort>Male.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Malediven</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Mal%C3%A9</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>Shahee Ilyas [https://en.wikipedia.org/wiki/User:Shahee]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[http://creativecommons.org/licenses/by-sa/3.0/]</ImageAntwortLizenz>
+                <WikiPageFraVers>No revisions found</WikiPageFraVers>
+                <WikiPageAntVers>24.04.2024</WikiPageAntVers>
+                <ExcludeAereaFra>210,531,307,37,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Maldives_on_the_globe_(Afro-Eurasia_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Male-total.jpg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Maldives_on_the_globe_%28Afro-Eurasia_centered%29.svg/324px-Maldives_on_the_globe_%28Afro-Eurasia_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Male-total.jpg/250px-Male-total.jpg</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="39">
+                <FrageSubjekt>Mikronesien</FrageSubjekt>
+                <AntwortSubjekt>Palikir</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Mikronesien.jpg</ImagefileFrage>
+                <ImagefileAntwort>Palikir.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Mikronesien</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Palikir</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>Ras67[https://commons.wikimedia.org/wiki/User:Ras67]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 2.5[https://creativecommons.org/licenses/by-sa/2.5]</ImageAntwortLizenz>
+                <WikiPageFraVers>No revisions found</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Micronesia_on_the_globe_(small_islands_magnified)_(Polynesia_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Pohnpei_Island.png</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Micronesia_on_the_globe_%28small_islands_magnified%29_%28Polynesia_centered%29.svg/300px-Micronesia_on_the_globe_%28small_islands_magnified%29_%28Polynesia_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Pohnpei_Island.png/250px-Pohnpei_Island.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="40">
+                <FrageSubjekt>Mongolei</FrageSubjekt>
+                <AntwortSubjekt>Ulaanbaatar</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Mongolei.jpg</ImagefileFrage>
+                <ImagefileAntwort>Ulaanbaatar.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Mongolei</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Ulaanbaatar</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>Zazaa Mongolia [//commons.wikimedia.org/wiki/User:Zazaa_Mongolia]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 4.0[https://creativecommons.org/licenses/by-sa/4.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>No revisions found</WikiPageFraVers>
+                <WikiPageAntVers>06.12.2012</WikiPageAntVers>
+                <ExcludeAereaFra>251,536,182,30,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Mongolia_on_the_globe_(Asia_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:UB_downtown.jpg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Mongolia_on_the_globe_%28Asia_centered%29.svg/324px-Mongolia_on_the_globe_%28Asia_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/UB_downtown.jpg/260px-UB_downtown.jpg</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="41">
+                <FrageSubjekt>Myanmar</FrageSubjekt>
+                <AntwortSubjekt>Naypyidaw</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Myanmar.jpg</ImagefileFrage>
+                <ImagefileAntwort>Naypyidaw.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Myanmar</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Naypyidaw</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>NordNordWest [//commons.wikimedia.org/wiki/User:NordNordWest]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0 de[https://creativecommons.org/licenses/by-sa/3.0/de/deed.en]</ImageAntwortLizenz>
+                <WikiPageFraVers>03.11.2010</WikiPageFraVers>
+                <WikiPageAntVers>02.05.2024</WikiPageAntVers>
+                <ExcludeAereaFra>233,532,224,39,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Myanmar_on_the_globe_(Southeast_Asia_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Myanmar_adm_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Myanmar_on_the_globe_%28Southeast_Asia_centered%29.svg/324px-Myanmar_on_the_globe_%28Southeast_Asia_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Myanmar_adm_location_map.svg/153px-Myanmar_adm_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="42">
+                <FrageSubjekt>Nauru</FrageSubjekt>
+                <AntwortSubjekt>Yaren</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Nauru.jpg</ImagefileFrage>
+                <ImagefileAntwort>Yaren.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Nauru</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Yaren_(Wahlkreis)</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>06.10.2022</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra>242,602,217,69,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Nauru_on_the_globe_(small_islands_magnified)_(Polynesia_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Yaren_in_Nauru.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Nauru_on_the_globe_%28small_islands_magnified%29_%28Polynesia_centered%29.svg/324px-Nauru_on_the_globe_%28small_islands_magnified%29_%28Polynesia_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Yaren_in_Nauru.svg/260px-Yaren_in_Nauru.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="43">
+                <FrageSubjekt>Nepal</FrageSubjekt>
+                <AntwortSubjekt>Kathmandu</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Nepal.jpg</ImagefileFrage>
+                <ImagefileAntwort>Kathmandu.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Nepal</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Kathmandu</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>Rüdiger Wenzel [https://www.wikidata.org/wiki/Q65012518]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0 de[https://creativecommons.org/licenses/by-sa/3.0/de/deed.en]</ImageAntwortLizenz>
+                <WikiPageFraVers>07.06.2006</WikiPageFraVers>
+                <WikiPageAntVers>27.04.2024</WikiPageAntVers>
+                <ExcludeAereaFra>212,685,310,43,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Nepal_on_the_globe_(Asia_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Kathmandu_im_Monsun.JPG</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Nepal_on_the_globe_%28Asia_centered%29.svg/324px-Nepal_on_the_globe_%28Asia_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Kathmandu_im_Monsun.JPG/300px-Kathmandu_im_Monsun.JPG</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="44">
+                <FrageSubjekt>Neukaledonien</FrageSubjekt>
+                <AntwortSubjekt>Noumea</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Neukaledonien.jpg</ImagefileFrage>
+                <ImagefileAntwort>Noumea.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Neukaledonien</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Noumea</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>Thomas@RUN</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY 2.0[https://creativecommons.org/licenses/by/2.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>No revisions found</WikiPageFraVers>
+                <WikiPageAntVers>29.02.2012</WikiPageAntVers>
+                <ExcludeAereaFra>249,640,208,23,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:New_Caledonia_on_the_globe_(Oceania_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Noumea_centre_1402561139_375c811796_o.jpg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/New_Caledonia_on_the_globe_%28Oceania_centered%29.svg/324px-New_Caledonia_on_the_globe_%28Oceania_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Noumea_centre_1402561139_375c811796_o.jpg/300px-Noumea_centre_1402561139_375c811796_o.jpg</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="45">
+                <FrageSubjekt>Neuseeland</FrageSubjekt>
+                <AntwortSubjekt>Wellington</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Neuseeland.jpg</ImagefileFrage>
+                <ImagefileAntwort>Wellington.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Neuseeland</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Wellington</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>Furfur [//commons.wikimedia.org/wiki/User:Furfur]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 4.0[https://creativecommons.org/licenses/by-sa/4.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>09.02.2011</WikiPageFraVers>
+                <WikiPageAntVers>24.06.2024</WikiPageAntVers>
+                <ExcludeAereaFra>239,625,212,26,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:New_Zealand_on_the_globe_(Oceania_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Wellington_City_in_NZ_2017.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/New_Zealand_on_the_globe_%28Oceania_centered%29.svg/324px-New_Zealand_on_the_globe_%28Oceania_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Wellington_City_in_NZ_2017.svg/270px-Wellington_City_in_NZ_2017.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="46">
+                <FrageSubjekt>Niue</FrageSubjekt>
+                <AntwortSubjekt>Alofi</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Niue.jpg</ImagefileFrage>
+                <ImagefileAntwort>Alofi.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Niue</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Alofi_(Niue)</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>vuorikari</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 2.0[https://creativecommons.org/licenses/by-sa/2.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>21.04.2024</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra>218,533,255,41,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:New_Zealand_on_the_globe_(Niue_special)_(small_islands_magnified)_(Polynesia_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Alofi.jpg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/New_Zealand_on_the_globe_%28Niue_special%29_%28small_islands_magnified%29_%28Polynesia_centered%29.svg/324px-New_Zealand_on_the_globe_%28Niue_special%29_%28small_islands_magnified%29_%28Polynesia_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Alofi.jpg/270px-Alofi.jpg</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="47">
+                <FrageSubjekt>Nordkorea</FrageSubjekt>
+                <AntwortSubjekt>Pyöngyang</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Nordkorea.jpg</ImagefileFrage>
+                <ImagefileAntwort>Pyongyang.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Nordkorea</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Pj%C3%B6ngjang</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>ASDFGHJ [https://en.wikipedia.org/wiki/User:ASDFGH]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 2.0[https://creativecommons.org/licenses/by-sa/2.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>No revisions found</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra>243,532,215,41,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:North_Korea_on_the_globe_(Japan_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Pyongyang_montage.png</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/North_Korea_on_the_globe_%28Japan_centered%29.svg/324px-North_Korea_on_the_globe_%28Japan_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Pyongyang_montage.png/224px-Pyongyang_montage.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="48">
+                <FrageSubjekt>Nördliche Marianen</FrageSubjekt>
+                <AntwortSubjekt>Saipan</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Nördliche Marianen.jpg</ImagefileFrage>
+                <ImagefileAntwort>Saipan.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Nördliche_Marianen</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Saipan</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>unbekannt</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[http://creativecommons.org/licenses/by-sa/3.0/]</ImageAntwortLizenz>
+                <WikiPageFraVers>No revisions found</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra>201,535,296,26,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Northern_Mariana_Islands_on_the_globe_(Southeast_Asia_centered)_(small_islands_magnified).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:SaipanTinianAquijan.png</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Northern_Mariana_Islands_on_the_globe_%28Southeast_Asia_centered%29_%28small_islands_magnified%29.svg/324px-Northern_Mariana_Islands_on_the_globe_%28Southeast_Asia_centered%29_%28small_islands_magnified%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/SaipanTinianAquijan.png/300px-SaipanTinianAquijan.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="49">
+                <FrageSubjekt>Nordzypern</FrageSubjekt>
+                <AntwortSubjekt>Nord-Nikosia</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Nordzypern.jpg</ImagefileFrage>
+                <ImagefileAntwort>Nord-Nikosia.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Nordzypern</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Nord-Nikosia</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>A.Savin [https://commons.wikimedia.org/wiki/User:A.Savin]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>FAL[http://artlibre.org/licence/lal/en]</ImageAntwortLizenz>
+                <WikiPageFraVers>No revisions found</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Northern_Cyprus_in_its_region_(less_biased).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Nicosia_01-2017_img31_View_from_City_Royal_Hotel.jpg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Northern_Cyprus_in_its_region_%28less_biased%29.svg/330px-Northern_Cyprus_in_its_region_%28less_biased%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Nicosia_01-2017_img31_View_from_City_Royal_Hotel.jpg/276px-Nicosia_01-2017_img31_View_from_City_Royal_Hotel.jpg</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="50">
+                <FrageSubjekt>Oman</FrageSubjekt>
+                <AntwortSubjekt>Maskat</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Oman.jpg</ImagefileFrage>
+                <ImagefileAntwort>Maskat.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Oman</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Maskat</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>Carport [//commons.wikimedia.org/wiki/User:Carport]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>28.06.2008</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra>212,536,297,27,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Oman_on_the_globe_(Afro-Eurasia_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Oman_relief_location_map.jpg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Oman_on_the_globe_%28Afro-Eurasia_centered%29.svg/324px-Oman_on_the_globe_%28Afro-Eurasia_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Oman_relief_location_map.jpg/192px-Oman_relief_location_map.jpg</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="51">
+                <FrageSubjekt>Osttimor</FrageSubjekt>
+                <AntwortSubjekt>Dili</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Osttimor.jpg</ImagefileFrage>
+                <ImagefileAntwort>Dili.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Osttimor</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Dili</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>unbekannt</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 2.0[https://creativecommons.org/licenses/by-sa/2.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>No revisions found</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra>209,640,294,23,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:East_Timor_on_the_globe_(Southeast_Asia_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Dili_dawn.jpg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/East_Timor_on_the_globe_%28Southeast_Asia_centered%29.svg/324px-East_Timor_on_the_globe_%28Southeast_Asia_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Dili_dawn.jpg/250px-Dili_dawn.jpg</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="52">
+                <FrageSubjekt>Pakistan</FrageSubjekt>
+                <AntwortSubjekt>Islamabad</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Pakistan.jpg</ImagefileFrage>
+                <ImagefileAntwort>Islamabad.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Pakistan</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Islamabad</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>NordNordWest [//commons.wikimedia.org/wiki/User:NordNordWest]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0 de[https://creativecommons.org/licenses/by-sa/3.0/de/deed.en]</ImageAntwortLizenz>
+                <WikiPageFraVers>07.10.2022</WikiPageFraVers>
+                <WikiPageAntVers>24.04.2024</WikiPageAntVers>
+                <ExcludeAereaFra>210,669,302,38,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Pakistan_on_the_globe_(claimed_hatched)_(Afro-Eurasia_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Pakistan_adm_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Pakistan_on_the_globe_%28claimed_hatched%29_%28Afro-Eurasia_centered%29.svg/324px-Pakistan_on_the_globe_%28claimed_hatched%29_%28Afro-Eurasia_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Pakistan_adm_location_map.svg/250px-Pakistan_adm_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="53">
+                <FrageSubjekt>Palästina</FrageSubjekt>
+                <AntwortSubjekt>Ramallah</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Palästina.jpg</ImagefileFrage>
+                <ImagefileAntwort>Ramallah.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Staat_Pal%C3%A4stina</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Ramallah</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>Ralf Lotys [//commons.wikimedia.org/wiki/User:Sicherlich]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY 3.0[https://creativecommons.org/licenses/by/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>No revisions found</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra>195,318,306,70,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Palestine_in_its_region.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:2010-08_Ramallah_42.jpg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Palestine_in_its_region.svg/324px-Palestine_in_its_region.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/2010-08_Ramallah_42.jpg/280px-2010-08_Ramallah_42.jpg</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="54">
+                <FrageSubjekt>Palau</FrageSubjekt>
+                <AntwortSubjekt>Ngerulmud</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Palau.jpg</ImagefileFrage>
+                <ImagefileAntwort>Ngerulmud.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Palau</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Ngerulmud</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>Aotearoa [//commons.wikimedia.org/wiki/User:Aotearoa]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY 3.0[https://creativecommons.org/licenses/by/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>06.10.2022</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra>206,660,315,42,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Palau_on_the_globe_(Southeast_Asia_centered)_(small_islands_magnified).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:State_of_Melekeok.png</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Palau_on_the_globe_%28Southeast_Asia_centered%29_%28small_islands_magnified%29.svg/324px-Palau_on_the_globe_%28Southeast_Asia_centered%29_%28small_islands_magnified%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/State_of_Melekeok.png/250px-State_of_Melekeok.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="55">
+                <FrageSubjekt>Papua-Neuguinea</FrageSubjekt>
+                <AntwortSubjekt>Port Moresby</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Papua-Neuguinea.jpg</ImagefileFrage>
+                <ImagefileAntwort>Port Moresby.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Papua-Neuguinea</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Port_Moresby</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>MSchlauch</ImageAntwortAuthor>
+                <ImageAntwortLizenz>Public domain</ImageAntwortLizenz>
+                <WikiPageFraVers>No revisions found</WikiPageFraVers>
+                <WikiPageAntVers>28.05.2024</WikiPageAntVers>
+                <ExcludeAereaFra>214,542,295,26,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Papua_New_Guinea_on_the_globe_(Southeast_Asia_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Port_Moresby_Town2_Mschlauch.jpg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Papua_New_Guinea_on_the_globe_%28Southeast_Asia_centered%29.svg/324px-Papua_New_Guinea_on_the_globe_%28Southeast_Asia_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Port_Moresby_Town2_Mschlauch.jpg/280px-Port_Moresby_Town2_Mschlauch.jpg</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="56">
+                <FrageSubjekt>Philippinen</FrageSubjekt>
+                <AntwortSubjekt>Manila</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Philippinen.jpg</ImagefileFrage>
+                <ImagefileAntwort>Manila.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Philippinen</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Manila</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>unbekannt</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 4.0[https://creativecommons.org/licenses/by-sa/4.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>07.10.2022</WikiPageFraVers>
+                <WikiPageAntVers>07.10.2022</WikiPageAntVers>
+                <ExcludeAereaFra>210,634,299,37,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Philippines_on_the_globe_(Southeast_Asia_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Manila_in_Metro_Manila.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Philippines_on_the_globe_%28Southeast_Asia_centered%29.svg/324px-Philippines_on_the_globe_%28Southeast_Asia_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Manila_in_Metro_Manila.svg/139px-Manila_in_Metro_Manila.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="57">
+                <FrageSubjekt>Pitcairninseln</FrageSubjekt>
+                <AntwortSubjekt>Adamstown</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Pitcairninseln.jpg</ImagefileFrage>
+                <ImagefileAntwort>Adamstown.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Pitcairninseln</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Adamstown_(Pitcairninseln)</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>doublecnz [https://www.flickr.com/people/98477380@N00]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY 2.0[https://creativecommons.org/licenses/by/2.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>No revisions found</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra>239,533,218,38,0</ExcludeAereaFra>
+                <ExcludeAereaAnt>0,220,318,33,0</ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Pitcairn_Islands_on_the_globe_(French_Polynesia_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Adamstown.jpg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Pitcairn_Islands_on_the_globe_%28French_Polynesia_centered%29.svg/324px-Pitcairn_Islands_on_the_globe_%28French_Polynesia_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/Adamstown.jpg/250px-Adamstown.jpg</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="58">
+                <FrageSubjekt>Russland</FrageSubjekt>
+                <AntwortSubjekt>Moskau</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Russland.jpg</ImagefileFrage>
+                <ImagefileAntwort>Moskau.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Russland</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Moskau</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>Uwe Dedering [//commons.wikimedia.org/wiki/User:Uwe_Dedering]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>05.12.2005</WikiPageFraVers>
+                <WikiPageAntVers>14.10.2006</WikiPageAntVers>
+                <ExcludeAereaFra>226,537,239,34,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Russia_on_the_globe_(Russia_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:European_Russia_laea_location_map_(without_Crimea).svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Russia_on_the_globe_%28Russia_centered%29.svg/324px-Russia_on_the_globe_%28Russia_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/European_Russia_laea_location_map_%28without_Crimea%29.svg/250px-European_Russia_laea_location_map_%28without_Crimea%29.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="59">
+                <FrageSubjekt>Salomonen</FrageSubjekt>
+                <AntwortSubjekt>Honiara</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Salomonen.jpg</ImagefileFrage>
+                <ImagefileAntwort>Honiara.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Salomonen</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Honiara</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>unbekannt</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 4.0[https://creativecommons.org/licenses/by-sa/4.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>No revisions found</WikiPageFraVers>
+                <WikiPageAntVers>15.10.2024</WikiPageAntVers>
+                <ExcludeAereaFra>238,606,221,29,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Solomon_Islands_on_the_globe_(Oceania_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Honiara_Mendana_Avenue.jpg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Solomon_Islands_on_the_globe_%28Oceania_centered%29.svg/324px-Solomon_Islands_on_the_globe_%28Oceania_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Honiara_Mendana_Avenue.jpg/250px-Honiara_Mendana_Avenue.jpg</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="60">
+                <FrageSubjekt>Samoa</FrageSubjekt>
+                <AntwortSubjekt>Apia</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Samoa.jpg</ImagefileFrage>
+                <ImagefileAntwort>Apia.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Samoa</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Apia</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>unbekannt</ImageAntwortAuthor>
+                <ImageAntwortLizenz>Public domain</ImageAntwortLizenz>
+                <WikiPageFraVers>06.10.2022</WikiPageFraVers>
+                <WikiPageAntVers>24.04.2024</WikiPageAntVers>
+                <ExcludeAereaFra>255,502,213,36,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Samoa_in_Oceania.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Urville-Apia-place.jpg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Samoa_in_Oceania.svg/300px-Samoa_in_Oceania.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Urville-Apia-place.jpg/220px-Urville-Apia-place.jpg</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="61">
+                <FrageSubjekt>Saudi-Arabien</FrageSubjekt>
+                <AntwortSubjekt>Riyadh</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Saudi-Arabien.jpg</ImagefileFrage>
+                <ImagefileAntwort>Riyadh.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Saudi-Arabien</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Riyadh</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>Translation by (Head [https://en.wikipedia.org/wiki/de:user:Head])</ImageAntwortAuthor>
+                <ImageAntwortLizenz>Public domain</ImageAntwortLizenz>
+                <WikiPageFraVers>No revisions found</WikiPageFraVers>
+                <WikiPageAntVers>30.04.2007</WikiPageAntVers>
+                <ExcludeAereaFra>258,694,192,24,0</ExcludeAereaFra>
+                <ExcludeAereaAnt>123,342,134,23,0</ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Saudi_Arabia_on_the_globe_(Afro-Eurasia_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:S-Arabien_GE.png</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Saudi_Arabia_on_the_globe_%28Afro-Eurasia_centered%29.svg/324px-Saudi_Arabia_on_the_globe_%28Afro-Eurasia_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/S-Arabien_GE.png/220px-S-Arabien_GE.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="62">
+                <FrageSubjekt>Singapur</FrageSubjekt>
+                <AntwortSubjekt>Singapore</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Singapur.jpg</ImagefileFrage>
+                <ImagefileAntwort>Singapore.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Singapur</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Singapore</InfoURLAntwort>
+                <ImageFrageAuthor>Seloloving [//commons.wikimedia.org/wiki/User:Seloloving]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>Seloloving [//commons.wikimedia.org/wiki/User:Seloloving]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>27.11.2010</WikiPageFraVers>
+                <WikiPageAntVers>25.06.2024</WikiPageAntVers>
+                <ExcludeAereaFra>249,635,209,41,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Singapore_on_the_globe_(Southeast_Asia_centered)_zoom.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Singapore_on_the_globe_(Southeast_Asia_centered)_zoom.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Singapore_on_the_globe_%28Southeast_Asia_centered%29_zoom.svg/324px-Singapore_on_the_globe_%28Southeast_Asia_centered%29_zoom.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Singapore_on_the_globe_%28Southeast_Asia_centered%29_zoom.svg/324px-Singapore_on_the_globe_%28Southeast_Asia_centered%29_zoom.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="63">
+                <FrageSubjekt>Sri Lanka</FrageSubjekt>
+                <AntwortSubjekt>Colombo</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Sri Lanka.jpg</ImagefileFrage>
+                <ImagefileAntwort>Colombo.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Sri_Lanka</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Colombo</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>Mayakaru [https://en.wikipedia.org/wiki/User:Mayakaru]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY 3.0[https://creativecommons.org/licenses/by/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>28.09.2024</WikiPageFraVers>
+                <WikiPageAntVers>02.03.2024</WikiPageAntVers>
+                <ExcludeAereaFra>207,533,310,69,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Sri_Lanka_on_the_globe_(Asia_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Colombo_-_Lake.jpg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Sri_Lanka_on_the_globe_%28Asia_centered%29.svg/324px-Sri_Lanka_on_the_globe_%28Asia_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Colombo_-_Lake.jpg/241px-Colombo_-_Lake.jpg</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="64">
+                <FrageSubjekt>Südkorea</FrageSubjekt>
+                <AntwortSubjekt>Seoul</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Südkorea.jpg</ImagefileFrage>
+                <ImagefileAntwort>Seoul.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Südkorea</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Seoul</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>NordNordWest [//commons.wikimedia.org/wiki/User:NordNordWest]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0 de[https://creativecommons.org/licenses/by-sa/3.0/de/deed.en]</ImageAntwortLizenz>
+                <WikiPageFraVers>22.05.2005</WikiPageFraVers>
+                <WikiPageAntVers>23.10.2022</WikiPageAntVers>
+                <ExcludeAereaFra>214,537,298,22,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:South_Korea_on_the_globe_(Japan_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Seoul_in_South_Korea_2023.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/South_Korea_on_the_globe_%28Japan_centered%29.svg/324px-South_Korea_on_the_globe_%28Japan_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Seoul_in_South_Korea_2023.svg/299px-Seoul_in_South_Korea_2023.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="65">
+                <FrageSubjekt>Südossetien</FrageSubjekt>
+                <AntwortSubjekt>Zchinwali</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Südossetien.jpg</ImagefileFrage>
+                <ImagefileAntwort>Tskhinvali.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Südossetien</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Tskhinvali</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>Photo by D. Rudnev, 1886</ImageAntwortAuthor>
+                <ImageAntwortLizenz>Public domain</ImageAntwortLizenz>
+                <WikiPageFraVers>No revisions found</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:South_Ossetia_in_Georgia_(semi-secession).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Tskhinvali._Rudnev,_D_1886.jpg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/South_Ossetia_in_Georgia_%28semi-secession%29.svg/330px-South_Ossetia_in_Georgia_%28semi-secession%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Tskhinvali._Rudnev%2C_D_1886.jpg/220px-Tskhinvali._Rudnev%2C_D_1886.jpg</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="66">
+                <FrageSubjekt>Syrien</FrageSubjekt>
+                <AntwortSubjekt>Damaskus</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Syrien.jpg</ImagefileFrage>
+                <ImagefileAntwort>Damaskus.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Syrien</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Damaskus</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>NordNordWest [//commons.wikimedia.org/wiki/User:NordNordWest]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0 de[https://creativecommons.org/licenses/by-sa/3.0/de/deed.en]</ImageAntwortLizenz>
+                <WikiPageFraVers>No revisions found</WikiPageFraVers>
+                <WikiPageAntVers>04.08.2020</WikiPageAntVers>
+                <ExcludeAereaFra>209,530,298,39,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Syria_on_the_globe_(Afro-Eurasia_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Syria_adm_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Syria_on_the_globe_%28Afro-Eurasia_centered%29.svg/324px-Syria_on_the_globe_%28Afro-Eurasia_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Syria_adm_location_map.svg/250px-Syria_adm_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="67">
+                <FrageSubjekt>Tadschikistan</FrageSubjekt>
+                <AntwortSubjekt>Duschanbe</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Tadschikistan.jpg</ImagefileFrage>
+                <ImagefileAntwort>Duschanbe.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Tadschikistan</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Duschanbe</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>NordNordWest [//commons.wikimedia.org/wiki/User:NordNordWest]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0 de[https://creativecommons.org/licenses/by-sa/3.0/de/deed.en]</ImageAntwortLizenz>
+                <WikiPageFraVers>22.09.2006</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra>206,591,320,34,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Tajikistan_on_the_globe_(Afro-Eurasia_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Tajikistan_adm_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Tajikistan_on_the_globe_%28Afro-Eurasia_centered%29.svg/324px-Tajikistan_on_the_globe_%28Afro-Eurasia_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Tajikistan_adm_location_map.svg/250px-Tajikistan_adm_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="68">
+                <FrageSubjekt>Taiwan</FrageSubjekt>
+                <AntwortSubjekt>Taipei</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Taiwan.jpg</ImagefileFrage>
+                <ImagefileAntwort>Taipei.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Republik_China_(Taiwan)</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Taipei</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>Foxy1219 [//commons.wikimedia.org/wiki/User:Foxy1219]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>No revisions found</WikiPageFraVers>
+                <WikiPageAntVers>25.03.2020</WikiPageAntVers>
+                <ExcludeAereaFra>231,689,224,26,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Taiwan_on_the_globe_(Japan_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Taipei_City_montage.PNG</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Taiwan_on_the_globe_%28Japan_centered%29.svg/324px-Taiwan_on_the_globe_%28Japan_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Taipei_City_montage.PNG/280px-Taipei_City_montage.PNG</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="69">
+                <FrageSubjekt>Thailand</FrageSubjekt>
+                <AntwortSubjekt>Bangkok</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Thailand.jpg</ImagefileFrage>
+                <ImagefileAntwort>Bangkok.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Thailand</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Bangkok</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>NordNordWest [//commons.wikimedia.org/wiki/User:NordNordWest]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0 de[https://creativecommons.org/licenses/by-sa/3.0/de/deed.en]</ImageAntwortLizenz>
+                <WikiPageFraVers>09.07.2008</WikiPageFraVers>
+                <WikiPageAntVers>11.11.2010</WikiPageAntVers>
+                <ExcludeAereaFra>236,536,261,63,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Thailand_on_the_globe_(Southeast_Asia_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Thailand_adm_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Thailand_on_the_globe_%28Southeast_Asia_centered%29.svg/324px-Thailand_on_the_globe_%28Southeast_Asia_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Thailand_adm_location_map.svg/142px-Thailand_adm_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="70">
+                <FrageSubjekt>Tokelau</FrageSubjekt>
+                <AntwortSubjekt>Fakaofo</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Tokelau.jpg</ImagefileFrage>
+                <ImagefileAntwort>Fakaofo.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Tokelau</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Fakaofo</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>CloudSurfer [https://en.wikipedia.org/wiki/User:CloudSurfer]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY 2.5[https://creativecommons.org/licenses/by/2.5]</ImageAntwortLizenz>
+                <WikiPageFraVers>21.04.2024</WikiPageFraVers>
+                <WikiPageAntVers>05.04.2008</WikiPageAntVers>
+                <ExcludeAereaFra>235,542,217,82,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Tokelau_on_the_globe_(Polynesia_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Fakaofo_village_square_20070716.jpg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Tokelau_on_the_globe_%28Polynesia_centered%29.svg/324px-Tokelau_on_the_globe_%28Polynesia_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Fakaofo_village_square_20070716.jpg/320px-Fakaofo_village_square_20070716.jpg</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="71">
+                <FrageSubjekt>Tonga</FrageSubjekt>
+                <AntwortSubjekt>Nukualofa</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Tonga.jpg</ImagefileFrage>
+                <ImagefileAntwort>Nukualofa.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Tonga</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Nukualofa</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>Tauʻolunga</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 2.5[https://creativecommons.org/licenses/by-sa/2.5]</ImageAntwortLizenz>
+                <WikiPageFraVers>27.05.2024</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra>207,600,303,44,0</ExcludeAereaFra>
+                <ExcludeAereaAnt>64,374,62,14,0|63,442,80,15,0</ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Tonga_on_the_globe_(small_islands_magnified)_(Polynesia_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Tongatapu.gif</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Tonga_on_the_globe_%28small_islands_magnified%29_%28Polynesia_centered%29.svg/324px-Tonga_on_the_globe_%28small_islands_magnified%29_%28Polynesia_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Tongatapu.gif/250px-Tongatapu.gif</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="72">
+                <FrageSubjekt>Türkei</FrageSubjekt>
+                <AntwortSubjekt>Ankara</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Türkei.jpg</ImagefileFrage>
+                <ImagefileAntwort>Ankara.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Türkei</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Ankara</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>Danloud [//commons.wikimedia.org/wiki/User:Danloud]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 4.0[https://creativecommons.org/licenses/by-sa/4.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>16.04.2006</WikiPageFraVers>
+                <WikiPageAntVers>03.12.2023</WikiPageAntVers>
+                <ExcludeAereaFra>249,536,203,25,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Turkey_in_Europe_(-rivers_-mini_map).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Ankara_Montage_2020.jpg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Turkey_in_Europe_%28-rivers_-mini_map%29.svg/324px-Turkey_in_Europe_%28-rivers_-mini_map%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Ankara_Montage_2020.jpg/280px-Ankara_Montage_2020.jpg</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="73">
+                <FrageSubjekt>Turkmenistan</FrageSubjekt>
+                <AntwortSubjekt>Aschkabad</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Turkmenistan.jpg</ImagefileFrage>
+                <ImagefileAntwort>Aschkabad.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Turkmenistan</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/A%C5%9Fgabat</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>NordNordWest [//commons.wikimedia.org/wiki/User:NordNordWest]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0 de[https://creativecommons.org/licenses/by-sa/3.0/de/deed.en]</ImageAntwortLizenz>
+                <WikiPageFraVers>06.10.2022</WikiPageFraVers>
+                <WikiPageAntVers>30.09.2024</WikiPageAntVers>
+                <ExcludeAereaFra>210,530,300,39,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Turkmenistan_on_the_globe_(Afro-Eurasia_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Turkmenistan_adm_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Turkmenistan_on_the_globe_%28Afro-Eurasia_centered%29.svg/324px-Turkmenistan_on_the_globe_%28Afro-Eurasia_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Turkmenistan_adm_location_map.svg/270px-Turkmenistan_adm_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="74">
+                <FrageSubjekt>Tuvalu</FrageSubjekt>
+                <AntwortSubjekt>Funafuti</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Tuvalu.jpg</ImagefileFrage>
+                <ImagefileAntwort>Funafuti.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Tuvalu</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Funafuti</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>Tschubby [https://de.wikipedia.org/wiki/Benutzer:Tschubby]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>16.04.2024</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra>243,621,215,39,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Tuvalu_on_the_globe_(small_islands_magnified)_(Polynesia_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Funafuti_2022.png</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Tuvalu_on_the_globe_%28small_islands_magnified%29_%28Polynesia_centered%29.svg/324px-Tuvalu_on_the_globe_%28small_islands_magnified%29_%28Polynesia_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Funafuti_2022.png/320px-Funafuti_2022.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="75">
+                <FrageSubjekt>Usbekistan</FrageSubjekt>
+                <AntwortSubjekt>Tashkent</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Usbekistan.jpg</ImagefileFrage>
+                <ImagefileAntwort>Tashkent.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Usbekistan</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Tashkent</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>Kaidor [//commons.wikimedia.org/wiki/User:Kaidor]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>Public domain</ImageAntwortLizenz>
+                <WikiPageFraVers>02.06.2013</WikiPageFraVers>
+                <WikiPageAntVers>01.04.2007</WikiPageAntVers>
+                <ExcludeAereaFra>212,569,294,22,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Uzbekistan_on_the_globe_(Eurasia_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Emblem_of_Tashkent.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Uzbekistan_on_the_globe_%28Eurasia_centered%29.svg/324px-Uzbekistan_on_the_globe_%28Eurasia_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Emblem_of_Tashkent.svg/250px-Emblem_of_Tashkent.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="76">
+                <FrageSubjekt>Vanuatu</FrageSubjekt>
+                <AntwortSubjekt>Port Vila</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Vanuatu.jpg</ImagefileFrage>
+                <ImagefileAntwort>Port Vila.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Vanuatu</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Port_Vila</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>Phillip Capper [https://www.flickr.com/people/42033648@N00]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY 2.0[https://creativecommons.org/licenses/by/2.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>20.10.2024</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra>217,610,295,21,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Vanuatu_on_the_globe_(small_islands_magnified)_(Polynesia_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Port_Vila_aerial.jpg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Vanuatu_on_the_globe_%28small_islands_magnified%29_%28Polynesia_centered%29.svg/324px-Vanuatu_on_the_globe_%28small_islands_magnified%29_%28Polynesia_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Port_Vila_aerial.jpg/250px-Port_Vila_aerial.jpg</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="77">
+                <FrageSubjekt>Vereinigte Arabische Emirate</FrageSubjekt>
+                <AntwortSubjekt>Abu Dhabi</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Vereinigte Arabische Emirate.jpg</ImagefileFrage>
+                <ImagefileAntwort>Abu Dhabi.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Vereinigte_Arabische_Emirate</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Abu_Dhabi</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>United_Arab_Emirates_location_map.svg [//commons.wikimedia.org/wiki/File:United_Arab_Emirates_location_map.svg]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>07.10.2022</WikiPageFraVers>
+                <WikiPageAntVers>07.10.2022</WikiPageAntVers>
+                <ExcludeAereaFra>241,535,221,37,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:United_Arab_Emirates_on_the_globe_(Afro-Eurasia_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:United_Arab_Emirates_relief_location_map.jpg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/United_Arab_Emirates_on_the_globe_%28Afro-Eurasia_centered%29.svg/324px-United_Arab_Emirates_on_the_globe_%28Afro-Eurasia_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/United_Arab_Emirates_relief_location_map.jpg/250px-United_Arab_Emirates_relief_location_map.jpg</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="78">
+                <FrageSubjekt>Vereinigte Staaten</FrageSubjekt>
+                <AntwortSubjekt>Washington D.C.</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Vereinigte Staaten.jpg</ImagefileFrage>
+                <ImagefileAntwort>Washington D.C..jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Vereinigte_Staaten</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Washington,_D.C.</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>AlexTref871[https://commons.wikimedia.org/wiki/User:AlexTref871]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>06.09.2017</WikiPageFraVers>
+                <WikiPageAntVers>05.08.2024</WikiPageAntVers>
+                <ExcludeAereaFra>242,722,216,38,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:United_States_on_the_globe_(North_America_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Washington_Montage_2016.png</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/United_States_on_the_globe_%28North_America_centered%29.svg/324px-United_States_on_the_globe_%28North_America_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Washington_Montage_2016.png/300px-Washington_Montage_2016.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="79">
+                <FrageSubjekt>Vietnam</FrageSubjekt>
+                <AntwortSubjekt>Hanoi</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Vietnam.jpg</ImagefileFrage>
+                <ImagefileAntwort>Hanoi.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Vietnam</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Hanoi</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>Uwe Dedering [//commons.wikimedia.org/wiki/User:Uwe_Dedering]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>16.11.2006</WikiPageFraVers>
+                <WikiPageAntVers>28.12.2017</WikiPageAntVers>
+                <ExcludeAereaFra>208,601,313,42,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Vietnam_on_the_globe_(Southeast_Asia_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Vietnam_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Vietnam_on_the_globe_%28Southeast_Asia_centered%29.svg/324px-Vietnam_on_the_globe_%28Southeast_Asia_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Vietnam_location_map.svg/152px-Vietnam_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="80">
+                <FrageSubjekt>Wallis und Futuna</FrageSubjekt>
+                <AntwortSubjekt>Mata Utu</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Wallis und Futuna.jpg</ImagefileFrage>
+                <ImagefileAntwort>Mata Utu.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Wallis_und_Futuna</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Mata_Utu</InfoURLAntwort>
+                <ImageFrageAuthor>TUBS [//commons.wikimedia.org/wiki/User:TUBS]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>Eric Gaba ( (Sting [//commons.wikimedia.org/wiki/User:Sting])</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers>No revisions found</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra>220,636,234,25,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Wallis_and_Futuna_on_the_globe_(small_islands_magnified)_(Polynesia_centered).svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Wallis_location_map.svg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Wallis_and_Futuna_on_the_globe_%28small_islands_magnified%29_%28Polynesia_centered%29.svg/324px-Wallis_and_Futuna_on_the_globe_%28small_islands_magnified%29_%28Polynesia_centered%29.svg.png</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Wallis_location_map.svg/221px-Wallis_location_map.svg.png</ImageAntwortUrl>
+            </Übung>
+            <Übung nummer="81">
+                <FrageSubjekt>Zypern</FrageSubjekt>
+                <AntwortSubjekt>Nikosia</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Zypern.jpg</ImagefileFrage>
+                <ImagefileAntwort>Nikosia.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Zypern</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Nikosia</InfoURLAntwort>
+                <ImageFrageAuthor>Alexrk2 [//commons.wikimedia.org/wiki/User:Alexrk2]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor>A.Savin [https://commons.wikimedia.org/wiki/User:A.Savin]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>FAL[http://artlibre.org/licence/lal/en]</ImageAntwortLizenz>
+                <WikiPageFraVers>08.01.2010</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra>229,764,167,23,0</ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Europe_relief_laea_location_map.jpg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Nicosia_01-2017_img23_View_from_Shacolas_Tower.jpg</ImageAntwortBildDescription>
+                <ImageFrageUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Europe_relief_laea_location_map.jpg/300px-Europe_relief_laea_location_map.jpg</ImageFrageUrl>
+                <ImageAntwortUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Nicosia_01-2017_img23_View_from_Shacolas_Tower.jpg/276px-Nicosia_01-2017_img23_View_from_Shacolas_Tower.jpg</ImageAntwortUrl>
+            </Übung>
+        </MainÜbungsliste>
+    </Übungen>
+</Daten>

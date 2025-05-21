@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Daten>
+    <Übungen name="Sternzeichen Astrologisch" sequentiell="true" umgekehrt="false">
+        <MainÜbungsliste>
+            <FrageText>Für welches Sternzeichen steht das Symbol</FrageText>
+            <FrageTextUmgekehrt></FrageTextUmgekehrt>
+            <Übung nummer="1">
+                <FrageSubjekt></FrageSubjekt>
+                <AntwortSubjekt>Steinbock</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>22. Dezember bis 19. Januar.jpg</ImagefileFrage>
+                <ImagefileAntwort>Steinbock.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Steinbock_(Tierkreiszeichen)</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Steinbock_(Tierkreiszeichen)</InfoURLAntwort>
+                <ImageFrageAuthor>unbekannt</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor>unbekannt</ImageAntwortAuthor>
+                <ImageAntwortLizenz>Public domain</ImageAntwortLizenz>
+                <WikiPageFraVers>No revisions found</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Capricorn.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Miscellanea_Astronomica_-_Mermen_and_Capricorn_BldK.jpg</ImageAntwortBildDescription>
+            </Übung>
+            <Übung nummer="2">
+                <FrageSubjekt></FrageSubjekt>
+                <AntwortSubjekt>Wassermann</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>20. Januar bis 18. Februar.jpg</ImagefileFrage>
+                <ImagefileAntwort>Wassermann.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Wassermann_(Tierkreiszeichen)</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Wassermann_(Tierkreiszeichen)</InfoURLAntwort>
+                <ImageFrageAuthor>unbekannt</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor>unbekannt</ImageAntwortAuthor>
+                <ImageAntwortLizenz>Public domain</ImageAntwortLizenz>
+                <WikiPageFraVers>No revisions found</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Aquarius2.jpg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Aquarius.svg</ImageAntwortBildDescription>
+            </Übung>
+            <Übung nummer="3">
+                <FrageSubjekt></FrageSubjekt>
+                <AntwortSubjekt>Fische</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>19. Februar bis 20. März.jpg</ImagefileFrage>
+                <ImagefileAntwort>Fische.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Fische_(Tierkreiszeichen)</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Fische_(Tierkreiszeichen)</InfoURLAntwort>
+                <ImageFrageAuthor>unbekannt</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor>unbekannt</ImageAntwortAuthor>
+                <ImageAntwortLizenz>Public domain</ImageAntwortLizenz>
+                <WikiPageFraVers>No revisions found</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Pisces.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Pisces2.jpg</ImageAntwortBildDescription>
+            </Übung>
+            <Übung nummer="4">
+                <FrageSubjekt></FrageSubjekt>
+                <AntwortSubjekt>Widder</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>21. März bis 19. April.jpg</ImagefileFrage>
+                <ImagefileAntwort>Widder.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Widder_(Tierkreiszeichen)</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Widder_(Tierkreiszeichen)</InfoURLAntwort>
+                <ImageFrageAuthor>unbekannt</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor>Sebald Beham</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC0[http://creativecommons.org/publicdomain/zero/1.0/deed.en]</ImageAntwortLizenz>
+                <WikiPageFraVers>No revisions found</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Aries.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Sebald_Beham,_Mars,_NGA_4281.jpg</ImageAntwortBildDescription>
+            </Übung>
+            <Übung nummer="5">
+                <FrageSubjekt></FrageSubjekt>
+                <AntwortSubjekt>Stier</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>20. April bis 20. Mai.jpg</ImagefileFrage>
+                <ImagefileAntwort>Stier.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Stier_(Tierkreiszeichen)</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Stier_(Tierkreiszeichen)</InfoURLAntwort>
+                <ImageFrageAuthor>unbekannt</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor>Sebald Beham</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC0[http://creativecommons.org/publicdomain/zero/1.0/deed.en]</ImageAntwortLizenz>
+                <WikiPageFraVers>No revisions found</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Taurus.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Sebald_Beham,_Venus,_NGA_4283.jpg</ImageAntwortBildDescription>
+            </Übung>
+            <Übung nummer="6">
+                <FrageSubjekt></FrageSubjekt>
+                <AntwortSubjekt>Zwillinge</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>21. Mai bis 20. Juni.jpg</ImagefileFrage>
+                <ImagefileAntwort>Zwillinge.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Zwillinge_(Tierkreiszeichen)</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Zwillinge_(Tierkreiszeichen)</InfoURLAntwort>
+                <ImageFrageAuthor>Tlusťa [//commons.wikimedia.org/wiki/User:Tlus%C5%A5a]</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor>unbekannt</ImageAntwortAuthor>
+                <ImageAntwortLizenz>Public domain</ImageAntwortLizenz>
+                <WikiPageFraVers>No revisions found</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Gemini.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Gemini2.jpg</ImageAntwortBildDescription>
+            </Übung>
+            <Übung nummer="7">
+                <FrageSubjekt></FrageSubjekt>
+                <AntwortSubjekt>Krebs</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>21. Juni bis 22. Juli.jpg</ImagefileFrage>
+                <ImagefileAntwort>Krebs.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Krebs_(Tierkreiszeichen)</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Krebs_(Tierkreiszeichen)</InfoURLAntwort>
+                <ImageFrageAuthor>unbekannt</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor>Rijksmuseum</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC0[http://creativecommons.org/publicdomain/zero/1.0/deed.en]</ImageAntwortLizenz>
+                <WikiPageFraVers>No revisions found</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Cancer.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Diana_(Luna)_met_sterrenbeeld_Kreeft_Lvna_(titel_op_object)_Zeven_planeten_en_sterrenbeelden_(serietitel),_RP-P-OB-10.833.jpg</ImageAntwortBildDescription>
+            </Übung>
+            <Übung nummer="8">
+                <FrageSubjekt></FrageSubjekt>
+                <AntwortSubjekt>Löwe</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>23. Juli bis 22. August.jpg</ImagefileFrage>
+                <ImagefileAntwort>Löwe.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/L%C3%B6we_(Tierkreiszeichen)</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/L%C3%B6we_(Tierkreiszeichen)</InfoURLAntwort>
+                <ImageFrageAuthor>unbekannt</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor>Rijksmuseum</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC0[http://creativecommons.org/publicdomain/zero/1.0/deed.en]</ImageAntwortLizenz>
+                <WikiPageFraVers>No revisions found</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Leo.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Apollo_(Sol)_met_sterrenbeeld_Leeuw_Sol_(titel_op_object)_Zeven_planeten_en_sterrenbeelden_(serietitel),_RP-P-H-H-1037.jpg</ImageAntwortBildDescription>
+            </Übung>
+            <Übung nummer="9">
+                <FrageSubjekt></FrageSubjekt>
+                <AntwortSubjekt>Jungfrau</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>23. August bis 22. September.jpg</ImagefileFrage>
+                <ImagefileAntwort>Jungfrau.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Jungfrau_(Tierkreiszeichen)</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Jungfrau_(Tierkreiszeichen)</InfoURLAntwort>
+                <ImageFrageAuthor>unbekannt</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor>unbekannt</ImageAntwortAuthor>
+                <ImageAntwortLizenz>Public domain</ImageAntwortLizenz>
+                <WikiPageFraVers>No revisions found</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Virgo.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Virgo2.jpg</ImageAntwortBildDescription>
+            </Übung>
+            <Übung nummer="10">
+                <FrageSubjekt></FrageSubjekt>
+                <AntwortSubjekt>Waage</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>23. September bis 22. Oktober.jpg</ImagefileFrage>
+                <ImagefileAntwort>Waage.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Waage_(Tierkreiszeichen)</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Waage_(Tierkreiszeichen)</InfoURLAntwort>
+                <ImageFrageAuthor>unbekannt</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor>unbekannt</ImageAntwortAuthor>
+                <ImageAntwortLizenz>Public domain</ImageAntwortLizenz>
+                <WikiPageFraVers>No revisions found</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Libra.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Fotothek_df_tg_0004434_Astrologie_^_Sternzeichen_^_Kalender.jpg</ImageAntwortBildDescription>
+            </Übung>
+            <Übung nummer="11">
+                <FrageSubjekt></FrageSubjekt>
+                <AntwortSubjekt>Skorpion</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>23. Oktober bis 21. November.jpg</ImagefileFrage>
+                <ImagefileAntwort>Skorpion.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Skorpion_(Tierkreiszeichen)</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Skorpion_(Tierkreiszeichen)</InfoURLAntwort>
+                <ImageFrageAuthor>unbekannt</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor>unbekannt</ImageAntwortAuthor>
+                <ImageAntwortLizenz>Public domain</ImageAntwortLizenz>
+                <WikiPageFraVers>No revisions found</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Scorpio.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Scorpio2.jpg</ImageAntwortBildDescription>
+            </Übung>
+            <Übung nummer="12">
+                <FrageSubjekt></FrageSubjekt>
+                <AntwortSubjekt>Schütze</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>22. November bis 21. Dezember.jpg</ImagefileFrage>
+                <ImagefileAntwort>Schütze.jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Sch%C3%BCtze_(Tierkreiszeichen)</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Sch%C3%BCtze_(Tierkreiszeichen)</InfoURLAntwort>
+                <ImageFrageAuthor>unbekannt</ImageFrageAuthor>
+                <ImageFrageLizenz>Public domain</ImageFrageLizenz>
+                <ImageAntwortAuthor>unbekannt</ImageAntwortAuthor>
+                <ImageAntwortLizenz>Public domain</ImageAntwortLizenz>
+                <WikiPageFraVers>No revisions found</WikiPageFraVers>
+                <WikiPageAntVers>No revisions found</WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription>https://commons.wikimedia.org/wiki/File:Sagittarius.svg</ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Fotothek_df_tg_0004436_Astrologie_^_Sternzeichen_^_Kalender.jpg</ImageAntwortBildDescription>
+            </Übung>
+        </MainÜbungsliste>
+    </Übungen>
+</Daten>
