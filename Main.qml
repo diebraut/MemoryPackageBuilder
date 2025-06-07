@@ -45,13 +45,20 @@ Window {
                     anchors.centerIn: parent
                     font.pixelSize: 16
                 }
+                TapHandler {
+                    acceptedButtons: Qt.LeftButton
+                    gesturePolicy: TapHandler.WithinBounds
 
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: packageListView.currentIndex = index
-                    onDoubleClicked: {
+                    onTapped: {
                         packageListView.currentIndex = index
-                        openDialog(packageModel.get(index))
+                    }
+
+                    onDoubleTapped: {
+                        console.log("🖱️ Doppel-Klick erkannt bei Index:", index)
+                        packageListView.currentIndex = index
+                        Qt.callLater(function() {
+                            openDialog(packageModel.get(index))
+                        })
                     }
                 }
             }

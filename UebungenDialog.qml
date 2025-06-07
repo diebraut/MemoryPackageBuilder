@@ -45,10 +45,106 @@ Window {
         enabled: !listView.activeFocus
     }
 
-    // 1) Inline-Komponente VOR allen Layouts definieren
+    // Bildbearbeitungsdialog
+    ImageProcessingWindow {
+        id: imageProcessingWindow
+
+        onAccepted: {
+            console.log("Bildbearbeitung bestätigt.")
+            // Optional: Weitere Logik z. B. Speichern
+        }
+
+        onRejected: {
+            console.log("Bildbearbeitung abgebrochen.")
+        }
+    }
+
+    Menu {
+        id: imageContextMenu
+        property string roleName
+        property int rowIndex
+
+        // Funktion zum sicheren Zugriff auf den Wert
+        function getCurrentValue() {
+            if (rowIndex >= 0 && rowIndex < uebungModel.count) {
+                return uebungModel.get(rowIndex)[roleName] || ""
+            }
+            return ""
+        }
+
+        function openFileDialog() {
+            console.log("FileDialog öffnen für:", roleName, "bei Zeile:", rowIndex)
+            // Hier FileDialog implementieren
+        }
+
+        // Dynamische Erstellung der Menüeinträge
+        function buildMenu() {
+            // Alte Einträge entfernen
+            while (count > 0) {
+                removeItem(itemAt(0))
+            }
+
+            // Aktuellen Wert abfragen
+            var currentVal = getCurrentValue()
+
+            // Nur relevante Einträge hinzufügen
+            if (currentVal) {
+                addItem(createMenuItem(
+                    "Bild '" + currentVal + "' entfernen",
+                    "uebungModel.setProperty(rowIndex, roleName, \"\")"
+                ))
+
+                addItem(createMenuItem(
+                    "Bild '" + currentVal + "' austauschen",
+                    "openFileDialog()"
+                ))
+
+                addItem(createMenuItem(
+                    "Bild '" + currentVal + "' bearbeiten",
+                    "imageContextMenu.openImageProcessingDialog('" + roleName + "', '" + rowIndex + "')"
+                ))
+            } else {
+                addItem(createMenuItem(
+                    "Bild hinzufügen",
+                    "openFileDialog()"
+                ))
+            }
+        }
+
+        function createMenuItem(text, action) {
+            return Qt.createQmlObject(`
+                import QtQuick.Controls 2.15
+                MenuItem {
+                    text: "${text}"
+                    onTriggered: {
+                        ${action}
+                    }
+                }
+            `, imageContextMenu)
+        }
+
+        // Funktion zum Öffnen des Bilddialogs
+        function openImageProcessingDialog(role, index) {
+            if (index >= 0 && index < uebungModel.count) {
+                const fileName = uebungModel.get(index)[role];
+                if (fileName && fileName.trim() !== "") {
+                    const fullPath = packagePath + "/" + fileName;
+                    const sanitizedPath = fullPath.replace(/\\/g, '/');
+                    imageProcessingWindow.openWithImage("file:///" + sanitizedPath);
+                } else {
+                    console.log("Kein Bild für diese Zelle vorhanden");
+                }
+            }
+        }
+    }
+
+    Item {
+        id: windowContent
+        anchors.fill: parent
+    }
+
     Component {
         id: columnEditor
-
         Item {
             property string roleName
             property int rowIndex
@@ -65,11 +161,10 @@ Window {
                 height: parent.height * 0.8
                 text: initialText
 
-                // Fokus explizit erlauben
-                //focusPolicy: Qt.StrongFocus
                 activeFocusOnPress: true
                 onPressed: {
                     listView.currentIndex = rowIndex;
+                    forceActiveFocus()
                 }
                 onTextChanged: {
                     if (text !== uebungModel.get(rowIndex)[roleName]) {
@@ -77,11 +172,41 @@ Window {
                     }
                 }
 
-                // Visuelles Feedback bei Fokus
                 background: Rectangle {
                     color: "white"
                     border.color: textField.activeFocus ? "blue" : "#ccc"
                     radius: 3
+                }
+
+                // MouseArea für Right-Click im Textfeld
+                MouseArea {
+                    anchors.fill: parent
+                    acceptedButtons: Qt.RightButton
+                    enabled: true
+                    propagateComposedEvents: true
+
+                    onPressed: function(mouse) {
+                        // KORREKTUR: Direkter Zugriff auf die Eigenschaften des umgebenden Items
+                        var currentRole = textField.parent.roleName;
+
+                        if (mouse.button === Qt.RightButton &&
+                            (currentRole === "imagefileFrage" ||
+                             currentRole === "imagefileAntwort")) {
+
+                            imageContextMenu.roleName = currentRole;
+                            imageContextMenu.rowIndex = textField.parent.rowIndex;
+
+                            var globalPos = mapToItem(windowContent, mouse.x, mouse.y);
+                            imageContextMenu.x = globalPos.x;
+                            imageContextMenu.y = globalPos.y;
+
+                            imageContextMenu.buildMenu();
+                            imageContextMenu.open();
+                            mouse.accepted = true;
+                        } else {
+                            mouse.accepted = false;
+                        }
+                    }
                 }
             }
         }
@@ -91,23 +216,21 @@ Window {
         id: uebungModel
     }
 
-
     Component.onCompleted: {
         if (packagePath) {
-            uebungenData = ExersizeLoader.loadPackage(packagePath)
-            uebungenNameField.text = uebungenData.name
-            frageTextField.text = uebungenData.frageText
-            frageTextUmgekehrtField.text = uebungenData.frageTextUmgekehrt
-            sequentiellCheckBox.checked = uebungenData.sequentiell
-            umgekehrtCheckBox.checked = uebungenData.umgekehrt
-            uebungModel.clear()
+            uebungenData = ExersizeLoader.loadPackage(packagePath);
+            uebungenNameField.text = uebungenData.name;
+            frageTextField.text = uebungenData.frageText;
+            frageTextUmgekehrtField.text = uebungenData.frageTextUmgekehrt;
+            sequentiellCheckBox.checked = uebungenData.sequentiell;
+            umgekehrtCheckBox.checked = uebungenData.umgekehrt;
+            uebungModel.clear();
             for (var i = 0; i < uebungenData.uebungsliste.length; ++i) {
-                uebungModel.append(uebungenData.uebungsliste[i])
+                uebungModel.append(uebungenData.uebungsliste[i]);
             }
         }
         listView.forceActiveFocus();
     }
-
 
     ColumnLayout {
         anchors.fill: parent
@@ -258,7 +381,36 @@ Window {
                         border.color: listView.currentIndex === indexOutside ? "blue" : "transparent"
                         border.width: 1
 
-                        // Textfelder ZUERST deklarieren (vor der MouseArea)
+                        // Funktion zum Öffnen des Dialogs
+                        function handleDoubleClick(index) {
+                            console.log("Doubleclick für Zeile:", index)
+                            listView.currentIndex = index
+                            if (listView.currentIndex >= 0) {
+                                editExersizeDialog.itemData = JSON.parse(JSON.stringify(uebungModel.get(listView.currentIndex)))
+                                editExersizeDialog.open()
+                            }
+                        }
+
+                        // MouseArea für Zeilen-Double-Click
+                        MouseArea {
+                            id: rowMouseArea
+                            anchors.fill: parent
+                            acceptedButtons: Qt.LeftButton
+                            propagateComposedEvents: true
+
+                            onDoubleClicked: function(mouse) {
+                                handleDoubleClick(indexOutside)
+                                mouse.accepted = true
+                            }
+
+                            onClicked: function(mouse) {
+                                listView.currentIndex = indexOutside
+                                listView.forceActiveFocus()
+                                mouse.accepted = false
+                            }
+                        }
+
+                        // Textfelder
                         Row {
                             anchors.fill: parent
                             spacing: columnSpacing
@@ -279,16 +431,6 @@ Window {
                                     Binding { target: item; property: "rowIndex"; value: rowIndex }
                                     Binding { target: item; property: "initialText"; value: uebungModel.get(rowIndex)[roleName] }
                                 }
-                            }
-                        }
-
-                        // MouseArea NACH den Textfeldern (nur für Zeilenauswahl)
-                        MouseArea {
-                            anchors.fill: parent
-                            acceptedButtons: Qt.RightButton // 🔴 Nur Rechtsklicks für Kontextmenüs
-                            onClicked: {
-                                listView.currentIndex = indexOutside
-                                listView.forceActiveFocus()
                             }
                         }
                     }

@@ -28,6 +28,7 @@ qt_add_qml_module(appMemoryPackagesBuilder
         packageparser.h packageparser.cpp
         SOURCES exersizeloader.h exersizeloader.cpp
         QML_FILES EditExersizeDialog.qml
+        QML_FILES ImageProcessingWindow.qml
 )
 
 # Setze Target-Eigenschaften
