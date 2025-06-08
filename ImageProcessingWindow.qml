@@ -19,6 +19,7 @@ Window {
 
     function openWithImage(path) {
         imagePreview.source = path
+        rectanglesModel.clear()
 
         imagePreview.statusChanged.connect(function handler() {
             if (imagePreview.status === Image.Ready) {
@@ -36,6 +37,100 @@ Window {
         })
 
         visible = true
+    }
+
+    Component {
+        id: resizeHandleComponent
+
+        Rectangle {
+            width: 16
+            height: 16
+            color: "white"
+            border.color: "red"
+            radius: 3
+            z: 1000
+
+            property string mode: ""
+            property int modelIndex: -1
+            property string cursor: "ArrowCursor"
+            property Item targetRectItem: parent
+
+            x: {
+                switch(mode) {
+                    case "topRight":
+                    case "bottomRight":
+                        return targetRectItem.width - width / 2;
+                    case "topLeft":
+                    case "bottomLeft":
+                    default:
+                        return -width / 2;
+                }
+            }
+
+            y: {
+                switch(mode) {
+                    case "bottomLeft":
+                    case "bottomRight":
+                        return targetRectItem.height - height / 2;
+                    case "topLeft":
+                    case "topRight":
+                    default:
+                        return -height / 2;
+                }
+            }
+
+            MouseArea {
+                anchors.fill: parent
+                cursorShape: Qt[cursor]
+
+                property real startMouseX: 0
+                property real startMouseY: 0
+                property real originalStartX: 0
+                property real originalStartY: 0
+                property real originalEndX: 0
+                property real originalEndY: 0
+
+                onPressed: (mouse) => {
+                    startMouseX = mouse.x
+                    startMouseY = mouse.y
+
+                    const r = rectanglesModel.get(modelIndex)
+                    if (r !== undefined) {
+                        originalStartX = r.startX
+                        originalStartY = r.startY
+                        originalEndX = r.endX
+                        originalEndY = r.endY
+                    }
+                }
+
+                onPositionChanged: (mouse) => {
+                    const dx = mouse.x - startMouseX
+                    const dy = mouse.y - startMouseY
+
+                    if (modelIndex < 0 || modelIndex >= rectanglesModel.count)
+                        return
+
+                    switch (mode) {
+                    case "topLeft":
+                        rectanglesModel.setProperty(modelIndex, "startX", Math.max(0, originalStartX + dx))
+                        rectanglesModel.setProperty(modelIndex, "startY", Math.max(0, originalStartY + dy))
+                        break
+                    case "topRight":
+                        rectanglesModel.setProperty(modelIndex, "endX", Math.max(0, originalEndX + dx))
+                        rectanglesModel.setProperty(modelIndex, "startY", Math.max(0, originalStartY + dy))
+                        break
+                    case "bottomLeft":
+                        rectanglesModel.setProperty(modelIndex, "startX", Math.max(0, originalStartX + dx))
+                        rectanglesModel.setProperty(modelIndex, "endY", Math.max(0, originalEndY + dy))
+                        break
+                    case "bottomRight":
+                        rectanglesModel.setProperty(modelIndex, "endX", Math.max(0, originalEndX + dx))
+                        rectanglesModel.setProperty(modelIndex, "endY", Math.max(0, originalEndY + dy))
+                        break
+                    }
+                }
+            }
+        }
     }
 
     ColumnLayout {
@@ -90,9 +185,16 @@ Window {
                 Repeater {
                     id: rectRepeater
                     model: rectanglesModel
+                    z: 100
 
                     Rectangle {
+                        Behavior on x { NumberAnimation { duration: 50 } }
+                        Behavior on y { NumberAnimation { duration: 50 } }
+                        Behavior on width { NumberAnimation { duration: 50 } }
+                        Behavior on height { NumberAnimation { duration: 50 } }
                         id: rectItem
+
+                        clip: true
                         x: Math.min(model.startX, model.endX)
                         y: Math.min(model.startY, model.endY)
                         width: Math.abs(model.endX - model.startX)
@@ -106,9 +208,58 @@ Window {
                         property real dragStartY: 0
                         property int modelIndex: index
 
+                        // NEUE Eigenschaften für Resizing
+                        property bool resizing: false
+                        property string activeHandle: ""
+                        property real originalX: 0
+                        property real originalY: 0
+                        property real originalWidth: 0
+                        property real originalHeight: 0
+                        property real resizeStartX: 0
+                        property real resizeStartY: 0
+
+                        Loader {
+                            sourceComponent: resizeHandleComponent
+                            onLoaded: {
+                                item.color = "green"
+                                item.mode = "topLeft"
+                                item.cursor = "SizeFDiagCursor"
+                                item.modelIndex = rectItem.modelIndex
+                                item.targetRectItem = rectItem
+                            }
+                        }
+                        Loader {
+                            sourceComponent: resizeHandleComponent
+                            onLoaded: {
+                                item.color = "red"
+                                item.mode = "topRight"
+                                item.cursor = "SizeBDiagCursor"
+                                item.modelIndex = rectItem.modelIndex
+                                item.targetRectItem = rectItem
+                            }
+                        }
+                        Loader {
+                            sourceComponent: resizeHandleComponent
+                            onLoaded: {
+                                item.color = "black"
+                                item.mode = "bottomLeft"
+                                item.cursor = "SizeBDiagCursor"
+                                item.modelIndex = rectItem.modelIndex
+                                item.targetRectItem = rectItem
+                            }
+                        }
+                        Loader {
+                            sourceComponent: resizeHandleComponent
+                            onLoaded: {
+                                item.color = "yellow"
+                                item.mode = "bottomRight"
+                                item.cursor = "SizeFDiagCursor"
+                                item.modelIndex = rectItem.modelIndex
+                                item.targetRectItem = rectItem
+                            }
+                        }
                         Rectangle {
                             id: innerArea
-                            property alias rectItem: rectItem
                             anchors.verticalCenter: parent.verticalCenter
                             x: parent.width / 3
                             width: parent.width / 3
@@ -118,13 +269,15 @@ Window {
 
                             MouseArea {
                                 anchors.fill: parent
+                                acceptedButtons: Qt.LeftButton | Qt.RightButton
                                 drag.target: null
-                                property alias rectItem: innerArea.rectItem
 
                                 onPressed: (mouse) => {
-                                    rectItem.dragging = true
-                                    rectItem.dragStartX = mouse.x
-                                    rectItem.dragStartY = mouse.y
+                                    if (mouse.button === Qt.LeftButton) {
+                                        rectItem.dragging = true
+                                        rectItem.dragStartX = mouse.x
+                                        rectItem.dragStartY = mouse.y
+                                    }
                                 }
 
                                 onPositionChanged: (mouse) => {
@@ -178,23 +331,14 @@ Window {
                                 onReleased: {
                                     rectItem.dragging = false
                                 }
+
+                                onClicked: (mouse) => {
+                                    if (mouse.button === Qt.RightButton) {
+                                        rectanglesModel.remove(rectItem.modelIndex)
+                                        mouse.accepted = true
+                                    }
+                                }
                             }
-                        }
-
-                        Rectangle {
-                            width: 2
-                            height: parent.height
-                            x: parent.width / 3 - 1
-                            y: 0
-                            color: "red"
-                        }
-
-                        Rectangle {
-                            width: 2
-                            height: parent.height
-                            x: 2 * parent.width / 3 - 1
-                            y: 0
-                            color: "red"
                         }
                     }
                 }
