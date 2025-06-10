@@ -7,12 +7,17 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # Qt6 Komponenten finden – jetzt inklusive Xml
 find_package(Qt6 6.4 REQUIRED COMPONENTS Quick Core Gui Xml)
 
+#qt_policy(SET QTP0001 NEW)
+
 # Standard Projekt Setup für Qt
 qt_standard_project_setup()
+
+qt_add_resources(IMAGE_RESOURCES icons/icons.qrc)
 
 # Füge die ausführbare Datei hinzu
 qt_add_executable(appMemoryPackagesBuilder
     main.cpp
+    ${IMAGE_RESOURCES}
 )
 
 # Füge die QML-Dateien und C++-Quellen hinzu
@@ -22,21 +27,13 @@ qt_add_qml_module(appMemoryPackagesBuilder
     QML_FILES
         Main.qml
         UebungenDialog.qml
+        EditExersizeDialog.qml
+        ImageProcessingWindow.qml
     SOURCES
         packagemodel.h packagemodel.cpp
         ExersizeModel.h
         packageparser.h packageparser.cpp
-        SOURCES exersizeloader.h exersizeloader.cpp
-        QML_FILES EditExersizeDialog.qml
-        QML_FILES ImageProcessingWindow.qml
-)
-
-# Setze Target-Eigenschaften
-set_target_properties(appMemoryPackagesBuilder PROPERTIES
-    MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
-    MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
-    MACOSX_BUNDLE TRUE
-    WIN32_EXECUTABLE TRUE
+        exersizeloader.h exersizeloader.cpp
 )
 
 # Linke die Qt-Bibliotheken – jetzt inklusive Qt6::Xml

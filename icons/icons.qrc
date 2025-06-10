@@ -1,0 +1,6 @@
+<RCC>
+  <qresource prefix="/icons">
+    <file>arrow_to_left_bottom_and_right_top.png</file>
+    <file>arrow_to_left_top_and_right_bottom.png</file>
+  </qresource>
+</RCC>

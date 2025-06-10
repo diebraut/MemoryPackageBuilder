@@ -8,7 +8,9 @@
 
 int main(int argc, char *argv[])
 {
+    qmlRegisterModule("MemoryPackagesBuilder", 1, 0);
     QGuiApplication app(argc, argv);
+    qDebug() << QDir(":/icons").entryList();
 
     qmlRegisterSingletonInstance("ExersizeLoader", 1, 0, "ExersizeLoader", new ExersizeLoader);
 
@@ -27,6 +29,7 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("packagesFolder", packageFolderPath);
 
     const QUrl url(u"qrc:/MemoryPackagesBuilder/Main.qml"_qs);
+
     QObject::connect(
         &engine,
         &QQmlApplicationEngine::objectCreationFailed,
