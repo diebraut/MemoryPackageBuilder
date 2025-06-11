@@ -109,24 +109,39 @@ Window {
                     if (modelIndex < 0 || modelIndex >= rectanglesModel.count)
                         return
 
+                    const scaleX = imagePreview.paintedWidth / imagePreview.implicitWidth
+                    const scaleY = imagePreview.paintedHeight / imagePreview.implicitHeight
+                    const maxX = imagePreview.implicitWidth
+                    const maxY = imagePreview.implicitHeight
+
+                    let newStartX = originalStartX
+                    let newStartY = originalStartY
+                    let newEndX = originalEndX
+                    let newEndY = originalEndY
+
                     switch (mode) {
                     case "topLeft":
-                        rectanglesModel.setProperty(modelIndex, "startX", Math.max(0, originalStartX + dx))
-                        rectanglesModel.setProperty(modelIndex, "startY", Math.max(0, originalStartY + dy))
+                        newStartX = Math.max(0, Math.min(originalStartX + dx, originalEndX));
+                        newStartY = Math.max(0, Math.min(originalStartY + dy, originalEndY));
                         break
                     case "topRight":
-                        rectanglesModel.setProperty(modelIndex, "endX", Math.max(0, originalEndX + dx))
-                        rectanglesModel.setProperty(modelIndex, "startY", Math.max(0, originalStartY + dy))
+                        newEndX = Math.min(maxX, Math.max(originalEndX + dx, originalStartX));
+                        newStartY = Math.max(0, Math.min(originalStartY + dy, originalEndY));
                         break
                     case "bottomLeft":
-                        rectanglesModel.setProperty(modelIndex, "startX", Math.max(0, originalStartX + dx))
-                        rectanglesModel.setProperty(modelIndex, "endY", Math.max(0, originalEndY + dy))
+                        newStartX = Math.max(0, Math.min(originalStartX + dx, originalEndX));
+                        newEndY = Math.min(maxY, Math.max(originalEndY + dy, originalStartY));
                         break
                     case "bottomRight":
-                        rectanglesModel.setProperty(modelIndex, "endX", Math.max(0, originalEndX + dx))
-                        rectanglesModel.setProperty(modelIndex, "endY", Math.max(0, originalEndY + dy))
+                        newEndX = Math.min(maxX, Math.max(originalEndX + dx, originalStartX));
+                        newEndY = Math.min(maxY, Math.max(originalEndY + dy, originalStartY));
                         break
                     }
+
+                    rectanglesModel.setProperty(modelIndex, "startX", newStartX)
+                    rectanglesModel.setProperty(modelIndex, "startY", newStartY)
+                    rectanglesModel.setProperty(modelIndex, "endX", newEndX)
+                    rectanglesModel.setProperty(modelIndex, "endY", newEndY)
                 }
             }
             Image {
