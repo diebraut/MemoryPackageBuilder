@@ -18,25 +18,45 @@ Window {
     property int maxDialogHeight: Screen.height * 0.9
 
     function openWithImage(path) {
-        imagePreview.source = path
         rectanglesModel.clear()
+
+        imagePreview.source = ""
+        imageWindow.visible = false
+
+        Qt.callLater(() => {
+            imagePreview.source = path
+        })
 
         imagePreview.statusChanged.connect(function handler() {
             if (imagePreview.status === Image.Ready) {
-                var imgW = imagePreview.implicitWidth
-                var imgH = imagePreview.implicitHeight
-
-                var targetWidth = imgW * 1.1
-                var targetHeight = imgH * 1.1 + buttonsRow.implicitHeight + layout.spacing
-
-                imageWindow.width = Math.min(targetWidth, maxDialogWidth)
-                imageWindow.height = Math.min(targetHeight, maxDialogHeight)
-
                 imagePreview.statusChanged.disconnect(handler)
+
+                let imgW = imagePreview.sourceSize.width
+                let imgH = imagePreview.sourceSize.height
+
+                if (imgW <= 0 || imgH <= 0) {
+                    imgW = imagePreview.implicitWidth
+                    imgH = imagePreview.implicitHeight
+                }
+
+                // Sicherheitsmaßnahme: Fallback falls immer noch 0
+                if (imgW <= 0 || imgH <= 0) {
+                    imgW = 400
+                    imgH = 300
+                }
+
+                const buttonsHeight = buttonsRow.implicitHeight + layout.spacing
+                const windowMargin = 40
+
+                const targetW = Math.min(imgW * 1.1 + windowMargin, maxDialogWidth)
+                const targetH = Math.min(imgH * 1.1 + buttonsHeight + windowMargin, maxDialogHeight)
+
+                imageWindow.width = targetW
+                imageWindow.height = targetH
+
+                imageWindow.visible = true
             }
         })
-
-        visible = true
     }
 
     Component {
@@ -174,26 +194,34 @@ Window {
 
             Rectangle {
                 id: imageFrame
-                anchors.centerIn: parent
-                width: imagePreview.paintedWidth
-                height: imagePreview.paintedHeight
+                anchors.fill: parent  // füllt den verfügbaren Platz
                 color: "transparent"
                 border.color: "green"
                 border.width: 1
-                z: 1  // über dem Hintergrund, aber unter den Rechtecken
 
                 Image {
                     id: imagePreview
-                    anchors.centerIn: parent
+                    anchors.fill: parent
                     fillMode: Image.PreserveAspectFit
                     asynchronous: true
                     source: ""
+
+                    onStatusChanged: {
+                        if (status === Image.Ready) {
+                            console.log("Image loaded:", sourceSize.width, sourceSize.height)
+                        }
+                    }
                 }
 
                 Item {
                     id: drawLayer
                     anchors.fill: parent
                     z: 2
+
+                    property real offsetX: (width - imagePreview.paintedWidth) / 2
+                    property real offsetY: (height - imagePreview.paintedHeight) / 2
+                    property real scaleX: imagePreview.paintedWidth / imagePreview.implicitWidth
+                    property real scaleY: imagePreview.paintedHeight / imagePreview.implicitHeight
 
                     property bool drawing: false
                     property real startX: 0
@@ -241,11 +269,11 @@ Window {
                             Behavior on height { NumberAnimation { duration: 50 } }
 
                             clip: false
-                            x: drawLayer.imageOffsetX() + Math.min(model.startX, model.endX)
-                            y: drawLayer.imageOffsetY() + Math.min(model.startY, model.endY)
+                            x: drawLayer.imageOffsetX() + Math.min(model.startX, model.endX) * drawLayer.scaleX
+                            y: drawLayer.imageOffsetY() + Math.min(model.startY, model.endY) * drawLayer.scaleY
+                            width: Math.abs(model.endX - model.startX) * drawLayer.scaleX
+                            height: Math.abs(model.endY - model.startY) * drawLayer.scaleY
 
-                            width: Math.abs(model.endX - model.startX)
-                            height: Math.abs(model.endY - model.startY)
                             color: "transparent"
                             border.color: "red"
                             border.width: 2
@@ -422,10 +450,11 @@ Window {
                         color: "transparent"
                         border.color: "blue"
                         border.width: 2
-                        x: Math.min(drawLayer.startX, drawLayer.currentX)
-                        y: Math.min(drawLayer.startY, drawLayer.currentY)
-                        width: Math.abs(drawLayer.currentX - drawLayer.startX)
-                        height: Math.abs(drawLayer.currentY - drawLayer.startY)
+
+                        x: drawLayer.offsetX + Math.min(drawLayer.startX, drawLayer.currentX) * drawLayer.scaleX
+                        y: drawLayer.offsetY + Math.min(drawLayer.startY, drawLayer.currentY) * drawLayer.scaleY
+                        width: Math.abs(drawLayer.currentX - drawLayer.startX) * drawLayer.scaleX
+                        height: Math.abs(drawLayer.currentY - drawLayer.startY) * drawLayer.scaleY
                     }
 
                     // ... vorheriger Code unverändert ...
@@ -436,46 +465,50 @@ Window {
                         acceptedButtons: Qt.LeftButton
 
                         onPressed: (mouse) => {
-                            // Prüfen, ob ein Rechteck angeklickt wurde
-                            if (drawLayer.pointInExistingRect(mouse.x, mouse.y)) {
-                                // Ereignis weitergeben an Kindelemente
-                                mouse.accepted = false
-                                return
-                            }
-                            var imgX = mouse.x - drawLayer.imageOffsetX()
-                            var imgY = mouse.y - drawLayer.imageOffsetY()
+                            // Umrechnung von Mausposition in Bildkoordinaten
+                            var imgX = (mouse.x - drawLayer.offsetX) / drawLayer.scaleX
+                            var imgY = (mouse.y - drawLayer.offsetY) / drawLayer.scaleY
 
+                            // Prüfen, ob bereits ein Rechteck dort existiert
                             if (drawLayer.pointInExistingRect(imgX, imgY)) {
                                 mouse.accepted = false
                                 return
                             }
+
                             drawLayer.startX = imgX
                             drawLayer.startY = imgY
+                            drawLayer.currentX = imgX
+                            drawLayer.currentY = imgY
                             drawLayer.drawing = true
-                            drawLayer.currentX = drawLayer.startX
-                            drawLayer.currentY = drawLayer.startY
                         }
 
                         onPositionChanged: (mouse) => {
                             if (drawLayer.drawing) {
-                                drawLayer.currentX = mouse.x - drawLayer.imageOffsetX()
-                                drawLayer.currentY = mouse.y - drawLayer.imageOffsetY()
+                                drawLayer.currentX = (mouse.x - drawLayer.offsetX) / drawLayer.scaleX
+                                drawLayer.currentY = (mouse.y - drawLayer.offsetY) / drawLayer.scaleY
                             }
                         }
 
                         onReleased: (mouse) => {
-                            if (!drawLayer.drawing) return
+                            if (!drawLayer.drawing)
+                                return
 
                             drawLayer.drawing = false
-                            drawLayer.currentX = mouse.x - drawLayer.imageOffsetX()
-                            drawLayer.currentY = mouse.y - drawLayer.imageOffsetY()
 
-                            rectanglesModel.append({
-                                startX: drawLayer.startX,
-                                startY: drawLayer.startY,
-                                endX: drawLayer.currentX,
-                                endY: drawLayer.currentY
-                            })
+                            // Letzte Position in Bildkoordinaten
+                            drawLayer.currentX = (mouse.x - drawLayer.offsetX) / drawLayer.scaleX
+                            drawLayer.currentY = (mouse.y - drawLayer.offsetY) / drawLayer.scaleY
+
+                            // Nur sinnvolle Rechtecke speichern
+                            if (Math.abs(drawLayer.currentX - drawLayer.startX) >= 1 &&
+                                Math.abs(drawLayer.currentY - drawLayer.startY) >= 1) {
+                                rectanglesModel.append({
+                                    startX: drawLayer.startX,
+                                    startY: drawLayer.startY,
+                                    endX: drawLayer.currentX,
+                                    endY: drawLayer.currentY
+                                })
+                            }
                         }
                     }
                 }

@@ -45,17 +45,21 @@ Window {
         enabled: !listView.activeFocus
     }
 
-    // Bildbearbeitungsdialog
-    ImageProcessingWindow {
-        id: imageProcessingWindow
+    Component {
+        id: imageProcessingWindowComponent
 
-        onAccepted: {
-            console.log("Bildbearbeitung bestätigt.")
-            // Optional: Weitere Logik z. B. Speichern
-        }
+        ImageProcessingWindow {
+            onAccepted: {
+                console.log("Bildbearbeitung bestätigt.")
+            }
+            onRejected: {
+                console.log("Bildbearbeitung abgebrochen.")
+            }
 
-        onRejected: {
-            console.log("Bildbearbeitung abgebrochen.")
+            onVisibleChanged: {
+                if (!visible)
+                    destroy()
+            }
         }
     }
 
@@ -123,14 +127,15 @@ Window {
             `, imageContextMenu)
         }
 
-        // Funktion zum Öffnen des Bilddialogs
         function openImageProcessingDialog(role, index) {
             if (index >= 0 && index < uebungModel.count) {
                 const fileName = uebungModel.get(index)[role];
                 if (fileName && fileName.trim() !== "") {
                     const fullPath = packagePath + "/" + fileName;
                     const sanitizedPath = fullPath.replace(/\\/g, '/');
-                    imageProcessingWindow.openWithImage("file:///" + sanitizedPath);
+
+                    const win = imageProcessingWindowComponent.createObject(dialogWindow);
+                    win.openWithImage("file:///" + sanitizedPath);
                 } else {
                     console.log("Kein Bild für diese Zelle vorhanden");
                 }
