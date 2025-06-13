@@ -59,6 +59,11 @@ Window {
         })
     }
 
+    Item {
+        id: globalHelper
+        anchors.fill: parent
+    }
+
     Component {
         id: resizeHandleComponent
 
@@ -229,6 +234,13 @@ Window {
                     property real currentX: 0
                     property real currentY: 0
 
+                    property bool showGlobalCircles: false
+                    property real circleCenterX: 0
+                    property real circleCenterY: 0
+                    property real circleInnerRadius: 0
+                    property real circleOuterRadius: 0
+
+
                     ListModel {
                         id: rectanglesModel
                     }
@@ -292,6 +304,15 @@ Window {
                             property real originalHeight: 0
                             property real resizeStartX: 0
                             property real resizeStartY: 0
+
+                            property real rotationAngle: 0
+
+                            transform: Rotation {
+                                origin.x: rectItem.width / 2
+                                origin.y: rectItem.height / 2
+                                angle: rectItem.rotationAngle
+                            }
+
 
                             Loader {
                                 sourceComponent: resizeHandleComponent
@@ -387,17 +408,6 @@ Window {
                                         newX = Math.max(minX, Math.min(newX, maxX))
                                         newY = Math.max(minY, Math.min(newY, maxY))
 
-                                        // DEBUG-AUSGABEN
-                                        console.log("=== Rectangle Move Debug ===")
-                                        console.log("  Rechteck rechter Rand (X):", newX + viewWidth)
-                                        console.log("  Bild rechter Rand (X):", offsetX + imagePreview.paintedWidth)
-                                        console.log("  newX (View):", newX)
-                                        console.log("  offsetX:", offsetX)
-                                        console.log("  scaleX:", scaleX)
-                                        console.log("  modelWidth (Bild):", modelWidth)
-                                        console.log("  viewWidth:", viewWidth)
-                                        console.log("  rectItem.border.width:", rectItem.border.width)
-
                                         // Rückumrechnung zu Bildkoordinaten
                                         let newStartX = (newX - offsetX) / scaleX
                                         let newStartY = (newY - offsetY) / scaleY
@@ -442,9 +452,75 @@ Window {
                                     }
                                 }
                             }
+                            Rectangle {
+                                id: outerArea
+                                anchors.fill: parent
+                                color: "transparent"
+                                z: -2
+
+                                MouseArea {
+                                    id: outerMouseArea
+                                    anchors.fill: parent
+                                    acceptedButtons: Qt.LeftButton
+                                    hoverEnabled: true
+                                    propagateComposedEvents: true
+
+                                    property real startAngle: 0
+                                    property real dragStartAngle: 0           // Winkel bei Start
+                                    property real dragInitialRotation: 0      // ursprüngliche Rotation des Rechtecks
+
+                                    property point lastMouseGlobal
+
+                                    onPressed: (mouse) => {
+                                        if (!innerArea.containsMouse) {
+                                            const centerX = rectItem.width / 2
+                                            const centerY = rectItem.height / 2
+                                            const localX = mouse.x
+                                            const localY = mouse.y
+                                            const dx = localX - centerX
+                                            const dy = localY - centerY
+
+                                            dragStartAngle = Math.atan2(dy, dx)
+                                            dragInitialRotation = rectItem.rotationAngle
+
+                                            // Kreisvisualisierung
+                                            const dxOuter = rectItem.width / 2
+                                            const dyOuter = rectItem.height / 2
+                                            const outerRadius = Math.sqrt(dxOuter * dxOuter + dyOuter * dyOuter)
+
+                                            const dxInner = rectItem.width / 6
+                                            const dyInner = rectItem.height / 2
+                                            const innerRadius = Math.sqrt(dxInner * dxInner + dyInner * dyInner)
+
+                                            drawLayer.circleCenterX = rectItem.x + rectItem.width / 2
+                                            drawLayer.circleCenterY = rectItem.y + rectItem.height / 2
+                                            drawLayer.circleInnerRadius = innerRadius
+                                            drawLayer.circleOuterRadius = outerRadius
+
+                                            drawLayer.showGlobalCircles = true
+                                            globalCircleCanvas.requestPaint()
+                                        }
+                                    }
+                                    onPositionChanged: (mouse) => {
+                                        if (drawLayer.showGlobalCircles) {
+                                            const centerX = rectItem.width / 2
+                                            const centerY = rectItem.height / 2
+                                            const dx = mouse.x - centerX
+                                            const dy = mouse.y - centerY
+                                            const currentAngle = Math.atan2(dy, dx)
+
+                                            const angleDelta = currentAngle - dragStartAngle
+                                            rectItem.rotationAngle = dragInitialRotation + angleDelta * 180 / Math.PI
+                                        }
+                                    }
+                                    onReleased: {
+                                        drawLayer.showGlobalCircles = false
+                                        globalCircleCanvas.requestPaint()
+                                    }
+                                }
+                            }
                         }
                     }
-
                     Rectangle {
                         visible: drawLayer.drawing
                         color: "transparent"
@@ -510,6 +586,31 @@ Window {
                                 })
                             }
                         }
+                    }
+                }
+                Canvas {
+                    id: globalCircleCanvas
+                    anchors.fill: parent
+                    visible: drawLayer.showGlobalCircles
+                    z: 999
+
+                    onPaint: {
+                        const ctx = getContext("2d")
+                        ctx.clearRect(0, 0, width, height)
+
+                        if (!drawLayer.showGlobalCircles)
+                            return
+
+                        ctx.strokeStyle = "rgba(0, 150, 255, 0.7)"
+                        ctx.lineWidth = 2
+
+                        ctx.beginPath()
+                        ctx.arc(drawLayer.circleCenterX, drawLayer.circleCenterY, drawLayer.circleInnerRadius, 0, 2 * Math.PI)
+                        ctx.stroke()
+
+                        ctx.beginPath()
+                        ctx.arc(drawLayer.circleCenterX, drawLayer.circleCenterY, drawLayer.circleOuterRadius, 0, 2 * Math.PI)
+                        ctx.stroke()
                     }
                 }
             }

@@ -148,6 +148,36 @@ Window {
         anchors.fill: parent
     }
 
+    Canvas {
+        id: circleCanvas
+        anchors.fill: parent
+        visible: showCircles
+        onPaint: {
+            var ctx = getContext("2d");
+            ctx.clearRect(0, 0, width, height);
+
+            if (!showCircles) return;
+
+            ctx.strokeStyle = "red";
+            ctx.lineWidth = 2;
+
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, innerRadius, 0, 2 * Math.PI);
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, outerRadius, 0, 2 * Math.PI);
+            ctx.stroke();
+        }
+
+        property bool showCircles: false
+        property real centerX: 0
+        property real centerY: 0
+        property real innerRadius: 0
+        property real outerRadius: 0
+    }
+
+
     Component {
         id: columnEditor
         Item {
@@ -439,6 +469,7 @@ Window {
                             }
                         }
                     }
+
                 }
             }
         }
