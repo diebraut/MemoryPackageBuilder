@@ -452,71 +452,99 @@ Window {
                                     }
                                 }
                             }
-                            Rectangle {
-                                id: outerArea
+                            MouseArea {
+                                id: outerMouseArea
                                 anchors.fill: parent
-                                color: "transparent"
-                                z: -2
+                                acceptedButtons: Qt.LeftButton
+                                hoverEnabled: true
+                                propagateComposedEvents: true
 
-                                MouseArea {
-                                    id: outerMouseArea
-                                    anchors.fill: parent
-                                    acceptedButtons: Qt.LeftButton
-                                    hoverEnabled: true
-                                    propagateComposedEvents: true
+                                property real dragStartAngle: 0
+                                property real dragInitialRotation: 0
+                                property real centerGlobalX: 0
+                                property real centerGlobalY: 0
 
-                                    property real startAngle: 0
-                                    property real dragStartAngle: 0           // Winkel bei Start
-                                    property real dragInitialRotation: 0      // ursprüngliche Rotation des Rechtecks
+                                onPressed: (mouse) => {
+                                    const localPoint = Qt.point(mouse.x, mouse.y)
+                                    if (!innerArea.contains(localPoint)) {
+                                        // Mittelpunkt des Rechtecks → Canvas-Koordinaten
+                                        const center = rectItem.mapToItem(globalCircleCanvas, Qt.point(rectItem.width / 2, rectItem.height / 2))
+                                        centerGlobalX = center.x
+                                        centerGlobalY = center.y
 
-                                    property point lastMouseGlobal
+                                        const canvasMouse = outerMouseArea.mapToItem(globalCircleCanvas, Qt.point(mouse.x, mouse.y))
+                                        const dx = canvasMouse.x - centerGlobalX
+                                        const dy = canvasMouse.y - centerGlobalY
+                                        dragStartAngle = Math.atan2(dy, dx)
+                                        dragInitialRotation = rectItem.rotationAngle
 
-                                    onPressed: (mouse) => {
-                                        if (!innerArea.containsMouse) {
-                                            const centerX = rectItem.width / 2
-                                            const centerY = rectItem.height / 2
-                                            const localX = mouse.x
-                                            const localY = mouse.y
-                                            const dx = localX - centerX
-                                            const dy = localY - centerY
+                                        // Äußerer Kreis: Diagonale des Rechtecks
+                                        const outerRadius = Math.sqrt((rectItem.width / 2) ** 2 + (rectItem.height / 2) ** 2)
+                                        drawLayer.circleOuterRadius = outerRadius
 
-                                            dragStartAngle = Math.atan2(dy, dx)
-                                            dragInitialRotation = rectItem.rotationAngle
+                                        // Innerer Kreis: Abstand zu Ecke von innerArea (oben links)
+                                        const innerCorner = innerArea.mapToItem(globalCircleCanvas, Qt.point(0, 0))
+                                        const ix = centerGlobalX - innerCorner.x
+                                        const iy = centerGlobalY - innerCorner.y
+                                        const innerRadius = Math.sqrt(ix * ix + iy * iy)
+                                        drawLayer.circleInnerRadius = innerRadius
 
-                                            // Kreisvisualisierung
-                                            const dxOuter = rectItem.width / 2
-                                            const dyOuter = rectItem.height / 2
-                                            const outerRadius = Math.sqrt(dxOuter * dxOuter + dyOuter * dyOuter)
-
-                                            const dxInner = rectItem.width / 6
-                                            const dyInner = rectItem.height / 2
-                                            const innerRadius = Math.sqrt(dxInner * dxInner + dyInner * dyInner)
-
-                                            drawLayer.circleCenterX = rectItem.x + rectItem.width / 2
-                                            drawLayer.circleCenterY = rectItem.y + rectItem.height / 2
-                                            drawLayer.circleInnerRadius = innerRadius
-                                            drawLayer.circleOuterRadius = outerRadius
-
-                                            drawLayer.showGlobalCircles = true
-                                            globalCircleCanvas.requestPaint()
-                                        }
-                                    }
-                                    onPositionChanged: (mouse) => {
-                                        if (drawLayer.showGlobalCircles) {
-                                            const centerX = rectItem.width / 2
-                                            const centerY = rectItem.height / 2
-                                            const dx = mouse.x - centerX
-                                            const dy = mouse.y - centerY
-                                            const currentAngle = Math.atan2(dy, dx)
-
-                                            const angleDelta = currentAngle - dragStartAngle
-                                            rectItem.rotationAngle = dragInitialRotation + angleDelta * 180 / Math.PI
-                                        }
-                                    }
-                                    onReleased: {
-                                        drawLayer.showGlobalCircles = false
+                                        // Kreise aktivieren
+                                        drawLayer.circleCenterX = centerGlobalX
+                                        drawLayer.circleCenterY = centerGlobalY
+                                        drawLayer.showGlobalCircles = true
                                         globalCircleCanvas.requestPaint()
+
+                                        mouse.accepted = true
+                                    } else {
+                                        mouse.accepted = false
                                     }
+                                }
+
+                                onPositionChanged: (mouse) => {
+                                    if (drawLayer.showGlobalCircles) {
+                                        // Mausposition relativ zum Canvas
+                                        const canvasPos = outerMouseArea.mapToItem(globalCircleCanvas, Qt.point(mouse.x, mouse.y))
+                                        const dx = canvasPos.x - centerGlobalX
+                                        const dy = canvasPos.y - centerGlobalY
+
+                                        const angle = Math.atan2(dy, dx)
+                                        const delta = angle - dragStartAngle
+
+                                        const threshold = 0.003  // ca. 0.17°
+                                        if (Math.abs(delta) > threshold) {
+                                            rectItem.rotationAngle = dragInitialRotation + delta * 180 / Math.PI
+                                        }
+                                    }
+                                }
+
+                                onReleased: {
+                                    drawLayer.showGlobalCircles = false
+                                    globalCircleCanvas.requestPaint()
+                                }
+                            }
+                            Item {
+                                id: angleOverlay
+                                width: angleText.implicitWidth + 12
+                                height: angleText.implicitHeight + 8
+                                x: (rectItem.width - width) / 2
+                                y: (rectItem.height - height) / 2
+                                z: 1000
+                                visible: drawLayer.showGlobalCircles
+
+                                Rectangle {
+                                    anchors.fill: parent
+                                    radius: 4
+                                    color: "black"
+                                    opacity: 0.6
+                                }
+
+                                Text {
+                                    id: angleText
+                                    anchors.centerIn: parent
+                                    font.pixelSize: 14
+                                    color: "white"
+                                    text: Math.round(rectItem.rotationAngle) + "°"
                                 }
                             }
                         }
