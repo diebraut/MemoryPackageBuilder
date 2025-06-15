@@ -357,7 +357,7 @@ Window {
                                 width: parent.width / 3
                                 height: parent.height
                                 color: "#80000000"
-                                z: -1
+                                z: 1001
 
                                 MouseArea {
                                     anchors.fill: parent
