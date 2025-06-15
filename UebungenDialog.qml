@@ -135,7 +135,12 @@ Window {
                     const sanitizedPath = fullPath.replace(/\\/g, '/');
 
                     const win = imageProcessingWindowComponent.createObject(dialogWindow);
-                    win.openWithImage("file:///" + sanitizedPath);
+
+                    // Bildschirmgröße ermitteln für korrekte Positionierung
+                    const screenW = Screen.desktopAvailableWidth;
+                    const screenH = Screen.desktopAvailableHeight;
+
+                    win.openWithImage("file:///" + sanitizedPath, screenW, screenH);
                 } else {
                     console.log("Kein Bild für diese Zelle vorhanden");
                 }

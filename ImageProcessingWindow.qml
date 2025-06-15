@@ -17,7 +17,7 @@ Window {
     property int maxDialogWidth: Screen.width * 0.9
     property int maxDialogHeight: Screen.height * 0.9
 
-    function openWithImage(path) {
+    function openWithImage(path, screenW, screenH) {
         rectanglesModel.clear()
 
         imagePreview.source = ""
@@ -39,20 +39,25 @@ Window {
                     imgH = imagePreview.implicitHeight
                 }
 
-                // Sicherheitsmaßnahme: Fallback falls immer noch 0
                 if (imgW <= 0 || imgH <= 0) {
                     imgW = 400
                     imgH = 300
                 }
 
+                const availableWidth = screenW || Screen.desktopAvailableWidth
+                const availableHeight = screenH || Screen.desktopAvailableHeight
+
                 const buttonsHeight = buttonsRow.implicitHeight + layout.spacing
                 const windowMargin = 40
 
-                const targetW = Math.min(imgW * 1.1 + windowMargin, maxDialogWidth)
-                const targetH = Math.min(imgH * 1.1 + buttonsHeight + windowMargin, maxDialogHeight)
+                const targetW = Math.min(imgW * 1.1 + windowMargin, availableWidth * 0.95)
+                const targetH = Math.min(imgH * 1.1 + buttonsHeight + windowMargin, availableHeight * 0.95)
 
                 imageWindow.width = targetW
                 imageWindow.height = targetH
+
+                imageWindow.x = (availableWidth - targetW) / 2
+                imageWindow.y = (availableHeight - targetH) / 2
 
                 imageWindow.visible = true
             }
@@ -73,7 +78,7 @@ Window {
             color: "#80FFFFFF"
             //border.color: "red"
             radius: 3
-            z: 1000
+            z: 2000
 
             property string mode: ""
             property int modelIndex: -1
@@ -163,10 +168,19 @@ Window {
                         break
                     }
 
-                    rectanglesModel.setProperty(modelIndex, "startX", newStartX)
-                    rectanglesModel.setProperty(modelIndex, "startY", newStartY)
-                    rectanglesModel.setProperty(modelIndex, "endX", newEndX)
-                    rectanglesModel.setProperty(modelIndex, "endY", newEndY)
+                    const newCenterX = (newStartX + newEndX) / 2 * scaleX + drawLayer.offsetX
+                    const newCenterY = (newStartY + newEndY) / 2 * scaleY + drawLayer.offsetY
+                    const newWidth = Math.abs(newEndX - newStartX) * scaleX
+                    const newHeight = Math.abs(newEndY - newStartY) * scaleY
+
+                    const rotation = rectanglesModel.get(modelIndex).rotationAngle || 0
+
+                    if (drawLayer.allCornersInside(newCenterX, newCenterY, newWidth, newHeight, rotation)) {
+                        rectanglesModel.setProperty(modelIndex, "startX", newStartX)
+                        rectanglesModel.setProperty(modelIndex, "startY", newStartY)
+                        rectanglesModel.setProperty(modelIndex, "endX", newEndX)
+                        rectanglesModel.setProperty(modelIndex, "endY", newEndY)
+                    }
                 }
             }
             Image {
@@ -253,19 +267,67 @@ Window {
                         return (imagePreview.height - imagePreview.paintedHeight) / 2
                     }
 
+                    function pointInRotatedRect(x, y, rect) {
+                        const cx = (rect.startX + rect.endX) / 2
+                        const cy = (rect.startY + rect.endY) / 2
+
+                        const angle = - (rect.rotationAngle || 0) * Math.PI / 180
+
+                        const dx = x - cx
+                        const dy = y - cy
+
+                        // Inverse Rotation (um Mittelpunkt)
+                        const rx = dx * Math.cos(angle) - dy * Math.sin(angle)
+                        const ry = dx * Math.sin(angle) + dy * Math.cos(angle)
+
+                        const hw = Math.abs(rect.endX - rect.startX) / 2
+                        const hh = Math.abs(rect.endY - rect.startY) / 2
+
+                        return rx >= -hw && rx <= hw && ry >= -hh && ry <= hh
+                    }
+
                     function pointInExistingRect(x, y) {
-                        // Korrektur: Verwende Bildkoordinaten ohne Offset
                         for (let i = 0; i < rectanglesModel.count; ++i) {
-                            const rect = rectanglesModel.get(i)
-                            const rx = Math.min(rect.startX, rect.endX)
-                            const ry = Math.min(rect.startY, rect.endY)
-                            const rw = Math.abs(rect.endX - rect.startX)
-                            const rh = Math.abs(rect.endY - rect.startY)
-                            if (x >= rx && x <= rx + rw && y >= ry && y <= ry + rh) {
-                                return true
-                            }
+                            const r = rectanglesModel.get(i)
+                            if (pointInRotatedRect(x, y, r)) return true
                         }
                         return false
+                    }
+                    function isPointInImage(px, py) {
+                        return px >= offsetX &&
+                               px <= offsetX + imagePreview.paintedWidth &&
+                               py >= offsetY &&
+                               py <= offsetY + imagePreview.paintedHeight
+                    }
+
+                    function allCornersInside(rotCenterX, rotCenterY, width, height, angleDeg) {
+                        const angle = angleDeg * Math.PI / 180
+
+                        const cosA = Math.cos(angle)
+                        const sinA = Math.sin(angle)
+
+                        const corners = [
+                            [-width/2, -height/2],
+                            [ width/2, -height/2],
+                            [ width/2,  height/2],
+                            [-width/2,  height/2]
+                        ]
+
+                        for (let i = 0; i < 4; ++i) {
+                            const localX = corners[i][0]
+                            const localY = corners[i][1]
+
+                            const rotatedX = localX * cosA - localY * sinA
+                            const rotatedY = localX * sinA + localY * cosA
+
+                            const screenX = rotCenterX + rotatedX
+                            const screenY = rotCenterY + rotatedY
+
+                            if (!isPointInImage(screenX, screenY)) {
+                                return false
+                            }
+                        }
+                        return true
                     }
 
                     Repeater {
@@ -305,7 +367,9 @@ Window {
                             property real resizeStartX: 0
                             property real resizeStartY: 0
 
-                            property real rotationAngle: 0
+                            property var handles: []
+
+                            property real rotationAngle: model.rotationAngle !== undefined ? model.rotationAngle : 0
 
                             transform: Rotation {
                                 origin.x: rectItem.width / 2
@@ -321,6 +385,7 @@ Window {
                                     item.cursor = "SizeFDiagCursor"
                                     item.modelIndex = rectItem.modelIndex
                                     item.targetRectItem = rectItem
+                                    rectItem.handles.push(item)
                                 }
                             }
                             Loader {
@@ -330,6 +395,7 @@ Window {
                                     item.cursor = "SizeBDiagCursor"
                                     item.modelIndex = rectItem.modelIndex
                                     item.targetRectItem = rectItem
+                                    rectItem.handles.push(item)
                                 }
                             }
                             Loader {
@@ -339,6 +405,7 @@ Window {
                                     item.cursor = "SizeBDiagCursor"
                                     item.modelIndex = rectItem.modelIndex
                                     item.targetRectItem = rectItem
+                                    rectItem.handles.push(item)
                                 }
                             }
                             Loader {
@@ -348,6 +415,7 @@ Window {
                                     item.cursor = "SizeFDiagCursor"
                                     item.modelIndex = rectItem.modelIndex
                                     item.targetRectItem = rectItem
+                                    rectItem.handles.push(item)
                                 }
                             }
                             Rectangle {
@@ -369,52 +437,45 @@ Window {
                                             rectItem.dragging = true
                                             rectItem.dragStartX = mouse.x
                                             rectItem.dragStartY = mouse.y
+                                            mouse.accepted = true
+                                        } else if (mouse.button === Qt.RightButton) {
+                                            mouse.accepted = true  // ❗ Wichtig: akzeptieren, damit onClicked ausgelöst wird
                                         }
                                     }
 
                                     onPositionChanged: (mouse) => {
                                         if (!rectItem.dragging) return
 
-                                        // Bewegung
                                         let dx = mouse.x - rectItem.dragStartX
                                         let dy = mouse.y - rectItem.dragStartY
 
-                                        // Neue Bildschirmposition
                                         let newX = rectItem.x + dx
                                         let newY = rectItem.y + dy
 
-                                        // Bild-Offsets und Skalierung
                                         let offsetX = drawLayer.imageOffsetX()
                                         let offsetY = drawLayer.imageOffsetY()
                                         let scaleX = imagePreview.paintedWidth / imagePreview.implicitWidth
                                         let scaleY = imagePreview.paintedHeight / imagePreview.implicitHeight
 
-                                        // Modellabmessungen (Bild-Koordinaten)
                                         let model = rectanglesModel.get(rectItem.modelIndex)
                                         let modelWidth = Math.abs(model.endX - model.startX)
                                         let modelHeight = Math.abs(model.endY - model.startY)
 
-                                        // Rechteckgröße in View-Koordinaten
                                         let viewWidth = modelWidth * scaleX
                                         let viewHeight = modelHeight * scaleY
 
-                                        // Grenzen (View-Koordinaten)
-                                        let minX = offsetX
-                                        let minY = offsetY
-                                        let maxX = offsetX + imagePreview.paintedWidth - viewWidth
-                                        let maxY = offsetY + imagePreview.paintedHeight - viewHeight
+                                        let centerX = newX + viewWidth / 2
+                                        let centerY = newY + viewHeight / 2
 
-                                        // Begrenzung anwenden
-                                        newX = Math.max(minX, Math.min(newX, maxX))
-                                        newY = Math.max(minY, Math.min(newY, maxY))
+                                        if (!drawLayer.allCornersInside(centerX, centerY, viewWidth, viewHeight, rectItem.rotationAngle))
+                                            return
 
-                                        // Rückumrechnung zu Bildkoordinaten
                                         let newStartX = (newX - offsetX) / scaleX
                                         let newStartY = (newY - offsetY) / scaleY
                                         let newEndX = newStartX + modelWidth
                                         let newEndY = newStartY + modelHeight
 
-                                        // Überschneidungen prüfen
+                                        // Optional: Kollision mit anderen Rechtecken verhindern
                                         let blocked = false
                                         for (let i = 0; i < rectanglesModel.count; ++i) {
                                             if (i === rectItem.modelIndex) continue
@@ -431,7 +492,6 @@ Window {
                                             }
                                         }
 
-                                        // Wenn nicht blockiert, ins Modell schreiben
                                         if (!blocked) {
                                             rectanglesModel.setProperty(rectItem.modelIndex, "startX", newStartX)
                                             rectanglesModel.setProperty(rectItem.modelIndex, "startY", newStartY)
@@ -465,9 +525,25 @@ Window {
                                 property real centerGlobalY: 0
 
                                 onPressed: (mouse) => {
-                                    const localPoint = Qt.point(mouse.x, mouse.y)
-                                    if (!innerArea.contains(localPoint)) {
-                                        // Mittelpunkt des Rechtecks → Canvas-Koordinaten
+
+                                   for (let i = 0; i < rectItem.handles.length; ++i) {
+                                       const handle = rectItem.handles[i]
+                                       const pos = handle.mapToItem(outerMouseArea, Qt.point(0, 0))
+
+                                       const clickX = mouse.x
+                                       const clickY = mouse.y
+
+                                       if (clickX >= pos.x && clickX <= pos.x + handle.width &&
+                                           clickY >= pos.y && clickY <= pos.y + handle.height) {
+                                           mouse.accepted = false
+                                           return
+                                       }
+                                   }
+
+                                    // Check ob irgendein Resize-Handle die Maus hat
+                                    const clickPoint = Qt.point(mouse.x, mouse.y)
+                                    const mapped = outerMouseArea.mapToItem(innerArea, Qt.point(mouse.x, mouse.y))
+                                    if (mapped.x < 0 || mapped.x > innerArea.width || mapped.y < 0 || mapped.y > innerArea.height) {                                        // Mittelpunkt des Rechtecks → Canvas-Koordinaten
                                         const center = rectItem.mapToItem(globalCircleCanvas, Qt.point(rectItem.width / 2, rectItem.height / 2))
                                         centerGlobalX = center.x
                                         centerGlobalY = center.y
@@ -514,6 +590,7 @@ Window {
                                         const threshold = 0.003  // ca. 0.17°
                                         if (Math.abs(delta) > threshold) {
                                             rectItem.rotationAngle = dragInitialRotation + delta * 180 / Math.PI
+                                            rectanglesModel.setProperty(rectItem.modelIndex, "rotationAngle", rectItem.rotationAngle)
                                         }
                                     }
                                 }
@@ -610,7 +687,8 @@ Window {
                                     startX: drawLayer.startX,
                                     startY: drawLayer.startY,
                                     endX: drawLayer.currentX,
-                                    endY: drawLayer.currentY
+                                    endY: drawLayer.currentY,
+                                    rotationAngle: 0
                                 })
                             }
                         }
