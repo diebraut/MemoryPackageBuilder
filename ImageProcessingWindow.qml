@@ -17,9 +17,8 @@ Window {
     property int maxDialogWidth: Screen.width * 0.9
     property int maxDialogHeight: Screen.height * 0.9
 
-    function openWithImage(path, screenW, screenH) {
+    function openWithImage(path, screenW, screenH, excludeRect) {
         rectanglesModel.clear()
-
         imagePreview.source = ""
         imageWindow.visible = false
 
@@ -34,19 +33,27 @@ Window {
                 let imgW = imagePreview.sourceSize.width
                 let imgH = imagePreview.sourceSize.height
 
+                // Fallback, falls sourceSize nicht funktioniert
                 if (imgW <= 0 || imgH <= 0) {
-                    imgW = imagePreview.implicitWidth
-                    imgH = imagePreview.implicitHeight
+                    imgW = imagePreview.paintedWidth
+                    imgH = imagePreview.paintedHeight
                 }
 
+                // Falls immer noch nicht sicher: Standardwerte setzen
                 if (imgW <= 0 || imgH <= 0) {
                     imgW = 400
                     imgH = 300
                 }
 
+                // Setze Original-Bildgrößen für skalierungsberechnungen
+                imagePreview.originalImageWidth = imagePreview.sourceSize.width
+                imagePreview.originalImageHeight = imagePreview.sourceSize.height
+                console.log("Original image size:", imagePreview.sourceSize.width, imagePreview.sourceSize.height)
+                console.log("Painted size:", imagePreview.paintedWidth, imagePreview.paintedHeight)
+
+
                 const availableWidth = screenW || Screen.desktopAvailableWidth
                 const availableHeight = screenH || Screen.desktopAvailableHeight
-
                 const buttonsHeight = buttonsRow.implicitHeight + layout.spacing
                 const windowMargin = 40
 
@@ -55,10 +62,39 @@ Window {
 
                 imageWindow.width = targetW
                 imageWindow.height = targetH
-
                 imageWindow.x = (availableWidth - targetW) / 2
                 imageWindow.y = (availableHeight - targetH) / 2
 
+                if (excludeRect && typeof excludeRect === "string") {
+                    const rectStrings = excludeRect.split("|")
+                    for (let i = 0; i < rectStrings.length; ++i) {
+                        const parts = rectStrings[i].split(",")
+                        if (parts.length >= 5) {
+                            const startX = parseFloat(parts[0])
+                            const startY = parseFloat(parts[1])
+                            const width = parseFloat(parts[2])
+                            const height = parseFloat(parts[3])
+                            const rotationAngle = parseFloat(parts[4])
+
+                            if (!isNaN(startX) && !isNaN(startY) &&
+                                !isNaN(width) && !isNaN(height) &&
+                                !isNaN(rotationAngle)) {
+
+                                rectanglesModel.append({
+                                    startX: startX,
+                                    startY: startY,
+                                    endX: startX + width,
+                                    endY: startY + height,
+                                    rotationAngle: rotationAngle
+                                })
+                            } else {
+                                console.warn("Ungültige Werte in excludeRect:", rectStrings[i])
+                            }
+                        } else {
+                            console.warn("Unvollständiges Rechteck:", rectStrings[i])
+                        }
+                    }
+                }
                 imageWindow.visible = true
             }
         })
@@ -224,6 +260,8 @@ Window {
                     fillMode: Image.PreserveAspectFit
                     asynchronous: true
                     source: ""
+                    property int originalImageWidth: 0
+                    property int originalImageHeight: 0
 
                     onStatusChanged: {
                         if (status === Image.Ready) {
@@ -239,8 +277,8 @@ Window {
 
                     property real offsetX: (width - imagePreview.paintedWidth) / 2
                     property real offsetY: (height - imagePreview.paintedHeight) / 2
-                    property real scaleX: imagePreview.paintedWidth / imagePreview.implicitWidth
-                    property real scaleY: imagePreview.paintedHeight / imagePreview.implicitHeight
+                    property real scaleX: imagePreview.paintedWidth / imagePreview.originalImageWidth
+                    property real scaleY: imagePreview.paintedHeight / imagePreview.originalImageHeight
 
                     property bool drawing: false
                     property real startX: 0

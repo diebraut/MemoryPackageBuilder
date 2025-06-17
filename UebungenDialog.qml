@@ -136,11 +136,15 @@ Window {
 
                     const win = imageProcessingWindowComponent.createObject(dialogWindow);
 
-                    // Bildschirmgröße ermitteln für korrekte Positionierung
-                    const screenW = Screen.desktopAvailableWidth;
-                    const screenH = Screen.desktopAvailableHeight;
+                    // Neu: Rechteck-Daten übergeben
+                    let excludeRect = null;
+                    if (role === "imagefileFrage")
+                        excludeRect = uebungModel.get(index).excludeAereaFra;
+                    else if (role === "imagefileAntwort")
+                        excludeRect = uebungModel.get(index).excludeAereaAnt;
 
-                    win.openWithImage("file:///" + sanitizedPath, screenW, screenH);
+                    // Funktion erweitern
+                    win.openWithImage("file:///" + sanitizedPath, Screen.desktopAvailableWidth, Screen.desktopAvailableHeight, excludeRect);
                 } else {
                     console.log("Kein Bild für diese Zelle vorhanden");
                 }
