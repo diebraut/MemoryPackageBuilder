@@ -3,6 +3,8 @@ import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 import QtQuick.Controls.Material 2.15
 
+import ExersizeLoader 1.0
+
 Dialog {
     id: root
     title: "Übung bearbeiten"
@@ -46,11 +48,14 @@ Dialog {
                         spacing: 10
 
                         Button {
-                            id: speichern
                             text: "Speichern"
-                            icon.name: "check"
                             onClicked: {
-                                root.save(root.itemData)
+                                // Auslesen & neue Kopie erzeugen
+                                const cleanCopy = {}
+                                for (let key in root.itemData) {
+                                    cleanCopy[key] = root.itemData[key]
+                                }
+                                root.save(cleanCopy)
                                 root.close()
                             }
                             font.bold: true

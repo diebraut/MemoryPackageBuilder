@@ -11,6 +11,7 @@ public:
     explicit ExersizeLoader(QObject *parent = nullptr);
 
     Q_INVOKABLE QVariantMap loadPackage(const QString &path);
+    Q_INVOKABLE bool savePackage(const QString &path, const QVariantMap &data);
 
 private:
          // keine Notwendigkeit für Memberparser, da Methode lokal arbeitet

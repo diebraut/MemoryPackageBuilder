@@ -33,8 +33,14 @@ Window {
         id: editExersizeDialog
 
         onSave: function(updatedData) {
-            if (listView.currentIndex >= 0) {
-                uebungModel.set(listView.currentIndex, updatedData)
+            const idx = listView.currentIndex
+            if (idx >= 0) {
+                const oldEntry = uebungModel.get(idx)
+                const merged = {}
+                for (let key in oldEntry) merged[key] = oldEntry[key]
+                for (let key in updatedData) merged[key] = updatedData[key]
+                console.log("🔁 Ersetze Modell-Eintrag bei", idx, "mit:", JSON.stringify(merged, null, 2))
+                uebungModel.set(idx, merged)
             }
         }
     }
@@ -497,6 +503,7 @@ Window {
                     icon.name: "edit"
                     onClicked: {
                         if (listView.currentIndex >= 0) {
+                            listView.currentIndex = index; // ← wichtig!
                             editExersizeDialog.itemData = JSON.parse(JSON.stringify(uebungModel.get(listView.currentIndex)))
                             editExersizeDialog.open()
                         }
@@ -517,7 +524,37 @@ Window {
             // Spacer in der Mitte
             Item { Layout.fillWidth: true }
 
-            // Rechtsbündiger Abbrechen-Button
+            // Rechtsbündige Buttons
+            Button {
+                text: "Speichern"
+                icon.name: "save"
+                onClicked: {
+                    var data = {
+                        name: uebungenNameField.text,
+                        frageText: frageTextField.text,
+                        frageTextUmgekehrt: frageTextUmgekehrtField.text,
+                        sequentiell: sequentiellCheckBox.checked,
+                        umgekehrt: umgekehrtCheckBox.checked,
+                        uebungsliste: []
+                    }
+
+                    for (var i = 0; i < uebungModel.count; ++i) {
+                        let eintrag = JSON.parse(JSON.stringify(uebungModel.get(i)))
+                        delete eintrag[""]  // optional: leere Keys entfernen
+                        data.uebungsliste.push(eintrag)                    }
+
+                    console.log("📦 Zu speichernde Daten:", JSON.stringify(data, null, 2))
+
+                    const result = ExersizeLoader.savePackage(packagePath, data)
+                    if (!result) {
+                        console.warn("❌ Speichern fehlgeschlagen!")
+                    } else {
+                        console.log("✅ Speichern erfolgreich.")
+                        dialogWindow.close()
+                    }
+                }
+            }
+
             Button {
                 text: "Abbrechen"
                 onClicked: dialogWindow.close()
