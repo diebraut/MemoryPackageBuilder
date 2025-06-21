@@ -33,14 +33,15 @@ Window {
         id: editExersizeDialog
 
         onSave: function(updatedData) {
-            const idx = listView.currentIndex
+            const idx = listView.currentIndex;
             if (idx >= 0) {
-                const oldEntry = uebungModel.get(idx)
-                const merged = {}
-                for (let key in oldEntry) merged[key] = oldEntry[key]
-                for (let key in updatedData) merged[key] = updatedData[key]
-                console.log("🔁 Ersetze Modell-Eintrag bei", idx, "mit:", JSON.stringify(merged, null, 2))
-                uebungModel.set(idx, merged)
+                const keys = Object.keys(updatedData);
+                for (let key of keys) {
+                    uebungModel.setProperty(idx, key, updatedData[key]);
+                }
+                // Manuelles Refresh der ListView
+                listView.model = null;
+                listView.model = uebungModel;
             }
         }
     }
@@ -56,15 +57,15 @@ Window {
 
         ImageProcessingWindow {
             onAccepted: {
-                console.log("Bildbearbeitung bestätigt.")
+                console.log("Bildbearbeitung bestätigt.");
             }
             onRejected: {
-                console.log("Bildbearbeitung abgebrochen.")
+                console.log("Bildbearbeitung abgebrochen.");
             }
 
             onVisibleChanged: {
                 if (!visible)
-                    destroy()
+                    destroy();
             }
         }
     }
@@ -77,13 +78,13 @@ Window {
         // Funktion zum sicheren Zugriff auf den Wert
         function getCurrentValue() {
             if (rowIndex >= 0 && rowIndex < uebungModel.count) {
-                return uebungModel.get(rowIndex)[roleName] || ""
+                return uebungModel.get(rowIndex)[roleName] || "";
             }
-            return ""
+            return "";
         }
 
         function openFileDialog() {
-            console.log("FileDialog öffnen für:", roleName, "bei Zeile:", rowIndex)
+            console.log("FileDialog öffnen für:", roleName, "bei Zeile:", rowIndex);
             // Hier FileDialog implementieren
         }
 
@@ -91,33 +92,33 @@ Window {
         function buildMenu() {
             // Alte Einträge entfernen
             while (count > 0) {
-                removeItem(itemAt(0))
+                removeItem(itemAt(0));
             }
 
             // Aktuellen Wert abfragen
-            var currentVal = getCurrentValue()
+            var currentVal = getCurrentValue();
 
             // Nur relevante Einträge hinzufügen
             if (currentVal) {
                 addItem(createMenuItem(
                     "Bild '" + currentVal + "' entfernen",
                     "uebungModel.setProperty(rowIndex, roleName, \"\")"
-                ))
+                ));
 
                 addItem(createMenuItem(
                     "Bild '" + currentVal + "' austauschen",
                     "openFileDialog()"
-                ))
+                ));
 
                 addItem(createMenuItem(
                     "Bild '" + currentVal + "' bearbeiten",
                     "imageContextMenu.openImageProcessingDialog('" + roleName + "', '" + rowIndex + "')"
-                ))
+                ));
             } else {
                 addItem(createMenuItem(
                     "Bild hinzufügen",
                     "openFileDialog()"
-                ))
+                ));
             }
         }
 
@@ -130,7 +131,7 @@ Window {
                         ${action}
                     }
                 }
-            `, imageContextMenu)
+            `, imageContextMenu);
         }
 
         function openImageProcessingDialog(role, index) {
@@ -192,13 +193,11 @@ Window {
         property real outerRadius: 0
     }
 
-
     Component {
         id: columnEditor
         Item {
             property string roleName
             property int rowIndex
-            property string initialText
             property int colWidth
 
             width: colWidth
@@ -209,16 +208,22 @@ Window {
                 anchors.centerIn: parent
                 width: colWidth * 0.8
                 height: parent.height * 0.8
-                text: initialText
+
+                // Direkte Bindung mit Qt.binding für dynamische Aktualisierung
+                Binding {
+                    target: textField
+                    property: "text"
+                    value: uebungModel.get(rowIndex)[roleName] || ""
+                }
 
                 activeFocusOnPress: true
                 onPressed: {
                     listView.currentIndex = rowIndex;
-                    forceActiveFocus()
+                    forceActiveFocus();
                 }
                 onTextChanged: {
                     if (text !== uebungModel.get(rowIndex)[roleName]) {
-                        uebungModel.setProperty(rowIndex, roleName, text)
+                        uebungModel.setProperty(rowIndex, roleName, text);
                     }
                 }
 
@@ -236,7 +241,6 @@ Window {
                     propagateComposedEvents: true
 
                     onPressed: function(mouse) {
-                        // KORREKTUR: Direkter Zugriff auf die Eigenschaften des umgebenden Items
                         var currentRole = textField.parent.roleName;
 
                         if (mouse.button === Qt.RightButton &&
@@ -337,13 +341,13 @@ Window {
                 property real totalContentWidth: 150 * columnCount + (columnCount - 1) * columnSpacing
 
                 onWidthChanged: {
-                    columnWidth = Math.max(150, (width - (columnCount - 1) * columnSpacing) / columnCount)
-                    totalContentWidth = columnWidth * columnCount + (columnCount - 1) * columnSpacing
+                    columnWidth = Math.max(150, (width - (columnCount - 1) * columnSpacing) / columnCount);
+                    totalContentWidth = columnWidth * columnCount + (columnCount - 1) * columnSpacing;
                 }
 
                 Component.onCompleted: {
-                    columnWidth = Math.max(150, (width - (columnCount - 1) * columnSpacing) / columnCount)
-                    totalContentWidth = columnWidth * columnCount + (columnCount - 1) * columnSpacing
+                    columnWidth = Math.max(150, (width - (columnCount - 1) * columnSpacing) / columnCount);
+                    totalContentWidth = columnWidth * columnCount + (columnCount - 1) * columnSpacing;
                 }
 
                 // Kopfzeile
@@ -433,11 +437,11 @@ Window {
 
                         // Funktion zum Öffnen des Dialogs
                         function handleDoubleClick(index) {
-                            console.log("Doubleclick für Zeile:", index)
-                            listView.currentIndex = index
+                            console.log("Doubleclick für Zeile:", index);
+                            listView.currentIndex = index;
                             if (listView.currentIndex >= 0) {
-                                editExersizeDialog.itemData = JSON.parse(JSON.stringify(uebungModel.get(listView.currentIndex)))
-                                editExersizeDialog.open()
+                                editExersizeDialog.itemData = JSON.parse(JSON.stringify(uebungModel.get(listView.currentIndex)));
+                                editExersizeDialog.open();
                             }
                         }
 
@@ -449,14 +453,14 @@ Window {
                             propagateComposedEvents: true
 
                             onDoubleClicked: function(mouse) {
-                                handleDoubleClick(indexOutside)
-                                mouse.accepted = true
+                                handleDoubleClick(indexOutside);
+                                mouse.accepted = true;
                             }
 
                             onClicked: function(mouse) {
-                                listView.currentIndex = indexOutside
-                                listView.forceActiveFocus()
-                                mouse.accepted = false
+                                listView.currentIndex = indexOutside;
+                                listView.forceActiveFocus();
+                                mouse.accepted = false;
                             }
                         }
 
@@ -479,12 +483,10 @@ Window {
                                     Binding { target: item; property: "roleName"; value: roleName }
                                     Binding { target: item; property: "colWidth"; value: colWidth }
                                     Binding { target: item; property: "rowIndex"; value: rowIndex }
-                                    Binding { target: item; property: "initialText"; value: uebungModel.get(rowIndex)[roleName] }
                                 }
                             }
                         }
                     }
-
                 }
             }
         }
@@ -503,9 +505,8 @@ Window {
                     icon.name: "edit"
                     onClicked: {
                         if (listView.currentIndex >= 0) {
-                            listView.currentIndex = index; // ← wichtig!
-                            editExersizeDialog.itemData = JSON.parse(JSON.stringify(uebungModel.get(listView.currentIndex)))
-                            editExersizeDialog.open()
+                            editExersizeDialog.itemData = JSON.parse(JSON.stringify(uebungModel.get(listView.currentIndex)));
+                            editExersizeDialog.open();
                         }
                     }
                 }
@@ -517,7 +518,14 @@ Window {
 
                 Button {
                     text: "Löschen"
-                    onClicked: if (listView.currentIndex >= 0) uebungModel.remove(listView.currentIndex)
+                    onClicked: {
+                        if (listView.currentIndex >= 0) {
+                            uebungModel.remove(listView.currentIndex);
+                            // Aktualisiere die ListView
+                            listView.model = null;
+                            listView.model = uebungModel;
+                        }
+                    }
                 }
             }
 
@@ -539,18 +547,19 @@ Window {
                     }
 
                     for (var i = 0; i < uebungModel.count; ++i) {
-                        let eintrag = JSON.parse(JSON.stringify(uebungModel.get(i)))
-                        delete eintrag[""]  // optional: leere Keys entfernen
-                        data.uebungsliste.push(eintrag)                    }
+                        let eintrag = JSON.parse(JSON.stringify(uebungModel.get(i)));
+                        delete eintrag[""];
+                        data.uebungsliste.push(eintrag);
+                    }
 
-                    console.log("📦 Zu speichernde Daten:", JSON.stringify(data, null, 2))
+                    console.log("📦 Zu speichernde Daten:", JSON.stringify(data, null, 2));
 
-                    const result = ExersizeLoader.savePackage(packagePath, data)
+                    const result = ExersizeLoader.savePackage(packagePath, data);
                     if (!result) {
-                        console.warn("❌ Speichern fehlgeschlagen!")
+                        console.warn("❌ Speichern fehlgeschlagen!");
                     } else {
-                        console.log("✅ Speichern erfolgreich.")
-                        dialogWindow.close()
+                        console.log("✅ Speichern erfolgreich.");
+                        dialogWindow.close();
                     }
                 }
             }
