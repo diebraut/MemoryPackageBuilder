@@ -48,7 +48,7 @@ Dialog {
                         spacing: 10
 
                         Button {
-                            text: "Speichern"
+                            text: "Ändern"
                             onClicked: {
                                 // Auslesen & neue Kopie erzeugen
                                 const cleanCopy = {}

@@ -11,7 +11,7 @@ Window {
     flags: Qt.Window | Qt.WindowTitleHint | Qt.WindowMinimizeButtonHint | Qt.WindowMaximizeButtonHint | Qt.WindowCloseButtonHint
 
     property alias imagePath: imagePreview.source
-    signal accepted()
+    signal accepted(string excludeData)
     signal rejected()
 
     property int maxDialogWidth: Screen.width * 0.9
@@ -297,6 +297,11 @@ Window {
                         id: rectanglesModel
                     }
 
+                    ListModel {
+                        id: arrowModel
+                    }
+
+
                     function imageOffsetX() {
                         return (imagePreview.width - imagePreview.paintedWidth) / 2
                     }
@@ -375,12 +380,6 @@ Window {
 
                         Rectangle {
                             id: rectItem
-                            /*
-                            Behavior on x { NumberAnimation { duration: 50 } }
-                            Behavior on y { NumberAnimation { duration: 50 } }
-                            Behavior on width { NumberAnimation { duration: 50 } }
-                            Behavior on height { NumberAnimation { duration: 50 } }
-                            */
 
                             clip: false
                             x: drawLayer.imageOffsetX() + Math.min(model.startX, model.endX) * drawLayer.scaleX
@@ -751,6 +750,206 @@ Window {
                             }
                         }
                     }
+                    QtObject {
+                        id: rotationHelper
+                        property real centerX: 0
+                        property real centerY: 0
+                        property real startAngle: 0
+                        property real initialAngle: 0
+                        property bool active: false
+
+                        function startRotation(mouseArea, mouse, center, currentAngle) {
+                            const pos = mouseArea.mapToItem(globalCircleCanvas, Qt.point(mouse.x, mouse.y))
+                            centerX = center.x
+                            centerY = center.y
+                            const dx = pos.x - center.x
+                            const dy = pos.y - center.y
+                            startAngle = Math.atan2(dy, dx)
+                            initialAngle = currentAngle
+                            active = true
+                        }
+
+                        function updateAngle(mouseArea, mouse) {
+                            const pos = mouseArea.mapToItem(globalCircleCanvas, Qt.point(mouse.x, mouse.y))
+                            const dx = pos.x - centerX
+                            const dy = pos.y - centerY
+                            const current = Math.atan2(dy, dx)
+                            const delta = current - startAngle
+                            return initialAngle + delta * 180 / Math.PI
+                        }
+                    }
+
+                    Component {
+                        id: arrowPrototype
+                        Image {
+                            source: "qrc:/icons/arrow-right.png"
+                            width: 96
+                            height: 96
+                            opacity: 0.6
+                            z: 3100
+                            layer.enabled: true
+                        }
+                    }
+
+                    Image {
+                        id: arrowPlaceholder
+                        source: "qrc:/icons/arrow-right.png"
+                        width: 48
+                        height: 48
+                        anchors.left: parent.left
+                        anchors.bottom: parent.bottom
+                        anchors.margins: 16
+                        opacity: 0.5
+                        z: 3000
+
+                        MouseArea {
+                            id: dragArea
+                            anchors.fill: parent
+                            cursorShape: Qt.OpenHandCursor
+
+                            property var tempArrow: null
+
+                            onPressed: (mouse) => {
+                                if (tempArrow === null) {
+                                    tempArrow = arrowPrototype.createObject(drawLayer, {
+                                        x: mouse.x + arrowPlaceholder.x,
+                                        y: mouse.y + arrowPlaceholder.y
+                                    });
+                                }
+                            }
+
+                            onPositionChanged: (mouse) => {
+                                if (tempArrow) {
+                                    tempArrow.x = mouse.x + arrowPlaceholder.x;
+                                    tempArrow.y = mouse.y + arrowPlaceholder.y;
+                                }
+                            }
+
+                            onReleased: (mouse) => {
+                                if (tempArrow) {
+                                    const imgX = (tempArrow.x - drawLayer.offsetX) / drawLayer.scaleX
+                                    const imgY = (tempArrow.y - drawLayer.offsetY) / drawLayer.scaleY
+
+                                    arrowModel.append({
+                                        x: imgX,
+                                        y: imgY,
+                                        rotationAngle: 0
+                                    });
+                                    tempArrow.destroy();
+                                    tempArrow = null;
+                                }
+                            }
+                        }
+                    }
+
+                    Repeater {
+                        model: arrowModel
+                        delegate: Item {
+                            id: arrowItem
+                            width: 96
+                            height: 96
+                            x: drawLayer.offsetX + model.x * drawLayer.scaleX
+                            y: drawLayer.offsetY + model.y * drawLayer.scaleY
+                            z: 2100
+
+                            property int modelIndex: index
+                            property real rotationAngle: model.rotationAngle || 0
+                            property real centerX: width / 2
+                            property real centerY: height / 2
+
+                            transform: Rotation {
+                                origin.x: centerX
+                                origin.y: centerY
+                                angle: rotationAngle
+                            }
+
+                            Image {
+                                anchors.fill: parent
+                                source: "qrc:/icons/arrow-right.png"
+                                opacity: 0.9
+                            }
+
+                            MouseArea {
+                                anchors.fill: parent
+                                drag.target: parent
+                                cursorShape: Qt.OpenHandCursor
+                                acceptedButtons: Qt.LeftButton | Qt.RightButton
+                                hoverEnabled: true
+                                propagateComposedEvents: true
+
+                                onPressed: (mouse) => {
+                                    if (mouse.button === Qt.RightButton) {
+                                        mouse.accepted = true
+                                    }
+                                }
+
+                                onReleased: (mouse) => {
+                                    if (mouse.button === Qt.LeftButton) {
+                                        const imgX = (parent.x - drawLayer.offsetX) / drawLayer.scaleX
+                                        const imgY = (parent.y - drawLayer.offsetY) / drawLayer.scaleY
+                                        arrowModel.setProperty(modelIndex, "x", imgX)
+                                        arrowModel.setProperty(modelIndex, "y", imgY)
+                                    }
+                                }
+
+                                onClicked: (mouse) => {
+                                    if (mouse.button === Qt.RightButton) {
+                                        arrowModel.remove(modelIndex)
+                                        mouse.accepted = true
+                                    }
+                                }
+                            }
+
+                            // Rotation über Pfeilspitze
+                            Rectangle {
+                                id: tipTarget
+                                width: 24
+                                height: 24
+                                color: "transparent"
+                                x: parent.width - width
+                                y: (parent.height - height) / 2
+                                z: 999
+
+                                MouseArea {
+                                    anchors.fill: parent
+                                    cursorShape: Qt.CrossCursor
+
+                                    onPressed: (mouse) => {
+                                        const globalCenter = arrowItem.mapToItem(globalCircleCanvas, Qt.point(arrowItem.width / 2, arrowItem.height / 2))
+                                        rotationHelper.startRotation(this, mouse, globalCenter, rotationAngle)
+                                        drawLayer.showGlobalCircles = true
+                                        drawLayer.circleCenterX = globalCenter.x
+                                        drawLayer.circleCenterY = globalCenter.y
+                                        drawLayer.circleInnerRadius = 10
+                                        drawLayer.circleOuterRadius = 60
+                                        globalCircleCanvas.requestPaint()
+                                    }
+
+                                    onPositionChanged: (mouse) => {
+                                        if (!rotationHelper.active) return
+                                        const newAngle = rotationHelper.updateAngle(this, mouse)
+                                        rotationAngle = newAngle
+                                        arrowModel.setProperty(modelIndex, "rotationAngle", newAngle)
+                                    }
+
+                                    onReleased: {
+                                        rotationHelper.active = false
+                                        drawLayer.showGlobalCircles = false
+                                        globalCircleCanvas.requestPaint()
+                                    }
+                                }
+                            }
+
+                            Text {
+                                anchors.centerIn: parent
+                                text: Math.round(rotationAngle) + "°"
+                                font.pixelSize: 14
+                                color: "white"
+                                visible: drawLayer.showGlobalCircles
+                                z: 9999
+                            }
+                        }
+                    }
                 }
                 Canvas {
                     id: globalCircleCanvas
@@ -788,8 +987,24 @@ Window {
             Button {
                 text: "OK"
                 onClicked: {
-                    imageWindow.accepted()
-                    imageWindow.visible = false
+                    const rects = [];
+
+                    for (let i = 0; i < rectanglesModel.count; ++i) {
+                        const r = rectanglesModel.get(i);
+
+                        const x = parseInt(Math.min(r.startX, r.endX));
+                        const y = parseInt(Math.min(r.startY, r.endY));
+                        const width = parseInt(Math.abs(r.endX - r.startX));
+                        const height = parseInt(Math.abs(r.endY - r.startY));
+                        const angle = parseInt(r.rotationAngle || 0);
+
+                        rects.push(`${x},${y},${width},${height},${angle}`);
+                    }
+
+                    const excludeString = rects.join("|");
+
+                    accepted(excludeString);
+                    imageWindow.visible = false;
                 }
             }
 

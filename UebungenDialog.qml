@@ -143,17 +143,30 @@ Window {
 
                     const win = imageProcessingWindowComponent.createObject(dialogWindow);
 
-                    // Neu: Rechteck-Daten übergeben
+                    // Rechteckdaten vorbereiten
                     let excludeRect = null;
                     if (role === "imagefileFrage")
                         excludeRect = uebungModel.get(index).excludeAereaFra;
                     else if (role === "imagefileAntwort")
                         excludeRect = uebungModel.get(index).excludeAereaAnt;
 
-                    // Funktion erweitern
+                    // Fenster öffnen mit Bild und evtl. vorhandenen Rechtecken
                     win.openWithImage("file:///" + sanitizedPath, Screen.desktopAvailableWidth, Screen.desktopAvailableHeight, excludeRect);
+
+                    // Signal verbinden, um geänderte Rechtecke zu übernehmen
+                    win.accepted.connect(function(excludeData) {
+                        if (role === "imagefileFrage") {
+                            uebungModel.setProperty(index, "excludeAereaFra", excludeData);
+                        } else if (role === "imagefileAntwort") {
+                            uebungModel.setProperty(index, "excludeAereaAnt", excludeData);
+                        }
+                    });
+
+                    win.rejected.connect(function() {
+                        console.log("❌ Bearbeitung abgebrochen");
+                    });
                 } else {
-                    console.log("Kein Bild für diese Zelle vorhanden");
+                    console.log("⚠️ Kein Bild für diese Zelle vorhanden");
                 }
             }
         }
