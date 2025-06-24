@@ -2,6 +2,11 @@
     <qresource prefix="/icons">
         <file>arrow_to_left_bottom_and_right_top.png</file>
         <file>arrow_to_left_top_and_right_bottom.png</file>
-        <file>arrow-right.png</file>
+        <file>arrow-right-red.png</file>
+        <file>arrow-right-black.png</file>
+        <file>arrow-right-blue.png</file>
+        <file>arrow-right-green.png</file>
+        <file>arrow-right-white.png</file>
+        <file>arrow-right-yellow.png</file>
     </qresource>
 </RCC>

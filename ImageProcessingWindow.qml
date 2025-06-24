@@ -292,6 +292,8 @@ Window {
                     property real circleInnerRadius: 0
                     property real circleOuterRadius: 0
 
+                    property string selectedArrowColor: "red"
+
 
                     ListModel {
                         id: rectanglesModel
@@ -782,23 +784,31 @@ Window {
                     Component {
                         id: arrowPrototype
                         Image {
-                            source: "qrc:/icons/arrow-right.png"
+                            id: arrowPrototypeImageID
+                            property string color:  drawLayer.selectedArrowColor
+                            source: ""
                             width: 96
                             height: 96
                             opacity: 0.6
                             z: 3100
                             layer.enabled: true
+
+                            onColorChanged: {
+                                source = "qrc:/icons/arrow-right-" + color + ".png"
+                            }
+                            Component.onCompleted: {
+                                source = "qrc:/icons/arrow-right-" + color + ".png"
+                            }
                         }
                     }
-
+                    /*
                     Image {
                         id: arrowPlaceholder
-                        source: "qrc:/icons/arrow-right.png"
+                        source: "qrc:/icons/arrow-right-" + drawLayer.selectedArrowColor + ".png"
                         width: 48
                         height: 48
-                        anchors.left: parent.left
-                        anchors.bottom: parent.bottom
-                        anchors.margins: 16
+                        x: 2
+                        y: parent.height + 15
                         opacity: 0.5
                         z: 3000
 
@@ -813,7 +823,8 @@ Window {
                                 if (tempArrow === null) {
                                     tempArrow = arrowPrototype.createObject(drawLayer, {
                                         x: mouse.x + arrowPlaceholder.x,
-                                        y: mouse.y + arrowPlaceholder.y
+                                        y: mouse.y + arrowPlaceholder.y,
+                                        color: drawLayer.selectedArrowColor     // 🔸 Hier wird die Farbe gesetzt!
                                     });
                                 }
                             }
@@ -833,7 +844,8 @@ Window {
                                     arrowModel.append({
                                         x: imgX,
                                         y: imgY,
-                                        rotationAngle: 0
+                                        rotationAngle: 0,
+                                        color: drawLayer.selectedArrowColor
                                     });
                                     tempArrow.destroy();
                                     tempArrow = null;
@@ -841,7 +853,7 @@ Window {
                             }
                         }
                     }
-
+                    */
                     Repeater {
                         model: arrowModel
                         delegate: Item {
@@ -857,6 +869,16 @@ Window {
                             property real centerX: width / 2
                             property real centerY: height / 2
 
+
+                            function setColor(newColor) {
+                                arrowModel.setProperty(modelIndex, "color", newColor)
+                                var srcFile = "qrc:/icons/arrow-right-" + newColor + ".png"
+                                arrowImageID.source = srcFile
+                                arrowPlaceholder.source = srcFile
+                                drawLayer.selectedArrowColor = newColor
+                            }
+
+
                             transform: Rotation {
                                 origin.x: centerX
                                 origin.y: centerY
@@ -864,8 +886,9 @@ Window {
                             }
 
                             Image {
+                                id: arrowImageID
                                 anchors.fill: parent
-                                source: "qrc:/icons/arrow-right.png"
+                                source: "qrc:/icons/arrow-right-" + drawLayer.selectedArrowColor + ".png"
                                 opacity: 0.9
                             }
 
@@ -894,8 +917,29 @@ Window {
 
                                 onClicked: (mouse) => {
                                     if (mouse.button === Qt.RightButton) {
-                                        arrowModel.remove(modelIndex)
+                                        colorMenu.popup(mouse.screenX, mouse.screenY)
                                         mouse.accepted = true
+                                    }
+                                }
+                                Menu {
+                                    id: colorMenu
+
+                                    MenuItem { text: "Schwarz"; onTriggered: setColor("black") }
+                                    MenuItem { text: "Weiß"; onTriggered: setColor("white") }
+                                    MenuItem { text: "Rot"; onTriggered: setColor("red") }
+                                    MenuItem { text: "Blau"; onTriggered: setColor("blue") }
+                                    MenuItem { text: "Grün"; onTriggered: setColor("green") }
+                                    MenuItem { text: "Gelb"; onTriggered: setColor("yellow") }
+
+                                    MenuSeparator {}
+
+                                    MenuItem {
+                                        text: "Löschen"
+                                        onTriggered: arrowModel.remove(arrowItem.modelIndex)
+                                    }
+
+                                    function setColor(newColor) {
+                                        arrowModel.setProperty(arrowItem.modelIndex, "color", newColor)
                                     }
                                 }
                             }
@@ -980,40 +1024,107 @@ Window {
         }
 
         RowLayout {
-            id: buttonsRow
-            Layout.alignment: Qt.AlignHCenter
-            spacing: 20
+            Layout.fillWidth: true
+            spacing: 0
 
-            Button {
-                text: "OK"
-                onClicked: {
-                    const rects = [];
+            // 🔹 Linker Rand: Pfeil
+            Image {
+                id: arrowPlaceholder
+                source: "qrc:/icons/arrow-right-" + drawLayer.selectedArrowColor + ".png"
+                fillMode: Image.Stretch
+                opacity: 0.5
+                Layout.preferredWidth: 48
+                Layout.preferredHeight: 48
 
-                    for (let i = 0; i < rectanglesModel.count; ++i) {
-                        const r = rectanglesModel.get(i);
+                MouseArea {
+                    id: dragArea
+                    anchors.fill: parent
+                    cursorShape: Qt.OpenHandCursor
 
-                        const x = parseInt(Math.min(r.startX, r.endX));
-                        const y = parseInt(Math.min(r.startY, r.endY));
-                        const width = parseInt(Math.abs(r.endX - r.startX));
-                        const height = parseInt(Math.abs(r.endY - r.startY));
-                        const angle = parseInt(r.rotationAngle || 0);
+                    property var tempArrow: null
 
-                        rects.push(`${x},${y},${width},${height},${angle}`);
+                    onPressed: (mouse) => {
+                        if (tempArrow === null) {
+                            tempArrow = arrowPrototype.createObject(drawLayer, {
+                                x: mouse.x + arrowPlaceholder.x,
+                                y: mouse.y + arrowPlaceholder.y,
+                                color: drawLayer.selectedArrowColor     // 🔸 Hier wird die Farbe gesetzt!
+                            });
+                        }
                     }
 
-                    const excludeString = rects.join("|");
+                    onPositionChanged: (mouse) => {
+                        if (tempArrow) {
+                            tempArrow.x = mouse.x + arrowPlaceholder.x;
+                            tempArrow.y = mouse.y + arrowPlaceholder.y;
+                        }
+                    }
 
-                    accepted(excludeString);
-                    imageWindow.visible = false;
+                    onReleased: (mouse) => {
+                        if (tempArrow) {
+                            const imgX = (tempArrow.x - drawLayer.offsetX) / drawLayer.scaleX
+                            const imgY = (tempArrow.y - drawLayer.offsetY) / drawLayer.scaleY
+
+                            arrowModel.append({
+                                x: imgX,
+                                y: imgY,
+                                rotationAngle: 0,
+                                color: drawLayer.selectedArrowColor
+                            });
+                            tempArrow.destroy();
+                            tempArrow = null;
+                        }
+                    }
                 }
             }
 
-            Button {
-                text: "Abbrechen"
-                onClicked: {
-                    imageWindow.rejected()
-                    imageWindow.visible = false
+            // 🔹 Abstand zwischen Pfeil und Buttons
+            Item {
+                Layout.fillWidth: true
+            }
+
+            // 🔹 Buttons zentriert im restlichen Raum
+            RowLayout {
+                id: buttonsRow
+                Layout.alignment: Qt.AlignHCenter
+                spacing: 20
+
+                Button {
+                    text: "OK"
+                    onClicked: {
+                        const rects = [];
+
+                        for (let i = 0; i < rectanglesModel.count; ++i) {
+                            const r = rectanglesModel.get(i);
+
+                            const x = parseInt(Math.min(r.startX, r.endX));
+                            const y = parseInt(Math.min(r.startY, r.endY));
+                            const width = parseInt(Math.abs(r.endX - r.startX));
+                            const height = parseInt(Math.abs(r.endY - r.startY));
+                            const angle = parseInt(r.rotationAngle || 0);
+
+                            rects.push(`${x},${y},${width},${height},${angle}`);
+                        }
+
+                        const excludeString = rects.join("|");
+
+                        accepted(excludeString);
+                        imageWindow.visible = false;
+                    }
                 }
+
+                Button {
+                    text: "Abbrechen"
+                    onClicked: {
+                        imageWindow.rejected()
+                        imageWindow.visible = false
+                    }
+                }
+            }
+
+            // 🔹 Optionaler rechter Abstand (falls nötig)
+            Item {
+                Layout.fillWidth: true
             }
         }
     }

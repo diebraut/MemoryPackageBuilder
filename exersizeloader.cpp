@@ -72,9 +72,6 @@ bool ExersizeLoader::savePackage(const QString &path, const QVariantMap &data) {
     };
     const QVariantList uebungen = data.value("uebungsliste").toList();
     qDebug() << "Anzahl Übungen:" << uebungen.size();
-    for (int i = 0; i < uebungen.size(); ++i) {
-        qDebug() << "Typ bei Index" << i << ":" << uebungen[i].typeName();
-    }
     // Neue Übungen schreiben
     for (const QVariant &uebVar : uebungen) {
         const QVariantMap u = uebVar.toMap();
@@ -82,7 +79,6 @@ bool ExersizeLoader::savePackage(const QString &path, const QVariantMap &data) {
         e.setAttribute("nummer", u.value("nummer").toInt());
 
         for (const QString &key : allowedFields) {
-            QString deb = key;
             if (u.contains(key)) {
                 const QString text = u.value(key).toString();
                 QDomElement elem = doc.createElement(keyToTagName(key));
