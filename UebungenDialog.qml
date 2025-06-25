@@ -151,9 +151,19 @@ Window {
                         excludeRect = uebungModel.get(index).excludeAereaAnt;
 
                     // Fenster öffnen mit Bild und evtl. vorhandenen Rechtecken
-                    win.openWithImage("file:///" + sanitizedPath, Screen.desktopAvailableWidth, Screen.desktopAvailableHeight, excludeRect);
+                    let arrowData = null;
+                    if (role === "imagefileFrage")
+                        arrowData = uebungModel.get(index).arrowDescFra;
+                    else if (role === "imagefileAntwort")
+                        arrowData = uebungModel.get(index).arrowDescAnt;
 
-                    // Signal verbinden, um geänderte Rechtecke zu übernehmen
+                    win.openWithImage("file:///" + sanitizedPath,
+                                      Screen.desktopAvailableWidth,
+                                      Screen.desktopAvailableHeight,
+                                      excludeRect,
+                                      arrowData);  // ⬅️ NEU
+
+                    /* Signal verbinden, um geänderte Rechtecke zu übernehmen
                     win.accepted.connect(function(excludeData) {
                         if (role === "imagefileFrage") {
                             uebungModel.setProperty(index, "excludeAereaFra", excludeData);
@@ -161,6 +171,23 @@ Window {
                             uebungModel.setProperty(index, "excludeAereaAnt", excludeData);
                         }
                     });
+                    */
+                    win.accepted.connect(function(resultJson) {
+                        const result = JSON.parse(resultJson);
+                        const excludeData = result.excludeData;
+                        const arrowData = result.arrowData;
+                        const arrowKey = result.arrowKey;
+
+                        if (role === "imagefileFrage") {
+                            uebungModel.setProperty(index, "excludeAereaFra", excludeData);
+                            uebungModel.setProperty(index, "arrowDescFra", arrowData);  // NEU
+                        } else if (role === "imagefileAntwort") {
+                            uebungModel.setProperty(index, "excludeAereaAnt", excludeData);
+                            uebungModel.setProperty(index, "arrowDescAnt", arrowData);  // NEU
+                        }
+                    });
+
+
 
                     win.rejected.connect(function() {
                         console.log("❌ Bearbeitung abgebrochen");

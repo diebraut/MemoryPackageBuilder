@@ -17,87 +17,114 @@ Window {
     property int maxDialogWidth: Screen.width * 0.9
     property int maxDialogHeight: Screen.height * 0.9
 
-    function openWithImage(path, screenW, screenH, excludeRect) {
-        rectanglesModel.clear()
-        imagePreview.source = ""
-        imageWindow.visible = false
+    function openWithImage(path, screenW, screenH, excludeRect, arrowDesc) {
+        rectanglesModel.clear();
+        arrowModel.clear();
+        imagePreview.source = "";
+        imageWindow.visible = false;
 
         Qt.callLater(() => {
-            imagePreview.source = path
-        })
+            imagePreview.source = path;
+        });
 
         imagePreview.statusChanged.connect(function handler() {
             if (imagePreview.status === Image.Ready) {
-                imagePreview.statusChanged.disconnect(handler)
+                imagePreview.statusChanged.disconnect(handler);
 
-                let imgW = imagePreview.sourceSize.width
-                let imgH = imagePreview.sourceSize.height
+                let imgW = imagePreview.sourceSize.width;
+                let imgH = imagePreview.sourceSize.height;
 
-                // Fallback, falls sourceSize nicht funktioniert
                 if (imgW <= 0 || imgH <= 0) {
-                    imgW = imagePreview.paintedWidth
-                    imgH = imagePreview.paintedHeight
+                    imgW = imagePreview.paintedWidth;
+                    imgH = imagePreview.paintedHeight;
                 }
 
-                // Falls immer noch nicht sicher: Standardwerte setzen
                 if (imgW <= 0 || imgH <= 0) {
-                    imgW = 400
-                    imgH = 300
+                    imgW = 400;
+                    imgH = 300;
                 }
 
-                // Setze Original-Bildgrößen für skalierungsberechnungen
-                imagePreview.originalImageWidth = imagePreview.sourceSize.width
-                imagePreview.originalImageHeight = imagePreview.sourceSize.height
-                console.log("Original image size:", imagePreview.sourceSize.width, imagePreview.sourceSize.height)
-                console.log("Painted size:", imagePreview.paintedWidth, imagePreview.paintedHeight)
+                imagePreview.originalImageWidth = imagePreview.sourceSize.width;
+                imagePreview.originalImageHeight = imagePreview.sourceSize.height;
 
+                const availableWidth = screenW || Screen.desktopAvailableWidth;
+                const availableHeight = screenH || Screen.desktopAvailableHeight;
+                const buttonsHeight = buttonsRow.implicitHeight + layout.spacing;
+                const windowMargin = 40;
 
-                const availableWidth = screenW || Screen.desktopAvailableWidth
-                const availableHeight = screenH || Screen.desktopAvailableHeight
-                const buttonsHeight = buttonsRow.implicitHeight + layout.spacing
-                const windowMargin = 40
+                const targetW = Math.min(imgW * 1.1 + windowMargin, availableWidth * 0.95);
+                const targetH = Math.min(imgH * 1.1 + buttonsHeight + windowMargin, availableHeight * 0.95);
 
-                const targetW = Math.min(imgW * 1.1 + windowMargin, availableWidth * 0.95)
-                const targetH = Math.min(imgH * 1.1 + buttonsHeight + windowMargin, availableHeight * 0.95)
+                imageWindow.width = targetW;
+                imageWindow.height = targetH;
+                imageWindow.x = (availableWidth - targetW) / 2;
+                imageWindow.y = (availableHeight - targetH) / 2;
 
-                imageWindow.width = targetW
-                imageWindow.height = targetH
-                imageWindow.x = (availableWidth - targetW) / 2
-                imageWindow.y = (availableHeight - targetH) / 2
+                loadRectanglesFromString(excludeRect);
+                loadArrowsFromString(arrowDesc);
 
-                if (excludeRect && typeof excludeRect === "string") {
-                    const rectStrings = excludeRect.split("|")
-                    for (let i = 0; i < rectStrings.length; ++i) {
-                        const parts = rectStrings[i].split(",")
-                        if (parts.length >= 5) {
-                            const startX = parseFloat(parts[0])
-                            const startY = parseFloat(parts[1])
-                            const width = parseFloat(parts[2])
-                            const height = parseFloat(parts[3])
-                            const rotationAngle = parseFloat(parts[4])
-
-                            if (!isNaN(startX) && !isNaN(startY) &&
-                                !isNaN(width) && !isNaN(height) &&
-                                !isNaN(rotationAngle)) {
-
-                                rectanglesModel.append({
-                                    startX: startX,
-                                    startY: startY,
-                                    endX: startX + width,
-                                    endY: startY + height,
-                                    rotationAngle: rotationAngle
-                                })
-                            } else {
-                                console.warn("Ungültige Werte in excludeRect:", rectStrings[i])
-                            }
-                        } else {
-                            console.warn("Unvollständiges Rechteck:", rectStrings[i])
-                        }
-                    }
-                }
-                imageWindow.visible = true
+                imageWindow.visible = true;
             }
-        })
+        });
+    }
+
+    function loadRectanglesFromString(excludeRect) {
+        rectanglesModel.clear();
+        if (!excludeRect || typeof excludeRect !== "string") return;
+
+        const entries = excludeRect.split("|");
+        for (let i = 0; i < entries.length; ++i) {
+            const parts = entries[i].split(",");
+            if (parts.length >= 5) {
+                const startX = parseFloat(parts[0]);
+                const startY = parseFloat(parts[1]);
+                const width = parseFloat(parts[2]);
+                const height = parseFloat(parts[3]);
+                const rotationAngle = parseFloat(parts[4]);
+
+                if (!isNaN(startX) && !isNaN(startY) &&
+                    !isNaN(width) && !isNaN(height) &&
+                    !isNaN(rotationAngle)) {
+                    rectanglesModel.append({
+                        startX: startX,
+                        startY: startY,
+                        endX: startX + width,
+                        endY: startY + height,
+                        rotationAngle: rotationAngle
+                    });
+                } else {
+                    console.warn("❌ Ungültige Rechteckdaten:", entries[i]);
+                }
+            } else {
+                console.warn("❌ Unvollständige Rechteckbeschreibung:", entries[i]);
+            }
+        }
+    }
+
+    function loadArrowsFromString(arrowDesc) {
+        arrowModel.clear()
+        if (!arrowDesc || typeof arrowDesc !== "string") return
+
+        const entries = arrowDesc.split("|")
+        for (let j = 0; j < entries.length; ++j) {
+            const parts = entries[j].split(",")
+            if (parts.length >= 5) {
+                const x = parseFloat(parts[0])
+                const y = parseFloat(parts[1])
+                const angle = parseFloat(parts[2])
+                const color = parts[3]
+                const scale = parseFloat(parts[4])
+                if (!isNaN(x) && !isNaN(y)) {
+                    arrowModel.append({
+                        x: x,
+                        y: y,
+                        rotationAngle: angle,
+                        color: color,
+                        scaleFactor: isNaN(scale) ? 1.0 : scale
+                    })
+                }
+            }
+        }
     }
 
     Item {
@@ -888,7 +915,7 @@ Window {
                             Image {
                                 id: arrowImageID
                                 anchors.fill: parent
-                                source: "qrc:/icons/arrow-right-" + drawLayer.selectedArrowColor + ".png"
+                                source: "qrc:/icons/arrow-right-" + model.color + ".png"
                                 opacity: 0.9
                             }
 
@@ -1069,7 +1096,8 @@ Window {
                                 x: imgX,
                                 y: imgY,
                                 rotationAngle: 0,
-                                color: drawLayer.selectedArrowColor
+                                color: drawLayer.selectedArrowColor,
+                                scaleFactor: 1.00  // Standardwert
                             });
                             tempArrow.destroy();
                             tempArrow = null;
@@ -1091,24 +1119,45 @@ Window {
 
                 Button {
                     text: "OK"
-                    onClicked: {
+                    function saveRectanglesToString() {
                         const rects = [];
-
                         for (let i = 0; i < rectanglesModel.count; ++i) {
                             const r = rectanglesModel.get(i);
-
                             const x = parseInt(Math.min(r.startX, r.endX));
                             const y = parseInt(Math.min(r.startY, r.endY));
                             const width = parseInt(Math.abs(r.endX - r.startX));
                             const height = parseInt(Math.abs(r.endY - r.startY));
                             const angle = parseInt(r.rotationAngle || 0);
-
                             rects.push(`${x},${y},${width},${height},${angle}`);
                         }
+                        return rects.join("|");
+                    }
+                    function saveArrowsToString() {
+                        const arrows = [];
+                        for (let i = 0; i < arrowModel.count; ++i) {
+                            const a = arrowModel.get(i);
+                            const x = parseFloat(a.x).toFixed(2);
+                            const y = parseFloat(a.y).toFixed(2);
+                            const rot = parseInt(a.rotationAngle || 0);
+                            const col = a.color || "red";
+                            const scale = parseFloat(a.scaleFactor || 1.0).toFixed(2);
+                            arrows.push(`${x},${y},${rot},${col},${scale}`);
+                        }
+                        return arrows.join("|");
+                    }
+                    onClicked: {
+                        const excludeString = saveRectanglesToString();
+                        const arrowString = saveArrowsToString();
 
-                        const excludeString = rects.join("|");
+                        const sourcePath = imagePreview.source.toString().toLowerCase();
+                        let xmlKey = sourcePath.includes("frage") ? "ArrowDescFra" : "ArrowDescAnt";
 
-                        accepted(excludeString);
+                        accepted(JSON.stringify({
+                            excludeData: excludeString,
+                            arrowData: arrowString,
+                            arrowKey: xmlKey
+                        }));
+
                         imageWindow.visible = false;
                     }
                 }

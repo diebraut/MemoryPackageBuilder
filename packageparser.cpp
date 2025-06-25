@@ -87,6 +87,8 @@ QVariantMap PackageParser::getPackageData() {
             u["imageAntwortBildDescription"] = getText("ImageAntwortBildDescription");
             u["imageFrageUrl"] = getText("ImageFrageUrl");
             u["imageAntwortUrl"] = getText("ImageAntwortUrl");
+            u["arrowDescFra"] = getText("ArrowDescFra");
+            u["arrowDescAnt"] = getText("ArrowDescAnt");
 
             uebungList.append(u);
         }

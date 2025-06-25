@@ -62,7 +62,7 @@ bool ExersizeLoader::savePackage(const QString &path, const QVariantMap &data) {
         "imageFrageAuthor", "imageFrageLizenz", "imageAntwortAuthor", "imageAntwortLizenz",
         "wikiPageFraVers", "wikiPageAntVers", "excludeAereaFra", "excludeAereaAnt",
         "imageFrageBildDescription", "imageAntwortBildDescription",
-        "imageFrageUrl", "imageAntwortUrl"
+        "imageFrageUrl", "imageAntwortUrl", "arrowDescFra", "arrowDescAnt"
     };
 
     // Lokale helper-Funktion zum Umwandeln von Key → XML-Tag
