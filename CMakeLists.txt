@@ -5,7 +5,7 @@ project(MemoryPackagesBuilder VERSION 0.1 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Qt6 Komponenten finden – jetzt inklusive Xml
-find_package(Qt6 6.4 REQUIRED COMPONENTS Quick Core Gui Xml)
+find_package(Qt6 6.4 REQUIRED COMPONENTS Quick Core Gui Xml WebEngineQuick)
 
 #qt_policy(SET QTP0001 NEW)
 
@@ -28,17 +28,18 @@ qt_add_qml_module(appMemoryPackagesBuilder
         Main.qml
         UebungenDialog.qml
         EditExersizeDialog.qml
-        ImageProcessingWindow.qml
+        ImageProcessing.qml
     SOURCES
         packagemodel.h packagemodel.cpp
         ExersizeModel.h
         packageparser.h packageparser.cpp
         exersizeloader.h exersizeloader.cpp
+        QML_FILES URLComponentProcessing.qml
 )
 
 # Linke die Qt-Bibliotheken – jetzt inklusive Qt6::Xml
 target_link_libraries(appMemoryPackagesBuilder
-    PRIVATE Qt6::Quick Qt6::Core Qt6::Gui Qt6::Xml
+    PRIVATE Qt6::Quick Qt6::Core Qt6::Gui Qt6::Xml Qt6::WebEngineQuick
 )
 
 # 📂 Kopiere exercisepackages-Verzeichnis nach Build-Ausgabeordner

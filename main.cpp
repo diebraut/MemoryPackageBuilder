@@ -5,10 +5,13 @@
 #include "packagemodel.h"
 #include "exersizeloader.h"
 
+#include <QtWebEngineQuick/qtwebenginequickglobal.h>
+
 
 int main(int argc, char *argv[])
 {
     qmlRegisterModule("MemoryPackagesBuilder", 1, 0);
+    QtWebEngineQuick::initialize();
     QGuiApplication app(argc, argv);
     qDebug() << QDir(":/icons").entryList();
 

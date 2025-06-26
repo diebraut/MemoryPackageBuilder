@@ -53,9 +53,9 @@ Window {
     }
 
     Component {
-        id: imageProcessingWindowComponent
+        id: imageProcessingComponent
 
-        ImageProcessingWindow {
+        ImageProcessing {
             onAccepted: {
                 console.log("Bildbearbeitung bestätigt.");
             }
@@ -141,7 +141,7 @@ Window {
                     const fullPath = packagePath + "/" + fileName;
                     const sanitizedPath = fullPath.replace(/\\/g, '/');
 
-                    const win = imageProcessingWindowComponent.createObject(dialogWindow);
+                    const win = imageProcessingComponent.createObject(dialogWindow);
 
                     // Rechteckdaten vorbereiten
                     let excludeRect = null;
@@ -161,17 +161,8 @@ Window {
                                       Screen.desktopAvailableWidth,
                                       Screen.desktopAvailableHeight,
                                       excludeRect,
-                                      arrowData);  // ⬅️ NEU
+                                      arrowData);
 
-                    /* Signal verbinden, um geänderte Rechtecke zu übernehmen
-                    win.accepted.connect(function(excludeData) {
-                        if (role === "imagefileFrage") {
-                            uebungModel.setProperty(index, "excludeAereaFra", excludeData);
-                        } else if (role === "imagefileAntwort") {
-                            uebungModel.setProperty(index, "excludeAereaAnt", excludeData);
-                        }
-                    });
-                    */
                     win.accepted.connect(function(resultJson) {
                         const result = JSON.parse(resultJson);
                         const excludeData = result.excludeData;
@@ -198,6 +189,31 @@ Window {
             }
         }
     }
+    Menu {
+        id: urlContextMenu
+        property string roleName
+        property int rowIndex
+
+        MenuItem {
+            text: "Webseite anzeigen"
+            onTriggered: {
+                const url = uebungModel.get(urlContextMenu.rowIndex)[urlContextMenu.roleName] || "";
+                console.log("🔗 Übergabe an URLComponentProcessing:", url);
+
+                const component = Qt.createComponent("qrc:/MemoryPackagesBuilder/URLComponentProcessing.qml");
+                if (component.status === Component.Ready) {
+                    const dialog = component.createObject(dialogWindow, { urlString: url });
+                    dialog.accepted.connect(function(newUrl) {
+                        uebungModel.setProperty(urlContextMenu.rowIndex, urlContextMenu.roleName, newUrl);
+                    });
+                    dialog.open();
+                } else {
+                    console.warn("❌ Fehler beim Laden:", component.errorString());
+                }
+            }
+        }
+    }
+
 
     Item {
         id: windowContent
@@ -284,6 +300,22 @@ Window {
                         var currentRole = textField.parent.roleName;
 
                         if (mouse.button === Qt.RightButton &&
+                            (currentRole === "infoURLFrage" ||
+                             currentRole === "infoURLAntwort")) {
+
+                            // URL-Kontextmenü öffnen
+                            urlContextMenu.roleName = currentRole;
+                            urlContextMenu.rowIndex = textField.parent.rowIndex;
+
+                            var globalPos = mapToItem(windowContent, mouse.x, mouse.y);
+                            urlContextMenu.x = globalPos.x;
+                            urlContextMenu.y = globalPos.y;
+
+                            urlContextMenu.open();
+                            mouse.accepted = true;
+                        }
+
+                        if (mouse.button === Qt.RightButton &&
                             (currentRole === "imagefileFrage" ||
                              currentRole === "imagefileAntwort")) {
 
@@ -323,6 +355,14 @@ Window {
                 uebungModel.append(uebungenData.uebungsliste[i]);
             }
         }
+        // Dynamische Breite berechnen (mindestens 900px)
+        const colWidth = 150;
+        const spacing = columnSpacing;
+        const total = columnCount * colWidth + (columnCount - 1) * spacing;
+
+        dialogWindow.width = Math.max(total + 60, 900);  // etwas Puffer für Ränder
+        dialogWindow.height = 600;
+
         listView.forceActiveFocus();
     }
 
@@ -610,4 +650,5 @@ Window {
             }
         }
     }
+
 }
