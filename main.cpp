@@ -2,6 +2,7 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <QDir>
+#include <QCursor>
 #include "packagemodel.h"
 #include "exersizeloader.h"
 
@@ -40,6 +41,9 @@ int main(int argc, char *argv[])
         []() { QCoreApplication::exit(-1); },
         Qt::QueuedConnection);
     engine.load(url);
+
+    QPoint pos = QCursor::pos();  // globale Mausposition
+    engine.rootContext()->setContextProperty("globalMousePos", pos);
 
     return app.exec();
 }

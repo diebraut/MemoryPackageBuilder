@@ -3,40 +3,97 @@ import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 import QtWebEngine 1.9
 
-Dialog {
-    id: urlDialog
-    modal: true
+Window {
+    id: urlWindow
     title: "Webseite ansehen"
     width: 800
     height: 600
+    modality: Qt.ApplicationModal
+    visible: true
     property string urlString: ""
     signal accepted(string newUrl)
+    property var dynamicMenu
 
     ColumnLayout {
         anchors.fill: parent
         spacing: 10
 
-        WebEngineView {
-            id: webView
+        Item {
             Layout.fillWidth: true
             Layout.fillHeight: true
 
-            Component.onCompleted: {
-                const fallback = "https://de.wikipedia.org";
-                const pageToLoad = (urlString && urlString.trim() !== "") ? urlString : fallback;
-                console.log("🌐 Lade Seite:", pageToLoad);
-                webView.url = pageToLoad;  // ✅ richtig für QML
-            }
-            onLoadingChanged: function(request) {
-                // Nur prüfen, ob die Hauptseite fehlgeschlagen ist
-                if (request.status === 2 && request.url === webView.url) {
-                    errorLabel.visible = true;
-                    console.log("❌ Fehler beim Laden:", request.url);
-                } else {
-                    errorLabel.visible = false;
+            WebEngineView {
+                id: webView
+                anchors.fill: parent
+
+                property url expectedUrl
+
+                Component.onCompleted: {
+                    const fallback = "https://de.wikipedia.org";
+                    const pageToLoad = (urlString && urlString.trim() !== "") ? urlString : fallback;
+                    expectedUrl = pageToLoad;
+                    webView.url = pageToLoad;
+                    console.log("🌐 Lade Seite:", pageToLoad);
+                }
+
+                onLoadingChanged: function(request) {
+                    if (request.status === 2 && request.isMainFrame) {
+                        errorLabel.visible = true;
+                        console.log("❌ Fehler beim Laden der Hauptseite:", request.url);
+                    } else if (request.status === 1 && request.isMainFrame) {
+                        errorLabel.visible = false;
+                        console.log("✅ Seite geladen:", request.url);
+                    }
+                }
+
+                onContextMenuRequested: function(request) {
+                    request.accepted = true;
+
+                    var viewX = request.position.x / webView.zoomFactor;
+                    var viewY = request.position.y / webView.zoomFactor;
+
+                    var js = `
+                        (function() {
+                            var elem = document.elementFromPoint(${viewX}, ${viewY});
+                            if (!elem) return "";
+                            if (elem.tagName === "IMG") return elem.src;
+                            return "";
+                        })();
+                    `;
+
+                    webView.runJavaScript(js, function(result) {
+                        if (dynamicMenu) {
+                            dynamicMenu.destroy();
+                        }
+
+                        dynamicMenu = Qt.createQmlObject('import QtQuick.Controls 2.15; Menu {}', urlWindow);
+
+                        var hasItem = false;
+
+                        if (result !== "") {
+                            var imgItem = Qt.createQmlObject('import QtQuick.Controls 2.15; MenuItem { text: "Bild laden" }', dynamicMenu);
+                            imgItem.triggered.connect(function() {
+                                console.log("💾 Bild laden:", result);
+                            });
+                            dynamicMenu.addItem(imgItem);
+                            hasItem = true;
+                        }
+
+                        var rectItem = Qt.createQmlObject('import QtQuick.Controls 2.15; MenuItem { text: "Rechteck erzeugen" }', dynamicMenu);
+                        rectItem.triggered.connect(function() {
+                            console.log("🟩 Rechteck erzeugen gewählt");
+                        });
+                        dynamicMenu.addItem(rectItem);
+                        hasItem = true;
+
+                        if (hasItem) {
+                            dynamicMenu.x = request.position.x;
+                            dynamicMenu.y = request.position.y;
+                            dynamicMenu.open();
+                        }
+                    });
                 }
             }
-
         }
 
         Label {
@@ -47,20 +104,56 @@ Dialog {
         }
 
         RowLayout {
-            Layout.alignment: Qt.AlignRight
+            Layout.fillWidth: true
             spacing: 10
 
-            Button {
-                text: "Übernehmen"
-                onClicked: {
-                    accepted(webView.url.toString());
-                    urlDialog.close();
+            RowLayout {
+                spacing: 5
+
+                Label {
+                    text: "Zoom:"
+                    Layout.preferredWidth: 40
+                }
+
+                Slider {
+                    id: zoomSlider
+                    from: 0.5
+                    to: 3.0
+                    value: 1.0
+                    stepSize: 0.1
+                    Layout.preferredWidth: 150
+
+                    onValueChanged: {
+                        webView.zoomFactor = value;
+                        console.log("🔍 Zoomfaktor geändert:", value);
+                    }
+                }
+
+                Label {
+                    text: (zoomSlider.value * 100).toFixed(0) + "%"
+                    Layout.preferredWidth: 50
                 }
             }
 
-            Button {
-                text: "Abbrechen"
-                onClicked: urlDialog.close()
+            Item {
+                Layout.fillWidth: true
+            }
+
+            RowLayout {
+                spacing: 10
+
+                Button {
+                    text: "Übernehmen"
+                    onClicked: {
+                        accepted(webView.url.toString());
+                        urlWindow.close();
+                    }
+                }
+
+                Button {
+                    text: "Abbrechen"
+                    onClicked: urlWindow.close();
+                }
             }
         }
     }

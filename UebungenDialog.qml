@@ -202,11 +202,11 @@ Window {
 
                 const component = Qt.createComponent("qrc:/MemoryPackagesBuilder/URLComponentProcessing.qml");
                 if (component.status === Component.Ready) {
-                    const dialog = component.createObject(dialogWindow, { urlString: url });
-                    dialog.accepted.connect(function(newUrl) {
+                    const win = component.createObject(null, { urlString: url });  // null statt dialogWindow, da eigenständig
+                    win.accepted.connect(function(newUrl) {
                         uebungModel.setProperty(urlContextMenu.rowIndex, urlContextMenu.roleName, newUrl);
                     });
-                    dialog.open();
+                    win.show();
                 } else {
                     console.warn("❌ Fehler beim Laden:", component.errorString());
                 }
