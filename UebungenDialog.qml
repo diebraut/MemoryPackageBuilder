@@ -197,12 +197,17 @@ Window {
         MenuItem {
             text: "Webseite anzeigen"
             onTriggered: {
+                const extraProp = urlContextMenu.roleName === "infoURLFrage"
+                                  ? uebungModel.get(urlContextMenu.rowIndex).frageSubjekt
+                                  : uebungModel.get(urlContextMenu.rowIndex).antwortSubjekt;
                 const url = uebungModel.get(urlContextMenu.rowIndex)[urlContextMenu.roleName] || "";
-                console.log("🔗 Übergabe an URLComponentProcessing:", url);
-
                 const component = Qt.createComponent("qrc:/MemoryPackagesBuilder/URLComponentProcessing.qml");
                 if (component.status === Component.Ready) {
-                    const win = component.createObject(null, { urlString: url });  // null statt dialogWindow, da eigenständig
+                    const win = component.createObject(null, {
+                        urlString: url,
+                        subjektnamen: extraProp,
+                        packagePath: packagePath // Hier übergeben wir den Path
+                    });
                     win.accepted.connect(function(newUrl) {
                         uebungModel.setProperty(urlContextMenu.rowIndex, urlContextMenu.roleName, newUrl);
                     });
@@ -297,41 +302,36 @@ Window {
                     propagateComposedEvents: true
 
                     onPressed: function(mouse) {
-                        var currentRole = textField.parent.roleName;
-
-                        if (mouse.button === Qt.RightButton &&
-                            (currentRole === "infoURLFrage" ||
-                             currentRole === "infoURLAntwort")) {
-
-                            // URL-Kontextmenü öffnen
-                            urlContextMenu.roleName = currentRole;
-                            urlContextMenu.rowIndex = textField.parent.rowIndex;
-
-                            var globalPos = mapToItem(windowContent, mouse.x, mouse.y);
-                            urlContextMenu.x = globalPos.x;
-                            urlContextMenu.y = globalPos.y;
-
-                            urlContextMenu.open();
-                            mouse.accepted = true;
+                        if (mouse.button !== Qt.RightButton) {
+                            mouse.accepted = false;
+                            return;
                         }
 
-                        if (mouse.button === Qt.RightButton &&
-                            (currentRole === "imagefileFrage" ||
-                             currentRole === "imagefileAntwort")) {
+                        var currentRole = textField.parent.roleName;
 
-                            imageContextMenu.roleName = currentRole;
-                            imageContextMenu.rowIndex = textField.parent.rowIndex;
-
-                            var globalPos = mapToItem(windowContent, mouse.x, mouse.y);
-                            imageContextMenu.x = globalPos.x;
-                            imageContextMenu.y = globalPos.y;
-
-                            imageContextMenu.buildMenu();
-                            imageContextMenu.open();
-                            mouse.accepted = true;
+                        if (currentRole === "infoURLFrage" || currentRole === "infoURLAntwort") {
+                            openContextMenu(urlContextMenu, currentRole, textField.parent.rowIndex, mouse);
+                        } else if (currentRole === "imagefileFrage" || currentRole === "imagefileAntwort") {
+                            openContextMenu(imageContextMenu, currentRole, textField.parent.rowIndex, mouse, true);
                         } else {
                             mouse.accepted = false;
                         }
+                    }
+
+                    function openContextMenu(menu, roleName, rowIndex, mouse, isImage) {
+                        menu.roleName = roleName;
+                        menu.rowIndex = rowIndex;
+
+                        var globalPos = mapToItem(windowContent, mouse.x, mouse.y);
+                        menu.x = globalPos.x;
+                        menu.y = globalPos.y;
+
+                        if (isImage) {
+                            menu.buildMenu();
+                        }
+
+                        menu.open();
+                        mouse.accepted = true;
                     }
                 }
             }

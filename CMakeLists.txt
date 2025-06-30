@@ -35,6 +35,8 @@ qt_add_qml_module(appMemoryPackagesBuilder
         packageparser.h packageparser.cpp
         exersizeloader.h exersizeloader.cpp
         QML_FILES URLComponentProcessing.qml
+        SOURCES ImageDownloader.h
+        SOURCES ImageDownloader.cpp
 )
 
 # Linke die Qt-Bibliotheken – jetzt inklusive Qt6::Xml

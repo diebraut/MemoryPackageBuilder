@@ -3,6 +3,9 @@ import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 import QtWebEngine 1.9
 
+import Helpers 1.0
+
+
 Window {
     id: urlWindow
     title: "Webseite ansehen"
@@ -11,8 +14,27 @@ Window {
     modality: Qt.ApplicationModal
     visible: true
     property string urlString: ""
+    property string subjektnamen: ""
+    property string packagePath: ""
+
     signal accepted(string newUrl)
     property var dynamicMenu
+
+    ImageDownloader {
+        id: imgDownloader
+
+        onDownloadSucceeded: handleDownloadSucceeded
+        onDownloadFailed: handleDownloadFailed
+    }
+
+    function handleDownloadSucceeded(path) {
+        console.log("✅ Bild gespeichert unter:", path);
+        // Optional: Fenster schließen oder Status anzeigen
+    }
+
+    function handleDownloadFailed(error) {
+        console.warn("❌ Download fehlgeschlagen:", error);
+    }
 
     ColumnLayout {
         anchors.fill: parent
@@ -73,16 +95,14 @@ Window {
                         if (result !== "") {
                             var imgItem = Qt.createQmlObject('import QtQuick.Controls 2.15; MenuItem { text: "Bild laden" }', dynamicMenu);
                             imgItem.triggered.connect(function() {
-                                console.log("💾 Bild laden:", result);
+                                handleBildLaden(result);
                             });
                             dynamicMenu.addItem(imgItem);
                             hasItem = true;
                         }
 
                         var rectItem = Qt.createQmlObject('import QtQuick.Controls 2.15; MenuItem { text: "Rechteck erzeugen" }', dynamicMenu);
-                        rectItem.triggered.connect(function() {
-                            console.log("🟩 Rechteck erzeugen gewählt");
-                        });
+                        rectItem.triggered.connect(handleRechteckErzeugen);
                         dynamicMenu.addItem(rectItem);
                         hasItem = true;
 
@@ -92,6 +112,23 @@ Window {
                             dynamicMenu.open();
                         }
                     });
+
+                    function handleBildLaden(imageUrl) {
+                        var subject = subjektnamen;
+                        var imageType = imageUrl.split('.').pop().split(/\#|\?/)[0];
+                        var filename = subject + "." + imageType;
+                        var savePath = packagePath + "/" + filename;
+
+                        console.log("💾 Bild wird gespeichert unter:", savePath);
+
+                        imgDownloader.downloadImage(imageUrl, savePath);
+                    }
+
+                    function handleRechteckErzeugen() {
+                        console.log("🟩 Rechteck erzeugen gewählt");
+
+                        // TODO: Hier die Logik für das Erzeugen des Rechtecks implementieren
+                    }
                 }
             }
         }

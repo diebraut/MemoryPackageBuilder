@@ -5,6 +5,8 @@
 #include <QCursor>
 #include "packagemodel.h"
 #include "exersizeloader.h"
+#include "ImageDownloader.h"
+
 
 #include <QtWebEngineQuick/qtwebenginequickglobal.h>
 
@@ -17,6 +19,8 @@ int main(int argc, char *argv[])
     qDebug() << QDir(":/icons").entryList();
 
     qmlRegisterSingletonInstance("ExersizeLoader", 1, 0, "ExersizeLoader", new ExersizeLoader);
+    qmlRegisterType<ImageDownloader>("Helpers", 1, 0, "ImageDownloader");
+
 
     // Modell als QML-Typ registrieren
     qmlRegisterType<PackageModel>("Package", 1, 0, "PackageModel");
