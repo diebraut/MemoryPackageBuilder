@@ -6,7 +6,7 @@
 #include "packagemodel.h"
 #include "exersizeloader.h"
 #include "ImageDownloader.h"
-
+#include "ScreenshotHelper.h"
 
 #include <QtWebEngineQuick/qtwebenginequickglobal.h>
 

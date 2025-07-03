@@ -1,6 +1,8 @@
 #include "ImageDownloader.h"
 #include <QFile>
-#include <QDir>
+#include <QDebug>
+
+#include <QImage>
 
 ImageDownloader::ImageDownloader(QObject *parent) : QObject(parent)
 {
@@ -44,4 +46,24 @@ void ImageDownloader::onFinished(QNetworkReply *reply)
 
     emit downloadSucceeded(currentSavePath);
     reply->deleteLater();
+}
+
+Q_INVOKABLE void ImageDownloader::grabAndSaveCropped(QQuickWindow *window, int x, int y, int w, int h, const QString &path) {
+    if (!window) {
+        qWarning() << "❌ Fenster ist null";
+        return;
+    }
+
+    QImage image = window->grabWindow();
+    if (image.isNull()) {
+        qWarning() << "❌ Screenshot fehlgeschlagen";
+        return;
+    }
+
+    QImage cropped = image.copy(x, y, w, h);
+    if (cropped.save(path)) {
+        qDebug() << "✅ Bereich gespeichert unter:" << path;
+    } else {
+        qWarning() << "❌ Speichern fehlgeschlagen";
+    }
 }
