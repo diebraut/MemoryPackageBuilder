@@ -4,6 +4,7 @@ import QtQuick.Layouts 1.15
 import QtWebEngine 1.9
 
 import Helpers 1.0
+import Wiki 1.0  // Dein C++ Modul
 
 Window {
     id: urlWindow
@@ -26,6 +27,55 @@ Window {
 
         onDownloadSucceeded: handleDownloadSucceeded
         onDownloadFailed: handleDownloadFailed
+    }
+
+    LicenceInfoWiki {
+        id: licenceFetcher
+
+        onInfoReady: function(info) {
+            if (!info.imageUrl) {
+                console.warn("❌ Keine gültige Bildquelle erhalten!");
+                return;
+            }
+
+            console.log("✅ Bildquelle:", info.imageUrl);
+            console.log("👤 Autor:", info.authorName || "(unbekannt)", info.authorUrl || "");
+            console.log("📜 Lizenz:", info.licenceName || "(unbekannt)", info.licenceUrl || "");
+
+            if (info.imageUrl.includes("upload.wikimedia.org")) {
+                var thumbUrl = build500pxThumbnailUrl(info.imageUrl);
+
+                var subject = subjektnamen;
+                var filename = subject + ".png";
+                var savePath = packagePath + "/" + filename;
+
+                console.log("🌐 Lade 500px-Thumbnail:", thumbUrl);
+                console.log("💾 Bild wird gespeichert unter:", savePath);
+
+                imgDownloader.downloadImage(thumbUrl, savePath);
+            } else {
+                console.log("🌐 Kein Wikimedia-Bild, kein Thumbnail-Link generiert.");
+            }
+        }
+
+        onErrorOccurred: function(message) {
+            console.warn("❌ Fehler beim Abrufen der Lizenzinfos:", message);
+        }
+        function build500pxThumbnailUrl(originalUrl) {
+            // Beispiel: https://upload.wikimedia.org/wikipedia/commons/b/be/FILENAME.svg
+            var parts = originalUrl.split('/');
+            if (parts.length < 7) {
+                console.warn("❗ Ungültige Wikimedia-URL:", originalUrl);
+                return originalUrl;  // Fallback: Original verwenden
+            }
+
+            var dir1 = parts[parts.length - 3];  // z.B. 'b'
+            var dir2 = parts[parts.length - 2];  // z.B. 'be'
+            var file = parts[parts.length - 1];  // z.B. 'FILENAME.svg'
+
+            return "https://upload.wikimedia.org/wikipedia/commons/thumb/"
+                + dir1 + "/" + dir2 + "/" + file + "/500px-" + file + ".png";
+        }
     }
 
     function handleDownloadSucceeded(path) {
@@ -118,14 +168,54 @@ Window {
                     });
 
                     function handleBildLaden(imageUrl) {
-                        var subject = subjektnamen;
-                        var imageType = imageUrl.split('.').pop().split(/\#|\?/)[0];
-                        var filename = subject + "." + imageType;
-                        var savePath = packagePath + "/" + filename;
+                        console.log("📌 Bild-URL:", imageUrl);
 
-                        console.log("💾 Bild wird gespeichert unter:", savePath);
+                        // Prüfen: Ist es ein Wikimedia-Bild?
+                        if (imageUrl.includes("upload.wikimedia.org")) {
+                            var fileTitle = extractOriginalFileTitle(imageUrl);
+                            if (!fileTitle || fileTitle === "File:") {
+                                console.warn("❌ Kein gültiger Dateititel extrahiert, Lizenzinfo wird nicht abgerufen.");
+                                return;
+                            }
+                            console.log("🌐 Lizenzinfo abrufen für:", fileTitle);
+                            licenceFetcher.fetchLicenceInfo(fileTitle);
 
-                        imgDownloader.downloadImage(imageUrl, savePath);
+                            // Der eigentliche Download wird gestartet, wenn die Lizenzinfo geholt wurde (siehe onInfoReady)
+                        } else {
+                            // Normales Bild, direkt speichern wie bisher
+                            var subject = subjektnamen;
+                            var imageType = imageUrl.split('.').pop().split(/\#|\?/)[0];
+                            var filename = subject + "." + imageType;
+                            var savePath = packagePath + "/" + filename;
+
+                            console.log("📂 imageUrl:", imageUrl);
+                            console.log("📂 Geplanter Dateiname:", filename);
+                            console.log("💾 Bild wird gespeichert unter:", savePath);
+
+                            imgDownloader.downloadImage(imageUrl, savePath);
+                        }
+                    }
+
+                    function extractOriginalFileTitle(imageUrl) {
+                        if (!imageUrl.includes("upload.wikimedia.org")) {
+                            console.warn("❗ Keine Wikimedia-URL:", imageUrl);
+                            return "";
+                        }
+
+                        var parts = imageUrl.split('/');
+                        var fileName = parts[parts.length - 1];
+
+                        // Entferne Thumbnail-Prefix (z.B. 300px-)
+                        var match = fileName.match(/(?:\d+px-)?(.*)/);
+                        if (match && match[1]) {
+                            var cleaned = match[1]
+                                .replace(/\.png$/, "")
+                                .replace(/\.jpg$/, "")
+                                .replace(/\.jpeg$/, "");
+                            return "File:" + decodeURIComponent(cleaned);
+                        }
+
+                        return "File:" + decodeURIComponent(fileName);
                     }
 
                     function handleRechteckErzeugen() {

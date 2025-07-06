@@ -6,7 +6,7 @@
 #include "packagemodel.h"
 #include "exersizeloader.h"
 #include "ImageDownloader.h"
-#include "ScreenshotHelper.h"
+#include "licenceinfowiki.h"
 
 #include <QtWebEngineQuick/qtwebenginequickglobal.h>
 
@@ -21,6 +21,8 @@ int main(int argc, char *argv[])
     qmlRegisterSingletonInstance("ExersizeLoader", 1, 0, "ExersizeLoader", new ExersizeLoader);
     qmlRegisterType<ImageDownloader>("Helpers", 1, 0, "ImageDownloader");
 
+    qmlRegisterType<LicenceInfoWiki>("Wiki", 1, 0, "LicenceInfoWiki");
+    qRegisterMetaType<WikiLicenceInfo>("WikiLicenceInfo");
 
     // Modell als QML-Typ registrieren
     qmlRegisterType<PackageModel>("Package", 1, 0, "PackageModel");

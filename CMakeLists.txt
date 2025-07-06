@@ -39,6 +39,7 @@ qt_add_qml_module(appMemoryPackagesBuilder
         SOURCES ImageDownloader.cpp
         QML_FILES
         SOURCES
+        SOURCES licenceinfowiki.h licenceinfowiki.cpp
 )
 
 # Linke die Qt-Bibliotheken – jetzt inklusive Qt6::Xml
