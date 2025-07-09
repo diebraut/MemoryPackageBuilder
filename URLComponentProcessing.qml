@@ -33,16 +33,13 @@ Window {
         id: licenceFetcher
 
         onInfoReady: function(info) {
-            if (!info.imageUrl) {
-                console.warn("❌ Keine gültige Bildquelle erhalten!");
-                return;
-            }
 
-            console.log("✅ Bildquelle:", info.imageUrl);
+            console.log("✅ Bild URL:", info.imageUrl);
+            console.log("✅ Bildquelle:", info.imageDescriptionUrl);
             console.log("👤 Autor:", info.authorName || "(unbekannt)", info.authorUrl || "");
             console.log("📜 Lizenz:", info.licenceName || "(unbekannt)", info.licenceUrl || "");
 
-            if (info.imageUrl.includes("upload.wikimedia.org")) {
+            if (info.imageUrl.includes("wikimedia.org")) {
                 var thumbUrl = build500pxThumbnailUrl(info.imageUrl);
 
                 var subject = subjektnamen;
@@ -197,24 +194,25 @@ Window {
                     }
 
                     function extractOriginalFileTitle(imageUrl) {
-                        if (!imageUrl.includes("upload.wikimedia.org")) {
-                            console.warn("❗ Keine Wikimedia-URL:", imageUrl);
-                            return "";
-                        }
-
                         var parts = imageUrl.split('/');
                         var fileName = parts[parts.length - 1];
 
                         // Entferne Thumbnail-Prefix (z.B. 300px-)
                         var match = fileName.match(/(?:\d+px-)?(.*)/);
                         if (match && match[1]) {
-                            var cleaned = match[1]
-                                .replace(/\.png$/, "")
-                                .replace(/\.jpg$/, "")
-                                .replace(/\.jpeg$/, "");
+                            var cleaned = match[1];
+
+                            // Prüfen: Ist das ein SVG-Thumbnail? (z. B. FILENAME.svg.png)
+                            if (cleaned.endsWith('.svg.png') || cleaned.endsWith('.svg.jpg')) {
+                                // Bild stammt von SVG → extrahiere SVG-Dateiname
+                                cleaned = cleaned.replace(/\.png$/, "").replace(/\.jpg$/, "");
+                            }
+
+                            // Gib Dateinamen inkl. Endung zurück
                             return "File:" + decodeURIComponent(cleaned);
                         }
 
+                        // Fallback: falls keine Präfixe erkannt wurden
                         return "File:" + decodeURIComponent(fileName);
                     }
 

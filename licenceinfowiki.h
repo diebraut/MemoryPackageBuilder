@@ -9,11 +9,12 @@
 
 struct WikiLicenceInfo
 {
-    QString imageUrl;
     QString authorName;
     QString authorUrl;
     QString licenceName;
     QString licenceUrl;
+    QString imageDescriptionUrl;
+    QString imageUrl;
 };
 
 Q_DECLARE_METATYPE(WikiLicenceInfo)

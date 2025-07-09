@@ -29,8 +29,6 @@ void LicenceInfoWiki::fetchLicenceInfo(const QString &fileTitle)
 
     url.setQuery(query);
 
-    qDebug() << "🌐 API-URL:" << url.toString();
-
     manager.get(QNetworkRequest(url));
 }
 
@@ -62,10 +60,8 @@ void LicenceInfoWiki::onReplyFinished(QNetworkReply *reply)
         if (imageinfoArray.isEmpty()) continue;
 
         QJsonObject imageinfo = imageinfoArray.at(0).toObject();
-        info.imageUrl = imageinfo.value("url").toString();
 
         QJsonObject extMeta = imageinfo.value("extmetadata").toObject();
-        qDebug().noquote() << "EXTMETA:" << QString::fromUtf8(QJsonDocument(extMeta).toJson(QJsonDocument::Compact));
 
         // Helper-Lambda für sicheren Zugriff
         auto getExtMetaValue = [](const QJsonObject &extMeta, const QString &key) -> QString {
@@ -74,7 +70,16 @@ void LicenceInfoWiki::onReplyFinished(QNetworkReply *reply)
             }
             return QString();
         };
+        QString baseName = getExtMetaValue(extMeta, "ObjectName");
+        // Hole die Dateiendung aus der tatsächlichen URL
+        info.imageUrl = imageinfo.value("url").toString();
+        QString fileExtension;
 
+        int lastDot = info.imageUrl.lastIndexOf('.');
+        if (lastDot != -1)
+            fileExtension = info.imageUrl.mid(lastDot);  // inkl. Punkt, z. B. ".svg"
+
+        info.imageDescriptionUrl = "https://commons.wikimedia.org/wiki/File:" + baseName + fileExtension;
         // Autor
         info.authorName = getExtMetaValue(extMeta, "Artist");
         info.authorUrl = "";
@@ -92,12 +97,15 @@ void LicenceInfoWiki::onReplyFinished(QNetworkReply *reply)
         info.licenceUrl = getExtMetaValue(extMeta, "LicenseUrl");
 
         // Debug-Ausgabe (optional)
-        qDebug() << "✅ Bildquelle:" << info.imageUrl;
+        /*
+        qDebug() << "✅ Bildquelle:" << info.imageDescriptionUrl;
         qDebug() << "👤 Autor:" << info.authorName << info.authorUrl;
         qDebug() << "📜 Lizenz:" << info.licenceName << info.licenceUrl;
+        */
 
         QJsonObject jsonInfo;
         jsonInfo["imageUrl"] = info.imageUrl;
+        jsonInfo["imageDescriptionUrl"] = info.imageDescriptionUrl;
         jsonInfo["authorName"] = info.authorName;
         jsonInfo["authorUrl"] = info.authorUrl;
         jsonInfo["licenceName"] = info.licenceName;
