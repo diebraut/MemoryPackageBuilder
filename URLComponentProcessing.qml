@@ -4,6 +4,8 @@ import QtQuick.Layouts 1.15
 import QtWebEngine 1.9
 
 import Helpers 1.0
+import FileHelper 1.0
+
 import Wiki 1.0  // Dein C++ Modul
 
 Window {
@@ -22,18 +24,63 @@ Window {
     property var lastContextMenuPosition
     property bool pageReady: false
 
+    property string tempImagePath: ""
+    property string finalImagePath: ""
+    property bool imageAvailable: false
+
+    function cleanupTempFile() {
+        if (tempImagePath !== "") {
+            var file = new QFile(tempImagePath);
+            if (file.exists()) {
+                file.remove();
+                console.log("🗑️ Temporäre Datei gelöscht:", tempImagePath);
+            }
+            tempImagePath = "";
+            finalImagePath = "";
+            imageAvailable = false;
+            saveButton.enabled = false;
+        }
+    }
+
+    function saveImageTemporarily(imageUrl) {
+        if (!imageUrl || imageUrl === "") {
+            console.warn("⚠️ Ungültige Bild-URL");
+            return;
+        }
+
+        var extension = imageUrl.split('.').pop().split(/\#|\?/)[0];
+        if (!extension.match(/^[a-zA-Z0-9]+$/)) {
+            extension = "jpg";  // Fallback
+        }
+
+        var filename = subjektnamen + "_TEMP." + extension;
+        var savePath = packagePath + "/" + filename;
+
+        tempImagePath = savePath;
+        finalImagePath = savePath.replace("_TEMP.", ".");
+
+        console.log("💾 Temporäre Speicherung:", savePath);
+        imgDownloader.downloadImage(imageUrl, savePath);
+    }
+
     ImageDownloader {
         id: imgDownloader
 
-        onDownloadSucceeded: handleDownloadSucceeded
-        onDownloadFailed: handleDownloadFailed
+        onDownloadSucceeded: function(filePath) {
+            console.log("✅ Signal empfangen in QML:", filePath);
+            handleDownloadSucceeded(filePath);
+        }
+
+        onDownloadFailed: {
+            console.log("❌ Fehler beim Download:", errorString);
+            handleDownloadFailed(errorString);
+        }
     }
 
     LicenceInfoWiki {
         id: licenceFetcher
 
         onInfoReady: function(info) {
-
             console.log("✅ Bild URL:", info.imageUrl);
             console.log("✅ Bildquelle:", info.imageDescriptionUrl);
             console.log("👤 Autor:", info.authorName || "(unbekannt)", info.authorUrl || "");
@@ -41,15 +88,9 @@ Window {
 
             if (info.imageUrl.includes("wikimedia.org")) {
                 var thumbUrl = build500pxThumbnailUrl(info.imageUrl);
-
-                var subject = subjektnamen;
-                var filename = subject + ".png";
-                var savePath = packagePath + "/" + filename;
-
                 console.log("🌐 Lade 500px-Thumbnail:", thumbUrl);
-                console.log("💾 Bild wird gespeichert unter:", savePath);
 
-                imgDownloader.downloadImage(thumbUrl, savePath);
+                saveImageTemporarily(thumbUrl);
             } else {
                 console.log("🌐 Kein Wikimedia-Bild, kein Thumbnail-Link generiert.");
             }
@@ -76,7 +117,11 @@ Window {
     }
 
     function handleDownloadSucceeded(path) {
-        console.log("✅ Bild gespeichert unter:", path);
+        tempImagePath = path;
+        finalImagePath = path.replace("_TEMP", "");  // z.B. von foo_TEMP.png → foo.png
+        imageAvailable = true;
+        saveButton.enabled = true;
+        console.log("✅ Bild temporär gespeichert:", path);
     }
 
     function handleDownloadFailed(error) {
@@ -167,6 +212,11 @@ Window {
                     function handleBildLaden(imageUrl) {
                         console.log("📌 Bild-URL:", imageUrl);
 
+                        if (!imageUrl || imageUrl === "") {
+                            console.warn("⚠️ Leere Bild-URL");
+                            return;
+                        }
+
                         // Prüfen: Ist es ein Wikimedia-Bild?
                         if (imageUrl.includes("upload.wikimedia.org")) {
                             var fileTitle = extractOriginalFileTitle(imageUrl);
@@ -174,22 +224,14 @@ Window {
                                 console.warn("❌ Kein gültiger Dateititel extrahiert, Lizenzinfo wird nicht abgerufen.");
                                 return;
                             }
+
                             console.log("🌐 Lizenzinfo abrufen für:", fileTitle);
                             licenceFetcher.fetchLicenceInfo(fileTitle);
 
-                            // Der eigentliche Download wird gestartet, wenn die Lizenzinfo geholt wurde (siehe onInfoReady)
+                            // Der eigentliche Download erfolgt später in onInfoReady → saveImageTemporarily()
                         } else {
-                            // Normales Bild, direkt speichern wie bisher
-                            var subject = subjektnamen;
-                            var imageType = imageUrl.split('.').pop().split(/\#|\?/)[0];
-                            var filename = subject + "." + imageType;
-                            var savePath = packagePath + "/" + filename;
-
-                            console.log("📂 imageUrl:", imageUrl);
-                            console.log("📂 Geplanter Dateiname:", filename);
-                            console.log("💾 Bild wird gespeichert unter:", savePath);
-
-                            imgDownloader.downloadImage(imageUrl, savePath);
+                            // Normales Bild, direkt temporär speichern
+                            saveImageTemporarily(imageUrl);
                         }
                     }
 
@@ -255,8 +297,16 @@ Window {
 
                                             var saveItem = Qt.createQmlObject('import QtQuick.Controls 2.15; MenuItem { text: "Bereich speichern" }', urlWindow.dynamicMenu);
                                             saveItem.triggered.connect(function() {
-                                                var savePath = packagePath + "/" + subjektnamen + ".jpg";
-                                                console.log("💾 Bereich speichern als:", savePath);
+                                                var extension = "jpg";
+                                                var tempName = subjektnamen + "_TEMP." + extension;
+                                                var savePath = packagePath + "/" + tempName;
+
+                                                tempImagePath = savePath;
+                                                finalImagePath = savePath.replace("_TEMP.", ".");
+                                                imageAvailable = true;
+                                                saveButton.enabled = true;
+
+                                                console.log("💾 Bereich speichern als (temporär):", savePath);
 
                                                 // Handle ausblenden
                                                 resizeHandle.visible = false;
@@ -270,7 +320,7 @@ Window {
                                                                                      parent.height,
                                                                                      savePath);
 
-                                                    // Handle wieder einblenden (falls du das Rechteck doch nicht zerstören willst)
+                                                    // Handle wieder einblenden (falls Rechteck nicht zerstört würde)
                                                     resizeHandle.visible = true;
 
                                                     // Rechteck entfernen
@@ -378,17 +428,41 @@ Window {
                 spacing: 10
 
                 Button {
+                    id: saveButton
+                    enabled: false;
                     text: "Übernehmen"
                     onClicked: {
-                        accepted(webView.url.toString());
-                        urlWindow.close();
+                        if (tempImagePath === "" || finalImagePath === "") {
+                            console.warn("⚠️ Kein temporäres Bild zum Speichern");
+                            return;
+                        }
+
+                        if (FileHelper.fileExists(finalImagePath)) {
+                            FileHelper.removeFile(finalImagePath);
+                            console.log("⚠️ Vorherige Datei gelöscht:", finalImagePath);
+                        }
+
+                        if (FileHelper.renameFile(tempImagePath, finalImagePath)) {
+                            console.log("💾 Bild gespeichert als:", finalImagePath);
+                        } else {
+                            console.warn("❌ Umbenennen fehlgeschlagen");
+                        }
+
+                        // Clean up
+                        tempImagePath = "";
+                        finalImagePath = "";
+                        imageAvailable = false;
+                        saveButton.enabled = false;
                     }
                 }
 
                 Button {
                     text: "Abbrechen"
-                    onClicked: urlWindow.close();
-                }
+                    onClicked: {
+                        accepted(webView.url.toString());
+                        cleanupTempFile();
+                        urlWindow.close();
+                    }                }
             }
         }
     }

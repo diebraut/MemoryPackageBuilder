@@ -7,6 +7,7 @@
 #include "exersizeloader.h"
 #include "ImageDownloader.h"
 #include "licenceinfowiki.h"
+#include "filehelper.h"
 
 #include <QtWebEngineQuick/qtwebenginequickglobal.h>
 
@@ -23,6 +24,10 @@ int main(int argc, char *argv[])
 
     qmlRegisterType<LicenceInfoWiki>("Wiki", 1, 0, "LicenceInfoWiki");
     qRegisterMetaType<WikiLicenceInfo>("WikiLicenceInfo");
+
+    qmlRegisterSingletonType<FileHelper>("FileHelper", 1, 0, "FileHelper", [](QQmlEngine*, QJSEngine*) -> QObject* {
+        return new FileHelper();
+    });
 
     // Modell als QML-Typ registrieren
     qmlRegisterType<PackageModel>("Package", 1, 0, "PackageModel");

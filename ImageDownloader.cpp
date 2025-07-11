@@ -1,19 +1,17 @@
 #include "ImageDownloader.h"
 #include <QFile>
+#include <QImage>
+#include <QNetworkReply>
 #include <QDebug>
 
-#include <QImage>
-
-ImageDownloader::ImageDownloader(QObject *parent) : QObject(parent)
+ImageDownloader::ImageDownloader(QObject *parent)
+    : QObject(parent)
 {
-    connect(&manager, &QNetworkAccessManager::finished,
-            this, &ImageDownloader::onFinished);
+    // Kein globaler Slot nötig
 }
 
 void ImageDownloader::downloadImage(const QString &url, const QString &savePath)
 {
-    currentSavePath = savePath;
-
     QUrl qurl(url);
     if (!qurl.isValid()) {
         emit downloadFailed("Ungültige URL");
@@ -21,49 +19,52 @@ void ImageDownloader::downloadImage(const QString &url, const QString &savePath)
     }
 
     QNetworkRequest request(qurl);
-    manager.get(request);
+    QNetworkReply* reply = manager.get(request);
+
+    // Pro-Request-Handling mit Lambda
+    connect(reply, &QNetworkReply::finished, this, [reply, savePath, this]() {
+        if (reply->error() != QNetworkReply::NoError) {
+            emit downloadFailed("Netzwerkfehler: " + reply->errorString());
+            reply->deleteLater();
+            return;
+        }
+
+        QByteArray data = reply->readAll();
+        QFile file(savePath);
+        if (!file.open(QIODevice::WriteOnly)) {
+            emit downloadFailed("Fehler beim Öffnen der Datei: " + file.errorString());
+            reply->deleteLater();
+            return;
+        }
+
+        file.write(data);
+        file.close();
+
+        qDebug() << "✅ Bild gespeichert unter:" << savePath;
+        emit downloadSucceeded(savePath);
+
+        reply->deleteLater();
+    });
 }
 
-void ImageDownloader::onFinished(QNetworkReply *reply)
+void ImageDownloader::grabAndSaveCropped(QQuickWindow *window, int x, int y, int w, int h, const QString &path)
 {
-    if (reply->error() != QNetworkReply::NoError) {
-        emit downloadFailed(reply->errorString());
-        reply->deleteLater();
-        return;
-    }
-
-    QByteArray data = reply->readAll();
-
-    QFile file(currentSavePath);
-    if (!file.open(QIODevice::WriteOnly)) {
-        emit downloadFailed("Fehler beim Öffnen der Datei: " + file.errorString());
-        reply->deleteLater();
-        return;
-    }
-
-    file.write(data);
-    file.close();
-
-    emit downloadSucceeded(currentSavePath);
-    reply->deleteLater();
-}
-
-Q_INVOKABLE void ImageDownloader::grabAndSaveCropped(QQuickWindow *window, int x, int y, int w, int h, const QString &path) {
     if (!window) {
-        qWarning() << "❌ Fenster ist null";
+        emit downloadFailed("Fenster ist null");
         return;
     }
 
     QImage image = window->grabWindow();
     if (image.isNull()) {
-        qWarning() << "❌ Screenshot fehlgeschlagen";
+        emit downloadFailed("Screenshot fehlgeschlagen");
         return;
     }
 
     QImage cropped = image.copy(x, y, w, h);
     if (cropped.save(path)) {
         qDebug() << "✅ Bereich gespeichert unter:" << path;
+        emit downloadSucceeded(path);
     } else {
-        qWarning() << "❌ Speichern fehlgeschlagen";
+        emit downloadFailed("Speichern fehlgeschlagen");
     }
 }

@@ -24,8 +24,6 @@ signals:
     void downloadSucceeded(const QString &filePath);
     void downloadFailed(const QString &errorString);
 
-private slots:
-    void onFinished(QNetworkReply *reply);
 
 private:
     QNetworkAccessManager manager;
