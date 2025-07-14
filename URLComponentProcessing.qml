@@ -19,7 +19,8 @@ Window {
     property string subjektnamen: ""
     property string packagePath: ""
 
-    signal accepted(string newUrl)
+    signal accepted(string newUrl, var licenceInfo)
+
     property var dynamicMenu
     property var lastContextMenuPosition
     property bool pageReady: false
@@ -52,7 +53,7 @@ Window {
             urlWindow.dynamicMenu.destroy();
             urlWindow.dynamicMenu = null;
         }
-
+        currentImageLicenceInfo = null;
         var rect = Qt.createQmlObject(`
             import QtQuick 2.15
             import QtQuick.Controls 2.15
@@ -170,7 +171,7 @@ Window {
             console.warn("⚠️ Leere Bild-URL");
             return;
         }
-
+        currentImageLicenceInfo = null;
         if (imageUrl.includes("upload.wikimedia.org")) {
             var fileTitle = extractOriginalFileTitle(imageUrl);
             if (!fileTitle || fileTitle === "File:") {
@@ -195,7 +196,7 @@ Window {
             console.warn("⚠️ Leere Bild-URL");
             return;
         }
-
+        currentImageLicenceInfo = null
         if (imageUrl.includes("upload.wikimedia.org")) {
             var fileTitle = extractOriginalFileTitle(imageUrl);
             if (!fileTitle || fileTitle === "File:") {
@@ -280,7 +281,13 @@ Window {
         onInfoReady: function(info) {
             currentImageLicenceInfo = info;
 
-            console.log("✅ Lizenzinfo erhalten:", info.licenceName);
+            console.log("✅ Lizenzinfo erhalten name :", info.licenceName);
+            console.log("✅authorName:",info.authorName);
+            console.log("✅authorUrl:",info.authorUrl);
+            console.log("✅licenceName:",info.licenceName);
+            console.log("✅licenceUrl:",info.licenceUrl);
+            console.log("✅imageDescriptionUrl",info.imageDescriptionUrl);
+            console.log("✅imageUrl:",info.imageUrl);
 
             if (licenceFetchMode === "bildLaden" && autoDownloadImage && info.imageUrl.includes("wikimedia.org")) {
                 var thumbUrl = build500pxThumbnailUrl(info.imageUrl);
@@ -485,19 +492,21 @@ Window {
                         } else {
                             console.warn("❌ Umbenennen fehlgeschlagen");
                         }
-
+                        // Übergibt Bild-URL + Lizenzinfo an aufrufenden Dialog
+                        accepted(webView.url.toString(), currentImageLicenceInfo);
                         // Clean up
                         tempImagePath = "";
                         finalImagePath = "";
                         imageAvailable = false;
                         saveButton.enabled = false;
+                        cleanupTempFile();
+                        urlWindow.close();
                     }
                 }
 
                 Button {
                     text: "Abbrechen"
                     onClicked: {
-                        accepted(webView.url.toString());
                         cleanupTempFile();
                         urlWindow.close();
                     }

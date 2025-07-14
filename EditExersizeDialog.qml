@@ -89,7 +89,7 @@ Dialog {
                                 "frageSubjekt", "antwortSubjekt", "subjektPrefixFrage", "subjektPrefixAntwort",
                                 "imagefileFrage", "imagefileAntwort", "infoURLFrage", "infoURLAntwort",
                                 "imageFrageAuthor", "imageFrageLizenz", "imageAntwortAuthor", "imageAntwortLizenz",
-                                "wikiPageFraVers", "wikiPageAntVers", "excludeAereaFra", "excludeAereaAnt"
+                                "imageFrageBildDescription","imageAntwortBildDescription","wikiPageFraVers", "wikiPageAntVers", "excludeAereaFra", "excludeAereaAnt"
                             ]
 
                             delegate: Column {

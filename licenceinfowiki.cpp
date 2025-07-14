@@ -41,7 +41,7 @@ void LicenceInfoWiki::onReplyFinished(QNetworkReply *reply)
     }
 
     QByteArray data = reply->readAll();
-    qDebug().noquote() << "📥 Antwort JSON:" << QString::fromUtf8(data);
+    //qDebug().noquote() << "📥 Antwort JSON:" << QString::fromUtf8(data);
     QJsonDocument doc = QJsonDocument::fromJson(data);
     QJsonObject root = doc.object();
 

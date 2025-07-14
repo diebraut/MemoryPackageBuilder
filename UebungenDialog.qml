@@ -178,8 +178,6 @@ Window {
                         }
                     });
 
-
-
                     win.rejected.connect(function() {
                         console.log("❌ Bearbeitung abgebrochen");
                     });
@@ -197,20 +195,73 @@ Window {
         MenuItem {
             text: "Webseite anzeigen"
             onTriggered: {
-                const extraProp = urlContextMenu.roleName === "infoURLFrage"
-                                  ? uebungModel.get(urlContextMenu.rowIndex).frageSubjekt
-                                  : uebungModel.get(urlContextMenu.rowIndex).antwortSubjekt;
-                const url = uebungModel.get(urlContextMenu.rowIndex)[urlContextMenu.roleName] || "";
+                const row = urlContextMenu.rowIndex;
+                const role = urlContextMenu.roleName;
+                const extraProp = (role === "infoURLFrage")
+                                  ? uebungModel.get(row).frageSubjekt
+                                  : uebungModel.get(row).antwortSubjekt;
+
+                const url = uebungModel.get(row)[role] || "";
                 const component = Qt.createComponent("qrc:/MemoryPackagesBuilder/URLComponentProcessing.qml");
+
                 if (component.status === Component.Ready) {
                     const win = component.createObject(null, {
                         urlString: url,
                         subjektnamen: extraProp,
-                        packagePath: packagePath // Hier übergeben wir den Path
+                        packagePath: packagePath
                     });
-                    win.accepted.connect(function(newUrl) {
-                        uebungModel.setProperty(urlContextMenu.rowIndex, urlContextMenu.roleName, newUrl);
+
+                    win.accepted.connect(function(newUrl, licenceInfo) {
+                        // URL ins Modell schreiben
+                        uebungModel.setProperty(row, role, newUrl);
+
+                        if (licenceInfo) {
+                            const prefix = (role === "infoURLFrage")
+                                           ? "imageFrage"
+                                           : (role === "infoURLAntwort")
+                                           ? "imageAntwort"
+                                           : null;
+
+                            if (prefix) {
+                                uebungModel.setProperty(row, prefix + "Author",
+                                    licenceInfo.authorName + "[" + licenceInfo.authorUrl + "]");
+
+                                uebungModel.setProperty(row, prefix + "Lizenz",
+                                    licenceInfo.licenceName + "[" + licenceInfo.licenceUrl + "]");
+
+                                uebungModel.setProperty(row, prefix + "BildDescription",licenceInfo.imageDescriptionUrl);
+
+                                console.log("✅ Lizenzinfos gesetzt für", prefix);
+                            }
+                        }
+
+                        // 🔁 Modell sofort speichern
+                        saveCurrentModelToXml();
                     });
+                    function saveCurrentModelToXml() {
+                        var data = {
+                            name: uebungenNameField.text,
+                            frageText: frageTextField.text,
+                            frageTextUmgekehrt: frageTextUmgekehrtField.text,
+                            sequentiell: sequentiellCheckBox.checked,
+                            umgekehrt: umgekehrtCheckBox.checked,
+                            uebungsliste: []
+                        };
+
+                        for (var i = 0; i < uebungModel.count; ++i) {
+                            let eintrag = JSON.parse(JSON.stringify(uebungModel.get(i)));
+                            delete eintrag[""];
+                            data.uebungsliste.push(eintrag);
+                        }
+
+                        const result = ExersizeLoader.savePackage(packagePath, data);
+                        if (result) {
+                            console.log("💾 Änderungen in XML gespeichert.");
+                        } else {
+                            console.warn("❌ Fehler beim Speichern.");
+                        }
+                    }
+
                     win.show();
                 } else {
                     console.warn("❌ Fehler beim Laden:", component.errorString());
