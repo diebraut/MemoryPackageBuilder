@@ -177,7 +177,7 @@ Window {
                             uebungModel.setProperty(index, "arrowDescAnt", arrowData);  // NEU
                         }
                     });
-
+                    saveCurrentModelToXml();
                     win.rejected.connect(function() {
                         console.log("❌ Bearbeitung abgebrochen");
                     });
@@ -211,8 +211,11 @@ Window {
                         packagePath: packagePath
                     });
 
-                    win.accepted.connect(function(newUrl, licenceInfo) {
-                        // URL ins Modell schreiben
+                    win.accepted.connect(function(newUrl, licenceInfo, savedFileExtension) {
+                        const row = urlContextMenu.rowIndex;
+                        const role = urlContextMenu.roleName;
+
+                        // 1. URL setzen
                         uebungModel.setProperty(row, role, newUrl);
 
                         if (licenceInfo) {
@@ -223,44 +226,48 @@ Window {
                                            : null;
 
                             if (prefix) {
+                                // 2. Lizenzdaten setzen
                                 uebungModel.setProperty(row, prefix + "Author",
                                     licenceInfo.authorName + "[" + licenceInfo.authorUrl + "]");
 
                                 uebungModel.setProperty(row, prefix + "Lizenz",
                                     licenceInfo.licenceName + "[" + licenceInfo.licenceUrl + "]");
 
-                                uebungModel.setProperty(row, prefix + "BildDescription",licenceInfo.imageDescriptionUrl);
+                                uebungModel.setProperty(row, prefix + "BildDescription",
+                                    licenceInfo.imageDescriptionUrl);
 
-                                console.log("✅ Lizenzinfos gesetzt für", prefix);
+                                // 3. Bilddatei setzen oder anpassen
+                                const imageFileKey = (prefix === "imageFrage") ? "imagefileFrage" : "imagefileAntwort";
+                                let currentFileName = uebungModel.get(row)[imageFileKey];
+                                const subjectKey = (prefix === "imageFrage") ? "frageSubjekt" : "antwortSubjekt";
+                                const subjectValue = uebungModel.get(row)[subjectKey] || "";
+
+                                if (currentFileName && currentFileName.trim() !== "") {
+                                    const baseName = currentFileName.substring(0, currentFileName.lastIndexOf("."));  // ohne Endung
+                                    const currentExt = currentFileName.split(".").pop().toLowerCase();
+
+                                    if (currentExt !== savedFileExtension.toLowerCase()) {
+                                        const newName = baseName + "." + savedFileExtension;
+                                        uebungModel.setProperty(row, imageFileKey, newName);
+                                        console.log("🔁 Dateiendung angepasst für", imageFileKey, "→", newName);
+                                    }
+                                } else {
+                                    // 💡 Neuer Name auf Basis des Subjekts
+                                    const newName = subjectValue.trim() + "." + savedFileExtension;
+                                    uebungModel.setProperty(row, imageFileKey, newName);
+                                    console.log("🆕 Neuer Bildname gesetzt:", imageFileKey, "→", newName);
+                                }
+
+                                console.log("✅ Lizenzinfos gespeichert für", prefix);
                             }
                         }
 
-                        // 🔁 Modell sofort speichern
+                        // 4. XML sofort speichern
                         saveCurrentModelToXml();
+                        listView.model = null;
+                        listView.model = uebungModel;
+
                     });
-                    function saveCurrentModelToXml() {
-                        var data = {
-                            name: uebungenNameField.text,
-                            frageText: frageTextField.text,
-                            frageTextUmgekehrt: frageTextUmgekehrtField.text,
-                            sequentiell: sequentiellCheckBox.checked,
-                            umgekehrt: umgekehrtCheckBox.checked,
-                            uebungsliste: []
-                        };
-
-                        for (var i = 0; i < uebungModel.count; ++i) {
-                            let eintrag = JSON.parse(JSON.stringify(uebungModel.get(i)));
-                            delete eintrag[""];
-                            data.uebungsliste.push(eintrag);
-                        }
-
-                        const result = ExersizeLoader.savePackage(packagePath, data);
-                        if (result) {
-                            console.log("💾 Änderungen in XML gespeichert.");
-                        } else {
-                            console.warn("❌ Fehler beim Speichern.");
-                        }
-                    }
 
                     win.show();
                 } else {
@@ -270,6 +277,29 @@ Window {
         }
     }
 
+    function saveCurrentModelToXml() {
+        var data = {
+            name: uebungenNameField.text,
+            frageText: frageTextField.text,
+            frageTextUmgekehrt: frageTextUmgekehrtField.text,
+            sequentiell: sequentiellCheckBox.checked,
+            umgekehrt: umgekehrtCheckBox.checked,
+            uebungsliste: []
+        };
+
+        for (var i = 0; i < uebungModel.count; ++i) {
+            let eintrag = JSON.parse(JSON.stringify(uebungModel.get(i)));
+            delete eintrag[""];
+            data.uebungsliste.push(eintrag);
+        }
+
+        const result = ExersizeLoader.savePackage(packagePath, data);
+        if (result) {
+            console.log("💾 Änderungen in XML gespeichert.");
+        } else {
+            console.warn("❌ Fehler beim Speichern.");
+        }
+    }
 
     Item {
         id: windowContent

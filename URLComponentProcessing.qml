@@ -19,7 +19,7 @@ Window {
     property string subjektnamen: ""
     property string packagePath: ""
 
-    signal accepted(string newUrl, var licenceInfo)
+   signal accepted(string newUrl, var licenceInfo, string savedFileExtension)
 
     property var dynamicMenu
     property var lastContextMenuPosition
@@ -241,7 +241,7 @@ Window {
     function saveImageTemporarily(imageUrl) {
         if (!imageUrl || imageUrl === "") {
             console.warn("⚠️ Ungültige Bild-URL");
-            return;
+            return "";
         }
 
         var extension = imageUrl.split('.').pop().split(/\#|\?/)[0];
@@ -257,6 +257,8 @@ Window {
 
         console.log("💾 Temporäre Speicherung:", savePath);
         imgDownloader.downloadImage(imageUrl, savePath);
+
+        return extension;  // ⬅️ GIBT Dateityp zurück
     }
 
     ImageDownloader {
@@ -493,7 +495,10 @@ Window {
                             console.warn("❌ Umbenennen fehlgeschlagen");
                         }
                         // Übergibt Bild-URL + Lizenzinfo an aufrufenden Dialog
-                        accepted(webView.url.toString(), currentImageLicenceInfo);
+                        var lUrl = webView.url.toString();
+                        var savedType = finalImagePath.split('.').pop().toLowerCase();
+                        accepted(lUrl, currentImageLicenceInfo, savedType);
+
                         // Clean up
                         tempImagePath = "";
                         finalImagePath = "";
