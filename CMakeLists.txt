@@ -55,6 +55,14 @@ add_custom_command(TARGET appMemoryPackagesBuilder POST_BUILD
         $<TARGET_FILE_DIR:appMemoryPackagesBuilder>/exercisepackages
 )
 
+# 📂 Kopiere buildSourcen Folder Verzeichnis nach Build-Ausgabeordner
+add_custom_command(TARGET appMemoryPackagesBuilder POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_SOURCE_DIR}/buildsourcen
+        $<TARGET_FILE_DIR:appMemoryPackagesBuilder>/buildsourcen
+)
+
+
 # Installiere die Anwendung
 include(GNUInstallDirs)
 install(TARGETS appMemoryPackagesBuilder

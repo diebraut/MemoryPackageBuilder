@@ -35,6 +35,9 @@ int main(int argc, char *argv[])
     // Pfad zum Ordner "exercisepackages" relativ zum Programmverzeichnis
     QString packageFolderPath = QCoreApplication::applicationDirPath() + "/exercisepackages";
 
+    // Pfad zum Ordner "exercise packages" relativ zum Programmverzeichnis
+    QString buildSourcenPath = QCoreApplication::applicationDirPath() + "/buildsourcen";
+
     // Debug-Ausgabe zur Kontrolle
     qDebug() << "📂 Pfad zu exercisepackages:" << packageFolderPath;
 
@@ -42,6 +45,8 @@ int main(int argc, char *argv[])
 
     // Übergabe des Pfads an QML
     engine.rootContext()->setContextProperty("packagesFolder", packageFolderPath);
+    // Übergabe der build sourcen an QML
+    engine.rootContext()->setContextProperty("buildSourcenFolder", buildSourcenPath);
 
     const QUrl url(u"qrc:/MemoryPackagesBuilder/Main.qml"_qs);
 

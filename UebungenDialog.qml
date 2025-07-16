@@ -2,6 +2,7 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 import QtQuick.Controls.Fusion 2.15
+import Qt.labs.platform 1.1
 
 import ExersizeLoader 1.0
 
@@ -45,6 +46,22 @@ Window {
             }
         }
     }
+
+    FileDialog {
+        id: csvFileDialog
+        title: "CSV-Datei auswählen"
+        folder: buildSourcenFolder
+        nameFilters: ["CSV-Dateien (*.csv)"]
+        fileMode: FileDialog.OpenFile  // ← wichtig!
+        onAccepted: {
+            console.log("✅ Ausgewählt:", file)
+            // hier kannst du file (QString) oder fileUrl verwenden
+        }
+        onRejected: {
+            console.log("❌ Auswahl abgebrochen.")
+        }
+    }
+
 
     MouseArea {
         anchors.fill: parent
@@ -726,8 +743,9 @@ Window {
             }
 
             Button {
-                text: "Abbrechen"
-                onClicked: dialogWindow.close()
+                enabled: true
+                text: "Neu anlegen"
+                //onClicked: csvFileDialog.open()
             }
         }
     }
