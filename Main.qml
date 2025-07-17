@@ -3,6 +3,7 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import QtQuick.Window
 import Package 1.0
+import ExerciseIO 1.0
 
 import Qt.labs.platform 1.1
 import QtQuick.Controls.Fusion 2.15
@@ -16,6 +17,14 @@ Window {
 
     property string selectedCsvFileName: ""
     property string selectedCsvBaseName: ""
+
+    PackageModel {
+        id: packageModel
+    }
+
+    BuildExercisePackage {
+        id: buildExercize;
+    }
 
     FileDialog {
         id: csvFileDialog
@@ -126,33 +135,53 @@ Window {
             }
 
             Button {
-                id:createId
+                id: createId
                 anchors.top: cancelId.top
                 anchors.right: cancelId.left
                 anchors.rightMargin: 5
                 text: "Übung erstellen"
+
                 onClicked: {
                     const name = newExerciseNameField.text.trim()
                     const exists = exerciseExists(name)
+
                     if (exists) {
                         overwriteDialog.exerciseName = name
                         overwriteDialog.open()
                     } else {
-                        console.log("✅ Übung erzeugen:", name)
+                        console.log("✅ Erzeuge neue Übung:", name)
+
+                        const csvPath = buildSourcenFolder + "/" + exerciseCreationDialog.selectedCsvFileName
+                        const ok = buildExercize.buildPackage(csvPath, name, packagesFolder)
+                        if (ok) {
+                            console.log("✅ Paket erfolgreich erstellt.")
+                            packageModel.loadPackages(packagesFolder)
+                        } else {
+                            console.error("❌ Fehler beim Erstellen des Pakets.")
+                        }
+
                         exerciseCreationDialog.close()
-                        // TODO: Übung erzeugen
                     }
                 }
+
                 function exerciseExists(name) {
-                    console.log("Count List:",packageModel.rowCount())
-                    for (let i = 0; i < packageModel.rowCount(); i++) {
-                        var exercizeName = packageModel.get(i).displayName
-                        console.log("Übunsgsname:", exercizeName, " Name;", name)
-                        if (packageModel.get(i).displayName === name) {
-                            return true;
+                    const normalizedInput = name.toLowerCase().replace(/\s+/g, "")
+
+                    console.log("🔍 Suche nach Übung:", normalizedInput)
+                    const count = packageModel.rowCount()
+                    console.log("📦 Anzahl Übungen:", count)
+
+                    for (let i = 0; i < count; i++) {
+                        const modelName = packageModel.get(i).displayName
+                        const normalizedModelName = modelName.toLowerCase().replace(/\s+/g, "")
+
+                        console.log("➡️ Vergleiche mit:", normalizedModelName)
+                        if (normalizedInput === normalizedModelName) {
+                            return true
                         }
                     }
-                    return false;
+
+                    return false
                 }
             }
 
@@ -300,9 +329,6 @@ Window {
         }
     }
 
-    PackageModel {
-        id: packageModel
-    }
 
     Component.onCompleted: {
         console.log("📦 Lade Packages aus:", packagesFolder)
