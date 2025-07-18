@@ -16,6 +16,7 @@ LicenceInfoWiki::LicenceInfoWiki(QObject *parent) : QObject(parent)
 
 void LicenceInfoWiki::fetchLicenceInfo(const QString &fileTitle)
 {
+    lastFileTitle = fileTitle;
     QUrl url("https://commons.wikimedia.org/w/api.php");
     QUrlQuery query;
     query.addQueryItem("action", "query");
@@ -70,16 +71,8 @@ void LicenceInfoWiki::onReplyFinished(QNetworkReply *reply)
             }
             return QString();
         };
-        QString baseName = getExtMetaValue(extMeta, "ObjectName");
-        // Hole die Dateiendung aus der tatsächlichen URL
         info.imageUrl = imageinfo.value("url").toString();
-        QString fileExtension;
-
-        int lastDot = info.imageUrl.lastIndexOf('.');
-        if (lastDot != -1)
-            fileExtension = info.imageUrl.mid(lastDot);  // inkl. Punkt, z. B. ".svg"
-
-        info.imageDescriptionUrl = "https://commons.wikimedia.org/wiki/File:" + baseName + fileExtension;
+        info.imageDescriptionUrl = "https://commons.wikimedia.org/wiki/" + lastFileTitle;
         // Autor
         info.authorName = getExtMetaValue(extMeta, "Artist");
         info.authorUrl = "";

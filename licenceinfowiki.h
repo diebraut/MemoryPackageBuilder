@@ -40,6 +40,7 @@ private slots:
 
 private:
     QNetworkAccessManager manager;
+    QString lastFileTitle;
 };
 
 #endif // LICENCEINFOWIKI_H

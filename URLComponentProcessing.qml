@@ -45,7 +45,7 @@ Window {
             saveButton.enabled = false;
         }
     }
-    function handleRechteckErzeugen() {
+    function handleRechteckErzeugen(info) {
         console.log("🟩 Rechteck erzeugen gewählt");
 
         // Menü vor dem Erzeugen schließen, damit es nicht im Screenshot landet
@@ -53,7 +53,7 @@ Window {
             urlWindow.dynamicMenu.destroy();
             urlWindow.dynamicMenu = null;
         }
-        currentImageLicenceInfo = null;
+        currentImageLicenceInfo = info;
         var rect = Qt.createQmlObject(`
             import QtQuick 2.15
             import QtQuick.Controls 2.15
@@ -178,10 +178,7 @@ Window {
                 console.warn("❌ Kein gültiger Dateititel extrahiert.");
                 return;
             }
-
-            licenceFetcher.autoDownloadImage = true;
             licenceFetchMode = "bildLaden";
-
             licenceFetcher.fetchLicenceInfo(fileTitle);
 
         } else {
@@ -204,14 +201,13 @@ Window {
                 return;
             }
 
-            licenceFetcher.autoDownloadImage = false;
+            //licenceFetcher.autoDownloadImage = false;
             licenceFetchMode = "rechteck";
-
             licenceFetcher.fetchLicenceInfo(fileTitle);
 
         } else {
             currentImageLicenceInfo = null;
-            handleRechteckErzeugen();
+            handleRechteckErzeugen(null);
         }
     }
 
@@ -278,8 +274,6 @@ Window {
     LicenceInfoWiki {
         id: licenceFetcher
 
-        property bool autoDownloadImage: true  // Standard für <Bild laden>
-
         onInfoReady: function(info) {
             currentImageLicenceInfo = info;
 
@@ -291,13 +285,13 @@ Window {
             console.log("✅imageDescriptionUrl",info.imageDescriptionUrl);
             console.log("✅imageUrl:",info.imageUrl);
 
-            if (licenceFetchMode === "bildLaden" && autoDownloadImage && info.imageUrl.includes("wikimedia.org")) {
+            if (licenceFetchMode === "bildLaden" && info.imageUrl.includes("wikimedia.org")) {
                 var thumbUrl = build500pxThumbnailUrl(info.imageUrl);
                 console.log("🌐 Lade 500px-Thumbnail:", thumbUrl);
                 saveImageTemporarily(thumbUrl);
             } else if (licenceFetchMode === "rechteck") {
                 console.log("🟩 Lizenzinfo für Rechteck gespeichert. Rechteck wird jetzt erzeugt.");
-                handleRechteckErzeugen();
+                handleRechteckErzeugen(info);
             } else {
                 console.log("ℹ️ Lizenzinfo erhalten, aber kein weiterer Vorgang definiert.");
             }
@@ -306,6 +300,7 @@ Window {
         onErrorOccurred: function(message) {
             console.warn("❌ Fehler beim Abrufen der Lizenzinfos:", message);
         }
+
         function build500pxThumbnailUrl(originalUrl) {
             // Beispiel: https://upload.wikimedia.org/wikipedia/commons/b/be/FILENAME.svg
             var parts = originalUrl.split('/');
