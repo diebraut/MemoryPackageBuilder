@@ -276,6 +276,68 @@ Window {
                 }
             }
         }
+        MenuItem {
+            text: "Check Website"
+            onTriggered: {
+                const url = uebungModel.get(urlContextMenu.rowIndex)[urlContextMenu.roleName];
+                checkWebsite(url, urlContextMenu.rowIndex, urlContextMenu.roleName);
+            }
+        }
+
+    }
+
+    function checkWebsite(url, rowIndex, roleName) {
+        // Prüfen ob die Zeile noch existiert
+        if (rowIndex < 0 || rowIndex >= uebungModel.count) {
+            console.warn("Ungültiger Index:", rowIndex);
+            return;
+        }
+
+        // Temporäre Kopie für die Closure erstellen
+        let currentRow = rowIndex;
+        let currentRole = roleName;
+        // 🔶 Status: Gelb für "wird geprüft"
+        const colorKey = roleName + "_bgcolor";
+        uebungModel.setProperty(rowIndex, colorKey, "yellow");
+
+        let xhr = new XMLHttpRequest();
+        xhr.open("HEAD", url, true);
+        xhr.timeout = 5000;
+
+        xhr.onreadystatechange = function() {
+            // Prüfen ob Zeile noch existiert
+            if (currentRow >= uebungModel.count) return;
+            console.log("xhr.readyState",xhr.readyState)
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                let success = (xhr.status >= 200 && xhr.status < 400);
+                let color = success ? "#ccffcc" : "#ffcccc";  // hellgrün / hellrot
+                uebungModel.setProperty(currentRow, colorKey, color);
+                console.log(success ? "✅ erreichbar:" : "❌ nicht erreichbar:", url);
+            }
+        };
+
+        xhr.onerror = function() {
+            if (currentRow < uebungModel.count) {
+                console.warn("⚠️ Fehler beim Prüfen:", url);
+                uebungModel.setProperty(currentRow, colorKey, "#ffdddd");
+            }
+        };
+
+        xhr.ontimeout = function() {
+            if (currentRow < uebungModel.count) {
+                console.warn("⏰ Timeout bei:", url);
+                uebungModel.setProperty(currentRow, colorKey, "#ffdddd");
+            }
+        };
+
+        try {
+            xhr.send();
+        } catch (e) {
+            if (currentRow < uebungModel.count) {
+                console.warn("❌ Ausnahme bei:", url, e);
+                uebungModel.setProperty(currentRow, colorKey, "#ffdddd");
+            }
+        }
     }
 
     function saveCurrentModelToXml() {
@@ -339,6 +401,7 @@ Window {
     Component {
         id: columnEditor
         Item {
+            id: columnItemId
             property string roleName
             property int rowIndex
             property int colWidth
@@ -346,37 +409,55 @@ Window {
             width: colWidth
             height: 40
 
+            // Eigenschaften zur Bindung
+            property string currentRole: roleName
+            property int currentIndex: rowIndex
+            property string colorKey: currentRole + "_bgcolor"
+            property string bgColor: "white"  // neu
+
             TextField {
                 id: textField
                 anchors.centerIn: parent
                 width: colWidth * 0.8
                 height: parent.height * 0.8
 
-                // Direkte Bindung mit Qt.binding für dynamische Aktualisierung
-                Binding {
-                    target: textField
-                    property: "text"
-                    value: uebungModel.get(rowIndex)[roleName] || ""
+
+                // Direkte Bindung an Modelwert
+                text: {
+                    if (currentIndex >= 0 && currentIndex < uebungModel.count) {
+                        return uebungModel.get(currentIndex)[currentRole] || "";
+                    }
+                    return "";
                 }
 
                 activeFocusOnPress: true
+
                 onPressed: {
                     listView.currentIndex = rowIndex;
                     forceActiveFocus();
                 }
+
                 onTextChanged: {
-                    if (text !== uebungModel.get(rowIndex)[roleName]) {
-                        uebungModel.setProperty(rowIndex, roleName, text);
+                    if (currentIndex >= 0 && currentIndex < uebungModel.count) {
+                        if (text !== uebungModel.get(currentIndex)[currentRole]) {
+                            uebungModel.setProperty(currentIndex, currentRole, text);
+
+                            // Reset Hintergrundfarbe bei URL-Änderung
+                            if (currentRole === "infoURLFrage" || currentRole === "infoURLAntwort") {
+                                uebungModel.setProperty(currentIndex, colorKey, "white");
+                            }
+                        }
                     }
                 }
 
+                // ✅ Zuverlässige Farbbindung direkt im Rectangle
                 background: Rectangle {
-                    color: "white"
-                    border.color: textField.activeFocus ? "blue" : "#ccc"
                     radius: 3
+                    border.color: textField.activeFocus ? "blue" : "#ccc"
+                    color: bgColor
                 }
 
-                // MouseArea für Right-Click im Textfeld
+                // Kontextmenü für rechte Maustaste
                 MouseArea {
                     anchors.fill: parent
                     acceptedButtons: Qt.RightButton
@@ -432,11 +513,24 @@ Window {
             frageTextUmgekehrtField.text = uebungenData.frageTextUmgekehrt;
             sequentiellCheckBox.checked = uebungenData.sequentiell;
             umgekehrtCheckBox.checked = uebungenData.umgekehrt;
+
             uebungModel.clear();
+
             for (var i = 0; i < uebungenData.uebungsliste.length; ++i) {
-                uebungModel.append(uebungenData.uebungsliste[i]);
+                let eintrag = JSON.parse(JSON.stringify(uebungenData.uebungsliste[i]));
+                // ✅ Neue Farb-Properties hinzufügen, falls nicht vorhanden
+
+                if (!("infoURLFrage_bgcolor" in eintrag)) {
+                    eintrag.infoURLFrage_bgcolor = "white"; // oder dein Standard
+                }
+                if (!("infoURLAntwort_bgcolor" in eintrag)) {
+                    eintrag.infoURLAntwort_bgcolor = "white";
+                }
+
+                uebungModel.append(eintrag);
             }
         }
+
         // Dynamische Breite berechnen (mindestens 900px)
         const colWidth = 150;
         const spacing = columnSpacing;
@@ -642,9 +736,31 @@ Window {
                                     property int colWidth: listArea.columnWidth
 
                                     sourceComponent: columnEditor
-                                    Binding { target: item; property: "roleName"; value: roleName }
-                                    Binding { target: item; property: "colWidth"; value: colWidth }
-                                    Binding { target: item; property: "rowIndex"; value: rowIndex }
+
+                                    onLoaded: {
+                                        const bgKey = roleName + "_bgcolor";
+                                        item.roleName = roleName;
+                                        item.rowIndex = rowIndex;
+                                        item.colWidth = colWidth;
+                                        item.bgColor = uebungModel.get(rowIndex)[bgKey] || "white";
+                                    }
+
+                                    Connections {
+                                        target: uebungModel
+
+                                        // 🔧 Diese beiden musst du lokal speichern
+                                        property string roleNameCopy: roleName
+                                        property int rowIndexCopy: rowIndex
+
+                                        function onDataChanged(index, roles) {
+                                            const realIndex = (typeof index === "object" && typeof index.row === "number") ? index.row : index;
+
+                                            if (realIndex === rowIndexCopy && item) {
+                                                const bgKey = roleNameCopy + "_bgcolor";
+                                                item.bgColor = uebungModel.get(rowIndexCopy)[bgKey] || "white";
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -686,6 +802,19 @@ Window {
                             // Aktualisiere die ListView
                             listView.model = null;
                             listView.model = uebungModel;
+                        }
+                    }
+                }
+                Button {
+                    text: "Check Websites"
+                    onClicked: {
+                        for (let i = 0; i < uebungModel.count; i++) {
+                            ["infoURLFrage", "infoURLAntwort"].forEach(function(role) {
+                                let url = uebungModel.get(i)[role];
+                                if (url && url.trim() !== "") {
+                                    checkWebsite(url, i, role);
+                                }
+                            });
                         }
                     }
                 }
