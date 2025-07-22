@@ -42,6 +42,7 @@ qt_add_qml_module(appMemoryPackagesBuilder
         SOURCES licenceinfowiki.h licenceinfowiki.cpp
         SOURCES filehelper.h filehelper.cpp
         SOURCES buildexercisepackage.h buildexercisepackage.cpp
+        QML_FILES MultiSelectListView.qml
 )
 
 # Linke die Qt-Bibliotheken – jetzt inklusive Qt6::Xml

@@ -406,7 +406,6 @@ Window {
             property int rowIndex
             property int colWidth
 
-            width: colWidth
             height: 40
 
             // Eigenschaften zur Bindung
@@ -418,7 +417,7 @@ Window {
             TextField {
                 id: textField
                 anchors.centerIn: parent
-                width: colWidth * 0.8
+                width: listArea.columnWidth * 0.8
                 height: parent.height * 0.8
 
 
@@ -433,7 +432,6 @@ Window {
                 activeFocusOnPress: true
 
                 onPressed: {
-                    listView.currentIndex = rowIndex;
                     forceActiveFocus();
                 }
 
@@ -526,7 +524,9 @@ Window {
                 if (!("infoURLAntwort_bgcolor" in eintrag)) {
                     eintrag.infoURLAntwort_bgcolor = "white";
                 }
-
+                if (!("selected" in eintrag)) {
+                    eintrag.selected = false;
+                }
                 uebungModel.append(eintrag);
             }
         }
@@ -644,14 +644,14 @@ Window {
                 }
 
                 // Liste
-                ListView {
+                MultiSelectListView {
                     id: listView
                     anchors.top: header.bottom
                     anchors.left: parent.left
                     width: listArea.totalContentWidth
                     anchors.bottom: parent.bottom
                     clip: true
-                    model: uebungModel
+                    modelData: uebungModel
                     currentIndex: -1
                     interactive: true
                     focus: true
@@ -661,103 +661,95 @@ Window {
                     ScrollBar.horizontal: ScrollBar {}
                     ScrollBar.vertical: ScrollBar {}
 
-                    Keys.onPressed: function(event) {
-                        if (event.key === Qt.Key_Up && currentIndex > 0) {
-                            currentIndex--;
-                            event.accepted = true;
-                        } else if (event.key === Qt.Key_Down && currentIndex < model.count - 1) {
-                            currentIndex++;
-                            event.accepted = true;
-                        }
-                        scrollToItem();
-                    }
-
-                    function scrollToItem() {
-                        if (currentIndex === -1) return;
-                        listView.positionViewAtIndex(currentIndex, ListView.Contain);
-                    }
+                    // 👇 NEU: Scroll-Verhinderung bei gezieltem currentIndex-Setzen
+                    property bool blockedPositioning: false
 
                     Component.onCompleted: forceActiveFocus()
 
                     delegate: Rectangle {
-                        property int indexOutside: index
                         id: delegateRoot
+                        property int indexOutside: index
+                        property bool selected: model.selected
                         width: listArea.totalContentWidth
                         height: 40
 
-                        color: listView.currentIndex === indexOutside
-                               ? "lightblue"
-                               : (indexOutside % 2 === 0 ? "#f9f9f9" : "#ffffff")
+                        color: selected ? "#cce5ff" : (indexOutside % 2 === 0 ? "#f9f9f9" : "#ffffff")
                         border.color: listView.currentIndex === indexOutside ? "blue" : "transparent"
                         border.width: 1
 
-                        // Funktion zum Öffnen des Dialogs
                         function handleDoubleClick(index) {
                             console.log("Doubleclick für Zeile:", index);
-                            listView.currentIndex = index;
                             if (listView.currentIndex >= 0) {
                                 editExersizeDialog.itemData = JSON.parse(JSON.stringify(uebungModel.get(listView.currentIndex)));
                                 editExersizeDialog.open();
                             }
                         }
-
-                        // MouseArea für Zeilen-Double-Click
                         MouseArea {
-                            id: rowMouseArea
                             anchors.fill: parent
                             acceptedButtons: Qt.LeftButton
-                            propagateComposedEvents: true
+                            onClicked: function(mouse) {
+                                const clickedIndex = indexOutside;
+                                listView.currentListViewIndex = clickedIndex;
+                                listView.currentIndex = clickedIndex;
+                                listView.forceActiveFocus();
 
+                                if (mouse.modifiers & Qt.ShiftModifier) {
+                                    if (listView.selectionAnchor === -1)
+                                        listView.selectionAnchor = listView.currentListViewIndex;
+                                    listView.selectRange(listView.selectionAnchor, clickedIndex, mouse.modifiers & Qt.ControlModifier);
+                                } else if (mouse.modifiers & Qt.ControlModifier) {
+                                    listView.toggleSelection(clickedIndex);
+                                } else {
+                                    listView.selectedIndices = [clickedIndex];
+                                    listView.selectionAnchor = clickedIndex;
+                                }
+                                listView.updateSelectedItems();
+                            }
                             onDoubleClicked: function(mouse) {
                                 handleDoubleClick(indexOutside);
                                 mouse.accepted = true;
                             }
-
-                            onClicked: function(mouse) {
-                                listView.currentIndex = indexOutside;
-                                listView.forceActiveFocus();
-                                mouse.accepted = false;
-                            }
                         }
 
-                        // Textfelder
                         Row {
                             anchors.fill: parent
                             spacing: columnSpacing
 
                             Repeater {
-                                model: [
-                                    "frageSubjekt", "antwortSubjekt", "subjektPrefixFrage", "subjektPrefixAntwort",
-                                    "imagefileFrage", "imagefileAntwort", "infoURLFrage", "infoURLAntwort"
-                                ]
-                                Loader {
-                                    property string roleName: modelData
-                                    property int rowIndex: indexOutside
-                                    property int colWidth: listArea.columnWidth
+                                model: [ "frageSubjekt", "antwortSubjekt", "subjektPrefixFrage", "subjektPrefixAntwort",
+                                         "imagefileFrage", "imagefileAntwort", "infoURLFrage", "infoURLAntwort" ]
 
-                                    sourceComponent: columnEditor
+                                Item {
+                                    width: listArea.columnWidth
+                                    height: parent.height
+                                    property string bgColor: "white"
 
-                                    onLoaded: {
-                                        const bgKey = roleName + "_bgcolor";
-                                        item.roleName = roleName;
-                                        item.rowIndex = rowIndex;
-                                        item.colWidth = colWidth;
-                                        item.bgColor = uebungModel.get(rowIndex)[bgKey] || "white";
-                                    }
+                                    Loader {
+                                        id: loaderId
+                                        anchors.fill: parent
+                                        property string roleName: modelData
+                                        property int rowIndex: indexOutside
+                                        sourceComponent: columnEditor
 
-                                    Connections {
-                                        target: uebungModel
+                                        onLoaded: {
+                                            const bgKey = roleName + "_bgcolor";
+                                            loaderId.item.roleName = roleName;
+                                            loaderId.item.rowIndex = rowIndex;
+                                            loaderId.item.bgColor = uebungModel.get(rowIndex)[bgKey] || "white";
+                                        }
 
-                                        // 🔧 Diese beiden musst du lokal speichern
-                                        property string roleNameCopy: roleName
-                                        property int rowIndexCopy: rowIndex
+                                        Connections {
+                                            target: uebungModel
+                                            property string roleNameCopy: modelData
+                                            property int rowIndexCopy: indexOutside
 
-                                        function onDataChanged(index, roles) {
-                                            const realIndex = (typeof index === "object" && typeof index.row === "number") ? index.row : index;
+                                            function onDataChanged(index, roles) {
+                                                const realIndex = (typeof index === "object" && typeof index.row === "number") ? index.row : index;
 
-                                            if (realIndex === rowIndexCopy && item) {
-                                                const bgKey = roleNameCopy + "_bgcolor";
-                                                item.bgColor = uebungModel.get(rowIndexCopy)[bgKey] || "white";
+                                                if (realIndex === rowIndexCopy && loaderId.item) {
+                                                    const bgKey = roleNameCopy + "_bgcolor";
+                                                    loaderId.item.bgColor = uebungModel.get(rowIndexCopy)[bgKey] || "white";
+                                                }
                                             }
                                         }
                                     }
