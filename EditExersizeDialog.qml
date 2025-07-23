@@ -3,18 +3,38 @@ import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 import QtQuick.Controls.Material 2.15
 
-import ExersizeLoader 1.0
-
 Dialog {
     id: root
     title: "Übung bearbeiten"
     modal: true
     standardButtons: Dialog.NoButton
+
     property var itemData: ({})
-    signal save(var updatedData)
+    property var originalData: ({})
+    signal save(var updatedData, int index)
+
+    property var multiEditIndices: []
+    property int multiEditCurrent: -1
 
     width: 700
     height: 600
+
+    function isDataChanged() {
+        var newData = root.itemData;
+        var oldData = root.originalData;
+
+        for (var key in newData) {
+            if (newData[key] !== oldData[key]) {
+                return true;
+            }
+        }
+        for (let key in oldData) {
+            if (!(key in newData)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     ColumnLayout {
         anchors.fill: parent
@@ -26,10 +46,26 @@ Dialog {
             Layout.fillWidth: true
             Layout.fillHeight: true
 
-            Keys.onPressed: function(event) {
-                if (event.key === Qt.Key_Enter || event.key === Qt.Key_Return) {
-                    event.accepted = true
-                    abbrechen.clicked()
+            Keys.onPressed: (event) => {
+                if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
+                    let activeItem = Qt.inputMethod.focusItem;
+
+                    if (activeItem && activeItem.metaObject.className === "QQuickTextInput") {
+                        if (root.multiEditIndices.length > 1) {
+                            saveNextButton.clicked();
+                        } else {
+                            abbrechen.clicked();
+                        }
+                        event.accepted = true;
+                        return;
+                    }
+
+                    if (root.multiEditIndices.length >= 1) {
+                        saveNextButton.clicked();
+                    } else {
+                        abbrechen.clicked();
+                    }
+                    event.accepted = true;
                 }
             }
 
@@ -48,27 +84,53 @@ Dialog {
                         spacing: 10
 
                         Button {
-                            text: "Ändern"
+                            id: saveNextButton
+                            text: root.multiEditIndices.length > 1 ? "Weiter" : "Ändern"
+                            font.bold: root.multiEditIndices.length >= 1
+                            focus: root.multiEditIndices.length >= 1
+
                             onClicked: {
-                                // Auslesen & neue Kopie erzeugen
-                                const cleanCopy = {}
-                                for (let key in root.itemData) {
-                                    cleanCopy[key] = root.itemData[key]
+                                var updated = JSON.parse(JSON.stringify(root.itemData));
+                                delete updated[""];
+
+                                var indexToUpdate;
+
+                                if (root.multiEditIndices.length > 1 && root.multiEditCurrent >= 0) {
+                                    indexToUpdate = root.multiEditIndices[root.multiEditCurrent];
+                                } else {
+                                    indexToUpdate = listView.currentIndex;
                                 }
-                                root.save(cleanCopy)
-                                root.close()
+
+                                if (isDataChanged()) {
+                                    save(updated, indexToUpdate);
+                                }
+
+                                if (root.multiEditIndices.length > 1 && root.multiEditCurrent >= 0) {
+                                    const nextIndex = root.multiEditCurrent + 1;
+                                    if (nextIndex < root.multiEditIndices.length) {
+                                        root.multiEditCurrent = nextIndex;
+                                        const idx = root.multiEditIndices[root.multiEditCurrent];
+                                        root.itemData = JSON.parse(JSON.stringify(uebungModel.get(idx)));
+                                        root.originalData = JSON.parse(JSON.stringify(root.itemData));
+                                    } else {
+                                        root.multiEditIndices = [];
+                                        root.multiEditCurrent = -1;
+                                        root.close();
+                                    }
+                                } else {
+                                    root.close();
+                                }
                             }
-                            font.bold: true
-                            palette.text: "black"
                         }
 
                         Button {
                             id: abbrechen
                             text: "Abbrechen"
                             icon.name: "cancel"
-                            onClicked: root.close()
-                            font.bold: true
                             palette.text: "black"
+                            font.bold: root.multiEditIndices.length < 1
+                            focus: root.multiEditIndices.length < 1
+                            onClicked: root.close()
                         }
                     }
                 }
@@ -89,7 +151,9 @@ Dialog {
                                 "frageSubjekt", "antwortSubjekt", "subjektPrefixFrage", "subjektPrefixAntwort",
                                 "imagefileFrage", "imagefileAntwort", "infoURLFrage", "infoURLAntwort",
                                 "imageFrageAuthor", "imageFrageLizenz", "imageAntwortAuthor", "imageAntwortLizenz",
-                                "imageFrageBildDescription","imageAntwortBildDescription","wikiPageFraVers", "wikiPageAntVers", "excludeAereaFra", "excludeAereaAnt"
+                                "imageFrageBildDescription", "imageAntwortBildDescription",
+                                "wikiPageFraVers", "wikiPageAntVers",
+                                "excludeAereaFra", "excludeAereaAnt"
                             ]
 
                             delegate: Column {
@@ -108,6 +172,7 @@ Dialog {
                                     width: parent.width
                                     height: 30
                                     font.pixelSize: 14
+                                    Keys.forwardTo: [keyHandlerArea]
                                 }
                             }
                         }
@@ -117,5 +182,3 @@ Dialog {
         }
     }
 }
-
-

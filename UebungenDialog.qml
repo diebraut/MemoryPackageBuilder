@@ -32,20 +32,48 @@ Window {
     EditExersizeDialog {
         id: editExersizeDialog
 
-        onSave: function(updatedData) {
-            const idx = listView.currentIndex;
-            if (idx >= 0) {
+        onSave: function(updatedData, index) {
+            if (index >= 0 && index < uebungModel.count) {
                 const keys = Object.keys(updatedData);
                 for (let key of keys) {
-                    uebungModel.setProperty(idx, key, updatedData[key]);
+                    uebungModel.setProperty(index, key, updatedData[key]);
                 }
-                // Manuelles Refresh der ListView
-                listView.model = null;
-                listView.model = uebungModel;
+                // Optionales Refresh der View
+                saveCurrentModelToXml();
+            } else {
+                console.warn("❌ Ungültiger Index beim Speichern:", index);
             }
         }
     }
 
+    Menu {
+        id: rowContextMenu
+
+        MenuItem {
+            text: "Alle markierten Einträge vorlegen"
+            onTriggered: {
+                // Filtere alle ausgewählten Zeilen
+                const selectedIndices = listView.selectedIndices.filter(i => i >= 0);
+
+                if (selectedIndices.length === 0) {
+                    console.log("⚠️ Keine markierten Einträge");
+                    return;
+                }
+
+                // Sortieren, damit die Reihenfolge stimmt
+                selectedIndices.sort((a, b) => a - b);
+
+                editExersizeDialog.multiEditIndices = selectedIndices;
+                editExersizeDialog.multiEditCurrent = 0;
+
+                const firstIndex = selectedIndices[0];
+                listView.currentIndex = firstIndex;
+                editExersizeDialog.itemData = JSON.parse(JSON.stringify(uebungModel.get(firstIndex)));
+                editExersizeDialog.originalData = JSON.parse(JSON.stringify(editExersizeDialog.itemData));
+                editExersizeDialog.open();
+            }
+        }
+    }
 
     MouseArea {
         anchors.fill: parent
@@ -413,6 +441,7 @@ Window {
             property int currentIndex: rowIndex
             property string colorKey: currentRole + "_bgcolor"
             property string bgColor: "white"  // neu
+            property string textVal: ""  // neu
 
             TextField {
                 id: textField
@@ -422,12 +451,7 @@ Window {
 
 
                 // Direkte Bindung an Modelwert
-                text: {
-                    if (currentIndex >= 0 && currentIndex < uebungModel.count) {
-                        return uebungModel.get(currentIndex)[currentRole] || "";
-                    }
-                    return "";
-                }
+                text: textVal
 
                 activeFocusOnPress: true
 
@@ -686,6 +710,23 @@ Window {
                         }
                         MouseArea {
                             anchors.fill: parent
+                            acceptedButtons: Qt.RightButton
+                            propagateComposedEvents: true
+                            preventStealing: true
+
+                            onPressed: function(mouse) {
+                                if (mouse.button === Qt.RightButton) {
+                                    const globalPos = mapToItem(windowContent, mouse.x, mouse.y);
+                                    rowContextMenu.x = globalPos.x;
+                                    rowContextMenu.y = globalPos.y;
+                                    rowContextMenu.open();
+                                    mouse.accepted = true;
+                                }
+                            }
+                        }
+
+                        MouseArea {
+                            anchors.fill: parent
                             acceptedButtons: Qt.LeftButton
                             onClicked: function(mouse) {
                                 const clickedIndex = indexOutside;
@@ -736,6 +777,7 @@ Window {
                                             loaderId.item.roleName = roleName;
                                             loaderId.item.rowIndex = rowIndex;
                                             loaderId.item.bgColor = uebungModel.get(rowIndex)[bgKey] || "white";
+                                            loaderId.item.textVal = uebungModel.get(rowIndex)[roleName];
                                         }
 
                                         Connections {
@@ -746,10 +788,19 @@ Window {
                                             function onDataChanged(index, roles) {
                                                 const realIndex = (typeof index === "object" && typeof index.row === "number") ? index.row : index;
 
-                                                if (realIndex === rowIndexCopy && loaderId.item) {
-                                                    const bgKey = roleNameCopy + "_bgcolor";
-                                                    loaderId.item.bgColor = uebungModel.get(rowIndexCopy)[bgKey] || "white";
-                                                }
+                                                if (realIndex !== rowIndexCopy || !loaderId.item)
+                                                    return;
+
+                                                const updatedData = uebungModel.get(rowIndexCopy);
+                                                const targetItem = loaderId.item;
+
+                                                // 🔁 Hintergrundfarbe setzen (bestehende Funktionalität)
+                                                const bgKey = roleNameCopy + "_bgcolor";
+                                                targetItem.bgColor = updatedData[bgKey] || "white";
+
+
+                                                // 🔁 Option: falls weitere Properties am Item existieren, die im Model abgebildet sind
+                                                targetItem.textVal = updatedData[roleNameCopy];
                                             }
                                         }
                                     }
