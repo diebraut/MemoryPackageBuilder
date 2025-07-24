@@ -411,6 +411,11 @@ Window {
                             id: rectItem
 
                             clip: false
+                            Behavior on x { NumberAnimation { duration: 50 } }
+                            Behavior on y { NumberAnimation { duration: 50 } }
+                            Behavior on width { NumberAnimation { duration: 50 } }
+                            Behavior on height { NumberAnimation { duration: 50 } }
+
                             x: drawLayer.imageOffsetX() + Math.min(model.startX, model.endX) * drawLayer.scaleX
                             y: drawLayer.imageOffsetY() + Math.min(model.startY, model.endY) * drawLayer.scaleY
                             width: Math.abs(model.endX - model.startX) * drawLayer.scaleX
@@ -494,26 +499,17 @@ Window {
                                 height: parent.height
                                 color: "#80000000"
                                 z: 1001
-                                property real lastGlobalMouseX: 0
-                                property real lastGlobalMouseY: 0
-                                property point  globalNow
 
                                 MouseArea {
                                     anchors.fill: parent
                                     acceptedButtons: Qt.LeftButton | Qt.RightButton
                                     drag.target: null
-                                    hoverEnabled: true
-                                    z: 9999
 
                                     onPressed: (mouse) => {
                                         if (mouse.button === Qt.LeftButton) {
                                             rectItem.dragging = true
                                             rectItem.dragStartX = mouse.x
                                             rectItem.dragStartY = mouse.y
-
-                                            innerArea.globalNow = mapToGlobal(Qt.point(mouse.x, mouse.y))
-                                            innerArea.lastGlobalMouseX = innerArea.globalNow.x
-                                            innerArea.lastGlobalMouseY = innerArea.globalNow.y
                                             mouse.accepted = true
                                         } else if (mouse.button === Qt.RightButton) {
                                             mouse.accepted = true  // ❗ Wichtig: akzeptieren, damit onClicked ausgelöst wird
@@ -521,12 +517,10 @@ Window {
                                     }
 
                                     onPositionChanged: (mouse) => {
-
                                         if (!rectItem.dragging) return
-                                        innerArea.globalNow = mapToGlobal(Qt.point(mouse.x, mouse.y))
 
-                                        const dx = innerArea.globalNow.x - innerArea.lastGlobalMouseX
-                                        const dy = innerArea.globalNow.y - innerArea.lastGlobalMouseY
+                                        let dx = mouse.x - rectItem.dragStartX
+                                        let dy = mouse.y - rectItem.dragStartY
 
                                         let newX = rectItem.x + dx
                                         let newY = rectItem.y + dy
@@ -547,7 +541,7 @@ Window {
                                         let centerY = newY + viewHeight / 2
 
                                         if (!drawLayer.allCornersInside(centerX, centerY, viewWidth, viewHeight, rectItem.rotationAngle))
-                                          return
+                                            return
 
                                         let newStartX = (newX - offsetX) / scaleX
                                         let newStartY = (newY - offsetY) / scaleY
@@ -570,15 +564,13 @@ Window {
                                                 break
                                             }
                                         }
+
                                         if (!blocked) {
                                             rectanglesModel.setProperty(rectItem.modelIndex, "startX", newStartX)
                                             rectanglesModel.setProperty(rectItem.modelIndex, "startY", newStartY)
                                             rectanglesModel.setProperty(rectItem.modelIndex, "endX", newEndX)
                                             rectanglesModel.setProperty(rectItem.modelIndex, "endY", newEndY)
-
                                         }
-                                        innerArea.lastGlobalMouseX = innerArea.globalNow.x
-                                        innerArea.lastGlobalMouseY = innerArea.globalNow.y
                                     }
 
                                     onReleased: {
@@ -598,8 +590,7 @@ Window {
                                 anchors.fill: parent
                                 acceptedButtons: Qt.LeftButton
                                 hoverEnabled: true
-                                propagateComposedEvents: false
-                                preventStealing: true
+                                propagateComposedEvents: true
 
                                 property real dragStartAngle: 0
                                 property real dragInitialRotation: 0
@@ -607,12 +598,8 @@ Window {
                                 property real centerGlobalY: 0
 
                                 onPressed: (mouse) => {
-                                       console.log("outer pressed")
 
-                                       if (innerArea.containsMouse) {
-                                           mouse.accepted = false
-                                           return
-                                       }                                  for (let i = 0; i < rectItem.handles.length; ++i) {
+                                   for (let i = 0; i < rectItem.handles.length; ++i) {
                                        const handle = rectItem.handles[i]
                                        const pos = handle.mapToItem(outerMouseArea, Qt.point(0, 0))
 
@@ -828,59 +815,6 @@ Window {
                             }
                         }
                     }
-                    /*
-                    Image {
-                        id: arrowPlaceholder
-                        source: "qrc:/icons/arrow-right-" + drawLayer.selectedArrowColor + ".png"
-                        width: 48
-                        height: 48
-                        x: 2
-                        y: parent.height + 15
-                        opacity: 0.5
-                        z: 3000
-
-                        MouseArea {
-                            id: dragArea
-                            anchors.fill: parent
-                            cursorShape: Qt.OpenHandCursor
-
-                            property var tempArrow: null
-
-                            onPressed: (mouse) => {
-                                if (tempArrow === null) {
-                                    tempArrow = arrowPrototype.createObject(drawLayer, {
-                                        x: mouse.x + arrowPlaceholder.x,
-                                        y: mouse.y + arrowPlaceholder.y,
-                                        color: drawLayer.selectedArrowColor     // 🔸 Hier wird die Farbe gesetzt!
-                                    });
-                                }
-                            }
-
-                            onPositionChanged: (mouse) => {
-                                if (tempArrow) {
-                                    tempArrow.x = mouse.x + arrowPlaceholder.x;
-                                    tempArrow.y = mouse.y + arrowPlaceholder.y;
-                                }
-                            }
-
-                            onReleased: (mouse) => {
-                                if (tempArrow) {
-                                    const imgX = (tempArrow.x - drawLayer.offsetX) / drawLayer.scaleX
-                                    const imgY = (tempArrow.y - drawLayer.offsetY) / drawLayer.scaleY
-
-                                    arrowModel.append({
-                                        x: imgX,
-                                        y: imgY,
-                                        rotationAngle: 0,
-                                        color: drawLayer.selectedArrowColor
-                                    });
-                                    tempArrow.destroy();
-                                    tempArrow = null;
-                                }
-                            }
-                        }
-                    }
-                    */
                     Repeater {
                         model: arrowModel
                         delegate: Item {
