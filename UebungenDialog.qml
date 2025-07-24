@@ -124,38 +124,63 @@ Window {
                 removeItem(itemAt(0));
             }
 
-            // Aktuellen Wert abfragen
             var currentVal = getCurrentValue();
 
-            // Nur relevante Einträge hinzufügen
+            var texts = [];
+
             if (currentVal) {
-                addItem(createMenuItem(
-                    "Bild '" + currentVal + "' entfernen",
-                    "uebungModel.setProperty(rowIndex, roleName, \"\")"
-                ));
-
-                addItem(createMenuItem(
-                    "Bild '" + currentVal + "' austauschen",
-                    "openFileDialog()"
-                ));
-
-                addItem(createMenuItem(
-                    "Bild '" + currentVal + "' bearbeiten",
-                    "imageContextMenu.openImageProcessingDialog('" + roleName + "', '" + rowIndex + "')"
-                ));
+                texts.push("Bild entfernen");
+                texts.push("Bild austauschen");
+                texts.push("Bild bearbeiten");
             } else {
-                addItem(createMenuItem(
-                    "Bild hinzufügen",
-                    "openFileDialog()"
-                ));
+                texts.push("Bild hinzufügen");
+            }
+
+            var maxWidth = 0;
+            const metrics = Qt.createQmlObject(`
+                import QtQuick 2.15
+                FontMetrics { }
+            `, imageContextMenu);
+
+            for (var t of texts) {
+                const width = metrics.boundingRect(t).width;
+                maxWidth = Math.max(maxWidth, width);
+            }
+
+            const padding = 30; // Links + rechts + Reserve
+            const finalWidth = maxWidth + padding;
+
+            for (t of texts) {
+                const action = getActionForText(t);
+                const item = createMenuItem(t, action, finalWidth);
+                addItem(item);
+            }
+
+            width = finalWidth; // 👈 Menübreite explizit setzen
+        }
+
+        function getActionForText(text) {
+            switch (text) {
+                case "Bild entfernen":
+                    return "uebungModel.setProperty(rowIndex, roleName, \"\")";
+                case "Bild austauschen":
+                    return "openFileDialog()";
+                case "Bild bearbeiten":
+                     return "imageContextMenu.startSequentialImageEditing('" + imageContextMenu.roleName + "')";
+                case "Bild hinzufügen":
+                    return "openFileDialog()";
+                default:
+                    return "";
             }
         }
 
-        function createMenuItem(text, action) {
+
+        function createMenuItem(text, action, itemWidth) {
             return Qt.createQmlObject(`
                 import QtQuick.Controls 2.15
                 MenuItem {
                     text: "${text}"
+                    width: ${itemWidth}
                     onTriggered: {
                         ${action}
                     }
@@ -163,60 +188,93 @@ Window {
             `, imageContextMenu);
         }
 
-        function openImageProcessingDialog(role, index) {
-            if (index >= 0 && index < uebungModel.count) {
-                const fileName = uebungModel.get(index)[role];
-                if (fileName && fileName.trim() !== "") {
-                    const fullPath = packagePath + "/" + fileName;
-                    const sanitizedPath = fullPath.replace(/\\/g, '/');
+        function startSequentialImageEditing(role) {
+            const allIndices = listView.selectedIndices.filter(i => i >= 0);
+            let validIndices;
 
-                    const win = imageProcessingComponent.createObject(dialogWindow);
+            if (allIndices.length === 0) {
+                // 👉 Kein Eintrag markiert → verwende nur die aktuell geklickte Zeile
+                if (imageContextMenu.rowIndex < 0 || imageContextMenu.rowIndex >= uebungModel.count) {
+                    console.warn("❌ Ungültiger rowIndex");
+                    return;
+                }
 
-                    // Rechteckdaten vorbereiten
-                    let excludeRect = null;
-                    if (role === "imagefileFrage")
-                        excludeRect = uebungModel.get(index).excludeAereaFra;
-                    else if (role === "imagefileAntwort")
-                        excludeRect = uebungModel.get(index).excludeAereaAnt;
+                const fileName = uebungModel.get(imageContextMenu.rowIndex)[role];
+                if (!fileName || fileName.trim() === "") {
+                    console.log("⚠️ Kein Bild vorhanden für diese Zeile");
+                    return;
+                }
 
-                    // Fenster öffnen mit Bild und evtl. vorhandenen Rechtecken
-                    let arrowData = null;
-                    if (role === "imagefileFrage")
-                        arrowData = uebungModel.get(index).arrowDescFra;
-                    else if (role === "imagefileAntwort")
-                        arrowData = uebungModel.get(index).arrowDescAnt;
+                validIndices = [imageContextMenu.rowIndex];
+            } else {
+                // 👉 Mehrere markierte Zeilen
+                validIndices = allIndices.filter(i => {
+                    const fileName = uebungModel.get(i)[role];
+                    return fileName && fileName.trim() !== "";
+                });
 
-                    win.openWithImage("file:///" + sanitizedPath,
-                                      Screen.desktopAvailableWidth,
-                                      Screen.desktopAvailableHeight,
-                                      excludeRect,
-                                      arrowData);
-
-                    win.accepted.connect(function(resultJson) {
-                        const result = JSON.parse(resultJson);
-                        const excludeData = result.excludeData;
-                        const arrowData = result.arrowData;
-                        const arrowKey = result.arrowKey;
-
-                        if (role === "imagefileFrage") {
-                            uebungModel.setProperty(index, "excludeAereaFra", excludeData);
-                            uebungModel.setProperty(index, "arrowDescFra", arrowData);  // NEU
-                        } else if (role === "imagefileAntwort") {
-                            uebungModel.setProperty(index, "excludeAereaAnt", excludeData);
-                            uebungModel.setProperty(index, "arrowDescAnt", arrowData);  // NEU
-                        }
-                    });
-                    saveCurrentModelToXml();
-                    win.rejected.connect(function() {
-                        console.log("❌ Bearbeitung abgebrochen");
-                    });
-                } else {
-                    console.log("⚠️ Kein Bild für diese Zelle vorhanden");
+                if (validIndices.length === 0) {
+                    console.log("⚠️ Keine gültigen Einträge zur Bearbeitung");
+                    return;
                 }
             }
+
+            let current = 0;
+
+            function editNext() {
+                if (current >= validIndices.length) {
+                    console.log("✅ Alle Bilder bearbeitet.");
+                    return;
+                }
+
+                const index = validIndices[current];
+                const fileName = uebungModel.get(index)[role];
+                const fullPath = packagePath + "/" + fileName;
+                const sanitizedPath = fullPath.replace(/\\/g, '/');
+
+                const win = imageProcessingComponent.createObject(dialogWindow);
+
+                let excludeRect = (role === "imagefileFrage") ? uebungModel.get(index).excludeAereaFra
+                                                               : uebungModel.get(index).excludeAereaAnt;
+
+                let arrowData = (role === "imagefileFrage") ? uebungModel.get(index).arrowDescFra
+                                                            : uebungModel.get(index).arrowDescAnt;
+
+                win.openWithImage("file:///" + sanitizedPath,
+                                  Screen.desktopAvailableWidth,
+                                  Screen.desktopAvailableHeight,
+                                  excludeRect,
+                                  arrowData);
+
+                win.accepted.connect(function(resultJson) {
+                    const result = JSON.parse(resultJson);
+                    const excludeData = result.excludeData;
+                    const arrowData = result.arrowData;
+
+                    if (role === "imagefileFrage") {
+                        uebungModel.setProperty(index, "excludeAereaFra", excludeData);
+                        uebungModel.setProperty(index, "arrowDescFra", arrowData);
+                    } else {
+                        uebungModel.setProperty(index, "excludeAereaAnt", excludeData);
+                        uebungModel.setProperty(index, "arrowDescAnt", arrowData);
+                    }
+
+                    saveCurrentModelToXml();
+                    current++;
+                    editNext();
+                });
+
+                win.rejected.connect(function() {
+                    console.log("🚫 Bildbearbeitung vom Benutzer abgebrochen bei Index", index);
+                    // ❗️Keine weiteren Schritte – Kette wird gestoppt.
+                });
+            }
+
+            editNext();
         }
-    }
-    Menu {
+   }
+
+   Menu {
         id: urlContextMenu
         property string roleName
         property int rowIndex
@@ -293,8 +351,6 @@ Window {
 
                         // 4. XML sofort speichern
                         saveCurrentModelToXml();
-                        listView.model = null;
-                        listView.model = uebungModel;
 
                     });
 
