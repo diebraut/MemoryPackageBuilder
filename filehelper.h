@@ -12,6 +12,8 @@ public:
     Q_INVOKABLE static bool renameFile(const QString &oldPath, const QString &newPath);
     Q_INVOKABLE static bool fileExists(const QString &path);
     Q_INVOKABLE bool removeFilesWithSameBaseName(const QString& filePath);
+    Q_INVOKABLE bool removeTMPFiles(const QString &path);
+
 };
 
 #endif // FILEHELPER_H

@@ -280,84 +280,9 @@ Window {
         property int rowIndex
 
         MenuItem {
-            text: "Webseite anzeigen"
+            text: "Alle markierten Webseiten anzeigen"
             onTriggered: {
-                const row = urlContextMenu.rowIndex;
-                const role = urlContextMenu.roleName;
-                const extraProp = (role === "infoURLFrage")
-                                  ? uebungModel.get(row).frageSubjekt
-                                  : uebungModel.get(row).antwortSubjekt;
-
-                const url = uebungModel.get(row)[role] || "";
-                const component = Qt.createComponent("qrc:/MemoryPackagesBuilder/URLComponentProcessing.qml");
-
-                if (component.status === Component.Ready) {
-                    const win = component.createObject(null, {
-                        urlString: url,
-                        subjektnamen: extraProp,
-                        packagePath: packagePath
-                    });
-
-                    win.accepted.connect(function(newUrl, licenceInfo, savedFileExtension) {
-                        const row = urlContextMenu.rowIndex;
-                        const role = urlContextMenu.roleName;
-
-                        // 1. URL setzen
-                        uebungModel.setProperty(row, role, newUrl);
-
-                        if (licenceInfo) {
-                            const prefix = (role === "infoURLFrage")
-                                           ? "imageFrage"
-                                           : (role === "infoURLAntwort")
-                                           ? "imageAntwort"
-                                           : null;
-
-                            if (prefix) {
-                                // 2. Lizenzdaten setzen
-                                uebungModel.setProperty(row, prefix + "Author",
-                                    licenceInfo.authorName + "[" + licenceInfo.authorUrl + "]");
-
-                                uebungModel.setProperty(row, prefix + "Lizenz",
-                                    licenceInfo.licenceName + "[" + licenceInfo.licenceUrl + "]");
-
-                                uebungModel.setProperty(row, prefix + "BildDescription",
-                                    licenceInfo.imageDescriptionUrl);
-
-                                // 3. Bilddatei setzen oder anpassen
-                                const imageFileKey = (prefix === "imageFrage") ? "imagefileFrage" : "imagefileAntwort";
-                                let currentFileName = uebungModel.get(row)[imageFileKey];
-                                const subjectKey = (prefix === "imageFrage") ? "frageSubjekt" : "antwortSubjekt";
-                                const subjectValue = uebungModel.get(row)[subjectKey] || "";
-
-                                if (currentFileName && currentFileName.trim() !== "") {
-                                    const baseName = currentFileName.substring(0, currentFileName.lastIndexOf("."));  // ohne Endung
-                                    const currentExt = currentFileName.split(".").pop().toLowerCase();
-
-                                    if (currentExt !== savedFileExtension.toLowerCase()) {
-                                        const newName = baseName + "." + savedFileExtension;
-                                        uebungModel.setProperty(row, imageFileKey, newName);
-                                        console.log("🔁 Dateiendung angepasst für", imageFileKey, "→", newName);
-                                    }
-                                } else {
-                                    // 💡 Neuer Name auf Basis des Subjekts
-                                    const newName = subjectValue.trim() + "." + savedFileExtension;
-                                    uebungModel.setProperty(row, imageFileKey, newName);
-                                    console.log("🆕 Neuer Bildname gesetzt:", imageFileKey, "→", newName);
-                                }
-
-                                console.log("✅ Lizenzinfos gespeichert für", prefix);
-                            }
-                        }
-
-                        // 4. XML sofort speichern
-                        saveCurrentModelToXml();
-
-                    });
-
-                    win.show();
-                } else {
-                    console.warn("❌ Fehler beim Laden:", component.errorString());
-                }
+                urlContextMenu.startSequentialUrlEditing(urlContextMenu.roleName);
             }
         }
         MenuItem {
@@ -368,6 +293,123 @@ Window {
             }
         }
 
+        function startSequentialUrlEditing(role) {
+            const allIndices = listView.selectedIndices.filter(i => i >= 0);
+            let validIndices;
+
+            if (allIndices.length === 0) {
+                if (urlContextMenu.rowIndex < 0 || urlContextMenu.rowIndex >= uebungModel.count) {
+                    console.warn("❌ Ungültiger rowIndex");
+                    return;
+                }
+
+                const url = uebungModel.get(urlContextMenu.rowIndex)[role];
+                if (!url || url.trim() === "") {
+                    console.log("⚠️ Kein URL-Wert vorhanden");
+                    return;
+                }
+
+                validIndices = [urlContextMenu.rowIndex];
+            } else {
+                validIndices = allIndices.filter(i => {
+                    const url = uebungModel.get(i)[role];
+                    return url && url.trim() !== "";
+                });
+
+                if (validIndices.length === 0) {
+                    console.log("⚠️ Keine gültigen URLs");
+                    return;
+                }
+            }
+
+            let current = 0;
+
+            function editNext() {
+                if (current >= validIndices.length) {
+                    console.log("✅ Alle URLs bearbeitet.");
+                    return;
+                }
+
+                const index = validIndices[current];
+                const url = uebungModel.get(index)[role] || "";
+                const extraProp = (role === "infoURLFrage")
+                                  ? uebungModel.get(index).frageSubjekt
+                                  : uebungModel.get(index).antwortSubjekt;
+
+                const component = Qt.createComponent("qrc:/MemoryPackagesBuilder/URLComponentProcessing.qml");
+
+                if (component.status === Component.Ready) {
+                    const win = component.createObject(null, {
+                        urlString: url,
+                        subjektnamen: extraProp,
+                        packagePath: packagePath,
+                        isMultiEdit: true,
+                        multiEditCurrentIndex: current,
+                        multiEditCount: validIndices.length,
+                        isLastStep: current === validIndices.length - 1 // 👈 wichtig
+                    });
+
+                    if (!win) {
+                        console.warn("❌ Fehler beim Erstellen des Dialogfensters.");
+                        return;
+                    }
+
+                    win.accepted.connect(function(newUrl, licenceInfo, savedFileExtension) {
+                        uebungModel.setProperty(index, role, newUrl);
+
+                        const prefix = (role === "infoURLFrage") ? "imageFrage"
+                                     : (role === "infoURLAntwort") ? "imageAntwort" : null;
+
+                        if (prefix && licenceInfo) {
+                            uebungModel.setProperty(index, prefix + "Author",
+                                licenceInfo.authorName + "[" + licenceInfo.authorUrl + "]");
+
+                            uebungModel.setProperty(index, prefix + "Lizenz",
+                                licenceInfo.licenceName + "[" + licenceInfo.licenceUrl + "]");
+
+                            uebungModel.setProperty(index, prefix + "BildDescription",
+                                licenceInfo.imageDescriptionUrl);
+
+                            const imageFileKey = (prefix === "imageFrage") ? "imagefileFrage" : "imagefileAntwort";
+                            let currentFileName = uebungModel.get(index)[imageFileKey];
+                            const subjectKey = (prefix === "imageFrage") ? "frageSubjekt" : "antwortSubjekt";
+                            const subjectValue = uebungModel.get(index)[subjectKey] || "";
+
+                            if (currentFileName && currentFileName.trim() !== "") {
+                                const baseName = currentFileName.substring(0, currentFileName.lastIndexOf("."));
+                                const currentExt = currentFileName.split(".").pop().toLowerCase();
+                                if (currentExt !== savedFileExtension.toLowerCase()) {
+                                    const newName = baseName + "." + savedFileExtension;
+                                    uebungModel.setProperty(index, imageFileKey, newName);
+                                }
+                            } else {
+                                const newName = subjectValue.trim() + "." + savedFileExtension;
+                                uebungModel.setProperty(index, imageFileKey, newName);
+                            }
+                        }
+
+                        saveCurrentModelToXml();
+                        current++;
+                        editNext();
+                    });
+                    win.continueRequested.connect(function() {
+                        current++;
+                        editNext();
+                    });
+                    win.rejected.connect(function() {
+                        console.log("🚫 Bearbeitung abgebrochen bei Index", index);
+                        // ❗️ Kette hier nicht fortsetzen
+                    });
+
+                    win.show();
+
+                } else {
+                    console.warn("❌ Fehler beim Laden:", component.errorString());
+                }
+            }
+
+            editNext();
+        }
     }
 
     function checkWebsite(url, rowIndex, roleName) {

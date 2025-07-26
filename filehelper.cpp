@@ -42,3 +42,28 @@ bool FileHelper::removeFilesWithSameBaseName(const QString& filePath) {
 
     return allSuccess;
 }
+
+bool FileHelper::removeTMPFiles(const QString &path) {
+    QFileInfo refInfo(path);
+    QDir dir = refInfo.dir();
+
+    if (!dir.exists())
+        return false;
+    qDebug() << "pfad:" << dir.absolutePath();
+    QFileInfoList allFiles = dir.entryInfoList(QDir::Files);
+    bool allSuccess = true;
+
+    for (const QFileInfo& fileInfo : allFiles) {
+        if (fileInfo.fileName().contains("_TEMP.")) {
+            if (!QFile::remove(fileInfo.absoluteFilePath())) {
+                qWarning() << "❌ TEMP-Datei konnte nicht gelöscht werden:" << fileInfo.absoluteFilePath();
+                allSuccess = false;
+            } else {
+                qDebug() << "🗑️ TEMP-Datei gelöscht:" << fileInfo.fileName();
+            }
+        }
+    }
+
+    return allSuccess;
+}
+

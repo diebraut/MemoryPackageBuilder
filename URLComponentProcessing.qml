@@ -15,11 +15,19 @@ Window {
     height: 600
     modality: Qt.ApplicationModal
     visible: true
+
+    property bool isMultiEdit: false
+    property int multiEditCurrentIndex: -1
+    property int multiEditCount: 0
+    property bool isLastStep:false
+
     property string urlString: ""
     property string subjektnamen: ""
     property string packagePath: ""
 
-   signal accepted(string newUrl, var licenceInfo, string savedFileExtension)
+    signal accepted(string newUrl, var licenceInfo, string savedFileExtension)
+    signal continueRequested()
+    signal rejected()
 
     property var dynamicMenu
     property var lastContextMenuPosition
@@ -33,18 +41,9 @@ Window {
     property string licenceFetchMode: ""  // z.B. "bildLaden" oder "rechteck"
 
     function cleanupTempFile() {
-        if (tempImagePath !== "") {
-            var file = new QFile(tempImagePath);
-            if (file.exists()) {
-                file.remove();
-                console.log("🗑️ Temporäre Datei gelöscht:", tempImagePath);
-            }
-            tempImagePath = "";
-            finalImagePath = "";
-            imageAvailable = false;
-            saveButton.enabled = false;
-        }
+        FileHelper.removeTMPFiles(finalImagePath);
     }
+
     function handleRechteckErzeugen(info) {
         console.log("🟩 Rechteck erzeugen gewählt");
 
@@ -467,11 +466,36 @@ Window {
 
             RowLayout {
                 spacing: 10
+                Button {
+                    id: nextButton
+                    text: (urlWindow.multiEditCount && urlWindow.multiEditCount > 1 && !urlWindow.isLastStep) ? "Weiter" : "Beenden"
+                    visible: urlWindow.isMultiEdit
+
+                    onClicked: {
+                        function continueNextStep() {
+                            cleanupTempFile();
+                            if (urlWindow.isLastStep || urlWindow.multiEditCount <= 1) {
+                                urlWindow.close(); // Letzter Schritt → Fenster schließen
+                            } else {
+                                continueRequested(); // Signal für nächsten Bearbeitungsschritt
+                                urlWindow.close();
+                            }
+                        }
+
+                        if (saveButton.enabled) {
+                            unsavedWarningDialog.currentActionText = nextButton.text;
+                            unsavedWarningDialog.continueCallback = continueNextStep;
+                            unsavedWarningDialog.visible = true;
+                        } else {
+                            continueNextStep();
+                        }
+                    }
+                }
 
                 Button {
                     id: saveButton
-                    enabled: false;
-                    text: "Übernehmen"
+                    enabled: false
+                    text: "Speichern"
                     onClicked: {
                         if (tempImagePath === "" || finalImagePath === "") {
                             console.warn("⚠️ Kein temporäres Bild zum Speichern");
@@ -489,29 +513,144 @@ Window {
                         } else {
                             console.warn("❌ Umbenennen fehlgeschlagen");
                         }
-                        // Übergibt Bild-URL + Lizenzinfo an aufrufenden Dialog
+
+                        // Signal senden an aufrufenden Dialog
                         var lUrl = webView.url.toString();
                         var savedType = finalImagePath.split('.').pop().toLowerCase();
                         accepted(lUrl, currentImageLicenceInfo, savedType);
 
-                        // Clean up
+                        // Clean up, aber NICHT schließen
                         tempImagePath = "";
                         finalImagePath = "";
                         imageAvailable = false;
-                        saveButton.enabled = false;
-                        cleanupTempFile();
-                        urlWindow.close();
+                        cleanupTempFile();  // ❗ Falls du das willst – sonst weglassen
+                        saveButton.enabled = false
                     }
                 }
 
                 Button {
                     text: "Abbrechen"
                     onClicked: {
+                        if (saveButton.enabled) {
+                            cancelWarningPopup.open();
+                        } else {
+                            cleanupTempFile();
+                            urlWindow.close();
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    Popup {
+        id: cancelWarningPopup
+        modal: true
+        focus: true
+
+        width: 400
+        background: Rectangle {
+            color: "#fff0f0"
+            radius: 8
+            border.color: "black"
+            border.width: 2
+        }
+
+        contentItem: Column {
+            spacing: 10
+            padding: 20
+
+            Label {
+                text: "Es gibt noch nicht gespeicherte Aktionen. Trotzdem abbrechen?"
+                wrapMode: Text.WordWrap
+            }
+
+            RowLayout {
+                spacing: 10
+
+                Button {
+                    text: "Abbrechen"
+                    Layout.preferredWidth: 120
+                    onClicked: {
+                        cancelWarningPopup.close();
                         cleanupTempFile();
                         urlWindow.close();
                     }
                 }
+
+                Button {
+                    text: "Zurück"
+                    Layout.preferredWidth: 100
+                    onClicked: cancelWarningPopup.close()
+                }
             }
+        }
+
+        onVisibleChanged: if (visible) {
+            Qt.callLater(() => {
+                cancelWarningPopup.x = (urlWindow.width - cancelWarningPopup.width) / 2;
+                cancelWarningPopup.y = (urlWindow.height - cancelWarningPopup.height) / 2;
+            });
+        }
+    }
+
+    Popup {
+        id: unsavedWarningDialog
+        modal: true
+        focus: true   // optional, damit Esc schließt
+        property string currentActionText: "Weiter"
+        property var continueCallback: function() {}
+
+        background: Rectangle {
+            color: "#fff0f0"
+            radius: 8
+            border.color: "black"
+            border.width: 2
+        }
+
+        contentItem: Column {
+            spacing: 10
+            padding: 20
+            width: 460
+
+            Label {
+                text: "Es gibt noch nicht gespeicherte Aktionen."
+                wrapMode: Text.WordWrap
+            }
+
+            RowLayout {
+                spacing: 10
+
+                Button {
+                    text: unsavedWarningDialog.currentActionText + " mit Speichern"
+                    Layout.preferredWidth: 160
+                    onClicked: {
+                        saveButton.onClicked();
+                        unsavedWarningDialog.close();
+                        unsavedWarningDialog.continueCallback();
+                    }
+                }
+
+                Button {
+                    text: unsavedWarningDialog.currentActionText + " ohne Speichern"
+                    Layout.preferredWidth: 160
+                    onClicked: {
+                        unsavedWarningDialog.close();
+                        unsavedWarningDialog.continueCallback();
+                    }
+                }
+
+                Button {
+                    text: "Abbrechen"
+                    Layout.preferredWidth: 100
+                    onClicked: unsavedWarningDialog.close()
+                }
+            }
+        }
+
+        onVisibleChanged: if (visible) {
+            unsavedWarningDialog.x = (urlWindow.width - unsavedWarningDialog.width) / 2;
+            unsavedWarningDialog.y = (urlWindow.height - unsavedWarningDialog.height) / 2;
         }
     }
 
