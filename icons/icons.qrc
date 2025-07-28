@@ -8,5 +8,7 @@
         <file>arrow-right-green.png</file>
         <file>arrow-right-white.png</file>
         <file>arrow-right-yellow.png</file>
+        <file>layout_2_parts_horicentral.png</file>
+        <file>layout_2_parts_vertical.png</file>
     </qresource>
 </RCC>

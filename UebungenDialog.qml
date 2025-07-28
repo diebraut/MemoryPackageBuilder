@@ -46,39 +46,52 @@ Window {
         }
     }
 
-    Menu {
-        id: rowContextMenu
-
-        MenuItem {
-            text: "Alle markierten Einträge vorlegen"
-            onTriggered: {
-                // Filtere alle ausgewählten Zeilen
-                const selectedIndices = listView.selectedIndices.filter(i => i >= 0);
-
-                if (selectedIndices.length === 0) {
-                    console.log("⚠️ Keine markierten Einträge");
-                    return;
-                }
-
-                // Sortieren, damit die Reihenfolge stimmt
-                selectedIndices.sort((a, b) => a - b);
-
-                editExersizeDialog.multiEditIndices = selectedIndices;
-                editExersizeDialog.multiEditCurrent = 0;
-
-                const firstIndex = selectedIndices[0];
-                listView.currentIndex = firstIndex;
-                editExersizeDialog.itemData = JSON.parse(JSON.stringify(uebungModel.get(firstIndex)));
-                editExersizeDialog.originalData = JSON.parse(JSON.stringify(editExersizeDialog.itemData));
-                editExersizeDialog.open();
+    MouseArea {
+        anchors.fill: parent
+        acceptedButtons: Qt.RightButton
+        propagateComposedEvents: true
+        onPressed: (mouse) => {
+            if (mouse.button === Qt.RightButton) {
+                customContextMenu.popup(mouse.x, mouse.y)
             }
         }
     }
 
-    MouseArea {
-        anchors.fill: parent
-        onClicked: listView.forceActiveFocus()
-        enabled: !listView.activeFocus
+    Menu {
+        id: customContextMenu
+
+        FontMetrics {
+            id: menuFont
+        }
+
+        Component.onCompleted: adjustWidth()
+
+        function adjustWidth() {
+            let maxTextWidth = 0;
+            const labels = ["Vertikale Linie", "Horizontale Linie"];
+            for (let label of labels) {
+                const width = menuFont.boundingRect(label).width;
+                if (width > maxTextWidth) maxTextWidth = width;
+            }
+            const padding = 40;
+            customContextMenu.width = maxTextWidth + padding;
+        }
+
+        MenuItem {
+            text: "Vertikale Linie"
+            icon.source: "icons/vertical.png"
+            width: customContextMenu.width
+            onTriggered: anzeigeZustand = 2
+        }
+
+        MenuItem {
+            text: "Horizontale Linie"
+            icon.source: "icons/horizontal.png"
+            width: customContextMenu.width
+            onTriggered: {
+                anzeigeZustand = 99 // Noch nicht implementiert
+            }
+        }
     }
 
     Component {
@@ -278,19 +291,36 @@ Window {
         id: urlContextMenu
         property string roleName
         property int rowIndex
+        property string dynamicMenuText: "Alle markierten Webseiten anzeigen"  // Standardtext
+
+        FontMetrics {
+            id: urlMenuFontMetrics
+        }
+
+        function adjustWidth() {
+            let maxTextWidth = 0;
+            for (let i = 0; i < count; ++i) {
+                const item = itemAt(i);
+                if (item && item.text) {
+                    const width = urlMenuFontMetrics.boundingRect(item.text).width;
+                    maxTextWidth = Math.max(maxTextWidth, width);
+                }
+            }
+            const padding = 15;
+            width = maxTextWidth + padding;
+        }
 
         MenuItem {
-            text: "Alle markierten Webseiten anzeigen"
+            text: urlContextMenu.dynamicMenuText
             onTriggered: {
                 urlContextMenu.startSequentialUrlEditing(urlContextMenu.roleName);
             }
-        }
-        MenuItem {
-            text: "Check Website"
+        }        MenuItem {
             onTriggered: {
                 const url = uebungModel.get(urlContextMenu.rowIndex)[urlContextMenu.roleName];
                 checkWebsite(url, urlContextMenu.rowIndex, urlContextMenu.roleName);
             }
+            text: "Check Website"
         }
 
         function startSequentialUrlEditing(role) {
@@ -605,11 +635,19 @@ Window {
                         menu.roleName = roleName;
                         menu.rowIndex = rowIndex;
 
-                        var globalPos = mapToItem(windowContent, mouse.x, mouse.y);
+                        const selected = listView.selectedIndices.filter(i => i >= 0);
+
+                        // 👉 Nur für urlContextMenu Breite anpassen
+                        if (menu === urlContextMenu && menu.adjustWidth) {
+                            menu.dynamicMenuText = selected.length === 0 ? "Webseite anzeigen" : "Alle markierten Webseiten anzeigen";
+                            menu.adjustWidth();
+                        }
+
+                        const globalPos = mapToItem(windowContent, mouse.x, mouse.y);
                         menu.x = globalPos.x;
                         menu.y = globalPos.y;
 
-                        if (isImage) {
+                        if (isImage && menu.buildMenu) {
                             menu.buildMenu();
                         }
 

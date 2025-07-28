@@ -40,6 +40,48 @@ Window {
     property var currentImageLicenceInfo: null
     property string licenceFetchMode: ""  // z.B. "bildLaden" oder "rechteck"
 
+    property var composer: null  // ❗ Füge das hinzu, falls noch nicht vorhanden
+
+    // Reagiere auf Fokuserhalt
+    onActiveFocusItemChanged: {
+        if (composer && composer.visible) {
+            composer.raise();
+        }
+    }
+
+    Component.onCompleted: {
+        const composerComponent = Qt.createComponent("qrc:/MemoryPackagesBuilder/ImageComposer.qml");
+
+        if (composerComponent.status === Component.Ready) {
+            const w = urlWindow.width / 4;
+            const h = urlWindow.height / 4;
+
+            const x = urlWindow.x + urlWindow.width - w * 0.5;
+            const y = urlWindow.y + h * 0.1;
+
+            // ⛳ Fenster erzeugen und positionieren
+            const composer = composerComponent.createObject(null);
+            if (composer) {
+                urlWindow.composer = composer; // ⬅️ speichere Referenz im Fenster
+                composer.width = w;
+                composer.height = h;
+                composer.x = x;
+                composer.y = y;
+
+                // 💡 Verknüpfe mit Hauptfenster
+                composer.transientParent = urlWindow;  // 👈 Schlüsselzeile
+                composer.visible = true;
+                composer.raise();              // bringt es über das Parent
+                composer.requestActivate();    // setzt den Fokus
+
+            } else {
+                console.warn("❌ Fehler beim Erzeugen des Composer-Fensters");
+            }
+        } else {
+            console.warn("❌ Fehler beim Laden von ImageComposer:", composerComponent.errorString());
+        }
+    }
+
     function cleanupTempFile() {
         FileHelper.removeTMPFiles(finalImagePath);
     }
@@ -427,7 +469,11 @@ Window {
             color: "red"
             visible: false
         }
-
+        Rectangle {
+            Layout.fillWidth: true
+            height: 2
+            color: "#888" // oder z.B. "#888" für stärkeren Kontrast
+        }
         RowLayout {
             Layout.fillWidth: true
             spacing: 10
