@@ -44,6 +44,7 @@ qt_add_qml_module(appMemoryPackagesBuilder
         SOURCES buildexercisepackage.h buildexercisepackage.cpp
         QML_FILES MultiSelectListView.qml
         QML_FILES ImageComposer.qml
+        QML_FILES firstWindow.qml
 )
 
 # Linke die Qt-Bibliotheken – jetzt inklusive Qt6::Xml

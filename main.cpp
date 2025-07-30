@@ -52,6 +52,7 @@ int main(int argc, char *argv[])
     // Übergabe der build sourcen an QML
     engine.rootContext()->setContextProperty("buildSourcenFolder", buildSourcenPath);
 
+    //const QUrl url(u"qrc:/MemoryPackagesBuilder/Main.qml"_qs);
     const QUrl url(u"qrc:/MemoryPackagesBuilder/Main.qml"_qs);
 
     QObject::connect(

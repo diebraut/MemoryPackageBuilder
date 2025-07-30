@@ -42,13 +42,6 @@ Window {
 
     property var composer: null  // ❗ Füge das hinzu, falls noch nicht vorhanden
 
-    // Reagiere auf Fokuserhalt
-    onActiveFocusItemChanged: {
-        if (composer && composer.visible) {
-            composer.raise();
-        }
-    }
-
     Component.onCompleted: {
         const composerComponent = Qt.createComponent("qrc:/MemoryPackagesBuilder/ImageComposer.qml");
 
@@ -63,6 +56,7 @@ Window {
             const composer = composerComponent.createObject(null);
             if (composer) {
                 urlWindow.composer = composer; // ⬅️ speichere Referenz im Fenster
+                composer.parentWindow = urlWindow
                 composer.width = w;
                 composer.height = h;
                 composer.x = x;
@@ -79,6 +73,19 @@ Window {
             }
         } else {
             console.warn("❌ Fehler beim Laden von ImageComposer:", composerComponent.errorString());
+        }
+    }
+
+    // Kindfenster schließen, wenn Hauptfenster geschlossen wird
+    Connections {
+        target: urlWindow
+        function onClosing(close) {
+            if (composer) {
+                // Diese Kombination schließt das Tool-Fenster zuverlässig
+                composer.destroy()
+                composer = null
+            }
+            close.accepted = true
         }
     }
 

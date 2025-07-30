@@ -57,42 +57,6 @@ Window {
         }
     }
 
-    Menu {
-        id: customContextMenu
-
-        FontMetrics {
-            id: menuFont
-        }
-
-        Component.onCompleted: adjustWidth()
-
-        function adjustWidth() {
-            let maxTextWidth = 0;
-            const labels = ["Vertikale Linie", "Horizontale Linie"];
-            for (let label of labels) {
-                const width = menuFont.boundingRect(label).width;
-                if (width > maxTextWidth) maxTextWidth = width;
-            }
-            const padding = 40;
-            customContextMenu.width = maxTextWidth + padding;
-        }
-
-        MenuItem {
-            text: "Vertikale Linie"
-            icon.source: "icons/vertical.png"
-            width: customContextMenu.width
-            onTriggered: anzeigeZustand = 2
-        }
-
-        MenuItem {
-            text: "Horizontale Linie"
-            icon.source: "icons/horizontal.png"
-            width: customContextMenu.width
-            onTriggered: {
-                anzeigeZustand = 99 // Noch nicht implementiert
-            }
-        }
-    }
 
     Component {
         id: imageProcessingComponent
