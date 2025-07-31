@@ -11,6 +11,8 @@ Window {
     flags: Qt.FramelessWindowHint | Qt.Window
 
     property int anzeigeZustand: 3
+    property int selectedPartIndex: 1  // Standard: Teil 1
+
     property int layoutMode: 0
     property bool isVertical: true
 
@@ -193,89 +195,37 @@ Window {
             color: "#f0f0f0"
             border.color: "#999"
             border.width: 1
-
+            clip: false   // ⬅️ Wichtig! Damit Ränder sichtbar bleiben
             // ===================== ZWEITEILUNG =====================
-            Rectangle {
-                visible: anzeigeZustand === 2 && isVertical
-                x: 0
-                y: 0
-                width: composerWindow.width * splitterRatio
-                height: parent.height
-                color: "transparent"
-                Text { anchors.centerIn: parent; text: "1"; font.pixelSize: 48 }
+
+            TwoPaneSplitter {
+                visible: anzeigeZustand === 2
+                anchors.fill: parent
+
+                isVertical: composerWindow.isVertical
+                splitterRatio: composerWindow.splitterRatio
+                selectedPartIndex: composerWindow.selectedPartIndex
+
+                onPartClicked: (index) => composerWindow.selectedPartIndex = index
+                onSplitterRatioChanged: composerWindow.splitterRatio = splitterRatio
             }
+            ThreePanelSplitter {
+                visible: anzeigeZustand === 3 && layoutMode === 0
+                anchors.fill: parent
 
-            Rectangle {
-                visible: anzeigeZustand === 2 && isVertical
-                x: composerWindow.width * splitterRatio + splitterLine.width
-                y: 0
-                width: composerWindow.width - x
-                height: parent.height
-                color: "transparent"
-                Text { anchors.centerIn: parent; text: "2"; font.pixelSize: 48 }
-            }
+                splitterRatio1: composerWindow.splitterRatio1
+                splitterRatio2: composerWindow.splitterRatio2
+                isVertical: composerWindow.isVertical
+                selectedPartIndex: composerWindow.selectedPartIndex
 
-            Rectangle {
-                id: splitterLine
-                visible: anzeigeZustand === 2 && isVertical
-                width: 4
-                height: parent.height
-                x: composerWindow.width * splitterRatio
-                color: "black"
-                z: 10
+                onPartClicked: (index) => composerWindow.selectedPartIndex = index
 
-                MouseArea {
-                    anchors.fill: parent
-                    cursorShape: Qt.SplitHCursor
-                    drag.target: parent
-                    drag.axis: Drag.XAxis
-                    drag.minimumX: 40
-                    drag.maximumX: composerWindow.width - 40
-                    onPositionChanged: splitterRatio = splitterLine.x / composerWindow.width
-                }
-            }
-
-            Rectangle {
-                visible: anzeigeZustand === 2 && !isVertical
-                x: 0
-                y: 0
-                width: parent.width
-                height: composerWindow.height * splitterRatio
-                color: "transparent"
-                Text { anchors.centerIn: parent; text: "1"; font.pixelSize: 48 }
-            }
-
-            Rectangle {
-                visible: anzeigeZustand === 2 && !isVertical
-                x: 0
-                y: composerWindow.height * splitterRatio + hSplitterLine.height
-                width: parent.width
-                height: composerWindow.height - y
-                color: "transparent"
-                Text { anchors.centerIn: parent; text: "2"; font.pixelSize: 48 }
-            }
-
-            Rectangle {
-                id: hSplitterLine
-                visible: anzeigeZustand === 2 && !isVertical
-                width: parent.width
-                height: 4
-                y: composerWindow.height * splitterRatio
-                color: "black"
-                z: 10
-
-                MouseArea {
-                    anchors.fill: parent
-                    cursorShape: Qt.SplitVCursor
-                    drag.target: parent
-                    drag.axis: Drag.YAxis
-                    drag.minimumY: 40
-                    drag.maximumY: composerWindow.height - 40
-                    onPositionChanged: splitterRatio = hSplitterLine.y / composerWindow.height
-                }
+                onSplitterRatio1Changed: composerWindow.splitterRatio1 = splitterRatio1
+                onSplitterRatio2Changed: composerWindow.splitterRatio2 = splitterRatio2
             }
 
             // ========== DREITEILUNG STANDARD (layoutMode = 0) ==========
+            /*
             Rectangle {
                 visible: anzeigeZustand === 3 && layoutMode === 0
                 x: 0
@@ -361,7 +311,7 @@ Window {
                     }
                 }
             }
-
+            */
             // ========== DREITEILUNG layoutMode 1: 2 oben, 1 unten ==========
             Rectangle {
                 visible: anzeigeZustand === 3 && layoutMode === 1

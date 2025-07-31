@@ -512,6 +512,38 @@ Window {
                     Layout.preferredWidth: 50
                 }
             }
+            GroupBox {
+                title: "ImageComposer-Parts"
+                Layout.preferredWidth: 300
+
+                ButtonGroup {
+                    id: composerPartGroup
+                    exclusive: true
+                }
+
+                RowLayout {
+                    spacing: 12
+
+                    CheckBox {
+                        text: "Parts 1"
+                        checked: true
+                        ButtonGroup.group: composerPartGroup
+                        onCheckedChanged: if (checked && composer) composer.anzeigeZustand = 1
+                    }
+
+                    CheckBox {
+                        text: "Parts 2"
+                        ButtonGroup.group: composerPartGroup
+                        onCheckedChanged: if (checked && composer) composer.anzeigeZustand = 2
+                    }
+
+                    CheckBox {
+                        text: "Parts 3"
+                        ButtonGroup.group: composerPartGroup
+                        onCheckedChanged: if (checked && composer) composer.anzeigeZustand = 3
+                    }
+                }
+            }
 
             Item {
                 Layout.fillWidth: true
