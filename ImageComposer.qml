@@ -41,6 +41,21 @@ Window {
         });
     }
 
+    // Kann z. B. ganz oben im QML stehen
+    QtObject {
+        id: resizeConfigHelper
+        property var edgeConfigs: [
+            { pos: "right",  edge: Qt.RightEdge,  w: 6,  h: -1, cursor: Qt.SizeHorCursor },
+            { pos: "left",   edge: Qt.LeftEdge,   w: 6,  h: -1, cursor: Qt.SizeHorCursor },
+            { pos: "top",    edge: Qt.TopEdge,    w: -1, h: 6,  cursor: Qt.SizeVerCursor },
+            { pos: "bottom", edge: Qt.BottomEdge, w: -1, h: 6,  cursor: Qt.SizeVerCursor },
+            { pos: "topLeft",     edge: Qt.TopEdge | Qt.LeftEdge,    w: 10, h: 10, cursor: Qt.SizeFDiagCursor },
+            { pos: "topRight",    edge: Qt.TopEdge | Qt.RightEdge,   w: 10, h: 10, cursor: Qt.SizeBDiagCursor },
+            { pos: "bottomLeft",  edge: Qt.BottomEdge | Qt.LeftEdge, w: 10, h: 10, cursor: Qt.SizeBDiagCursor },
+            { pos: "bottomRight", edge: Qt.BottomEdge | Qt.RightEdge,w: 10, h: 10, cursor: Qt.SizeFDiagCursor }
+        ]
+    }
+
     function toFileUrl(path) {
         if (path.startsWith("file://") || path.startsWith("qrc:/"))
             return path;
@@ -272,113 +287,24 @@ Window {
             }
 
             // Flackerfreier rechter Rand (systemeigenes Resizing)
-            MouseArea {
-                anchors.right: parent.right
-                anchors.top: parent.top
-                anchors.bottom: parent.bottom
-                width: 6
-                cursorShape: Qt.SizeHorCursor
-                z: 9999
+            Repeater {
+                model: resizeConfigHelper.edgeConfigs.length
+                delegate: MouseArea {
+                    property var conf: resizeConfigHelper.edgeConfigs[index]
+                    width: conf.w > 0 ? conf.w : parent.width
+                    height: conf.h > 0 ? conf.h : parent.height
+                    cursorShape: conf.cursor
 
-                onPressed: function(mouse) {
-                    if (mouse.button === Qt.LeftButton)
-                        composerWindow.startSystemResize(Qt.RightEdge)
-                }
-            }
+                    anchors {
+                        top: conf.pos.indexOf("top") !== -1 ? parent.top : undefined
+                        bottom: conf.pos.indexOf("bottom") !== -1 ? parent.bottom : undefined
+                        left: conf.pos.indexOf("left") !== -1 ? parent.left : undefined
+                        right: conf.pos.indexOf("right") !== -1 ? parent.right : undefined
+                    }
 
-            // Zusätzliche Resize-Handler für andere Kanten/Ecken
-            // Oben
-            MouseArea {
-                anchors.top: parent.top
-                anchors.left: parent.left
-                anchors.right: parent.right
-                height: 6
-                cursorShape: Qt.SizeVerCursor
-
-                onPressed: function(mouse) {
-                    if (mouse.button === Qt.LeftButton)
-                        composerWindow.startSystemResize(Qt.TopEdge)
-                }
-            }
-
-            // Unten
-            MouseArea {
-                anchors.bottom: parent.bottom
-                anchors.left: parent.left
-                anchors.right: parent.right
-                height: 6
-                cursorShape: Qt.SizeVerCursor
-
-                onPressed: function(mouse) {
-                    if (mouse.button === Qt.LeftButton)
-                        composerWindow.startSystemResize(Qt.BottomEdge)
-                }
-            }
-
-            // Links
-            MouseArea {
-                anchors.left: parent.left
-                anchors.top: parent.top
-                anchors.bottom: parent.bottom
-                width: 6
-                cursorShape: Qt.SizeHorCursor
-
-                onPressed: function(mouse) {
-                    if (mouse.button === Qt.LeftButton)
-                        composerWindow.startSystemResize(Qt.LeftEdge)
-                }
-            }
-
-            // Ecken
-            MouseArea { // Top-Left
-                anchors.top: parent.top
-                anchors.left: parent.left
-                width: 10
-                height: 10
-                cursorShape: Qt.SizeFDiagCursor
-
-                onPressed: function(mouse) {
-                    if (mouse.button === Qt.LeftButton)
-                        composerWindow.startSystemResize(Qt.TopEdge | Qt.LeftEdge)
-                }
-            }
-
-            MouseArea { // Top-Right
-                anchors.top: parent.top
-                anchors.right: parent.right
-                width: 10
-                height: 10
-                cursorShape: Qt.SizeBDiagCursor
-
-                onPressed: function(mouse) {
-                    if (mouse.button === Qt.LeftButton)
-                        composerWindow.startSystemResize(Qt.TopEdge | Qt.RightEdge)
-                }
-            }
-
-            MouseArea { // Bottom-Left
-                anchors.bottom: parent.bottom
-                anchors.left: parent.left
-                width: 10
-                height: 10
-                cursorShape: Qt.SizeBDiagCursor
-
-                onPressed: function(mouse) {
-                    if (mouse.button === Qt.LeftButton)
-                        composerWindow.startSystemResize(Qt.BottomEdge | Qt.LeftEdge)
-                }
-            }
-
-            MouseArea { // Bottom-Right
-                anchors.bottom: parent.bottom
-                anchors.right: parent.right
-                width: 10
-                height: 10
-                cursorShape: Qt.SizeFDiagCursor
-
-                onPressed: function(mouse) {
-                    if (mouse.button === Qt.LeftButton)
-                        composerWindow.startSystemResize(Qt.BottomEdge | Qt.RightEdge)
+                    onPressed: (mouse) => {
+                        if (mouse.button === Qt.LeftButton) composerWindow.startSystemResize(conf.edge)
+                    }
                 }
             }
         }

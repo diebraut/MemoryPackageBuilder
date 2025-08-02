@@ -45,8 +45,10 @@ qt_add_qml_module(appMemoryPackagesBuilder
         QML_FILES MultiSelectListView.qml
         QML_FILES ImageComposer.qml
         QML_FILES firstWindow.qml
-        QML_FILES TwoPaneSplitter.qml
-        QML_FILES ThreePanelSplitter.qml
+        QML_FILES TwoPanel.qml
+        QML_FILES ThreePanel.qml
+        QML_FILES PartView.qml
+        QML_FILES Splitter.qml
 )
 
 # Linke die Qt-Bibliotheken – jetzt inklusive Qt6::Xml
