@@ -90,7 +90,7 @@ Window {
     }
 
     function cleanupTempFile() {
-        FileHelper.removeTMPFiles(finalImagePath);
+        FileHelper.removeTMPFiles(packagePath);
     }
 
     function handleRechteckErzeugen(info) {
@@ -133,7 +133,11 @@ Window {
                             var saveItem = Qt.createQmlObject('import QtQuick.Controls 2.15; MenuItem { text: "Bereich speichern" }', urlWindow.dynamicMenu);
                             saveItem.triggered.connect(function() {
                                 var extension = "jpg";
-                                var tempName = subjektnamen + "_TEMP." + extension;
+                                var suffix = "_TEMP";
+                                if (composer && composer.anzeigeZustand > 1) {
+                                    suffix += composer.selectedPartIndex;
+                                }
+                                var tempName = subjektnamen + suffix + "." + extension;
                                 var savePath = packagePath + "/" + tempName;
 
                                 tempImagePath = savePath;
@@ -293,7 +297,11 @@ Window {
             extension = "jpg";  // Fallback
         }
 
-        var filename = subjektnamen + "_TEMP." + extension;
+        var suffix = "_TEMP";
+        if (composer && composer.anzeigeZustand > 1) {
+            suffix += composer.selectedPartIndex;
+        }
+        var filename = subjektnamen + suffix + "." + extension;
         var savePath = packagePath + "/" + filename;
 
         tempImagePath = savePath;
@@ -371,6 +379,9 @@ Window {
         finalImagePath = path.replace("_TEMP", "");  // z.B. von foo_TEMP.png → foo.png
         imageAvailable = true;
         saveButton.enabled = true;
+        if (composer && finalImagePath !== "") {
+            composer.loadImageInCurrentMode(finalImagePath);
+        }
         console.log("✅ Bild temporär gespeichert:", path);
     }
 

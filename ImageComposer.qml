@@ -41,6 +41,36 @@ Window {
         });
     }
 
+    function toFileUrl(path) {
+        if (path.startsWith("file://") || path.startsWith("qrc:/"))
+            return path;
+        return "file:///" + path.replace(/\\/g, "/");
+    }
+
+    function loadImageInCurrentMode(filePath) {
+        console.log("\ud83d\udcc5 Lade Bild in Composer:", filePath);
+        if (!filePath || filePath === "")
+            return;
+
+        const url = toFileUrl(filePath);
+
+        switch (anzeigeZustand) {
+            case 1:
+                singleImage.source = url;
+                break;
+            case 2:
+                if (twoSplitter)
+                    twoSplitter.setImageForPart(selectedPartIndex, url);
+                break;
+            case 3:
+                if (threeSplitter)
+                    threeSplitter.setImageForPart(selectedPartIndex, url);
+                break;
+            default:
+                console.warn("❗ Ungültiger Anzeigestatus:", anzeigeZustand);
+        }
+    }
+
     // Eigene minimalistische Titelzeile
     Rectangle {
         id: titleBar
@@ -197,8 +227,16 @@ Window {
             border.width: 1
             clip: false   // ⬅️ Wichtig! Damit Ränder sichtbar bleiben
             // ===================== ZWEITEILUNG =====================
+            Image {
+                id: singleImage
+                anchors.fill: parent
+
+                visible: anzeigeZustand === 1
+                fillMode: Image.PreserveAspectFit
+            }
 
             TwoPaneSplitter {
+                id: twoSplitter
                 visible: anzeigeZustand === 2
                 anchors.fill: parent
 
@@ -210,6 +248,7 @@ Window {
                 onSplitterRatioChanged: composerWindow.splitterRatio = splitterRatio
             }
             ThreePanelSplitter {
+                id: threeSplitter
                 visible: anzeigeZustand === 3
                 anchors.fill: parent
 
@@ -231,6 +270,7 @@ Window {
                 onLayout2_splitXChanged: composerWindow.layout2_splitX = layout2_splitX
                 onLayout2_splitYChanged: composerWindow.layout2_splitY = layout2_splitY
             }
+
             // Flackerfreier rechter Rand (systemeigenes Resizing)
             MouseArea {
                 anchors.right: parent.right

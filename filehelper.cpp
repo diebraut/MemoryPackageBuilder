@@ -44,8 +44,7 @@ bool FileHelper::removeFilesWithSameBaseName(const QString& filePath) {
 }
 
 bool FileHelper::removeTMPFiles(const QString &path) {
-    QFileInfo refInfo(path);
-    QDir dir = refInfo.dir();
+    QDir dir(path);
 
     if (!dir.exists())
         return false;

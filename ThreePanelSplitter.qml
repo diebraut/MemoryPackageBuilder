@@ -25,6 +25,15 @@ Item {
 
     signal partClicked(int index)
 
+    function setImageForPart(index, filePath) {
+        switch(index) {
+        case 1: part1Image.source = filePath; break;
+        case 2: part2Image.source = filePath; break;
+        case 3: part3Image.source = filePath; break;
+        default: console.warn("❓ Ungültiger Part:", index);
+        }
+    }
+
     // === Loader je nach Layout-Mode ===
     Loader {
         anchors.fill: parent
