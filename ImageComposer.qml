@@ -4,13 +4,13 @@ import QtQuick.Window 2.15
 
 Window {
     id: composerWindow
-    width: 600
-    height: 300
+    width: 1000
+    height: 1000
     visible: true
     title: "ImageComposer"
     flags: Qt.FramelessWindowHint | Qt.Window
 
-    property int anzeigeZustand: 3
+    property int anzeigeZustand: 1
     property int selectedPartIndex: 1  // Standard: Teil 1
 
     property int layoutMode: 0
@@ -32,14 +32,6 @@ Window {
     property Window parentWindow
     property bool lastParentActive: false
     property bool wasPositioned: false
-
-    Component.onCompleted: {
-        Qt.callLater(() => {
-            splitterRatio = 0.5;
-            splitterRatio1 = 0.33;
-            splitterRatio2 = 0.66;
-        });
-    }
 
     // Kann z. B. ganz oben im QML stehen
     QtObject {
@@ -71,6 +63,7 @@ Window {
 
         switch (anzeigeZustand) {
             case 1:
+                singleImage.source = ""; // Reset
                 singleImage.source = url;
                 break;
             case 2:
@@ -245,12 +238,13 @@ Window {
             Image {
                 id: singleImage
                 anchors.fill: parent
+                cache: false  // 👈 wichtig
 
                 visible: anzeigeZustand === 1
                 fillMode: Image.PreserveAspectFit
             }
 
-            TwoPaneSplitter {
+            TwoPanel {
                 id: twoSplitter
                 visible: anzeigeZustand === 2
                 anchors.fill: parent
@@ -262,7 +256,7 @@ Window {
                 onPartClicked: (index) => composerWindow.selectedPartIndex = index
                 onSplitterRatioChanged: composerWindow.splitterRatio = splitterRatio
             }
-            ThreePanelSplitter {
+            ThreePanel {
                 id: threeSplitter
                 visible: anzeigeZustand === 3
                 anchors.fill: parent

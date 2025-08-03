@@ -18,8 +18,8 @@ Item {
     signal partClicked(int index)
 
     function setImageForPart(index, filePath) {
-        if (index === 1) part1View.image.source = filePath
-        else if (index === 2) part2View.image.source = filePath
+        if (index === 1) part1View.setImage(filePath);
+        else if (index === 2) part2View.setImage(filePath);
         else console.warn("❓ Ungültiger Part:", index);
     }
 

@@ -46,11 +46,11 @@ Window {
         const composerComponent = Qt.createComponent("qrc:/MemoryPackagesBuilder/ImageComposer.qml");
 
         if (composerComponent.status === Component.Ready) {
-            const w = urlWindow.width / 4;
-            const h = urlWindow.height / 4;
+            const w = urlWindow.height ;
+            const h = urlWindow.height;
 
-            const x = urlWindow.x + urlWindow.width - w * 0.5;
-            const y = urlWindow.y + h * 0.1;
+            const x = urlWindow.x + urlWindow.width + 10 ;
+            const y = urlWindow.y
 
             // ⛳ Fenster erzeugen und positionieren
             const composer = composerComponent.createObject(null);
@@ -380,7 +380,7 @@ Window {
         imageAvailable = true;
         saveButton.enabled = true;
         if (composer && finalImagePath !== "") {
-            composer.loadImageInCurrentMode(finalImagePath);
+            composer.loadImageInCurrentMode(tempImagePath);
         }
         console.log("✅ Bild temporär gespeichert:", path);
     }

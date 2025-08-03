@@ -26,9 +26,9 @@ Item {
 
     function setImageForPart(index, filePath) {
         if (layoutLoader.item && layoutLoader.item.setImageForPart)
-            layoutLoader.item.setImageForPart(index, filePath)
+            layoutLoader.item.setImageForPart(index, filePath);
         else
-            console.warn("setImageForPart not available for current layout")
+            console.warn("❗ setImageForPart nicht verfügbar für aktuelles Layout");
     }
 
     Loader {
@@ -46,9 +46,10 @@ Item {
             id: layout0
 
             function setImageForPart(index, filePath) {
-                if (index === 1) part1View.image.source = filePath;
-                else if (index === 2) part2View.image.source = filePath;
-                else if (index === 3) part3View.image.source = filePath;
+                if (index === 1) part1View.setImage(filePath);
+                else if (index === 2) part2View.setImage(filePath);
+                else if (index === 3) part3View.setImage(filePath);
+                else console.warn("❓ Ungültiger Part:", index);
             }
 
             // Common calculations for vertical and horizontal layouts
@@ -90,12 +91,16 @@ Item {
                 onClicked: (idx) => root.partClicked(idx)
                 x: isVertical ? splitter1.x + splitter1.width : root.borderMargin
                 y: isVertical ? root.borderMargin : splitter1.y + splitter1.height
-                width: isVertical ? totalContentWidth * (root.splitterRatio2 - root.splitterRatio1) : parent.width - 2 * root.borderMargin
-                height: isVertical ? parent.height - 2 * root.borderMargin : totalContentHeight * (root.splitterRatio2 - root.splitterRatio1)
+                width: isVertical
+                    ? totalContentWidth * (root.splitterRatio2 - root.splitterRatio1)
+                    : parent.width - 2 * root.borderMargin
+                height: isVertical
+                    ? parent.height - 2 * root.borderMargin
+                    : totalContentHeight * (root.splitterRatio2 - root.splitterRatio1) - root.splitterSize
 
-                // Apply consistent margins based on position
                 marginLeft: isVertical ? root.gapToSplitter : 0
                 marginRight: isVertical ? root.gapToSplitter : 0
+                marginTop: isVertical ? 0 : root.gapToSplitter
                 marginBottom: isVertical ? 0 : root.gapToSplitter
             }
 
@@ -133,7 +138,12 @@ Item {
     Component {
         id: layout1Component
         Item {
-            function setImageForPart(index, filePath) {}
+            function setImageForPart(index, filePath) {
+                if (index === 1) part1L1.setImage(filePath);
+                else if (index === 2) part2L1.setImage(filePath);
+                else if (index === 3) part3L1.setImage(filePath);
+                else console.warn("❓ Ungültiger Part:", index);
+            }
 
             PartView {
                 id: part1L1
@@ -202,7 +212,12 @@ Item {
     Component {
         id: layout2Component
         Item {
-            function setImageForPart(index, filePath) {}
+            function setImageForPart(index, filePath) {
+                if (index === 1) part1L2.setImage(filePath);
+                else if (index === 2) part2L2.setImage(filePath);
+                else if (index === 3) part3L2.setImage(filePath);
+                else console.warn("❓ Ungültiger Part:", index);
+            }
 
             PartView {
                 id: part1L2

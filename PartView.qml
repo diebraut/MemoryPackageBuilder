@@ -17,18 +17,28 @@ Item {
 
     signal clicked(int index)
 
+    function setImage(path) {
+        console.log("🔍 Bildpfad:", path);
+        image.source = ""; // Reset
+        image.source = path
+        image.visible = true;
+    }
+
     // Optional: Bildanzeige
     Image {
         id: image
         anchors.fill: parent
         fillMode: Image.PreserveAspectFit
-        visible: false  // aktivieren falls gewünscht
+        cache: false
+        //border.color: "red"  // temporär testen
+        visible: true
+        z: 1
     }
 
     Rectangle {
         anchors.fill: parent
-        color: "#ffffff"
-        z: 1
+        color: "transparent"
+        z: -1
 
         MouseArea {
             anchors.fill: parent
