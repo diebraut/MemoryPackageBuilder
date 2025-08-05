@@ -63,8 +63,7 @@ Window {
 
         switch (anzeigeZustand) {
             case 1:
-                singleImage.source = ""; // Reset
-                singleImage.source = url;
+                singlePartView.setImage(url);
                 break;
             case 2:
                 if (twoSplitter)
@@ -234,16 +233,18 @@ Window {
             border.color: "#999"
             border.width: 1
             clip: false   // ⬅️ Wichtig! Damit Ränder sichtbar bleiben
-            // ===================== ZWEITEILUNG =====================
-            Image {
-                id: singleImage
+            // ===================== EINZEL VIEW =====================
+            PartView {
+                id: singlePartView
                 anchors.fill: parent
-                cache: false  // 👈 wichtig
-
                 visible: anzeigeZustand === 1
-                fillMode: Image.PreserveAspectFit
-            }
+                index: 0
+                selected: true
+                label: "Teil 1"
 
+                onClicked: (index) => composerWindow.selectedPartIndex = index
+            }
+            // ===================== ZWEITEILUNG =====================
             TwoPanel {
                 id: twoSplitter
                 visible: anzeigeZustand === 2
