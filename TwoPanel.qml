@@ -17,6 +17,10 @@ Item {
 
     signal partClicked(int index)
 
+    property alias part1: part1View
+    property alias part2: part2View
+    function getParts() { return [part1View, part2View] }
+
     function setImageForPart(index, filePath) {
         if (index === 1) part1View.setImage(filePath);
         else if (index === 2) part2View.setImage(filePath);

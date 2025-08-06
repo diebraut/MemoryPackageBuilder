@@ -67,6 +67,7 @@ Window {
                 composer.visible = true;
                 composer.raise();              // bringt es über das Parent
                 composer.requestActivate();    // setzt den Fokus
+                composer.packagePath = packagePath
 
             } else {
                 console.warn("❌ Fehler beim Erzeugen des Composer-Fensters");

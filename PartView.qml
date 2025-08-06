@@ -21,7 +21,20 @@ Item {
 
     property bool resizedByUser: false
 
+    property alias imageSource: image.source
+
     signal clicked(int index)
+
+    signal frameReadyChanged(bool ready)
+    signal frameGeometryChanged()
+
+    // PartView.qml, irgendwo unter deinen properties/Funktionen:
+    function frameRectIn(targetItem) {
+        var ti = targetItem ? targetItem : part.parent
+        var p = imageFrame.mapToItem(ti, 0, 0)
+        return { x: p.x, y: p.y, w: imageFrame.width, h: imageFrame.height,
+                 ready: image.status === Image.Ready, visible: imageFrame.visible }
+    }
 
     // Resize-Konfiguration
     QtObject {
@@ -174,6 +187,11 @@ Item {
         width: frameWidth
         height: frameHeight
 
+        onXChanged: part.frameGeometryChanged()
+        onYChanged: part.frameGeometryChanged()
+        onWidthChanged: part.frameGeometryChanged()
+        onHeightChanged: part.frameGeometryChanged()
+
         MouseArea {
             anchors.fill: parent
             drag.target: imageFrame
@@ -184,7 +202,12 @@ Item {
                 zoomFactor = 1.0
                 updateImageFrameSize()
             }
-            onWheel: {
+            // optional auch beim User-Resizing feuern (in den MouseAreas):
+            onReleased: {
+                resizing = false
+                part.frameGeometryChanged()
+            }
+            onWheel: function(wheel) {
                 let delta = wheel.angleDelta.y > 0 ? 1.1 : 0.9
                 let newZoom = zoomFactor * delta
                 newZoom = Math.max(minZoom, Math.min(maxZoom, newZoom))
@@ -268,9 +291,17 @@ Item {
             layer.smooth: !resizing
             mipmap: !resizing
 
-            onStatusChanged: {
-                if (status === Image.Ready)
-                    updateImageFrameSize()
+            onStatusChanged: if (status === Image.Ready) {
+                updateImageFrameSize()
+                part.frameReadyChanged(true)
+                // WICHTIG: erst nach dem nächsten Tick neu berechnen
+                Qt.callLater(part.frameGeometryChanged)
+            }
+
+            // Falls sich die Quellgröße später meldet
+            onSourceSizeChanged: {
+                updateImageFrameSize()
+                Qt.callLater(part.frameGeometryChanged)
             }
         }
     }

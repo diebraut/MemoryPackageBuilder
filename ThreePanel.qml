@@ -24,6 +24,14 @@ Item {
 
     signal partClicked(int index)
 
+    property var part1: null
+    property var part2: null
+    property var part3: null
+
+    function getParts() {
+        return [part1, part2, part3].filter(p => p) // nur existierende zurück
+    }
+
     function setImageForPart(index, filePath) {
         if (layoutLoader.item && layoutLoader.item.setImageForPart)
             layoutLoader.item.setImageForPart(index, filePath);
@@ -37,6 +45,13 @@ Item {
         sourceComponent: layoutMode === 0 ? layout0Component
                           : layoutMode === 1 ? layout1Component
                           : layout2Component
+        onItemChanged: {
+            if (!item) { root.part1 = root.part2 = root.part3 = null; return }
+            // Die Unter-Components liefern selbst part1/2/3 (siehe unten)
+            root.part1 = item.part1 || null
+            root.part2 = item.part2 || null
+            root.part3 = item.part3 || null
+        }
     }
 
     // === Layout 0 ===
@@ -44,6 +59,11 @@ Item {
         id: layout0Component
         Item {
             id: layout0
+            // einheitliche Namen nach außen:
+            property alias part1: part1View
+            property alias part2: part2View
+            property alias part3: part3View
+            function getParts() { return [part1View, part2View, part3View] }
 
             function setImageForPart(index, filePath) {
                 if (index === 1) part1View.setImage(filePath);
@@ -138,6 +158,11 @@ Item {
     Component {
         id: layout1Component
         Item {
+            // gleiche Export-Namen trotz anderer interner IDs:
+            property alias part1: part1L1
+            property alias part2: part2L1
+            property alias part3: part3L1
+            function getParts() { return [part1L1, part2L1, part3L1] }
             function setImageForPart(index, filePath) {
                 if (index === 1) part1L1.setImage(filePath);
                 else if (index === 2) part2L1.setImage(filePath);
@@ -212,6 +237,10 @@ Item {
     Component {
         id: layout2Component
         Item {
+            property alias part1: part1L2
+            property alias part2: part2L2
+            property alias part3: part3L2
+            function getParts() { return [part1L2, part2L2, part3L2] }
             function setImageForPart(index, filePath) {
                 if (index === 1) part1L2.setImage(filePath);
                 else if (index === 2) part2L2.setImage(filePath);

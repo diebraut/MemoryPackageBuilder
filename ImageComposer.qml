@@ -1,6 +1,7 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Window 2.15
+import QtQuick.Shapes 1.15
 
 Window {
     id: composerWindow
@@ -9,6 +10,8 @@ Window {
     visible: true
     title: "ImageComposer"
     flags: Qt.FramelessWindowHint | Qt.Window
+
+    property string packagePath: ""
 
     property int anzeigeZustand: 1
     property int selectedPartIndex: 1  // Standard: Teil 1
@@ -32,6 +35,10 @@ Window {
     property Window parentWindow
     property bool lastParentActive: false
     property bool wasPositioned: false
+
+    property bool isComposing: false
+    property int  composeGen: 0
+    property var  lastComposeStage: null
 
     // Kann z. B. ganz oben im QML stehen
     QtObject {
@@ -106,6 +113,89 @@ Window {
             }
         }
     }
+    //Begin
+
+
+    // ---- Recompute triggern ----
+    // a) Wenn Layout/Zustand wechselt
+    onWidthChanged: rootItem.recomputeOutline()
+    onHeightChanged: rootItem.recomputeOutline()
+    Component.onCompleted: rootItem.recomputeOutline()
+
+    // b) Wenn der Anzeigestatus wechselt
+    Connections {
+        target: composerWindow
+        function onAnzeigeZustandChanged() { rootItem.recomputeOutline() }
+    }
+
+    // c) Auf Frame-Events aller (potenziellen) Parts hören
+    //    -> für singlePartView:
+    Connections {
+        target: singlePartView
+        ignoreUnknownSignals: true
+        function onFrameReadyChanged() { rootItem.recomputeOutline() }
+        function onFrameGeometryChanged() { rootItem.recomputeOutline() }
+    }
+    //    -> für TwoPanel-Parts (sobald vorhanden)
+    Connections {
+        target: twoSplitter.part1   // braucht property alias part1 in TwoPanel
+        ignoreUnknownSignals: true
+        function onFrameReadyChanged()    { rootItem.recomputeOutline() }
+        function onFrameGeometryChanged() { rootItem.recomputeOutline() }
+    }
+    Connections {
+        target: twoSplitter.part2
+        ignoreUnknownSignals: true
+        function onFrameReadyChanged()    { rootItem.recomputeOutline() }
+        function onFrameGeometryChanged() { rootItem.recomputeOutline() }
+    }
+
+    //    -> für ThreePanel ähnlich
+    // direkt auf die 3 Parts connecten
+    Connections {
+        target: threeSplitter.part1
+        ignoreUnknownSignals: true
+        function onFrameReadyChanged()    { rootItem.recomputeOutline() }
+        function onFrameGeometryChanged() { rootItem.recomputeOutline() }
+    }
+    Connections {
+        target: threeSplitter.part2
+        ignoreUnknownSignals: true
+        function onFrameReadyChanged()    { rootItem.recomputeOutline() }
+        function onFrameGeometryChanged() { rootItem.recomputeOutline() }
+    }
+    Connections {
+        target: threeSplitter.part3
+        ignoreUnknownSignals: true
+        function onFrameReadyChanged()    { rootItem.recomputeOutline() }
+        function onFrameGeometryChanged() { rootItem.recomputeOutline() }
+    }
+
+    // d) Nach dem Laden der Panels die Verbindungen zu deren Parts setzen
+    Timer {
+        interval: 0; running: true; repeat: true
+        onTriggered: {
+            // sobald Panels existieren und getParts liefern, deren Signale verbinden
+            function hook(parts) {
+                for (let i = 0; i < parts.length; ++i) {
+                    const p = parts[i]
+                    if (!p._outlineHooked) {
+                        p._outlineHooked = true
+                        p.frameReadyChanged.connect(rootItem.recomputeOutline)
+                        p.frameGeometryChanged.connect(rootItem.recomputeOutline)
+                    }
+                }
+            }
+            if (twoSplitter.getParts) hook(twoSplitter.getParts())
+            if (threeSplitter.getParts) hook(threeSplitter.getParts())
+            rootItem.recomputeOutline()
+            // Timer kann gestoppt werden, wenn alles einmal „verdrahtet“ ist:
+            if (singlePartView && twoSplitter.getParts && threeSplitter.getParts)
+                running = false
+        }
+    }
+    //end
+
     // Sichtbarkeit an Hauptfenster-Zustand binden
     Connections {
         target: parentWindow
@@ -160,59 +250,234 @@ Window {
         anchors.fill: parent
         acceptedButtons: Qt.RightButton
 
-        onPressed: (mouse) => {
-            if (mouse.button === Qt.RightButton && anzeigeZustand > 1) {
-                // 1. Vorherige Items entfernen
-                for (let i = 0; i < customContextMenu.dynamicItems.length; ++i)
-                    customContextMenu.dynamicItems[i].destroy();
-                customContextMenu.dynamicItems = [];
-
-                // 2. Kontextmenüeinträge bestimmen
-                let texts = [];
-                if (anzeigeZustand === 2) {
-                    texts = ["Zweiteilung Vertikal", "Zweiteilung Horizontal"];
-                } else if (anzeigeZustand === 3) {
-                    texts = [
-                        "Dreiteilung Vertikal",
-                        "Dreiteilung Horizontal",
-                        "Dreiteilung: 2 Oben, 1 Unten",
-                        "Dreiteilung: 1 Unten, 2 Oben"
-                    ];
-                }
-
-                // 3. Maximale Textbreite berechnen
-                let maxTextWidth = 0;
-                for (let y = 0; y < texts.length; ++y) {
-                    const w = menuFont.boundingRect(texts[y]).width;
-                    if (w > maxTextWidth) maxTextWidth = w;
-                }
-                customContextMenu.custLength = maxTextWidth + 20;
-
-                // 4. Items hinzufügen
-                function add(text, fn) {
-                    const item = dynamicMenuItem.createObject(null, {
-                        text: text
-                        //implicitWidth: itemWidth
-                    });
-                    item.onTriggered.connect(fn);
-                    customContextMenu.addItem(item);
-                    customContextMenu.dynamicItems.push(item);
-                }
-
-                // 5. Items je nach Zustand hinzufügen
-                if (anzeigeZustand === 2) {
-                    add("Zweiteilung Vertikal", () => { isVertical = true; });
-                    add("Zweiteilung Horizontal", () => { isVertical = false; });
-                } else if (anzeigeZustand === 3) {
-                    add("Dreiteilung Vertikal", () => { layoutMode = 0; isVertical = true; });
-                    add("Dreiteilung Horizontal", () => { layoutMode = 0; isVertical = false; });
-                    add("Dreiteilung: 2 Oben, 1 Unten", () => { layoutMode = 1; });
-                    add("Dreiteilung: 1 Unten, 2 Oben", () => { layoutMode = 2; });
-                }
-
-                // 6. Menü anzeigen an Mausposition
-                customContextMenu.popup(mouse.screenX, mouse.screenY);
+        // Helper: prüfen, ob alle sichtbaren Parts ready sind
+        function allVisibleImagesReady() {
+            if (!rootItem || !rootItem.activeParts) return false
+            const parts = rootItem.activeParts()
+            if (!parts.length) return false
+            for (let i = 0; i < parts.length; ++i) {
+                const p = parts[i]
+                if (!p || typeof p.frameRectIn !== "function") return false
+                const r = p.frameRectIn(rootItem)
+                if (!r.ready) return false
             }
+            return true
+        }
+
+        // optionaler Callback für Compose
+        function triggerCompose() {
+            if (typeof composerWindow.composeImages === "function") {
+                composerWindow.composeImages()
+            } else {
+                console.log("⚙️ <Compose-Image> triggered")
+            }
+        }
+
+        onPressed: (mouse) => {
+            if (mouse.button !== Qt.RightButton) return
+
+            // 1) alte dynamische Items entsorgen
+            if (customContextMenu.dynamicItems && customContextMenu.dynamicItems.length) {
+                for (let i = 0; i < customContextMenu.dynamicItems.length; ++i) {
+                    customContextMenu.dynamicItems[i].destroy()
+                }
+            }
+            customContextMenu.dynamicItems = []
+
+            // 2) Texte für normale Layout-Einträge
+            let texts = []
+            if (anzeigeZustand === 2) {
+                texts = ["Zweiteilung Vertikal", "Zweiteilung Horizontal"]
+            } else if (anzeigeZustand === 3) {
+                texts = [
+                    "Dreiteilung Vertikal",
+                    "Dreiteilung Horizontal",
+                    "Dreiteilung: 2 Oben, 1 Unten",
+                    "Dreiteilung: 1 Unten, 2 Oben"
+                ]
+            }
+
+            // 3) Breite berechnen (Compose-Image ggf. mitrechnen)
+            let maxTextWidth = 0
+            for (let y = 0; y < texts.length; ++y) {
+                const w = menuFont.boundingRect(texts[y]).width
+                if (w > maxTextWidth) maxTextWidth = w
+            }
+            if (allVisibleImagesReady()) {
+                const w = menuFont.boundingRect("Compose-Image").width
+                if (w > maxTextWidth) maxTextWidth = w
+            }
+            customContextMenu.custLength = maxTextWidth + 20
+
+            // 4) Hilfsfunktion zum Erzeugen von Items
+            function addMenuItem(text, handler) {
+                const item = Qt.createQmlObject('import QtQuick.Controls 2.15; MenuItem { text: "' + text.replace(/"/g, '\\"') + '" }',
+                                                customContextMenu)
+                if (handler) item.onTriggered.connect(handler)
+                customContextMenu.addItem(item)
+                customContextMenu.dynamicItems.push(item)
+                return item
+            }
+            function addSeparator() {
+                const sep = Qt.createQmlObject('import QtQuick.Controls 2.15; MenuSeparator { }', customContextMenu)
+                customContextMenu.addItem(sep)
+                customContextMenu.dynamicItems.push(sep)
+                return sep
+            }
+
+            // 5) ✨ Compose-Image + Separator (nur wenn alle ready)
+            if (allVisibleImagesReady()) {
+                addMenuItem("<Compose-Image>", triggerCompose)
+                addSeparator()
+            }
+
+            // 6) Normale Einträge gemäß Zustand
+            if (anzeigeZustand === 2) {
+                addMenuItem("Zweiteilung Vertikal", () => { isVertical = true })
+                addMenuItem("Zweiteilung Horizontal", () => { isVertical = false })
+            } else if (anzeigeZustand === 3) {
+                addMenuItem("Dreiteilung Vertikal", () => { layoutMode = 0; isVertical = true })
+                addMenuItem("Dreiteilung Horizontal", () => { layoutMode = 0; isVertical = false })
+                addMenuItem("Dreiteilung: 2 Oben, 1 Unten", () => { layoutMode = 1 })
+                addMenuItem("Dreiteilung: 1 Unten, 2 Oben", () => { layoutMode = 2 })
+            }
+
+            // 7) Menü anzeigen
+            customContextMenu.popup(mouse.screenX, mouse.screenY)
+        }
+    }
+
+    function composeImages() {
+        // neue Generation starten und evtl. alte Stage wegwerfen
+        composeGen++
+        const myGen = composeGen
+        if (lastComposeStage) {
+            try { lastComposeStage.destroy() } catch (e) {}
+            lastComposeStage = null
+        }
+
+        const parts = rootItem.activeParts ? rootItem.activeParts() : []
+        if (!parts.length) { console.warn("Keine Parts"); return }
+
+        // Union + maximale Skala (= höchste Quellauflösung)
+        let minX=Infinity, minY=Infinity, maxX=-Infinity, maxY=-Infinity
+        let scaleMax = 1.0
+        const entries = []
+
+        for (let i=0;i<parts.length;i++) {
+            const p = parts[i]
+            if (!p || typeof p.frameRectIn !== "function") { console.warn("Part ohne frameRectIn"); return }
+            const r = p.frameRectIn(rootItem)
+            if (!r.ready || !r.visible) { console.warn("Nicht alle Bilder geladen"); return }
+
+            minX = Math.min(minX, r.x);  minY = Math.min(minY, r.y)
+            maxX = Math.max(maxX, r.x + r.w);  maxY = Math.max(maxY, r.y + r.h)
+
+            const iw = (p.imageSourceSize && p.imageSourceSize.width)  ? p.imageSourceSize.width  : r.w
+            const ih = (p.imageSourceSize && p.imageSourceSize.height) ? p.imageSourceSize.height : r.h
+            const sx = iw / Math.max(1, r.w)
+            const sy = ih / Math.max(1, r.h)
+            scaleMax = Math.max(scaleMax, sx, sy)
+
+            const url = p.imageSource || ""
+            entries.push({ url, rect: r })
+        }
+
+        if (!isFinite(minX)) { console.warn("Union ungültig"); return }
+        const targetW = Math.round((maxX - minX) * scaleMax)
+        const targetH = Math.round((maxY - minY) * scaleMax)
+        if (targetW<=0 || targetH<=0) { console.warn("Zielgröße 0"); return }
+
+        // eigene Stage für diese Runde anlegen (alle Timer/Signals hängen daran)
+        const stage = Qt.createQmlObject(
+            'import QtQuick 2.15; Item { visible: false; layer.enabled: true }',
+            rootItem
+        )
+        stage.width = targetW
+        stage.height = targetH
+        lastComposeStage = stage
+
+        // Kinder erzeugen & auf Ready warten
+        let need = 0, ready = 0, finalized = false
+
+        function finalizeOnce() {
+            if (finalized) return
+            finalized = true
+
+            // wenn inzwischen eine neue Runde gestartet wurde → ignorieren & eigene Stage entsorgen
+            if (myGen !== composeGen) { try { stage.destroy() } catch(e) {} return }
+
+            // 2 kleine Ticks warten, damit die Stage sicher gezeichnet ist
+            Qt.callLater(function() {
+                const tick = Qt.createQmlObject('import QtQuick 2.15; Timer { interval: 0; running: true }', stage)
+                tick.triggered.connect(function() {
+                    if (myGen !== composeGen) { try { stage.destroy() } catch(e) {} return }
+                    const fileName = (packagePath && packagePath.length)
+                                     ? packagePath + "/TestCompose.png"
+                                     : "TestCompose.png"
+                    stage.grabToImage(function(res) {
+                        try { stage.destroy() } catch(e) {}
+                        if (myGen !== composeGen) return
+                        if (!res || !res.saveToFile(fileName))
+                            console.warn("❌ Speichern fehlgeschlagen:", fileName)
+                        else
+                            console.log("✅ Compose gespeichert:", fileName, stage.width, "x", stage.height)
+                    }, Qt.size(targetW, targetH))
+                })
+            })
+        }
+
+        // harte Deadline: falls ein Image nie fertig wird, trotzdem abschließen
+        const deadlineTimer = Qt.createQmlObject(
+            'import QtQuick 2.15; Timer { interval: 6000; running: true; repeat: false }',
+            stage
+        )
+        deadlineTimer.triggered.connect(function() {
+            if (myGen !== composeGen) return
+            console.warn("⚠️ Compose: Timeout – speichere mit", ready, "von", need)
+            finalizeOnce()
+        })
+
+        for (let i=0;i<entries.length;i++) {
+            const e = entries[i]
+            if (!e.url) continue
+            need++
+
+            const dx = Math.round((e.rect.x - minX) * scaleMax)
+            const dy = Math.round((e.rect.y - minY) * scaleMax)
+            const dw = Math.round(e.rect.w * scaleMax)
+            const dh = Math.round(e.rect.h * scaleMax)
+
+            const img = Qt.createQmlObject(
+                'import QtQuick 2.15; Image {' +
+                '  asynchronous: false; cache: true; smooth: true; mipmap: true;' +
+                '  fillMode: Image.Stretch; visible: true;' +
+                '}',
+                stage
+            )
+            img.x = dx; img.y = dy; img.width = dw; img.height = dh
+            img.sourceSize = Qt.size(dw, dh)
+            img.source = e.url
+
+            // Event-Handler: nur für die aktuelle Generation zählen
+            function onStatus() {
+                if (myGen !== composeGen) return
+                if (img.status === Image.Ready || img.status === Image.Error) {
+                    ready++
+                    if (ready >= need) finalizeOnce()
+                }
+            }
+            if (img.status === Image.Ready || img.status === Image.Error) {
+                onStatus()
+            } else {
+                img.statusChanged.connect(onStatus)
+            }
+        }
+
+        if (need === 0) {
+            console.warn("Keine gültigen Einträge")
+            try { stage.destroy() } catch(e) {}
+            return
         }
     }
 
@@ -233,6 +498,91 @@ Window {
             border.color: "#999"
             border.width: 1
             clip: false   // ⬅️ Wichtig! Damit Ränder sichtbar bleiben
+
+            // ---- Overlay-Geometrie ----
+            property real outlineX: 0
+            property real outlineY: 0
+            property real outlineW: 0
+            property real outlineH: 0
+            property bool outlineVisible: false
+
+            // Offscreen-Compositing-Stage
+            Item {
+                id: composeStage
+                visible: false       // kein Onscreen-Render
+                width: 1; height: 1  // wird dynamisch gesetzt
+                layer.enabled: true  // sichert sauberes Rendern
+            }
+
+            // Helfer: gibt das aktive PartView-Array zurück
+            function activeParts() {
+                if (anzeigeZustand === 1) return [singlePartView]
+                if (anzeigeZustand === 2) return twoSplitter.getParts ? twoSplitter.getParts() : []
+                if (anzeigeZustand === 3) return threeSplitter.getParts ? threeSplitter.getParts() : []
+                return []
+            }
+
+            // Bounding-Box neu berechnen
+            function recomputeOutline() {
+                console.log("DBG parts:", activeParts().length)
+                const parts = activeParts()
+                if (!parts.length) {
+                    outlineVisible = false
+                    outlineX = outlineY = outlineW = outlineH = 0
+                    return
+                }
+
+                let allReady = true
+                let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity
+
+                for (let i = 0; i < parts.length; ++i) {
+                    if (!parts[i] || typeof parts[i].frameRectIn !== "function") { allReady = false; break }
+                    const r = parts[i].frameRectIn(rootItem)
+                    if (!r.ready || !r.visible) { allReady = false; break }
+                    minX = Math.min(minX, r.x)
+                    minY = Math.min(minY, r.y)
+                    maxX = Math.max(maxX, r.x + r.w)
+                    maxY = Math.max(maxY, r.y + r.h)
+                    console.log("DBG r:", JSON.stringify(r))
+                }
+
+                if (!allReady || !isFinite(minX)) {
+                    outlineVisible = false
+                    outlineX = outlineY = outlineW = outlineH = 0
+                    return
+                }
+
+                outlineVisible = true
+                outlineX = minX
+                outlineY = minY
+                outlineW = Math.max(0, maxX - minX)
+                outlineH = Math.max(0, maxY - minY)
+            }
+
+            // ---- Das gestrichelte Overlay ----
+            Shape {
+                id: outlineShape
+                visible: rootItem.outlineVisible
+                x: rootItem.outlineX
+                y: rootItem.outlineY
+                width: rootItem.outlineW
+                height: rootItem.outlineH
+                z: 9999
+
+                ShapePath {
+                    strokeWidth: 4             // "etwas dicker"
+                    strokeColor: "#444"
+                    strokeStyle: ShapePath.DashLine
+                    dashPattern: [8, 6]        // gestrichelt
+                    fillColor: "transparent"
+                    startX: 0; startY: 0
+                    PathLine { x: outlineShape.width;  y: 0 }
+                    PathLine { x: outlineShape.width;  y: outlineShape.height }
+                    PathLine { x: 0;                  y: outlineShape.height }
+                    PathLine { x: 0;                  y: 0 }
+                }
+            }
+
             // ===================== EINZEL VIEW =====================
             PartView {
                 id: singlePartView
