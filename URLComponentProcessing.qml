@@ -2,6 +2,7 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 import QtWebEngine 1.9
+import QtQuick.Shapes 1.15
 
 import Helpers 1.0
 import FileHelper 1.0
@@ -148,8 +149,6 @@ Window {
 
                     onClicked: function(mouse) {
                         if (mouse.button === Qt.RightButton) {
-                            console.log("📌 Rechtsklick auf Rechteck");
-
                             if (urlWindow.dynamicMenu) {
                                 urlWindow.dynamicMenu.destroy();
                             }
@@ -171,15 +170,12 @@ Window {
                                 imageAvailable = true;
                                 saveButton.enabled = true;
 
-                                console.log("💾 Bereich speichern als (temporär):", savePath);
-
-                                // Rahmen/Griff verschwinden lassen und erst NACH dem nächsten Frame grabben
-                                 grabAreaWithoutOverlay(parent, savePath, ${transparentBg});
+                                grabAreaWithoutOverlay(parent, savePath, ${transparentBg});
                             });
                             urlWindow.dynamicMenu.addItem(saveItem);
+
                             var removeItem = Qt.createQmlObject('import QtQuick.Controls 2.15; MenuItem { text: "Rechteck entfernen" }', urlWindow.dynamicMenu);
                             removeItem.triggered.connect(function() {
-                                console.log("🗑️ Rechteck entfernt");
                                 parent.destroy();
                             });
                             urlWindow.dynamicMenu.addItem(removeItem);
@@ -219,6 +215,64 @@ Window {
                         var newHeight = Math.max(20, parent.height + mouse.y - dragYStart);
                         parent.width = newWidth;
                         parent.height = newHeight;
+                    }
+                }
+                Rectangle {
+                    id: innerBox
+                    width: 60
+                    height: 20
+                    x: 10
+                    y: 10
+                    color: "#880000ff"
+                    border.color: "white"
+                    border.width: 1
+                    z: 10
+
+                    MouseArea {
+                        anchors.fill: parent
+                        drag.target: parent
+                        cursorShape: Qt.SizeAllCursor
+
+                        onPositionChanged: {
+                            parent.x = Math.max(0, Math.min(parent.x, parent.parent.width - parent.width));
+                            parent.y = Math.max(0, Math.min(parent.y, parent.parent.height - parent.height));
+                        }
+                    }
+
+                    Rectangle {
+                        id: innerResizeHandle
+                        width: 10
+                        height: 10
+                        anchors.right: parent.right
+                        anchors.bottom: parent.bottom
+                        color: "white"
+                        border.color: "black"
+                        z: 11
+
+                        MouseArea {
+                            anchors.fill: parent
+                            cursorShape: Qt.SizeFDiagCursor  // ✅ Korrekt hier!
+                            drag.target: undefined
+
+                            property real startX
+                            property real startY
+
+                            onPressed: function(mouse) {
+                                startX = mouse.x
+                                startY = mouse.y
+                            }
+
+                            onPositionChanged: function(mouse) {
+                                var newWidth = Math.max(20, innerBox.width + mouse.x - startX);
+                                var newHeight = Math.max(10, innerBox.height + mouse.y - startY);
+
+                                newWidth = Math.min(newWidth, innerBox.parent.width - innerBox.x);
+                                newHeight = Math.min(newHeight, innerBox.parent.height - innerBox.y);
+
+                                innerBox.width = newWidth;
+                                innerBox.height = newHeight;
+                            }
+                        }
                     }
                 }
             }
