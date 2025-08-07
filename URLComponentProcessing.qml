@@ -94,7 +94,32 @@ Window {
         FileHelper.removeTMPFiles(packagePath);
     }
 
-    function handleRechteckErzeugen(info) {
+    // Wartet einen Render-Tick, nachdem 'rect' ausgeblendet wurde, und grabbt dann.
+    function grabAreaWithoutOverlay(rect, savePath, transparentBg) {
+        // Koordinaten sichern (da 'rect' gleich zerstört wird)
+        const rx = rect.x, ry = rect.y, rw = rect.width, rh = rect.height;
+
+        rect.visible = false;
+        urlWindow.requestUpdate();  // ⬅️ sorgt für Redraw ohne das Rechteck
+
+        nextFrameTimer.callback = function() {
+            imgDownloader.grabAndSaveCropped(urlWindow, rx, ry, rw, rh, savePath, transparentBg);
+            rect.destroy();
+        };
+
+        nextFrameTimer.interval = 16;
+        nextFrameTimer.start();
+    }
+
+    Timer {
+        id: nextFrameTimer
+        interval: 16
+        repeat: false
+        property var callback: null
+        onTriggered: { if (callback) callback(); callback = null }
+    }
+
+    function handleRechteckErzeugen(info, transparentBg) {
         console.log("🟩 Rechteck erzeugen gewählt");
 
         // Menü vor dem Erzeugen schließen, damit es nicht im Screenshot landet
@@ -133,11 +158,11 @@ Window {
 
                             var saveItem = Qt.createQmlObject('import QtQuick.Controls 2.15; MenuItem { text: "Bereich speichern" }', urlWindow.dynamicMenu);
                             saveItem.triggered.connect(function() {
-                                var extension = "jpg";
+                                var extension = "png";
                                 var suffix = "_TEMP";
-                                if (composer && composer.anzeigeZustand > 1) {
+                                if (composer && composer.anzeigeZustand > 1)
                                     suffix += composer.selectedPartIndex;
-                                }
+
                                 var tempName = subjektnamen + suffix + "." + extension;
                                 var savePath = packagePath + "/" + tempName;
 
@@ -148,28 +173,10 @@ Window {
 
                                 console.log("💾 Bereich speichern als (temporär):", savePath);
 
-                                // Handle ausblenden
-                                resizeHandle.visible = false;
-
-                                // Screenshot verzögert auslösen
-                                Qt.callLater(function() {
-                                    imgDownloader.grabAndSaveCropped(urlWindow,
-                                                                     parent.x,
-                                                                     parent.y,
-                                                                     parent.width,
-                                                                     parent.height,
-                                                                     savePath);
-
-                                    // Handle wieder einblenden (falls Rechteck nicht zerstört würde)
-                                    resizeHandle.visible = true;
-
-                                    // Rechteck entfernen
-                                    parent.destroy();
-                                    console.log("🗑️ Rechteck nach dem Speichern entfernt");
-                                });
+                                // Rahmen/Griff verschwinden lassen und erst NACH dem nächsten Frame grabben
+                                 grabAreaWithoutOverlay(parent, savePath, ${transparentBg});
                             });
                             urlWindow.dynamicMenu.addItem(saveItem);
-
                             var removeItem = Qt.createQmlObject('import QtQuick.Controls 2.15; MenuItem { text: "Rechteck entfernen" }', urlWindow.dynamicMenu);
                             removeItem.triggered.connect(function() {
                                 console.log("🗑️ Rechteck entfernt");
@@ -239,7 +246,7 @@ Window {
         }
     }
 
-    function handleRechteckMitBild(imageUrl) {
+    function handleRechteckMitBild(imageUrl,transparentBg) {
         console.log("🟩 Rechteck (mit Bild) gewählt für:", imageUrl);
 
         if (!imageUrl || imageUrl === "") {
@@ -255,12 +262,16 @@ Window {
             }
 
             //licenceFetcher.autoDownloadImage = false;
-            licenceFetchMode = "rechteck";
+
+            if (transparentBg)
+                licenceFetchMode = "rechteckTransp"
+            else
+                licenceFetchMode = "rechteck";
             licenceFetcher.fetchLicenceInfo(fileTitle);
 
         } else {
             currentImageLicenceInfo = null;
-            handleRechteckErzeugen(null);
+            handleRechteckErzeugen(null,transparentBg);
         }
     }
 
@@ -346,9 +357,9 @@ Window {
                 var thumbUrl = build500pxThumbnailUrl(info.imageUrl);
                 console.log("🌐 Lade 500px-Thumbnail:", thumbUrl);
                 saveImageTemporarily(thumbUrl);
-            } else if (licenceFetchMode === "rechteck") {
+            } else if (licenceFetchMode === "rechteck" || licenceFetchMode === "rechteckTransp") {
                 console.log("🟩 Lizenzinfo für Rechteck gespeichert. Rechteck wird jetzt erzeugt.");
-                handleRechteckErzeugen(info);
+                handleRechteckErzeugen(info,licenceFetchMode === "rechteckTransp");
             } else {
                 console.log("ℹ️ Lizenzinfo erhalten, aber kein weiterer Vorgang definiert.");
             }
@@ -447,7 +458,6 @@ Window {
                         }
 
                         dynamicMenu = Qt.createQmlObject('import QtQuick.Controls 2.15; Menu {}', urlWindow);
-
                         var hasItem = false;
 
                         if (result !== "") {
@@ -463,12 +473,34 @@ Window {
                             });
                             dynamicMenu.addItem(rectImageItem);
 
+                            var rectImageTranspItem = Qt.createQmlObject('import QtQuick.Controls 2.15; MenuItem { text: "Rechteck erzeugen (mit Bild) transp.Hg" }', dynamicMenu);
+                            rectImageTranspItem.triggered.connect(function() {
+                                licenceFetchMode = "rechteckTransp";
+                                currentImageLicenceInfo = null;
+                                var fileTitle = extractOriginalFileTitle(result);
+                                if (fileTitle && fileTitle !== "File:") {
+                                    licenceFetcher.fetchLicenceInfo(fileTitle);
+                                } else {
+                                    handleRechteckMitBild(null, true);
+                                }
+                            });
+                            dynamicMenu.addItem(rectImageTranspItem);
+
                             hasItem = true;
                         }
 
                         var rectItem = Qt.createQmlObject('import QtQuick.Controls 2.15; MenuItem { text: "Rechteck erzeugen" }', dynamicMenu);
-                        rectItem.triggered.connect(handleRechteckErzeugen);
+                        rectItem.triggered.connect(function() {
+                            handleRechteckErzeugen(null, false);
+                        });
                         dynamicMenu.addItem(rectItem);
+
+                        var rectTranspItem = Qt.createQmlObject('import QtQuick.Controls 2.15; MenuItem { text: "Rechteck erzeugen transp.Hg" }', dynamicMenu);
+                        rectTranspItem.triggered.connect(function() {
+                            handleRechteckErzeugen(null, true);
+                        });
+                        dynamicMenu.addItem(rectTranspItem);
+
                         hasItem = true;
 
                         if (hasItem) {

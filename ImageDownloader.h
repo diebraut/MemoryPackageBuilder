@@ -15,7 +15,7 @@ public:
     explicit ImageDownloader(QObject *parent = nullptr);
 
     Q_INVOKABLE void downloadImage(const QString &url, const QString &savePath);
-    Q_INVOKABLE void grabAndSaveCropped(QQuickWindow *window, int x, int y, int w, int h, const QString &path);
+    Q_INVOKABLE bool grabAndSaveCropped(QQuickWindow *window, int x, int y, int w, int h, const QString &path, bool transparentBackground);
     Q_INVOKABLE void saveCropped(const QString &path) {
          qDebug() << "saveGrabbedImage aufgerufen mit:" << path;
     }
