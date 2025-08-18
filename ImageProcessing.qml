@@ -81,6 +81,7 @@ Window {
                 const width = parseFloat(parts[2]);
                 const height = parseFloat(parts[3]);
                 const rotationAngle = parseFloat(parts[4]);
+                const color = (parts.length >= 6 && parts[5]) ? parts[5] : "red"; // ✅ neu: farbe optional
 
                 if (!isNaN(startX) && !isNaN(startY) &&
                     !isNaN(width) && !isNaN(height) &&
@@ -90,7 +91,8 @@ Window {
                         startY: startY,
                         endX: startX + width,
                         endY: startY + height,
-                        rotationAngle: rotationAngle
+                        rotationAngle: rotationAngle,
+                        color: color                             // ✅ neu
                     });
                 } else {
                     console.warn("❌ Ungültige Rechteckdaten:", entries[i]);
@@ -301,7 +303,8 @@ Window {
                     property real circleInnerRadius: 0
                     property real circleOuterRadius: 0
 
-                    property string selectedArrowColor: "red"
+                    property string defaultRectColor: "black"
+                    property string defaultArrowColor: "red"
 
                     // ---- Daten ----
                     ListModel { id: rectanglesModel }
@@ -384,7 +387,7 @@ Window {
                                 height: Math.abs(model.endY - model.startY) * drawLayer.scaleY
 
                                 color: "transparent"
-                                border.color: "red"
+                                border.color: model.color || "red"   // ✅ neu: farbe aus model
                                 border.width: 2
 
                                 property bool dragging: false
@@ -470,8 +473,10 @@ Window {
                                         acceptedButtons: Qt.LeftButton | Qt.RightButton
                                         preventStealing: true
                                         hoverEnabled: true
+                                        propagateComposedEvents: true
                                         cursorShape: rectItem.dragging ? Qt.ClosedHandCursor : Qt.OpenHandCursor
 
+                                        // Drag-Hilfsvariablen
                                         property real startGX: 0
                                         property real startGY: 0
                                         property real origStartX: 0
@@ -481,6 +486,7 @@ Window {
 
                                         onPressed: (mouse) => {
                                             if (mouse.button === Qt.LeftButton) {
+                                                // Drag vorbereiten
                                                 const g = moveMA.mapToItem(drawLayer, Qt.point(mouse.x, mouse.y))
                                                 startGX = g.x
                                                 startGY = g.y
@@ -496,12 +502,14 @@ Window {
                                                 cursorShape = Qt.ClosedHandCursor
                                                 mouse.accepted = true
                                             } else if (mouse.button === Qt.RightButton) {
+                                                // Rechtsklick akzeptieren; Menü wird in onClicked geöffnet
                                                 mouse.accepted = true
                                             }
                                         }
 
                                         onPositionChanged: (mouse) => {
                                             if (!rectItem.dragging) return
+
                                             const g = moveMA.mapToItem(drawLayer, Qt.point(mouse.x, mouse.y))
                                             const dx = (g.x - startGX) / drawLayer.scaleX
                                             const dy = (g.y - startGY) / drawLayer.scaleY
@@ -519,9 +527,38 @@ Window {
 
                                         onClicked: (mouse) => {
                                             if (mouse.button === Qt.RightButton) {
-                                                rectanglesModel.remove(rectItem.modelIndex)
+                                                rectMenu.popup(mouse.screenX, mouse.screenY) // Kontextmenü nur bei Rechtsklick
                                                 mouse.accepted = true
+                                            } else {
+                                                // Linksklick: keine Sonderbehandlung – Drag läuft über onPressed/onPositionChanged
+                                                mouse.accepted = false
                                             }
+                                        }
+
+                                        // Kontextmenü (wie bei den Pfeilen)
+                                        Menu {
+                                            id: rectMenu
+                                            function choose(c) {
+                                                rectanglesModel.setProperty(rectItem.modelIndex, "color", c)  // Rahmen einfärben
+                                                drawLayer.defaultRectColor = c                                // ← neuen Default merken
+                                            }
+
+                                            MenuItem { text: "Schwarz"; checkable: true; checked: drawLayer.defaultRectColor === "black"; onTriggered: rectMenu.choose("black") }
+                                            MenuItem { text: "Weiß";   checkable: true; checked: drawLayer.defaultRectColor === "white"; onTriggered: rectMenu.choose("white") }
+                                            MenuItem { text: "Rot";    checkable: true; checked: drawLayer.defaultRectColor === "red";   onTriggered: rectMenu.choose("red") }
+                                            MenuItem { text: "Blau";   checkable: true; checked: drawLayer.defaultRectColor === "blue";  onTriggered: rectMenu.choose("blue") }
+                                            MenuItem { text: "Grün";   checkable: true; checked: drawLayer.defaultRectColor === "green"; onTriggered: rectMenu.choose("green") }
+                                            MenuItem { text: "Gelb";   checkable: true; checked: drawLayer.defaultRectColor === "yellow";onTriggered: rectMenu.choose("yellow") }
+                                            MenuSeparator {}
+                                             // 🔴 neues Menüitem, NICHT checkable
+                                             MenuItem {
+                                                 text: "Strich (transp. Hintergrund)"
+                                                 onTriggered: {
+                                                     rectanglesModel.setProperty(rectItem.modelIndex, "color", "none")
+                                                 }
+                                             }
+                                            MenuSeparator {}
+                                            MenuItem { text: "Löschen"; onTriggered: rectanglesModel.remove(rectItem.modelIndex) }
                                         }
                                     }
                                 }
@@ -717,18 +754,20 @@ Window {
 
                                     Menu {
                                         id: colorMenu
-                                        MenuItem { text: "Schwarz"; onTriggered: setColor("black") }
-                                        MenuItem { text: "Weiß";   onTriggered: setColor("white") }
-                                        MenuItem { text: "Rot";    onTriggered: setColor("red") }
-                                        MenuItem { text: "Blau";   onTriggered: setColor("blue") }
-                                        MenuItem { text: "Grün";   onTriggered: setColor("green") }
-                                        MenuItem { text: "Gelb";   onTriggered: setColor("yellow") }
+                                        function choose(c) {
+                                            arrowModel.setProperty(arrowItem.modelIndex, "color", c)   // Pfeil einfärben
+                                            drawLayer.defaultArrowColor = c                            // ← neuen Default merken
+                                        }
+
+                                        MenuItem { text: "Schwarz"; checkable: true; checked: drawLayer.defaultArrowColor === "black"; onTriggered: colorMenu.choose("black") }
+                                        MenuItem { text: "Weiß";   checkable: true; checked: drawLayer.defaultArrowColor === "white"; onTriggered: colorMenu.choose("white") }
+                                        MenuItem { text: "Rot";    checkable: true; checked: drawLayer.defaultArrowColor === "red";   onTriggered: colorMenu.choose("red") }
+                                        MenuItem { text: "Blau";   checkable: true; checked: drawLayer.defaultArrowColor === "blue";  onTriggered: colorMenu.choose("blue") }
+                                        MenuItem { text: "Grün";   checkable: true; checked: drawLayer.defaultArrowColor === "green"; onTriggered: colorMenu.choose("green") }
+                                        MenuItem { text: "Gelb";   checkable: true; checked: drawLayer.defaultArrowColor === "yellow";onTriggered: colorMenu.choose("yellow") }
+
                                         MenuSeparator {}
                                         MenuItem { text: "Löschen"; onTriggered: arrowModel.remove(arrowItem.modelIndex) }
-
-                                        function setColor(newColor) {
-                                            arrowModel.setProperty(arrowItem.modelIndex, "color", newColor)
-                                        }
                                     }
                                 }
 
@@ -858,7 +897,8 @@ Window {
                                     startY: drawLayer.startY,
                                     endX: drawLayer.currentX,
                                     endY: drawLayer.currentY,
-                                    rotationAngle: 0
+                                    rotationAngle: 0,
+                                    color: drawLayer.defaultRectColor   // ← Rechteck-Default nutzen
                                 })
                             }
                         }
@@ -899,7 +939,7 @@ Window {
                         id: arrowPrototype
                         Image {
                             id: arrowPrototypeImageID
-                            property string color:  drawLayer.selectedArrowColor
+                            property string color:  drawLayer.defaultArrowColor
                             source: ""
                             width: 96
                             height: 96
@@ -924,7 +964,7 @@ Window {
             // Linker Rand: Pfeil (Farbvorschau)
             Image {
                 id: arrowPlaceholder
-                source: "qrc:/icons/arrow-right-" + drawLayer.selectedArrowColor + ".png"
+                source: "qrc:/icons/arrow-right-" + drawLayer.defaultArrowColor + ".png"
                 fillMode: Image.Stretch
                 opacity: 0.5
                 Layout.preferredWidth: 48
@@ -978,9 +1018,9 @@ Window {
                             x: imgX,
                             y: imgY,
                             rotationAngle: 0,
-                            color: drawLayer.selectedArrowColor,
+                            color: drawLayer.defaultArrowColor,  // ← Pfeil-Default nutzen
                             scaleFactor: 1.0
-                        });
+                        })
 
                         tempArrow.destroy();
                         tempArrow = null;
