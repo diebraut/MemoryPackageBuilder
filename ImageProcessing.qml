@@ -2,6 +2,8 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 import QtQuick.Window 2.15
+import QtQuick.Shapes 1.15
+
 
 Window {
     id: imageWindow
@@ -82,6 +84,8 @@ Window {
                 const height = parseFloat(parts[3]);
                 const rotationAngle = parseFloat(parts[4]);
                 const color = (parts.length >= 6 && parts[5]) ? parts[5] : "red"; // ✅ neu: farbe optional
+                const rectTranspWithLine =
+                    (parts.length >= 7) ? (parts[6] === "1" || parts[6].toLowerCase?.() === "true") : false;
 
                 if (!isNaN(startX) && !isNaN(startY) &&
                     !isNaN(width) && !isNaN(height) &&
@@ -92,9 +96,9 @@ Window {
                         endX: startX + width,
                         endY: startY + height,
                         rotationAngle: rotationAngle,
-                        color: color                             // ✅ neu
-                    });
-                } else {
+                        color: color,
+                        rectTranspWithLine: rectTranspWithLine       // NEU
+                    });                } else {
                     console.warn("❌ Ungültige Rechteckdaten:", entries[i]);
                 }
             } else {
@@ -305,6 +309,7 @@ Window {
 
                     property string defaultRectColor: "black"
                     property string defaultArrowColor: "red"
+                    property bool   defaultRectTranspWithLine: false   // NEU
 
                     // ---- Daten ----
                     ListModel { id: rectanglesModel }
@@ -355,16 +360,55 @@ Window {
                         }
                         return true
                     }
+                    // In drawLayer {} hinzufügen (neben rotationHelper)
+
+                    function snappedRightAngle(a) {
+                        // map nach [0,360)
+                        let m = ((a % 360) + 360) % 360;
+                        const cand = [0, 90, 180, 270, 360];
+                        let best = m, diff = 999;
+                        for (let c of cand) {
+                            const d = Math.abs(m - c);
+                            if (d < diff) { best = c; diff = d; }
+                        }
+                        if (diff <= 0.2) return (best === 360 ? 0 : best); // Toleranz ~0.2°
+                        return a;
+                    }
+
+                    function isAxisAligned(a) {
+                        const s = drawLayer.snappedRightAngle(a);
+                        return s === 0 || s === 90 || s === 180 || s === 270;
+                    }
+                    function snapCoord(v, strokeWidth) {
+                        const dpr = Screen.devicePixelRatio;
+                        const w = (strokeWidth || 1) * dpr;
+                        const iv = Math.round(v * dpr);
+                        return (w % 2 === 1) ? (iv + 0.5) / dpr : iv / dpr;
+                    }
+                    function snapSize(v) {
+                        const dpr = Screen.devicePixelRatio;
+                        return Math.max(1, Math.round(v * dpr)) / dpr;
+                    }
+                    function snapAbs(v) {               // absolute Koordinaten (z.B. imageClip.x/y)
+                        const dpr = Screen.devicePixelRatio;
+                        return Math.round(v * dpr) / dpr;
+                    }
+                    function snapAbsHalfAware(v, strokeWidth) {
+                        const dpr = Screen.devicePixelRatio;
+                        const w = (strokeWidth || 1) * dpr;
+                        const iv = Math.round(v * dpr);
+                        return (w % 2 === 1) ? (iv + 0.5) / dpr : iv / dpr;
+                    }
 
                     // =======================
-                    //  Clip-Container NUR über dem Bild
+                    //  Clip-Container NUR über dem Bild imageClip
                     // =======================
                     Item {
                         id: imageClip
-                        x: drawLayer.offsetX
-                        y: drawLayer.offsetY
-                        width: imagePreview.paintedWidth
-                        height: imagePreview.paintedHeight
+                        x: drawLayer.snapAbs(drawLayer.offsetX)
+                        y: drawLayer.snapAbs(drawLayer.offsetY)
+                        width:  drawLayer.snapAbs(imagePreview.paintedWidth)
+                        height: drawLayer.snapAbs(imagePreview.paintedHeight)
                         clip: true
                         z: 2
 
@@ -378,27 +422,110 @@ Window {
                                 id: rectItem
                                 clip: false
 
-                                Behavior on width { NumberAnimation { duration: 50 } }
-                                Behavior on height { NumberAnimation { duration: 50 } }
-
-                                x: Math.min(model.startX, model.endX) * drawLayer.scaleX
-                                y: Math.min(model.startY, model.endY) * drawLayer.scaleY
-                                width: Math.abs(model.endX - model.startX) * drawLayer.scaleX
-                                height: Math.abs(model.endY - model.startY) * drawLayer.scaleY
-
-                                color: "transparent"
-                                border.color: model.color || "red"   // ✅ neu: farbe aus model
-                                border.width: 2
-
                                 property bool dragging: false
                                 property int modelIndex: index
                                 property var handles: []
                                 property real rotationAngle: model.rotationAngle !== undefined ? model.rotationAngle : 0
 
-                                transform: Rotation {
+                                readonly property int strokeW: 2
+                                readonly property bool axisAligned: drawLayer.isAxisAligned(rotationAngle)
+
+                                // 🔹 Gestrichelter Rahmen als Overlay (nur wenn Flag gesetzt)
+                                // --- Einzige Shape: gestrichelter Rahmen + mittige Linie ---
+                                Shape {
+                                    id: rectOverlay
+                                    anchors.fill: parent
+                                    visible: model.rectTranspWithLine
+                                    z: 2
+
+                                    // bei 0°/90° ohne Filter zeichnen → knackscharf
+                                    layer.enabled: rectItem.axisAligned
+                                    layer.smooth: false
+                                    layer.mipmap: false
+
+                                    // gemeinsam genutzte Hilfen
+                                    property real inset: rectItem.strokeW / 2     // Strich innen führen
+                                    property int  centerLineW: 3                  // mittlere Linie 3 px
+                                    // DPR-bewusste Y-Position der mittigen Linie (odd width → +0.5 px)
+                                    property real cy: {
+                                        const dpr = Screen.devicePixelRatio;
+                                        const iw  = centerLineW * dpr;
+                                        const iv  = Math.round((height / 2) * dpr);
+                                        return (iw % 2 === 1) ? (iv + 0.5) / dpr : iv / dpr;
+                                    }
+
+                                    // 1) Gestrichelter Rechteck-Rahmen
+                                    ShapePath {
+                                        strokeWidth: rectItem.strokeW
+                                        strokeColor: drawLayer.defaultRectColor
+                                        fillColor: "transparent"
+                                        strokeStyle: ShapePath.DashLine
+                                        capStyle: ShapePath.FlatCap
+                                        joinStyle: ShapePath.MiterJoin
+                                        dashPattern: [6, 4]
+
+                                        startX: rectOverlay.inset
+                                        startY: rectOverlay.inset
+                                        PathLine { x: rectOverlay.width  - rectOverlay.inset; y: rectOverlay.inset }
+                                        PathLine { x: rectOverlay.width  - rectOverlay.inset; y: rectOverlay.height - rectOverlay.inset }
+                                        PathLine { x: rectOverlay.inset; y: rectOverlay.height - rectOverlay.inset }
+                                        PathLine { x: rectOverlay.inset; y: rectOverlay.inset }
+                                    }
+
+                                    // 2) Mittige, solide Linie (horizontale)
+                                    ShapePath {
+                                        strokeWidth: rectOverlay.centerLineW
+                                        strokeColor: drawLayer.defaultRectColor
+                                        fillColor: "transparent"
+                                        strokeStyle: ShapePath.SolidLine
+                                        capStyle: ShapePath.FlatCap
+                                        joinStyle: ShapePath.MiterJoin
+
+                                        startX: rectOverlay.inset
+                                        startY: rectOverlay.cy
+                                        PathLine { x: rectOverlay.width - rectOverlay.inset; y: rectOverlay.cy }
+                                    }
+                                }                                // ✨ Transform-Liste dynamisch setzen
+                                Component.onCompleted: updateTransform()
+                                onAxisAlignedChanged: updateTransform()
+
+                                Rotation {
+                                    id: rectRot
                                     origin.x: rectItem.width / 2
                                     origin.y: rectItem.height / 2
                                     angle: rectItem.rotationAngle
+                                }
+
+                                // ✨ Anti-Aliasing für die Kante aus, wenn achs-aligned
+                                antialiasing: !axisAligned ? true : false
+
+                                // ✨ Deine bestehenden Snappings bleiben wie sie sind:
+                                x: axisAligned
+                                   ? drawLayer.snapCoord(Math.min(model.startX, model.endX) * drawLayer.scaleX, strokeW)
+                                   : Math.min(model.startX, model.endX) * drawLayer.scaleX
+
+                                y: axisAligned
+                                   ? drawLayer.snapCoord(Math.min(model.startY, model.endY) * drawLayer.scaleY, strokeW)
+                                   : Math.min(model.startY, model.endY) * drawLayer.scaleY
+
+                                width: axisAligned
+                                   ? drawLayer.snapSize(Math.abs(model.endX - model.startX) * drawLayer.scaleX)
+                                   : Math.abs(model.endX - model.startX) * drawLayer.scaleX
+
+                                height: axisAligned
+                                   ? drawLayer.snapSize(Math.abs(model.endY - model.startY) * drawLayer.scaleY)
+                                   : Math.abs(model.endY - model.startY) * drawLayer.scaleY
+
+                                color: "transparent"
+                                // 🔹 Normale Linie nur zeigen, wenn NICHT gestrichelt
+                                border.color: model.rectTranspWithLine ? "transparent" : (model.color || "red")
+                                border.width: strokeW
+
+                                Behavior on width  { NumberAnimation { duration: rectItem.axisAligned ? 0 : 50 } }
+                                Behavior on height { NumberAnimation { duration: rectItem.axisAligned ? 0 : 50 } }
+
+                                function updateTransform() {
+                                    rectItem.transform = rectItem.axisAligned ? [] : [rectRot];
                                 }
                                 Text {
                                     anchors.centerIn: parent
@@ -551,12 +678,17 @@ Window {
                                             MenuItem { text: "Gelb";   checkable: true; checked: drawLayer.defaultRectColor === "yellow";onTriggered: rectMenu.choose("yellow") }
                                             MenuSeparator {}
                                              // 🔴 neues Menüitem, NICHT checkable
-                                             MenuItem {
-                                                 text: "Strich (transp. Hintergrund)"
-                                                 onTriggered: {
-                                                     rectanglesModel.setProperty(rectItem.modelIndex, "color", "none")
-                                                 }
-                                             }
+                                            MenuItem {
+                                                text: "Strich (transp. Hintergrund)"
+                                                checkable: true
+                                                // Anzeige wie bei Default-Farbe: globaler Default steuert den Haken
+                                                checked: drawLayer.defaultRectTranspWithLine
+                                                onTriggered: {
+                                                    const newVal = !drawLayer.defaultRectTranspWithLine;
+                                                    drawLayer.defaultRectTranspWithLine = newVal;                 // Default umschalten
+                                                    rectanglesModel.setProperty(rectItem.modelIndex, "rectTranspWithLine", newVal); // aktuelles Rect setzen
+                                                }
+                                            }
                                             MenuSeparator {}
                                             MenuItem { text: "Löschen"; onTriggered: rectanglesModel.remove(rectItem.modelIndex) }
                                         }
@@ -667,9 +799,13 @@ Window {
                                             }
                                         }
                                     }
-
                                     onReleased: {
                                         drawLayer.showGlobalCircles = false;
+                                        // SNAP HINZUFÜGEN:
+                                        const snapped = drawLayer.snappedRightAngle(rectItem.rotationAngle);
+                                        rectItem.rotationAngle = snapped;
+                                        rectanglesModel.setProperty(rectItem.modelIndex, "rotationAngle", snapped);
+
                                         globalCircleCanvas.requestPaint();
                                     }
                                 }
@@ -711,12 +847,13 @@ Window {
                                     drawLayer.selectedArrowColor = newColor
                                 }
 
-                                transform: Rotation {
-                                    origin.x: centerX
-                                    origin.y: centerY
-                                    angle: rotationAngle
-                                }
-
+                                transform: [
+                                    Rotation {
+                                        origin.x: centerX
+                                        origin.y: centerY
+                                        angle: arrowItem.axisAligned ? 0 : rotationAngle
+                                    }
+                                ]
                                 Image {
                                     id: arrowImageID
                                     anchors.fill: parent
@@ -802,15 +939,17 @@ Window {
                                             rotationAngle = newAngle
                                             arrowModel.setProperty(modelIndex, "rotationAngle", newAngle)
                                         }
-
                                         onReleased: {
-                                            rotationHelper.active = false
-                                            drawLayer.showGlobalCircles = false
                                             rotationHelper.active = false
                                             drawLayer.showGlobalCircles = false
                                             drawLayer.rotatingKind = ""
                                             drawLayer.rotatingIndex = -1
-                                            globalCircleCanvas.requestPaint()
+
+                                            // SNAP HINZUFÜGEN:
+                                            const snapped = drawLayer.snappedRightAngle(arrowItem.rotationAngle);
+                                            arrowItem.rotationAngle = snapped;
+                                            arrowModel.setProperty(arrowItem.modelIndex, "rotationAngle", snapped);
+
                                             globalCircleCanvas.requestPaint()
                                         }
                                     }
@@ -892,14 +1031,15 @@ Window {
 
                             if (Math.abs(drawLayer.currentX - drawLayer.startX) >= 1 &&
                                 Math.abs(drawLayer.currentY - drawLayer.startY) >= 1) {
-                                rectanglesModel.append({
-                                    startX: drawLayer.startX,
-                                    startY: drawLayer.startY,
-                                    endX: drawLayer.currentX,
-                                    endY: drawLayer.currentY,
-                                    rotationAngle: 0,
-                                    color: drawLayer.defaultRectColor   // ← Rechteck-Default nutzen
-                                })
+                                    rectanglesModel.append({
+                                        startX: drawLayer.startX,
+                                        startY: drawLayer.startY,
+                                        endX:   drawLayer.currentX,
+                                        endY:   drawLayer.currentY,
+                                        rotationAngle: 0,
+                                        color:  drawLayer.defaultRectColor,
+                                        rectTranspWithLine: drawLayer.defaultRectTranspWithLine   // NEU
+                                    })
                             }
                         }
                     }
@@ -1059,13 +1199,15 @@ Window {
                     function saveArrowsToString() {
                         const arrows = [];
                         for (let i = 0; i < arrowModel.count; ++i) {
-                            const a = arrowModel.get(i);
-                            const x = parseFloat(a.x).toFixed(2);
-                            const y = parseFloat(a.y).toFixed(2);
-                            const rot = parseInt(a.rotationAngle || 0);
-                            const col = a.color || "red";
-                            const scale = parseFloat(a.scaleFactor || 1.0).toFixed(2);
-                            arrows.push(`${x},${y},${rot},${col},${scale}`);
+                            const r = rectanglesModel.get(i);
+                            const x = parseInt(Math.min(r.startX, r.endX));
+                            const y = parseInt(Math.min(r.startY, r.endY));
+                            const width  = parseInt(Math.abs(r.endX - r.startX));
+                            const height = parseInt(Math.abs(r.endY - r.startY));
+                            const angle  = parseInt(r.rotationAngle || 0);
+                            const color  = r.color || "red";
+                            const rtl    = r.rectTranspWithLine ? 1 : 0;              // NEU
+                            rects.push(`${x},${y},${width},${height},${angle},${color},${rtl}`);  // NEU: + ,rtl
                         }
                         return arrows.join("|");
                     }
