@@ -19,6 +19,71 @@ Window {
     property int maxDialogWidth: Screen.width * 0.9
     property int maxDialogHeight: Screen.height * 0.9
 
+
+    // --- Auswahl-Index & Helfer ---
+    Item {
+        id: kbHelpers
+        property int selectedRectIndex: -1      // aktuell gewähltes Rechteck
+
+        function applyToSelected(fn) {
+            const i = selectedRectIndex;
+            if (i < 0 || i >= rectanglesModel.count) return;
+            const r = rectanglesModel.get(i);
+            fn(r, i);
+        }
+
+        function nudge(dx, dy, step) {   // bewegen
+            const s = step || 1;
+            applyToSelected((r,i) => {
+                rectanglesModel.setProperty(i, "startX", r.startX + dx*s);
+                rectanglesModel.setProperty(i, "endX",   r.endX   + dx*s);
+                rectanglesModel.setProperty(i, "startY", r.startY + dy*s);
+                rectanglesModel.setProperty(i, "endY",   r.endY   + dy*s);
+            });
+        }
+        function resizeBy(dw, dh, step) { // Größe (unten-rechts) ändern
+            const s = step || 1;
+            applyToSelected((r,i) => {
+                rectanglesModel.setProperty(i, "endX", r.endX + dw*s);
+                rectanglesModel.setProperty(i, "endY", r.endY + dh*s);
+            });
+        }
+        function rotateBy(deg) {
+            applyToSelected((r,i) => {
+                rectanglesModel.setProperty(i, "rotationAngle", (Number(r.rotationAngle)||0) + deg);
+            });
+        }
+        function setRotation(deg) {
+            applyToSelected((r,i) => {
+                rectanglesModel.setProperty(i, "rotationAngle", deg);
+            });
+        }
+        function snapSelected() {
+            applyToSelected((r,i) => {
+                const a = Number(r.rotationAngle) || 0;
+                rectanglesModel.setProperty(i, "rotationAngle", drawLayer.snappedRightAngle(a));
+            });
+        }
+    }
+
+    // --- Shortcuts: Pfeile bewegen; Shift+Pfeil = Resize; Ctrl = 10px; Alt+Links/Rechts = drehen ---
+    Shortcut { enabled: imageWindow.visible; context: Qt.WindowShortcut; autoRepeat: true; sequence: Qt.Key_Left;     onActivated: kbHelpers.nudge(-1, 0, 1) }
+    Shortcut { enabled: imageWindow.visible; context: Qt.WindowShortcut; autoRepeat: true; sequence: Qt.Key_Right;    onActivated: kbHelpers.nudge( 1, 0, 1) }
+    Shortcut { enabled: imageWindow.visible; context: Qt.WindowShortcut; autoRepeat: true; sequence: Qt.Key_Up;       onActivated: kbHelpers.nudge( 0,-1, 1) }
+    Shortcut { enabled: imageWindow.visible; context: Qt.WindowShortcut; autoRepeat: true; sequence: Qt.Key_Down;     onActivated: kbHelpers.nudge( 0, 1, 1) }
+
+    Shortcut { enabled: imageWindow.visible; context: Qt.WindowShortcut; autoRepeat: true; sequence: "Ctrl+Left";     onActivated: kbHelpers.nudge(-10, 0, 1) }
+    Shortcut { enabled: imageWindow.visible; context: Qt.WindowShortcut; autoRepeat: true; sequence: "Ctrl+Right";    onActivated: kbHelpers.nudge( 10, 0, 1) }
+    Shortcut { enabled: imageWindow.visible; context: Qt.WindowShortcut; autoRepeat: true; sequence: "Ctrl+Up";       onActivated: kbHelpers.nudge( 0,-10, 1) }
+    Shortcut { enabled: imageWindow.visible; context: Qt.WindowShortcut; autoRepeat: true; sequence: "Ctrl+Down";     onActivated: kbHelpers.nudge( 0, 10, 1) }
+
+    Shortcut { enabled: imageWindow.visible; context: Qt.WindowShortcut; autoRepeat: true; sequence: "Shift+Left";    onActivated: kbHelpers.resizeBy(-1, 0, 1) }
+    Shortcut { enabled: imageWindow.visible; context: Qt.WindowShortcut; autoRepeat: true; sequence: "Shift+Right";   onActivated: kbHelpers.resizeBy( 1, 0, 1) }
+    Shortcut { enabled: imageWindow.visible; context: Qt.WindowShortcut; autoRepeat: true; sequence: "Shift+Up";      onActivated: kbHelpers.resizeBy( 0,-1, 1) }
+    Shortcut { enabled: imageWindow.visible; context: Qt.WindowShortcut; autoRepeat: true; sequence: "Shift+Down";    onActivated: kbHelpers.resizeBy( 0, 1, 1) }
+
+    Shortcut { enabled: imageWindow.visible; context: Qt.WindowShortcut; sequence: "Esc"; onActivated: kbHelpers.selectedRectIndex = -1 }
+
     function openWithImage(path, screenW, screenH, excludeRect, arrowDesc) {
         rectanglesModel.clear();
         arrowModel.clear();
@@ -177,6 +242,8 @@ Window {
                 onExited:   cursorShape = Qt.ArrowCursor
 
                 onPressed: (mouse) => {
+                    kbHelpers.selectedRectIndex = modelIndex;
+                    drawLayer.selectRect(modelIndex);        // << hinzufügen
                     const g = parent.mapToItem(drawLayer, Qt.point(mouse.x, mouse.y))
                     startMouseGX = g.x
                     startMouseGY = g.y
@@ -227,6 +294,9 @@ Window {
                     rectanglesModel.setProperty(modelIndex, "startY", newStartY)
                     rectanglesModel.setProperty(modelIndex, "endX",   newEndX)
                     rectanglesModel.setProperty(modelIndex, "endY",   newEndY)
+                }
+                onReleased: {
+                    keyScope.forceActiveFocus();                 // <— nur wenn du die Fokus-Variante nutzt
                 }
             }
 
@@ -316,6 +386,83 @@ Window {
                     ListModel { id: arrowModel }
 
                     // ---- Helper ----
+                    // --- Auswahlstatus ---
+                    property int  selectedRectIndex:  -1
+                    property int  selectedArrowIndex: -1
+
+                    function selectRect(i)  { selectedRectIndex  = i; selectedArrowIndex = -1; }
+                    function selectArrow(i) { selectedArrowIndex = i; selectedRectIndex  = -1; }
+
+                    function cycleRect(dir) {
+                        if (rectanglesModel.count <= 0) return;
+                        if (selectedRectIndex < 0) selectedRectIndex = 0;
+                        else selectedRectIndex = (selectedRectIndex + dir + rectanglesModel.count) % rectanglesModel.count;
+                    }
+                    function cycleArrow(dir) {
+                        if (arrowModel.count <= 0) return;
+                        if (selectedArrowIndex < 0) selectedArrowIndex = 0;
+                        else selectedArrowIndex = (selectedArrowIndex + dir + arrowModel.count) % arrowModel.count;
+                    }
+
+                    function keyMoveStep(mods) {
+                        if (mods & Qt.AltModifier)   return 0.5;
+                        if (mods & Qt.ControlModifier) return 10;
+                        if (mods & Qt.ShiftModifier) return 5;
+                        return 1;
+                    }
+
+                    // --- Geometrie-Helfer (Rect in Bildkoordinaten) ---
+                    function moveSelectedRect(dx, dy) {
+                        const i = selectedRectIndex; if (i < 0) return;
+                        const r = rectanglesModel.get(i);
+                        rectanglesModel.setProperty(i, "startX", r.startX + dx);
+                        rectanglesModel.setProperty(i, "startY", r.startY + dy);
+                        rectanglesModel.setProperty(i, "endX",   r.endX   + dx);
+                        rectanglesModel.setProperty(i, "endY",   r.endY   + dy);
+                    }
+                    function moveSelectedArrow(dx, dy) {
+                        const i = selectedArrowIndex; if (i < 0) return;
+                        const a = arrowModel.get(i);
+                        arrowModel.setProperty(i, "x", a.x + dx);
+                        arrowModel.setProperty(i, "y", a.y + dy);
+                    }
+
+                    // einseitig resizen (ändert „End“-Seite, bleibt simpel & stabil)
+                    function resizeSelectedRect(dir, amount) {
+                        const i = selectedRectIndex; if (i < 0) return;
+                        const r = rectanglesModel.get(i);
+                        let sx = r.startX, sy = r.startY, ex = r.endX, ey = r.endY;
+
+                        if (dir === "left") {
+                            // welche Seite ist „links“ in Model-Koords?
+                            if (sx <= ex) sx += amount; else ex += amount;
+                        } else if (dir === "right") {
+                            if (sx <= ex) ex += amount; else sx += amount;
+                        } else if (dir === "up") {
+                            if (sy <= ey) sy += amount; else ey += amount;
+                        } else if (dir === "down") {
+                            if (sy <= ey) ey += amount; else sy += amount;
+                        }
+                        rectanglesModel.setProperty(i, "startX", sx);
+                        rectanglesModel.setProperty(i, "startY", sy);
+                        rectanglesModel.setProperty(i, "endX",   ex);
+                        rectanglesModel.setProperty(i, "endY",   ey);
+                    }
+
+                    function rotateSelectedRect(deltaDeg, snap=false, reset=false) {
+                        const i = selectedRectIndex; if (i < 0) return;
+                        const r = rectanglesModel.get(i);
+                        let ang = reset ? 0 : (Number(r.rotationAngle)||0) + (deltaDeg||0);
+                        if (snap) ang = drawLayer.snappedRightAngle(ang);
+                        rectanglesModel.setProperty(i, "rotationAngle", ang);
+                    }
+                    function rotateSelectedArrow(deltaDeg, snap=false, reset=false) {
+                        const i = selectedArrowIndex; if (i < 0) return;
+                        const a = arrowModel.get(i);
+                        let ang = reset ? 0 : (Number(a.rotationAngle)||0) + (deltaDeg||0);
+                        if (snap) ang = drawLayer.snappedRightAngle(ang);
+                        arrowModel.setProperty(i, "rotationAngle", ang);
+                    }
                     function imageOffsetX() { return (imagePreview.width - imagePreview.paintedWidth) / 2 }
                     function imageOffsetY() { return (imagePreview.height - imagePreview.paintedHeight) / 2 }
 
@@ -425,10 +572,9 @@ Window {
                                 property bool dragging: false
                                 property int modelIndex: index
                                 property var handles: []
-                                property real rotationAngle: model.rotationAngle !== undefined ? model.rotationAngle : 0
 
                                 readonly property int strokeW: 2
-                                readonly property bool axisAligned: drawLayer.isAxisAligned(rotationAngle)
+                                readonly property bool axisAligned: drawLayer.isAxisAligned(model.rotationAngle || 0)
 
                                 // 🔹 Gestrichelter Rahmen als Overlay (nur wenn Flag gesetzt)
                                 // --- Einzige Shape: gestrichelter Rahmen + mittige Linie ---
@@ -486,6 +632,15 @@ Window {
                                         PathLine { x: rectOverlay.width - rectOverlay.inset; y: rectOverlay.cy }
                                     }
                                 }                                // ✨ Transform-Liste dynamisch setzen
+                                // Auswahl-Outline (unabhängig vom Strichmodus)
+                                Rectangle {
+                                    anchors.fill: parent
+                                    color: "transparent"
+                                    border.color: "#66A8D1FF"   // cyan-ish
+                                    border.width: 2
+                                    visible: drawLayer.selectedRectIndex === rectItem.modelIndex
+                                    z: 5000
+                                }
                                 Component.onCompleted: updateTransform()
                                 onAxisAlignedChanged: updateTransform()
 
@@ -493,7 +648,7 @@ Window {
                                     id: rectRot
                                     origin.x: rectItem.width / 2
                                     origin.y: rectItem.height / 2
-                                    angle: rectItem.rotationAngle
+                                    angle: model.rotationAngle || 0
                                 }
 
                                 // ✨ Anti-Aliasing für die Kante aus, wenn achs-aligned
@@ -529,7 +684,7 @@ Window {
                                 }
                                 Text {
                                     anchors.centerIn: parent
-                                    text: Math.round(rectItem.rotationAngle) + "°"
+                                    text: Math.round(model.rotationAngle || 0) + "°"
                                     font.pixelSize: 14
                                     color: "white"
                                     z: 4000
@@ -612,7 +767,9 @@ Window {
                                         property real origEndY: 0
 
                                         onPressed: (mouse) => {
+                                            drawLayer.selectRect(rectItem.modelIndex);
                                             if (mouse.button === Qt.LeftButton) {
+                                                kbHelpers.selectedRectIndex = rectItem.modelIndex;  // <— NEU
                                                 // Drag vorbereiten
                                                 const g = moveMA.mapToItem(drawLayer, Qt.point(mouse.x, mouse.y))
                                                 startGX = g.x
@@ -650,6 +807,7 @@ Window {
                                         onReleased: {
                                             rectItem.dragging = false
                                             cursorShape = Qt.OpenHandCursor
+                                            keyScope.forceActiveFocus();
                                         }
 
                                         onClicked: (mouse) => {
@@ -751,6 +909,8 @@ Window {
                                     onExited:  outerMouseArea.cursorShape = Qt.ArrowCursor
 
                                     onPressed: (mouse) => {
+                                        kbHelpers.selectedRectIndex = rectItem.modelIndex;
+                                        drawLayer.selectRect(rectItem.modelIndex);
                                         if (handleUnderMouse(mouse.x, mouse.y)) {
                                             mouse.accepted = false; // Handle bekommt Event
                                             return;
@@ -763,7 +923,7 @@ Window {
                                             const cm = outerMouseArea.mapToItem(globalCircleCanvas, Qt.point(mouse.x, mouse.y));
                                             const dx = cm.x - centerGlobalX, dy = cm.y - centerGlobalY;
                                             dragStartAngle = Math.atan2(dy, dx);
-                                            dragInitialRotation = rectItem.rotationAngle;
+                                            dragInitialRotation = (model.rotationAngle || 0);
 
                                             const outerRadius = Math.sqrt((rectItem.width / 2) ** 2 + (rectItem.height / 2) ** 2);
                                             drawLayer.circleOuterRadius = outerRadius;
@@ -794,19 +954,19 @@ Window {
                                             const angle = Math.atan2(dy, dx);
                                             const delta = angle - dragStartAngle;
                                             if (Math.abs(delta) > 0.003) {
-                                                rectItem.rotationAngle = dragInitialRotation + delta * 180 / Math.PI;
-                                                rectanglesModel.setProperty(rectItem.modelIndex, "rotationAngle", rectItem.rotationAngle);
+                                                const newDeg = dragInitialRotation + delta * 180 / Math.PI;
+                                                rectanglesModel.setProperty(rectItem.modelIndex, "rotationAngle", newDeg);
                                             }
                                         }
                                     }
                                     onReleased: {
                                         drawLayer.showGlobalCircles = false;
                                         // SNAP HINZUFÜGEN:
-                                        const snapped = drawLayer.snappedRightAngle(rectItem.rotationAngle);
-                                        rectItem.rotationAngle = snapped;
+                                        const snapped = drawLayer.snappedRightAngle(model.rotationAngle || 0);
                                         rectanglesModel.setProperty(rectItem.modelIndex, "rotationAngle", snapped);
 
                                         globalCircleCanvas.requestPaint();
+                                        keyScope.forceActiveFocus();
                                     }
                                 }
                             }
@@ -835,7 +995,6 @@ Window {
                                 z: 2100
 
                                 property int modelIndex: index
-                                property real rotationAngle: model.rotationAngle || 0
                                 property real centerX: width / 2
                                 property real centerY: height / 2
 
@@ -851,7 +1010,7 @@ Window {
                                     Rotation {
                                         origin.x: centerX
                                         origin.y: centerY
-                                        angle: arrowItem.axisAligned ? 0 : rotationAngle
+                                        angle: model.rotationAngle || 0
                                     }
                                 ]
                                 Image {
@@ -870,6 +1029,7 @@ Window {
                                     propagateComposedEvents: true
 
                                     onPressed: (mouse) => {
+                                        drawLayer.selectArrow(arrowItem.modelIndex);
                                         if (mouse.button === Qt.RightButton) mouse.accepted = true
                                     }
 
@@ -907,7 +1067,14 @@ Window {
                                         MenuItem { text: "Löschen"; onTriggered: arrowModel.remove(arrowItem.modelIndex) }
                                     }
                                 }
-
+                                Rectangle {
+                                    anchors.fill: parent
+                                    color: "transparent"
+                                    border.color: "#66A8D1FF"
+                                    border.width: 2
+                                    visible: drawLayer.selectedArrowIndex === arrowItem.modelIndex
+                                    z: 9999
+                                }
                                 Rectangle {
                                     id: tipTarget
                                     width: 24; height: 24
@@ -922,7 +1089,7 @@ Window {
 
                                         onPressed: (mouse) => {
                                             const globalCenter = arrowItem.mapToItem(globalCircleCanvas, Qt.point(arrowItem.width / 2, arrowItem.height / 2))
-                                            rotationHelper.startRotation(this, mouse, globalCenter, rotationAngle)
+                                            rotationHelper.startRotation(this, mouse, globalCenter, model.rotationAngle || 0)
                                             drawLayer.showGlobalCircles = true
                                             drawLayer.circleCenterX = globalCenter.x
                                             drawLayer.circleCenterY = globalCenter.y
@@ -936,7 +1103,6 @@ Window {
                                         onPositionChanged: (mouse) => {
                                             if (!rotationHelper.active) return
                                             const newAngle = rotationHelper.updateAngle(this, mouse)
-                                            rotationAngle = newAngle
                                             arrowModel.setProperty(modelIndex, "rotationAngle", newAngle)
                                         }
                                         onReleased: {
@@ -946,8 +1112,7 @@ Window {
                                             drawLayer.rotatingIndex = -1
 
                                             // SNAP HINZUFÜGEN:
-                                            const snapped = drawLayer.snappedRightAngle(arrowItem.rotationAngle);
-                                            arrowItem.rotationAngle = snapped;
+                                            const snapped = drawLayer.snappedRightAngle(model.rotationAngle || 0);
                                             arrowModel.setProperty(arrowItem.modelIndex, "rotationAngle", snapped);
 
                                             globalCircleCanvas.requestPaint()
@@ -956,7 +1121,7 @@ Window {
                                 }
                                 Text {
                                     anchors.centerIn: parent
-                                    text: Math.round(rotationAngle) + "°"
+                                    text: Math.round(model.rotationAngle || 0) + "°"
                                     font.pixelSize: 14
                                     color: "white"
                                     visible: drawLayer.showGlobalCircles
@@ -1031,15 +1196,19 @@ Window {
 
                             if (Math.abs(drawLayer.currentX - drawLayer.startX) >= 1 &&
                                 Math.abs(drawLayer.currentY - drawLayer.startY) >= 1) {
-                                    rectanglesModel.append({
-                                        startX: drawLayer.startX,
-                                        startY: drawLayer.startY,
-                                        endX:   drawLayer.currentX,
-                                        endY:   drawLayer.currentY,
-                                        rotationAngle: 0,
-                                        color:  drawLayer.defaultRectColor,
-                                        rectTranspWithLine: drawLayer.defaultRectTranspWithLine   // NEU
-                                    })
+                                rectanglesModel.append({
+                                    startX: drawLayer.startX,
+                                    startY: drawLayer.startY,
+                                    endX:   drawLayer.currentX,
+                                    endY:   drawLayer.currentY,
+                                    rotationAngle: 0,
+                                    color:  drawLayer.defaultRectColor,
+                                    rectTranspWithLine: drawLayer.defaultRectTranspWithLine   // NEU
+                                })
+                                const idx = rectanglesModel.count - 1;
+                                drawLayer.selectRect(idx);                  // << auswählen für Keys-Handler
+                                kbHelpers.selectedRectIndex = idx;          // << (falls du kbHelpers noch nutzt)
+                                keyScope.forceActiveFocus();                // << Fokus zurück an die Tastatur
                             }
                         }
                     }
@@ -1089,6 +1258,131 @@ Window {
                             onColorChanged: source = "qrc:/icons/arrow-right-" + color + ".png"
                             Component.onCompleted: source = "qrc:/icons/arrow-right-" + color + ".png"
                         }
+                    }
+                }
+            }
+            FocusScope {
+                id: keyScope
+                anchors.fill: parent
+                focus: true
+                Keys.priority: Keys.BeforeItem
+
+                Component.onCompleted: forceActiveFocus()
+                onActiveFocusChanged: if (activeFocus && imageWindow.visible) forceActiveFocus()
+                Connections {
+                    target: imageWindow
+                    function onVisibleChanged(visible) {  // Qt 6: bool-Argument vorhanden
+                        if (visible) keyScope.forceActiveFocus();
+                    }
+                }
+
+                Keys.onPressed: (event) => {
+                    // --- ALT + Arrow = Rotation (Shift = 15°), Alt+Up snap, Alt+Down reset ---
+                    if ((event.modifiers & Qt.AltModifier) &&
+                        (event.key === Qt.Key_Left || event.key === Qt.Key_Right ||
+                         event.key === Qt.Key_Up   || event.key === Qt.Key_Down)) {
+
+                        console.log("Rotate key hit", event.key, "mods", event.modifiers);
+                        const step = (event.modifiers & Qt.ShiftModifier) ? 15 : 1;
+
+                        if (event.key === Qt.Key_Left || event.key === Qt.Key_Right) {
+                            const d = (event.key === Qt.Key_Left) ? -step : +step;
+                            if (drawLayer.selectedRectIndex >= 0)
+                                drawLayer.rotateSelectedRect(d, false, false);
+                            else if (drawLayer.selectedArrowIndex >= 0)
+                                drawLayer.rotateSelectedArrow(d, false, false);
+                            event.accepted = true;
+                            return;
+                        }
+                        if (event.key === Qt.Key_Up) {
+                            if (drawLayer.selectedRectIndex >= 0)      drawLayer.rotateSelectedRect(0, true,  false);
+                            else if (drawLayer.selectedArrowIndex >= 0) drawLayer.rotateSelectedArrow(0, true,  false);
+                            event.accepted = true; return;
+                        }
+                        if (event.key === Qt.Key_Down) {
+                            if (drawLayer.selectedRectIndex >= 0)      drawLayer.rotateSelectedRect(0, false, true);
+                            else if (drawLayer.selectedArrowIndex >= 0) drawLayer.rotateSelectedArrow(0, false, true);
+                            event.accepted = true; return;
+                        }
+                    }
+                    // Q/E = ±1°, Shift = ±15°  (ohne Alt, damit kein OS "Alt+Pfeil"-Konflikt greift)
+                    if (event.key === Qt.Key_Q || event.key === Qt.Key_E) {
+                        console.log("Rotate (test) key hit", event.key, "mods", event.modifiers);
+                        const step = (event.modifiers & Qt.ShiftModifier) ? 15 : 1;
+                        const d = (event.key === Qt.Key_Q) ? -step : +step;
+
+                        // falls noch nichts ausgewählt ist: letztes Rechteck oder Pfeil nehmen
+                        if (drawLayer.selectedRectIndex < 0 && drawLayer.selectedArrowIndex < 0) {
+                            if (rectanglesModel.count > 0)      drawLayer.selectRect(rectanglesModel.count - 1);
+                            else if (arrowModel.count > 0)      drawLayer.selectArrow(arrowModel.count - 1);
+                        }
+
+                        if (drawLayer.selectedRectIndex >= 0)      drawLayer.rotateSelectedRect(d, false, false);
+                        else if (drawLayer.selectedArrowIndex >= 0) drawLayer.rotateSelectedArrow(d, false, false);
+
+                        event.accepted = true;
+                        return;
+                    }
+                    if (event.key === Qt.Key_Tab) {
+                        if (event.modifiers & Qt.ControlModifier) {
+                            drawLayer.cycleArrow(event.modifiers & Qt.ShiftModifier ? -1 : +1);
+                        } else {
+                            drawLayer.cycleRect(event.modifiers & Qt.ShiftModifier ? -1 : +1);
+                        }
+                        event.accepted = true; return;
+                    }
+
+                    // Delete: löschen
+                    if (event.key === Qt.Key_Delete || event.key === Qt.Key_Backspace) {
+                        if (drawLayer.selectedRectIndex >= 0) {
+                            rectanglesModel.remove(drawLayer.selectedRectIndex);
+                            drawLayer.selectedRectIndex = Math.min(drawLayer.selectedRectIndex, rectanglesModel.count-1);
+                        } else if (drawLayer.selectedArrowIndex >= 0) {
+                            arrowModel.remove(drawLayer.selectedArrowIndex);
+                            drawLayer.selectedArrowIndex = Math.min(drawLayer.selectedArrowIndex, arrowModel.count-1);
+                        }
+                        event.accepted = true; return;
+                    }
+
+                    // Space: Strichmodus toggeln (nur Rect)
+                    if (event.key === Qt.Key_Space && drawLayer.selectedRectIndex >= 0) {
+                        const i = drawLayer.selectedRectIndex;
+                        const r = rectanglesModel.get(i);
+                        rectanglesModel.setProperty(i, "rectTranspWithLine", !r.rectTranspWithLine);
+                        event.accepted = true; return;
+                    }
+
+                    // Pfeile: Move / Resize / Rotate
+                    const isArrowKey = (event.key === Qt.Key_Left || event.key === Qt.Key_Right ||
+                                        event.key === Qt.Key_Up   || event.key === Qt.Key_Down);
+                    if (isArrowKey) {
+                        // RESIZE (nur Rect): Shift + Arrow
+                        if ((event.modifiers & Qt.ShiftModifier) && drawLayer.selectedRectIndex >= 0) {
+                            const step = drawLayer.keyMoveStep(event.modifiers & ~Qt.ShiftModifier);
+                            if (event.key === Qt.Key_Left)  drawLayer.resizeSelectedRect("left",  -step);
+                            if (event.key === Qt.Key_Right) drawLayer.resizeSelectedRect("right", +step);
+                            if (event.key === Qt.Key_Up)    drawLayer.resizeSelectedRect("up",    -step);
+                            if (event.key === Qt.Key_Down)  drawLayer.resizeSelectedRect("down",  +step);
+                            event.accepted = true; return;
+                        }
+
+                        // MOVE: ohne Shift/Ctrl → bewegen (Rect oder Arrow)
+                        const step = drawLayer.keyMoveStep(event.modifiers);
+                        let dx = 0, dy = 0;
+                        if (event.key === Qt.Key_Left)  dx = -step;
+                        if (event.key === Qt.Key_Right) dx = +step;
+                        if (event.key === Qt.Key_Up)    dy = -step;
+                        if (event.key === Qt.Key_Down)  dy = +step;
+
+                        if (drawLayer.selectedRectIndex >= 0)      drawLayer.moveSelectedRect(dx, dy);
+                        else if (drawLayer.selectedArrowIndex >= 0) drawLayer.moveSelectedArrow(dx, dy);
+                        event.accepted = true; return;
+                    }
+
+                    // R: schnell Snapping zur nächsten 0/90/180/270 (nur Rect)
+                    if (event.key === Qt.Key_R && drawLayer.selectedRectIndex >= 0) {
+                        drawLayer.rotateSelectedRect(0, true, false);
+                        event.accepted = true; return;
                     }
                 }
             }
