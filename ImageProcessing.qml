@@ -1187,27 +1187,44 @@ Window {
                         const rects = [];
                         for (let i = 0; i < rectanglesModel.count; ++i) {
                             const r = rectanglesModel.get(i);
-                            const x = parseInt(Math.min(r.startX, r.endX));
-                            const y = parseInt(Math.min(r.startY, r.endY));
-                            const width = parseInt(Math.abs(r.endX - r.startX));
-                            const height = parseInt(Math.abs(r.endY - r.startY));
-                            const angle = parseInt(r.rotationAngle || 0);
-                            rects.push(`${x},${y},${width},${height},${angle}`);
+
+                            const sx = Number(r.startX) || 0;
+                            const sy = Number(r.startY) || 0;
+                            const ex = Number(r.endX)   || sx;
+                            const ey = Number(r.endY)   || sy;
+
+                            const x = Math.round(Math.min(sx, ex));
+                            const y = Math.round(Math.min(sy, ey));
+                            const width  = Math.max(0, Math.round(Math.abs(ex - sx)));
+                            const height = Math.max(0, Math.round(Math.abs(ey - sy)));
+
+                            // Winkel sicherheitshalber erneut snappen
+                            const angle = Math.round(drawLayer.snappedRightAngle(Number(r.rotationAngle) || 0));
+
+                            const color = r.color ? String(r.color) : "red";
+                            const rtl   = r.rectTranspWithLine ? 1 : 0;   // 1 = an, 0 = aus
+
+                            // Format: x,y,w,h,angle,color,rectTranspWithLine
+                            rects.push(`${x},${y},${width},${height},${angle},${color},${rtl}`);
                         }
                         return rects.join("|");
                     }
+
                     function saveArrowsToString() {
                         const arrows = [];
                         for (let i = 0; i < arrowModel.count; ++i) {
-                            const r = rectanglesModel.get(i);
-                            const x = parseInt(Math.min(r.startX, r.endX));
-                            const y = parseInt(Math.min(r.startY, r.endY));
-                            const width  = parseInt(Math.abs(r.endX - r.startX));
-                            const height = parseInt(Math.abs(r.endY - r.startY));
-                            const angle  = parseInt(r.rotationAngle || 0);
-                            const color  = r.color || "red";
-                            const rtl    = r.rectTranspWithLine ? 1 : 0;              // NEU
-                            rects.push(`${x},${y},${width},${height},${angle},${color},${rtl}`);  // NEU: + ,rtl
+                            const a = arrowModel.get(i);
+                            const x = Number(a.x) || 0;
+                            const y = Number(a.y) || 0;
+
+                            // Winkel auch hier snappen
+                            const rot = Math.round(drawLayer.snappedRightAngle(Number(a.rotationAngle) || 0));
+
+                            const col   = a.color || "red";
+                            const scale = (Number(a.scaleFactor) || 1).toFixed(2);
+
+                            // Format: x,y,rot,color,scale
+                            arrows.push(`${x.toFixed(2)},${y.toFixed(2)},${rot},${col},${scale}`);
                         }
                         return arrows.join("|");
                     }
