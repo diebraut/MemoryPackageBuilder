@@ -67,22 +67,12 @@ Window {
     }
 
     // --- Shortcuts: Pfeile bewegen; Shift+Pfeil = Resize; Ctrl = 10px; Alt+Links/Rechts = drehen ---
-    Shortcut { enabled: imageWindow.visible; context: Qt.WindowShortcut; autoRepeat: true; sequence: Qt.Key_Left;     onActivated: kbHelpers.nudge(-1, 0, 1) }
-    Shortcut { enabled: imageWindow.visible; context: Qt.WindowShortcut; autoRepeat: true; sequence: Qt.Key_Right;    onActivated: kbHelpers.nudge( 1, 0, 1) }
-    Shortcut { enabled: imageWindow.visible; context: Qt.WindowShortcut; autoRepeat: true; sequence: Qt.Key_Up;       onActivated: kbHelpers.nudge( 0,-1, 1) }
-    Shortcut { enabled: imageWindow.visible; context: Qt.WindowShortcut; autoRepeat: true; sequence: Qt.Key_Down;     onActivated: kbHelpers.nudge( 0, 1, 1) }
-
-    Shortcut { enabled: imageWindow.visible; context: Qt.WindowShortcut; autoRepeat: true; sequence: "Ctrl+Left";     onActivated: kbHelpers.nudge(-10, 0, 1) }
-    Shortcut { enabled: imageWindow.visible; context: Qt.WindowShortcut; autoRepeat: true; sequence: "Ctrl+Right";    onActivated: kbHelpers.nudge( 10, 0, 1) }
-    Shortcut { enabled: imageWindow.visible; context: Qt.WindowShortcut; autoRepeat: true; sequence: "Ctrl+Up";       onActivated: kbHelpers.nudge( 0,-10, 1) }
-    Shortcut { enabled: imageWindow.visible; context: Qt.WindowShortcut; autoRepeat: true; sequence: "Ctrl+Down";     onActivated: kbHelpers.nudge( 0, 10, 1) }
-
     Shortcut { enabled: imageWindow.visible; context: Qt.WindowShortcut; autoRepeat: true; sequence: "Shift+Left";    onActivated: kbHelpers.resizeBy(-1, 0, 1) }
     Shortcut { enabled: imageWindow.visible; context: Qt.WindowShortcut; autoRepeat: true; sequence: "Shift+Right";   onActivated: kbHelpers.resizeBy( 1, 0, 1) }
     Shortcut { enabled: imageWindow.visible; context: Qt.WindowShortcut; autoRepeat: true; sequence: "Shift+Up";      onActivated: kbHelpers.resizeBy( 0,-1, 1) }
     Shortcut { enabled: imageWindow.visible; context: Qt.WindowShortcut; autoRepeat: true; sequence: "Shift+Down";    onActivated: kbHelpers.resizeBy( 0, 1, 1) }
 
-    Shortcut { enabled: imageWindow.visible; context: Qt.WindowShortcut; sequence: "Esc"; onActivated: kbHelpers.selectedRectIndex = -1 }
+    Shortcut { enabled: imageWindow.visible; context: Qt.WindowShortcut; sequence: "Esc"; onActivated: drawLayer.selectNone() }
 
     function openWithImage(path, screenW, screenH, excludeRect, arrowDesc) {
         rectanglesModel.clear();
@@ -390,8 +380,47 @@ Window {
                     property int  selectedRectIndex:  -1
                     property int  selectedArrowIndex: -1
 
-                    function selectRect(i)  { selectedRectIndex  = i; selectedArrowIndex = -1; }
-                    function selectArrow(i) { selectedArrowIndex = i; selectedRectIndex  = -1; }
+                    function cycleAll(dir) {
+                        const rc = rectanglesModel.count;
+                        const ac = arrowModel.count;
+                        const total = rc + ac;
+                        if (total === 0) { selectNone(); return; }
+
+                        // aktuellen Flat-Index ermitteln
+                        let idx;
+                        if (selectedRectIndex >= 0)       idx = selectedRectIndex;
+                        else if (selectedArrowIndex >= 0) idx = rc + selectedArrowIndex;
+                        else                              idx = (dir > 0 ? -1 : 0); // Start
+
+                        // nächsten Index wählen
+                        idx = (idx + dir + total) % total;
+
+                        // anwenden
+                        if (idx < rc) selectRect(idx);
+                        else          selectArrow(idx - rc);
+                    }
+
+                    function selectRect(i)  {
+                        selectedRectIndex  = i;
+                        selectedArrowIndex = -1;
+                        kbHelpers.selectedRectIndex = i;     // Sync für alte Shortcuts/Handles
+                    }
+                    function selectArrow(i) {
+                        selectedArrowIndex = i;
+                        selectedRectIndex  = -1;
+                        kbHelpers.selectedRectIndex = -1;    // sicher: kein Rect mehr selektiert
+                    }
+
+                    // Neu: komplett abwählen
+                    function selectNone() {
+                        selectedRectIndex  = -1;
+                        selectedArrowIndex = -1;
+                        kbHelpers.selectedRectIndex = -1;
+                        showGlobalCircles = false;
+                        rotatingKind = "";
+                        rotatingIndex = -1;
+                        globalCircleCanvas.requestPaint();
+                    }
 
                     function cycleRect(dir) {
                         if (rectanglesModel.count <= 0) return;
@@ -1164,7 +1193,10 @@ Window {
                         acceptedButtons: Qt.LeftButton
 
                         onPressed: (mouse) => {
-                            if (!drawLayer.isPointInImage(mouse.x, mouse.y)) return;
+                            if (!drawLayer.isPointInImage(mouse.x, mouse.y)) {
+                                drawLayer.selectNone();   // außerhalb: immer abwählen
+                                return;
+                            }
 
                             var imgX = (mouse.x - drawLayer.offsetX) / drawLayer.scaleX
                             var imgY = (mouse.y - drawLayer.offsetY) / drawLayer.scaleY
@@ -1194,22 +1226,29 @@ Window {
                             drawLayer.currentX = (mouse.x - drawLayer.offsetX) / drawLayer.scaleX
                             drawLayer.currentY = (mouse.y - drawLayer.offsetY) / drawLayer.scaleY
 
-                            if (Math.abs(drawLayer.currentX - drawLayer.startX) >= 1 &&
-                                Math.abs(drawLayer.currentY - drawLayer.startY) >= 1) {
-                                rectanglesModel.append({
-                                    startX: drawLayer.startX,
-                                    startY: drawLayer.startY,
-                                    endX:   drawLayer.currentX,
-                                    endY:   drawLayer.currentY,
-                                    rotationAngle: 0,
-                                    color:  drawLayer.defaultRectColor,
-                                    rectTranspWithLine: drawLayer.defaultRectTranspWithLine   // NEU
-                                })
-                                const idx = rectanglesModel.count - 1;
-                                drawLayer.selectRect(idx);                  // << auswählen für Keys-Handler
-                                kbHelpers.selectedRectIndex = idx;          // << (falls du kbHelpers noch nutzt)
-                                keyScope.forceActiveFocus();                // << Fokus zurück an die Tastatur
+                            const w = Math.abs(drawLayer.currentX - drawLayer.startX)
+                            const h = Math.abs(drawLayer.currentY - drawLayer.startY)
+
+                            // Nur Klick (ohne Drag): Selektion entfernen, kein neues Objekt
+                            if (w < 1 && h < 1) {
+                                drawLayer.selectNone()
+                                return
                             }
+
+                            // Ansonsten: Rechteck anlegen
+                            rectanglesModel.append({
+                                startX: drawLayer.startX,
+                                startY: drawLayer.startY,
+                                endX:   drawLayer.currentX,
+                                endY:   drawLayer.currentY,
+                                rotationAngle: 0,
+                                color:  drawLayer.defaultRectColor,
+                                rectTranspWithLine: drawLayer.defaultRectTranspWithLine
+                            })
+                            const idx = rectanglesModel.count - 1;
+                            drawLayer.selectRect(idx);
+                            kbHelpers.selectedRectIndex = idx;
+                            keyScope.forceActiveFocus();
                         }
                     }
 
@@ -1282,7 +1321,6 @@ Window {
                         (event.key === Qt.Key_Left || event.key === Qt.Key_Right ||
                          event.key === Qt.Key_Up   || event.key === Qt.Key_Down)) {
 
-                        console.log("Rotate key hit", event.key, "mods", event.modifiers);
                         const step = (event.modifiers & Qt.ShiftModifier) ? 15 : 1;
 
                         if (event.key === Qt.Key_Left || event.key === Qt.Key_Right) {
@@ -1305,30 +1343,9 @@ Window {
                             event.accepted = true; return;
                         }
                     }
-                    // Q/E = ±1°, Shift = ±15°  (ohne Alt, damit kein OS "Alt+Pfeil"-Konflikt greift)
-                    if (event.key === Qt.Key_Q || event.key === Qt.Key_E) {
-                        console.log("Rotate (test) key hit", event.key, "mods", event.modifiers);
-                        const step = (event.modifiers & Qt.ShiftModifier) ? 15 : 1;
-                        const d = (event.key === Qt.Key_Q) ? -step : +step;
-
-                        // falls noch nichts ausgewählt ist: letztes Rechteck oder Pfeil nehmen
-                        if (drawLayer.selectedRectIndex < 0 && drawLayer.selectedArrowIndex < 0) {
-                            if (rectanglesModel.count > 0)      drawLayer.selectRect(rectanglesModel.count - 1);
-                            else if (arrowModel.count > 0)      drawLayer.selectArrow(arrowModel.count - 1);
-                        }
-
-                        if (drawLayer.selectedRectIndex >= 0)      drawLayer.rotateSelectedRect(d, false, false);
-                        else if (drawLayer.selectedArrowIndex >= 0) drawLayer.rotateSelectedArrow(d, false, false);
-
-                        event.accepted = true;
-                        return;
-                    }
                     if (event.key === Qt.Key_Tab) {
-                        if (event.modifiers & Qt.ControlModifier) {
-                            drawLayer.cycleArrow(event.modifiers & Qt.ShiftModifier ? -1 : +1);
-                        } else {
-                            drawLayer.cycleRect(event.modifiers & Qt.ShiftModifier ? -1 : +1);
-                        }
+                        const dir = (event.modifiers & Qt.ShiftModifier) ? -1 : +1;
+                        drawLayer.cycleAll(dir);
                         event.accepted = true; return;
                     }
 
