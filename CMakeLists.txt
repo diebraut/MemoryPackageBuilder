@@ -44,7 +44,7 @@ qt_add_qml_module(appMemoryPackagesBuilder
         SOURCES buildexercisepackage.h buildexercisepackage.cpp
         QML_FILES MultiSelectListView.qml
         QML_FILES ImageComposer.qml
-        QML_FILES firstWindow.qml
+        QML_FILES
         QML_FILES TwoPanel.qml
         QML_FILES ThreePanel.qml
         QML_FILES PartView.qml

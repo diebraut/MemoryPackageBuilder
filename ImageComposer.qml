@@ -2,9 +2,86 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Window 2.15
 import QtQuick.Shapes 1.15
+import QtCore
+
 
 Window {
     id: composerWindow
+
+    Settings {
+        id: composerState
+        // persistenter Ort pro OS:
+        category: "ImageComposer"   // trennt die Schlüssel logisch
+
+        // deine Properties
+        property int  x: 100
+        property int  y: 100
+        property int  w: 1000
+        property int  h: 1000
+        property int  anzeigeZustand: 1
+        property int  selectedPartIndex: 1
+        property int  layoutMode: 0
+        property bool isVertical: true
+        property real splitterRatio: 0.5
+        property real splitterRatio1: 0.33
+        property real splitterRatio2: 0.66
+        property real layout1_splitX: 0.5
+        property real layout1_splitY: 0.5
+        property real layout2_splitX: 0.5
+        property real layout2_splitY: 0.5
+    }
+
+    function clampToDesktop(win) {
+        const dw = Screen.desktopAvailableWidth
+        const dh = Screen.desktopAvailableHeight
+        win.width  = Math.min(win.width,  dw)
+        win.height = Math.min(win.height, dh)
+        win.x = Math.max(0, Math.min(win.x, dw - win.width))
+        win.y = Math.max(0, Math.min(win.y, dh - win.height))
+    }
+
+    // Wiederherstellen beim Start
+    Component.onCompleted: {
+        // Wiederherstellen beim Start
+        x = composerState.x
+        y = composerState.y
+        width  = composerState.w
+        height = composerState.h
+        clampToDesktop(composerWindow)
+
+        anzeigeZustand     = composerState.anzeigeZustand
+        selectedPartIndex  = composerState.selectedPartIndex
+        layoutMode         = composerState.layoutMode
+        isVertical         = composerState.isVertical
+        splitterRatio      = composerState.splitterRatio
+        splitterRatio1     = composerState.splitterRatio1
+        splitterRatio2     = composerState.splitterRatio2
+        layout1_splitX     = composerState.layout1_splitX
+        layout1_splitY     = composerState.layout1_splitY
+        layout2_splitX     = composerState.layout2_splitX
+        layout2_splitY     = composerState.layout2_splitY
+
+        // einmalig nach dem Aufbau: Outline neu berechnen
+        rootItem.recomputeOutline()
+    }
+
+    // Geometrie zurückschreiben
+    onXChanged:      composerState.x = x
+    onYChanged:      composerState.y = y
+
+    // Layout-Status zurückschreiben
+    onAnzeigeZustandChanged:    composerState.anzeigeZustand = anzeigeZustand
+    onSelectedPartIndexChanged: composerState.selectedPartIndex = selectedPartIndex
+    onLayoutModeChanged:        composerState.layoutMode = layoutMode
+    onIsVerticalChanged:        composerState.isVertical = isVertical
+    onSplitterRatioChanged:     composerState.splitterRatio = splitterRatio
+    onSplitterRatio1Changed:    composerState.splitterRatio1 = splitterRatio1
+    onSplitterRatio2Changed:    composerState.splitterRatio2 = splitterRatio2
+    onLayout1_splitXChanged:    composerState.layout1_splitX = layout1_splitX
+    onLayout1_splitYChanged:    composerState.layout1_splitY = layout1_splitY
+    onLayout2_splitXChanged:    composerState.layout2_splitX = layout2_splitX
+    onLayout2_splitYChanged:    composerState.layout2_splitY = layout2_splitY
+
     width: 1000
     height: 1000
     visible: true
@@ -12,6 +89,7 @@ Window {
     flags: Qt.FramelessWindowHint | Qt.Window
 
     property string packagePath: ""
+    property string subjektName: ""
 
     property int anzeigeZustand: 1
     property int selectedPartIndex: 1  // Standard: Teil 1
@@ -113,14 +191,15 @@ Window {
             }
         }
     }
-    //Begin
-
-
-    // ---- Recompute triggern ----
-    // a) Wenn Layout/Zustand wechselt
-    onWidthChanged: rootItem.recomputeOutline()
-    onHeightChanged: rootItem.recomputeOutline()
-    Component.onCompleted: rootItem.recomputeOutline()
+    // Geometrie zurückschreiben + Outline neu berechnen
+    onWidthChanged: {
+        composerState.w = width
+        rootItem.recomputeOutline()
+    }
+    onHeightChanged: {
+        composerState.h = height
+        rootItem.recomputeOutline()
+    }
 
     // b) Wenn der Anzeigestatus wechselt
     Connections {
@@ -413,8 +492,8 @@ Window {
                 tick.triggered.connect(function() {
                     if (myGen !== composeGen) { try { stage.destroy() } catch(e) {} return }
                     const fileName = (packagePath && packagePath.length)
-                                     ? packagePath + "/TestCompose.png"
-                                     : "TestCompose.png"
+                                     ? packagePath + "/" + subjektName + ".png"
+                                     : subjektName + ".png"
                     stage.grabToImage(function(res) {
                         try { stage.destroy() } catch(e) {}
                         if (myGen !== composeGen) return

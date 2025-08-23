@@ -19,6 +19,10 @@ int main(int argc, char *argv[])
     qmlRegisterModule("MemoryPackagesBuilder", 1, 0);
     QtWebEngineQuick::initialize();
     QGuiApplication app(argc, argv);
+    QCoreApplication::setOrganizationName("DeineOrg");
+    QCoreApplication::setOrganizationDomain("example.com");
+    QCoreApplication::setApplicationName("MemoryPackagesBuilder");
+
     qDebug() << QDir(":/icons").entryList();
 
     qmlRegisterSingletonInstance("ExersizeLoader", 1, 0, "ExersizeLoader", new ExersizeLoader);

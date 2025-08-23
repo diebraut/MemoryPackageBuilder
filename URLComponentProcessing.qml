@@ -2,6 +2,7 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 import QtWebEngine 1.9
+import QtCore
 
 import Helpers 1.0
 import FileHelper 1.0
@@ -10,6 +11,55 @@ import Wiki 1.0  // Dein C++ Modul
 
 Window {
     id: urlWindow
+
+    // Persistenz für URL-Dialog
+    Settings {
+        id: urlState
+        category: "URLComponentProcessing"
+        property int  x: 100
+        property int  y: 100
+        property int  w: 800
+        property int  h: 600
+        property real zoom: 1.0
+        property int  scrollX: 0     // ✅ NEU
+        property int  scrollY: 0
+        property int  imageComposerParts: 1
+    }
+
+    function clampToDesktop(win) {
+        const dw = Screen.desktopAvailableWidth
+        const dh = Screen.desktopAvailableHeight
+        win.width  = Math.min(win.width,  dw)
+        win.height = Math.min(win.height, dh)
+        win.x = Math.max(0, Math.min(win.x, dw - win.width))
+        win.y = Math.max(0, Math.min(win.y, dh - win.height))
+    }
+
+    Timer {
+        id: scrollPoll
+        interval: 400
+        repeat: true
+        running: true
+        onTriggered: {
+            if (!pageReady) return;
+            webView.runJavaScript(
+                "(function(){return {x: window.scrollX||document.documentElement.scrollLeft||0," +
+                "y: window.scrollY||document.documentElement.scrollTop||0};})()",
+                function(r) {
+                    if (!r) return;
+                    urlState.scrollX = r.x|0;
+                    urlState.scrollY = r.y|0;
+                }
+            )
+        }
+    }
+
+    // Geometrie in Settings zurückschreiben
+    onXChanged:      urlState.x = x
+    onYChanged:      urlState.y = y
+    onWidthChanged:  urlState.w = width
+    onHeightChanged: urlState.h = height
+
     title: "Webseite ansehen"
     width: 800
     height: 600
@@ -22,7 +72,7 @@ Window {
     property bool isLastStep:false
 
     property string urlString: ""
-    property string subjektnamen: ""
+    property string subjektName: ""
     property string packagePath: ""
 
     signal accepted(string newUrl, var licenceInfo, string savedFileExtension)
@@ -45,6 +95,15 @@ Window {
     Component.onCompleted: {
         const composerComponent = Qt.createComponent("qrc:/MemoryPackagesBuilder/ImageComposer.qml");
 
+        // Geometrie wiederherstellen
+        urlWindow.x = urlState.x
+        urlWindow.y = urlState.y
+        urlWindow.width  = urlState.w
+        urlWindow.height = urlState.h
+        clampToDesktop(urlWindow)
+        // Zoom wiederherstellen
+        zoomSlider.value = urlState.zoom
+
         if (composerComponent.status === Component.Ready) {
             const w = urlWindow.height ;
             const h = urlWindow.height;
@@ -65,9 +124,14 @@ Window {
                 // 💡 Verknüpfe mit Hauptfenster
                 composer.transientParent = urlWindow;  // 👈 Schlüsselzeile
                 composer.visible = true;
+                // Composer-Parts aus eigener Persistenz initial setzen
+                if (urlState.imageComposerParts >= 1 && urlState.imageComposerParts <= 3)
+                    composer.anzeigeZustand = urlState.imageComposerParts
+                syncPartsChecks()
                 composer.raise();              // bringt es über das Parent
                 composer.requestActivate();    // setzt den Fokus
                 composer.packagePath = packagePath
+                composer.subjektName = subjektName
 
             } else {
                 console.warn("❌ Fehler beim Erzeugen des Composer-Fensters");
@@ -75,6 +139,11 @@ Window {
         } else {
             console.warn("❌ Fehler beim Laden von ImageComposer:", composerComponent.errorString());
         }
+    }
+
+    Connections {
+        target: composer
+        function onAnzeigeZustandChanged() { syncPartsChecks() }
     }
 
     // Kindfenster schließen, wenn Hauptfenster geschlossen wird
@@ -163,7 +232,7 @@ Window {
                                 if (composer && composer.anzeigeZustand > 1)
                                     suffix += composer.selectedPartIndex;
 
-                                var tempName = subjektnamen + suffix + "." + extension;
+                                var tempName = subjektName + suffix + "." + extension;
                                 var savePath = packagePath + "/" + tempName;
 
                                 tempImagePath = savePath;
@@ -313,7 +382,7 @@ Window {
         if (composer && composer.anzeigeZustand > 1) {
             suffix += composer.selectedPartIndex;
         }
-        var filename = subjektnamen + suffix + "." + extension;
+        var filename = subjektName + suffix + "." + extension;
         var savePath = packagePath + "/" + filename;
 
         tempImagePath = savePath;
@@ -401,6 +470,14 @@ Window {
         console.warn("❌ Download fehlgeschlagen:", error);
     }
 
+    // Helfer: Checkboxes an Composer-Status angleichen
+    function syncPartsChecks() {
+        if (!composer) return
+        parts1.checked = composer.anzeigeZustand === 1
+        parts2.checked = composer.anzeigeZustand === 2
+        parts3.checked = composer.anzeigeZustand === 3
+    }
+
     ColumnLayout {
         anchors.fill: parent
         spacing: 10
@@ -429,6 +506,10 @@ Window {
                         console.log("❌ Fehler beim Laden der Hauptseite:", request.url);
                         pageReady = false;
                     } else if (request.status === 1 && request.isMainFrame) {
+                        // Zoom & Scrollposition nach Page-Load setzen
+                        webView.zoomFactor = urlState.zoom
+                        zoomSlider.value   = urlState.zoom
+                        webView.runJavaScript("window.scrollTo(" + urlState.scrollX + "," + urlState.scrollY + ");")
                         errorLabel.visible = false;
                         console.log("✅ Seite geladen:", request.url);
                         pageReady = true;
@@ -544,10 +625,10 @@ Window {
                     value: 1.0
                     stepSize: 0.1
                     Layout.preferredWidth: 150
-
                     onValueChanged: {
-                        webView.zoomFactor = value;
-                        console.log("🔍 Zoomfaktor geändert:", value);
+                        webView.zoomFactor = value
+                        urlState.zoom = value     // 👈 speichern
+                        console.log("🔍 Zoomfaktor geändert:", value)
                     }
                 }
 
@@ -560,31 +641,28 @@ Window {
                 title: "ImageComposer-Parts"
                 Layout.preferredWidth: 300
 
-                ButtonGroup {
-                    id: composerPartGroup
-                    exclusive: true
-                }
+                ButtonGroup { id: composerPartGroup; exclusive: true }
 
                 RowLayout {
                     spacing: 12
 
                     CheckBox {
+                        id: parts1
                         text: "Parts 1"
-                        checked: true
                         ButtonGroup.group: composerPartGroup
-                        onCheckedChanged: if (checked && composer) composer.anzeigeZustand = 1
+                        onCheckedChanged: if (checked && composer) { composer.anzeigeZustand = 1; urlState.imageComposerParts = 1; }
                     }
-
                     CheckBox {
+                        id: parts2
                         text: "Parts 2"
                         ButtonGroup.group: composerPartGroup
-                        onCheckedChanged: if (checked && composer) composer.anzeigeZustand = 2
+                        onCheckedChanged: if (checked && composer) { composer.anzeigeZustand = 2; urlState.imageComposerParts = 2; }
                     }
-
                     CheckBox {
+                        id: parts3
                         text: "Parts 3"
                         ButtonGroup.group: composerPartGroup
-                        onCheckedChanged: if (checked && composer) composer.anzeigeZustand = 3
+                        onCheckedChanged: if (checked && composer) { composer.anzeigeZustand = 3; urlState.imageComposerParts = 3; }
                     }
                 }
             }

@@ -335,7 +335,7 @@ Window {
                 if (component.status === Component.Ready) {
                     const win = component.createObject(null, {
                         urlString: url,
-                        subjektnamen: extraProp,
+                        subjektName: extraProp,
                         packagePath: packagePath,
                         isMultiEdit: true,
                         multiEditCurrentIndex: current,
