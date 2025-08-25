@@ -16,6 +16,7 @@ Window {
     // Eigenschaften
     property string packagePath
     property bool sequentiell: sequentiellCheckBox.checked
+    property bool hideAuthorByQuestion: hideAuthorByQuestionCheckBox.checked
     property bool umgekehrt: umgekehrtCheckBox.checked
     property string frageText: frageTextField.text
     property string frageTextUmgekehrt: frageTextUmgekehrtField.text
@@ -354,7 +355,7 @@ Window {
                         const prefix = (role === "infoURLFrage") ? "imageFrage"
                                      : (role === "infoURLAntwort") ? "imageAntwort" : null;
 
-                        if (prefix && licenceInfo) {
+                        if (licenceInfo) {
                             uebungModel.setProperty(index, prefix + "Author",
                                 licenceInfo.authorName + "[" + licenceInfo.authorUrl + "]");
 
@@ -364,6 +365,8 @@ Window {
                             uebungModel.setProperty(index, prefix + "BildDescription",
                                 licenceInfo.imageDescriptionUrl);
 
+                        }
+                        if (prefix) {
                             const imageFileKey = (prefix === "imageFrage") ? "imagefileFrage" : "imagefileAntwort";
                             let currentFileName = uebungModel.get(index)[imageFileKey];
                             const subjectKey = (prefix === "imageFrage") ? "frageSubjekt" : "antwortSubjekt";
@@ -381,7 +384,6 @@ Window {
                                 uebungModel.setProperty(index, imageFileKey, newName);
                             }
                         }
-
                         saveCurrentModelToXml();
                         current++;
                         editNext();
@@ -467,6 +469,7 @@ Window {
             frageTextUmgekehrt: frageTextUmgekehrtField.text,
             sequentiell: sequentiellCheckBox.checked,
             umgekehrt: umgekehrtCheckBox.checked,
+            hideAuthorByQuestion: hideAuthorByQuestionCheckBox.checked, // neu
             uebungsliste: []
         };
 
@@ -633,15 +636,18 @@ Window {
             uebungenNameField.text = uebungenData.name;
             frageTextField.text = uebungenData.frageText;
             frageTextUmgekehrtField.text = uebungenData.frageTextUmgekehrt;
-            sequentiellCheckBox.checked = uebungenData.sequentiell;
-            umgekehrtCheckBox.checked = uebungenData.umgekehrt;
+            sequentiellCheckBox.checked = !!uebungenData.sequentiell;
+            umgekehrtCheckBox.checked = !!uebungenData.umgekehrt;
+            hideAuthorByQuestionCheckBox.checked = !!uebungenData.hideAuthorByQuestion; // neu
 
             uebungModel.clear();
 
             for (var i = 0; i < uebungenData.uebungsliste.length; ++i) {
                 let eintrag = JSON.parse(JSON.stringify(uebungenData.uebungsliste[i]));
-                // ✅ Neue Farb-Properties hinzufügen, falls nicht vorhanden
-
+                // ✅ Neue Farb-            // ✅ hier fügst du die Defaults ein:
+                if (!("hideAuthor" in eintrag)) {
+                    eintrag.hideAuthor = false;
+                }
                 if (!("infoURLFrage_bgcolor" in eintrag)) {
                     eintrag.infoURLFrage_bgcolor = "white"; // oder dein Standard
                 }
@@ -695,9 +701,18 @@ Window {
                     TextField { id: frageTextUmgekehrtField; Layout.fillWidth: true }
                 }
 
+                // << geändert: HideAuthorByQuestion neben Sequentiell >>
                 RowLayout {
                     Label { text: "Sequentiell:"; Layout.preferredWidth: labelWidth }
                     CheckBox { id: sequentiellCheckBox }
+
+                    Item { width: 24; height: 1 } // kleiner Abstand
+
+                    Label { text: "HideAuthorByQuestion:" }
+                    CheckBox {
+                        id: hideAuthorByQuestionCheckBox
+                        checked: false // Default
+                    }
                 }
 
                 RowLayout {
@@ -977,6 +992,7 @@ Window {
                         frageTextUmgekehrt: frageTextUmgekehrtField.text,
                         sequentiell: sequentiellCheckBox.checked,
                         umgekehrt: umgekehrtCheckBox.checked,
+                        hideAuthorByQuestion: hideAuthorByQuestionCheckBox.checked, // neu
                         uebungsliste: []
                     }
 

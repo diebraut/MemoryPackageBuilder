@@ -44,6 +44,7 @@ bool ExersizeLoader::savePackage(const QString &path, const QVariantMap &data) {
     uebungenElem.setAttribute("name", data.value("name").toString());
     uebungenElem.setAttribute("sequentiell", data.value("sequentiell").toBool() ? "true" : "false");
     uebungenElem.setAttribute("umgekehrt", data.value("umgekehrt").toBool() ? "true" : "false");
+    uebungenElem.setAttribute("hideAuthorByQuestion", data.value("hideAuthorByQuestion").toBool() ? "true" : "false"); // neu
 
     // Texte aktualisieren
     mainListElem.firstChildElement("FrageText").firstChild().setNodeValue(data.value("frageText").toString());

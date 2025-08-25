@@ -196,7 +196,7 @@ Window {
             urlWindow.dynamicMenu.destroy();
             urlWindow.dynamicMenu = null;
         }
-        currentImageLicenceInfo = info;
+        if (info) currentImageLicenceInfo = info;
         var rect = Qt.createQmlObject(`
             import QtQuick 2.15
             import QtQuick.Controls 2.15
