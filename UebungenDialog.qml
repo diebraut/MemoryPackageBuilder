@@ -57,6 +57,159 @@ Window {
             }
         }
     }
+    // ------------------------------------------------------------------
+    // Info-Popup (OK)
+    // ------------------------------------------------------------------
+    Popup {
+        id: infoPopup
+        modal: true
+        focus: true
+        width: 400
+
+        // alias, damit du infoPopup.text setzen kannst
+        property alias text: infoLabel.text
+
+        background: Rectangle {
+            color: "#fff0f0"
+            radius: 8
+            border.color: "black"
+            border.width: 2
+        }
+
+        contentItem: Column {
+            spacing: 10
+            padding: 20
+
+            Label {
+                id: infoLabel
+                text: ""
+                wrapMode: Text.WordWrap
+            }
+
+            RowLayout {
+                spacing: 10
+                Button {
+                    text: "OK"
+                    Layout.preferredWidth: 120
+                    onClicked: infoPopup.close()
+                }
+            }
+        }
+
+        onVisibleChanged: if (visible) {
+            Qt.callLater(() => {
+                infoPopup.x = (dialogWindow.width  - infoPopup.width)  / 2;
+                infoPopup.y = (dialogWindow.height - infoPopup.height) / 2;
+            });
+        }
+    }
+
+    /* ===== Meldungen via Popup ===== */
+    // ------------------------------------------------------------------
+    // Bestätigungs-Popup (Löschen / Abbrechen)
+    // ------------------------------------------------------------------
+    Popup {
+        id: confirmDeletePopup
+        modal: true
+        focus: true
+        width: 400
+
+        // alias, damit du confirmDeletePopup.text setzen kannst
+        property alias text: confirmLabel.text
+        // trägt die zu löschenden Indizes
+        property var indicesToDelete: []
+
+        background: Rectangle {
+            color: "#fff0f0"
+            radius: 8
+            border.color: "black"
+            border.width: 2
+        }
+
+        contentItem: Column {
+            spacing: 10
+            padding: 20
+
+            Label {
+                id: confirmLabel
+                text: ""
+                wrapMode: Text.WordWrap
+            }
+
+            RowLayout {
+                spacing: 10
+
+                Button {
+                    text: "Löschen"
+                    Layout.preferredWidth: 120
+                    onClicked: {
+                        const idx = confirmDeletePopup.indicesToDelete || [];
+                        confirmDeletePopup.close();
+                        performDelete(idx);
+                    }
+                }
+
+                Button {
+                    text: "Abbrechen"
+                    Layout.preferredWidth: 100
+                    onClicked: confirmDeletePopup.close()
+                }
+            }
+        }
+
+        onVisibleChanged: if (visible) {
+            Qt.callLater(() => {
+                confirmDeletePopup.x = (dialogWindow.width  - confirmDeletePopup.width)  / 2;
+                confirmDeletePopup.y = (dialogWindow.height - confirmDeletePopup.height) / 2;
+            });
+        }
+    }
+
+    /* ===== Lösch-Workflow ===== */
+    // --- Helfer: Auswahl aus der ListView holen ---
+    function selectedRows() {
+        return (listView && listView.selectedIndices) ? listView.selectedIndices.slice() : [];
+    }
+
+    // --- Dummy: später echte XML-Löschung hier implementieren ---
+    function removeEntriesFromXml(indices) {
+        console.log("🧪 Dummy XML-Remove – noch nicht implementiert. Indices:", indices);
+        // TODO: echte Entfernung aus der XML-Datei
+        return true;
+    }
+
+    // --- eigentliche Model-Löschung ---
+    function performDelete(indices) {
+        if (!indices || indices.length === 0) return;
+        // Erst Dummy-XML-Call
+        removeEntriesFromXml(indices);
+
+        // Dann aus dem Model (absteigend, damit Indizes stabil bleiben)
+        indices.sort((a,b) => b - a).forEach(i => {
+            if (i >= 0 && i < uebungModel.count) uebungModel.remove(i);
+        });
+
+        // Auswahl & Fokus aufräumen
+        listView.selectedIndices = [];
+        listView.currentIndex = -1;
+    }
+
+    // --- Public API: vom Button aus aufrufen ---
+    function requestDeleteSelectedRows() {
+        const sel = selectedRows();
+        if (sel.length === 0) {
+            infoPopup.text = "Kein Zeile zum löschen markiert";
+            infoPopup.open();
+            return;
+        }
+        confirmDeletePopup.text = "<Achtung die markierten Zeilen werden endgültig gelöscht";
+        confirmDeletePopup.indicesToDelete = sel.slice(); // Kopie
+        confirmDeletePopup.open();
+    }
+
+    function dummyDeleteEntriesFromXml(indices) {
+        console.log("🗑️ [DUMMY] Entferne aus XML:", JSON.stringify(indices))
+    }
 
 
     Component {
@@ -954,14 +1107,7 @@ Window {
 
                 Button {
                     text: "Löschen"
-                    onClicked: {
-                        if (listView.currentIndex >= 0) {
-                            uebungModel.remove(listView.currentIndex);
-                            // Aktualisiere die ListView
-                            listView.model = null;
-                            listView.model = uebungModel;
-                        }
-                    }
+                    onClicked: requestDeleteSelectedRows()
                 }
                 Button {
                     text: "Check Websites"

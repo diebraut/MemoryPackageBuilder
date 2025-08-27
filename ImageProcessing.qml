@@ -3,6 +3,7 @@ import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 import QtQuick.Window 2.15
 import QtQuick.Shapes 1.15
+import QtCore
 
 
 Window {
@@ -19,6 +20,13 @@ Window {
     property int maxDialogWidth: Screen.width * 0.9
     property int maxDialogHeight: Screen.height * 0.9
 
+    Settings {
+        id: ipSettings
+        category: "ImageProcessingDefaults"   // eigener Namespace
+        property string defaultRectColor: "black"
+        property string defaultArrowColor: "red"
+        property bool   defaultRectTranspWithLine: false
+    }
 
     // --- Auswahl-Index & Helfer ---
     Item {
@@ -75,6 +83,12 @@ Window {
     Shortcut { enabled: imageWindow.visible; context: Qt.WindowShortcut; sequence: "Esc"; onActivated: drawLayer.selectNone() }
 
     function openWithImage(path, screenW, screenH, excludeRect, arrowDesc) {
+
+        // Defaults aus letzter Session laden
+        drawLayer.defaultRectColor          = ipSettings.defaultRectColor
+        drawLayer.defaultArrowColor         = ipSettings.defaultArrowColor
+        drawLayer.defaultRectTranspWithLine = ipSettings.defaultRectTranspWithLine
+
         rectanglesModel.clear();
         arrowModel.clear();
         imagePreview.source = "";
@@ -127,34 +141,44 @@ Window {
 
     function loadRectanglesFromString(excludeRect) {
         rectanglesModel.clear();
-        if (!excludeRect || typeof excludeRect !== "string") return;
+        if (!excludeRect || typeof excludeRect !== "string" || !excludeRect.trim())
+            return;
 
         const entries = excludeRect.split("|");
         for (let i = 0; i < entries.length; ++i) {
             const parts = entries[i].split(",");
             if (parts.length >= 5) {
-                const startX = parseFloat(parts[0]);
-                const startY = parseFloat(parts[1]);
-                const width = parseFloat(parts[2]);
-                const height = parseFloat(parts[3]);
+                const startX        = parseFloat(parts[0]);
+                const startY        = parseFloat(parts[1]);
+                const width         = parseFloat(parts[2]);
+                const height        = parseFloat(parts[3]);
                 const rotationAngle = parseFloat(parts[4]);
-                const color = (parts.length >= 6 && parts[5]) ? parts[5] : "red"; // ✅ neu: farbe optional
-                const rectTranspWithLine =
-                    (parts.length >= 7) ? (parts[6] === "1" || parts[6].toLowerCase?.() === "true") : false;
 
-                if (!isNaN(startX) && !isNaN(startY) &&
-                    !isNaN(width) && !isNaN(height) &&
-                    !isNaN(rotationAngle)) {
+                // Falls Farbe/Flag fehlen → persistierte Defaults verwenden
+                const color = (parts.length >= 6 && parts[5] && parts[5].trim() !== "")
+                              ? parts[5].trim()
+                              : drawLayer.defaultRectColor;
+
+                const rectTranspWithLine = (parts.length >= 7)
+                              ? (parts[6] === "1" || parts[6].toLowerCase?.() === "true")
+                              : drawLayer.defaultRectTranspWithLine;
+
+                // ✅ Validierung beibehalten
+                if (Number.isFinite(startX) && Number.isFinite(startY) &&
+                    Number.isFinite(width)  && Number.isFinite(height) &&
+                    Number.isFinite(rotationAngle)) {
+
                     rectanglesModel.append({
                         startX: startX,
                         startY: startY,
-                        endX: startX + width,
-                        endY: startY + height,
+                        endX:   startX + width,
+                        endY:   startY + height,
                         rotationAngle: rotationAngle,
                         color: color,
-                        rectTranspWithLine: rectTranspWithLine       // NEU
-                    });                } else {
-                    console.warn("❌ Ungültige Rechteckdaten:", entries[i]);
+                        rectTranspWithLine: rectTranspWithLine
+                    });
+                } else {
+                    console.warn("❌ Ungültige Rechteckdaten (NaN):", entries[i]);
                 }
             } else {
                 console.warn("❌ Unvollständige Rechteckbeschreibung:", entries[i]);
@@ -173,16 +197,15 @@ Window {
                 const x = parseFloat(parts[0])
                 const y = parseFloat(parts[1])
                 const angle = parseFloat(parts[2])
-                const color = parts[3]
+                const color = (parts.length >= 4 && parts[3]) ? parts[3] : drawLayer.defaultArrowColor;
                 const scale = parseFloat(parts[4])
                 if (!isNaN(x) && !isNaN(y)) {
                     arrowModel.append({
-                        x: x,
-                        y: y,
+                        x, y,
                         rotationAngle: angle,
-                        color: color,
+                        color: color,                         // <-- jetzt immer gesetzt
                         scaleFactor: isNaN(scale) ? 1.0 : scale
-                    })
+                    });
                 }
             }
         }
@@ -370,6 +393,10 @@ Window {
                     property string defaultRectColor: "black"
                     property string defaultArrowColor: "red"
                     property bool   defaultRectTranspWithLine: false   // NEU
+
+                    onDefaultRectColorChanged:          ipSettings.defaultRectColor = defaultRectColor
+                    onDefaultArrowColorChanged:         ipSettings.defaultArrowColor = defaultArrowColor
+                    onDefaultRectTranspWithLineChanged: ipSettings.defaultRectTranspWithLine = defaultRectTranspWithLine
 
                     // ---- Daten ----
                     ListModel { id: rectanglesModel }
@@ -632,7 +659,7 @@ Window {
                                     // 1) Gestrichelter Rechteck-Rahmen
                                     ShapePath {
                                         strokeWidth: rectItem.strokeW
-                                        strokeColor: drawLayer.defaultRectColor
+                                        strokeColor: rectItem.effectiveRectColor()
                                         fillColor: "transparent"
                                         strokeStyle: ShapePath.DashLine
                                         capStyle: ShapePath.FlatCap
@@ -650,7 +677,7 @@ Window {
                                     // 2) Mittige, solide Linie (horizontale)
                                     ShapePath {
                                         strokeWidth: rectOverlay.centerLineW
-                                        strokeColor: drawLayer.defaultRectColor
+                                        strokeColor: rectItem.effectiveRectColor()
                                         fillColor: "transparent"
                                         strokeStyle: ShapePath.SolidLine
                                         capStyle: ShapePath.FlatCap
@@ -702,7 +729,8 @@ Window {
 
                                 color: "transparent"
                                 // 🔹 Normale Linie nur zeigen, wenn NICHT gestrichelt
-                                border.color: model.rectTranspWithLine ? "transparent" : (model.color || "red")
+                                // Rahmen des Rechtecks
+                                border.color: model.rectTranspWithLine ? "transparent" : rectItem.effectiveRectColor()
                                 border.width: strokeW
 
                                 Behavior on width  { NumberAnimation { duration: rectItem.axisAligned ? 0 : 50 } }
@@ -710,6 +738,11 @@ Window {
 
                                 function updateTransform() {
                                     rectItem.transform = rectItem.axisAligned ? [] : [rectRot];
+                                }
+                                function effectiveRectColor() {
+                                    return (model.color !== undefined && model.color !== "")
+                                           ? model.color
+                                           : drawLayer.defaultRectColor;
                                 }
                                 Text {
                                     anchors.centerIn: parent
@@ -852,31 +885,66 @@ Window {
                                         // Kontextmenü (wie bei den Pfeilen)
                                         Menu {
                                             id: rectMenu
-                                            function choose(c) {
-                                                rectanglesModel.setProperty(rectItem.modelIndex, "color", c)  // Rahmen einfärben
-                                                drawLayer.defaultRectColor = c                                // ← neuen Default merken
+
+                                            // aktuelles Rechteck bequem lesen
+                                            function currentRect() {
+                                                return rectanglesModel.get(rectItem.modelIndex) || {};
                                             }
 
-                                            MenuItem { text: "Schwarz"; checkable: true; checked: drawLayer.defaultRectColor === "black"; onTriggered: rectMenu.choose("black") }
-                                            MenuItem { text: "Weiß";   checkable: true; checked: drawLayer.defaultRectColor === "white"; onTriggered: rectMenu.choose("white") }
-                                            MenuItem { text: "Rot";    checkable: true; checked: drawLayer.defaultRectColor === "red";   onTriggered: rectMenu.choose("red") }
-                                            MenuItem { text: "Blau";   checkable: true; checked: drawLayer.defaultRectColor === "blue";  onTriggered: rectMenu.choose("blue") }
-                                            MenuItem { text: "Grün";   checkable: true; checked: drawLayer.defaultRectColor === "green"; onTriggered: rectMenu.choose("green") }
-                                            MenuItem { text: "Gelb";   checkable: true; checked: drawLayer.defaultRectColor === "yellow";onTriggered: rectMenu.choose("yellow") }
+                                            // nur die Farbe des aktuellen Objekts setzen
+                                            function setColor(c) {
+                                                if (rectItem.modelIndex < 0 || rectItem.modelIndex >= rectanglesModel.count) return;
+                                                // aktuelles Objekt färben
+                                                rectanglesModel.setProperty(rectItem.modelIndex, "color", c);
+                                                // ⚙️ Default für künftige Objekte mit umstellen (wird automatisch in Settings persistiert)
+                                                drawLayer.defaultRectColor = c;
+                                            }
+
+                                            // ---- Farbwahl (Häkchen zeigt Objektfarbe; fällt bei fehlendem Wert auf Default zurück) ----
+                                            MenuItem { text: "Schwarz"; checkable: true;
+                                                checked: (rectMenu.currentRect().color !== undefined && rectMenu.currentRect().color !== "" ? rectMenu.currentRect().color : drawLayer.defaultRectColor) === "black";
+                                                onTriggered: rectMenu.setColor("black")
+                                            }
+                                            MenuItem { text: "Weiß"; checkable: true;
+                                                checked: (rectMenu.currentRect().color !== undefined && rectMenu.currentRect().color !== "" ? rectMenu.currentRect().color : drawLayer.defaultRectColor) === "white";
+                                                onTriggered: rectMenu.setColor("white")
+                                            }
+                                            MenuItem { text: "Rot"; checkable: true;
+                                                checked: (rectMenu.currentRect().color !== undefined && rectMenu.currentRect().color !== "" ? rectMenu.currentRect().color : drawLayer.defaultRectColor) === "red";
+                                                onTriggered: rectMenu.setColor("red")
+                                            }
+                                            MenuItem { text: "Blau"; checkable: true;
+                                                checked: (rectMenu.currentRect().color !== undefined && rectMenu.currentRect().color !== "" ? rectMenu.currentRect().color : drawLayer.defaultRectColor) === "blue";
+                                                onTriggered: rectMenu.setColor("blue")
+                                            }
+                                            MenuItem { text: "Grün"; checkable: true;
+                                                checked: (rectMenu.currentRect().color !== undefined && rectMenu.currentRect().color !== "" ? rectMenu.currentRect().color : drawLayer.defaultRectColor) === "green";
+                                                onTriggered: rectMenu.setColor("green")
+                                            }
+                                            MenuItem { text: "Gelb"; checkable: true;
+                                                checked: (rectMenu.currentRect().color !== undefined && rectMenu.currentRect().color !== "" ? rectMenu.currentRect().color : drawLayer.defaultRectColor) === "yellow";
+                                                onTriggered: rectMenu.setColor("yellow")
+                                            }
+
                                             MenuSeparator {}
-                                             // 🔴 neues Menüitem, NICHT checkable
+
+                                            // ---- Strichmodus (transparent + gestrichelter Rahmen + Mittellinie) objektbezogen ----
                                             MenuItem {
                                                 text: "Strich (transp. Hintergrund)"
                                                 checkable: true
-                                                // Anzeige wie bei Default-Farbe: globaler Default steuert den Haken
-                                                checked: drawLayer.defaultRectTranspWithLine
+                                                checked: !!rectMenu.currentRect().rectTranspWithLine
                                                 onTriggered: {
-                                                    const newVal = !drawLayer.defaultRectTranspWithLine;
-                                                    drawLayer.defaultRectTranspWithLine = newVal;                 // Default umschalten
-                                                    rectanglesModel.setProperty(rectItem.modelIndex, "rectTranspWithLine", newVal); // aktuelles Rect setzen
+                                                    const cur = !!rectMenu.currentRect().rectTranspWithLine;
+                                                    // aktuelles Objekt toggeln
+                                                    rectanglesModel.setProperty(rectItem.modelIndex, "rectTranspWithLine", !cur);
+                                                    // ⚙️ Default für künftige Objekte mit umstellen (persistiert über onDefault…Changed)
+                                                    drawLayer.defaultRectTranspWithLine = !cur;
                                                 }
                                             }
+
                                             MenuSeparator {}
+
+                                            // ---- Löschen des aktuellen Rechtecks ----
                                             MenuItem { text: "Löschen"; onTriggered: rectanglesModel.remove(rectItem.modelIndex) }
                                         }
                                     }

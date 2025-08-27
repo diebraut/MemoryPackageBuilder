@@ -40,6 +40,34 @@ Window {
         win.y = Math.max(0, Math.min(win.y, dh - win.height))
     }
 
+    function traversalOrder() {
+        // Reihenfolge gemäß deiner Vorgaben:
+        // - 2 Parts: vertical -> 1(oben),2(darunter); horizontal -> 1(links),2(rechts)
+        // - 3 Parts layoutMode 0: alle untereinander/nebeneinander -> 1,2,3
+        // - 3 Parts layoutMode 1: 1 oben, 2 unten links, 3 unten rechts -> 1,2,3
+        // - 3 Parts layoutMode 2: 2 oben (links/rechts), 1 unten -> 1,2,3
+        switch (anzeigeZustand) {
+        case 1:  return [1];
+        case 2:  return [1, 2];
+        case 3:
+            if (layoutMode === 1) return [1, 2, 3]; // oben=1, unten: 2,3
+            if (layoutMode === 2) return [1, 2, 3]; // oben: 1,2; unten=3
+            return [1, 2, 3];                       // „alle untereinander/nebeneinander“
+        default: return [];
+        }
+    }
+
+    function selectNextPart(dir) {
+        const order = traversalOrder();
+        if (!order.length) return;
+
+        let i = order.indexOf(selectedPartIndex);
+        if (i < 0) i = 0; // falls außerhalb
+        i = (i + (dir > 0 ? 1 : -1) + order.length) % order.length;
+
+        selectedPartIndex = order[i];
+    }
+
     // Wiederherstellen beim Start
     Component.onCompleted: {
         // Wiederherstellen beim Start
@@ -63,6 +91,9 @@ Window {
 
         // einmalig nach dem Aufbau: Outline neu berechnen
         rootItem.recomputeOutline()
+        rootItem.forceActiveFocus();
+        selectedPartIndex = 1
+        composerState.selectedPartIndex = 1
     }
 
     // Geometrie zurückschreiben
@@ -70,10 +101,24 @@ Window {
     onYChanged:      composerState.y = y
 
     // Layout-Status zurückschreiben
-    onAnzeigeZustandChanged:    composerState.anzeigeZustand = anzeigeZustand
-    onSelectedPartIndexChanged: composerState.selectedPartIndex = selectedPartIndex
-    onLayoutModeChanged:        composerState.layoutMode = layoutMode
-    onIsVerticalChanged:        composerState.isVertical = isVertical
+    onAnzeigeZustandChanged: {
+        composerState.anzeigeZustand = anzeigeZustand
+        selectedPartIndex = 1
+        composerState.selectedPartIndex = 1
+    }
+
+    onLayoutModeChanged: {
+        composerState.layoutMode = layoutMode
+        selectedPartIndex = 1
+        composerState.selectedPartIndex = 1
+    }
+
+    onIsVerticalChanged: {
+        composerState.isVertical = isVertical
+        selectedPartIndex = 1
+        composerState.selectedPartIndex = 1
+    }
+
     onSplitterRatioChanged:     composerState.splitterRatio = splitterRatio
     onSplitterRatio1Changed:    composerState.splitterRatio1 = splitterRatio1
     onSplitterRatio2Changed:    composerState.splitterRatio2 = splitterRatio2
@@ -140,26 +185,37 @@ Window {
     }
 
     function loadImageInCurrentMode(filePath) {
-        console.log("\ud83d\udcc5 Lade Bild in Composer:", filePath);
+        console.log("📥 Lade Bild in Composer:", filePath);
         if (!filePath || filePath === "")
             return;
 
         const url = toFileUrl(filePath);
+        const targetIndex = selectedPartIndex; // aktuellen Part fixieren
 
         switch (anzeigeZustand) {
             case 1:
                 singlePartView.setImage(url);
                 break;
             case 2:
-                if (twoSplitter)
-                    twoSplitter.setImageForPart(selectedPartIndex, url);
+                if (twoSplitter && twoSplitter.setImageForPart)
+                    twoSplitter.setImageForPart(targetIndex, url);
                 break;
             case 3:
-                if (threeSplitter)
-                    threeSplitter.setImageForPart(selectedPartIndex, url);
+                if (threeSplitter && threeSplitter.setImageForPart)
+                    threeSplitter.setImageForPart(targetIndex, url);
                 break;
             default:
                 console.warn("❗ Ungültiger Anzeigestatus:", anzeigeZustand);
+                return;
+        }
+
+        // ➜ Nach dem Laden automatisch zum nächsten Part springen
+        if (typeof selectNextPart === "function") {
+            selectNextPart(+1);
+        } else {
+            // Fallback: simple Rundlauf-Logik
+            const max = (anzeigeZustand === 3) ? 3 : (anzeigeZustand === 2 ? 2 : 1);
+            selectedPartIndex = (targetIndex % max) + 1;
         }
     }
 
@@ -585,6 +641,19 @@ Window {
             property real outlineH: 0
             property bool outlineVisible: false
 
+            focus: true
+            Keys.priority: Keys.BeforeItem
+            Keys.onPressed: (event) => {
+                if (event.key === Qt.Key_Tab) {
+                    selectNextPart(+1);
+                    event.accepted = true;
+                } else if (event.key === Qt.Key_Backtab || (event.key === Qt.Key_Tab && (event.modifiers & Qt.ShiftModifier))) {
+                    // Qt sendet bei Shift+Tab meist Key_Backtab – das OR deckt beide Fälle ab
+                    selectNextPart(-1);
+                    event.accepted = true;
+                }
+            }
+
             // Offscreen-Compositing-Stage
             Item {
                 id: composeStage
@@ -667,7 +736,7 @@ Window {
                 id: singlePartView
                 anchors.fill: parent
                 visible: anzeigeZustand === 1
-                index: 0
+                index: 1
                 selected: true
                 label: "Teil 1"
 
