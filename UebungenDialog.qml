@@ -26,7 +26,7 @@ Window {
     property int labelWidth: 120
 
     // Anzahl der Spalten
-    property int columnCount: 8
+    property int columnCount: 9
     // Zwischenraum zwischen den Spalten (Row.spacing)
     property int columnSpacing: 5
 
@@ -178,22 +178,6 @@ Window {
         return true;
     }
 
-    // --- eigentliche Model-Löschung ---
-    function performDelete(indices) {
-        if (!indices || indices.length === 0) return;
-        // Erst Dummy-XML-Call
-        removeEntriesFromXml(indices);
-
-        // Dann aus dem Model (absteigend, damit Indizes stabil bleiben)
-        indices.sort((a,b) => b - a).forEach(i => {
-            if (i >= 0 && i < uebungModel.count) uebungModel.remove(i);
-        });
-
-        // Auswahl & Fokus aufräumen
-        listView.selectedIndices = [];
-        listView.currentIndex = -1;
-    }
-
     // --- Public API: vom Button aus aufrufen ---
     function requestDeleteSelectedRows() {
         const sel = selectedRows();
@@ -203,12 +187,120 @@ Window {
             return;
         }
         confirmDeletePopup.text = "<Achtung die markierten Zeilen werden endgültig gelöscht";
-        confirmDeletePopup.indicesToDelete = sel.slice(); // Kopie
+        confirmDeletePopup.indicesToDelete = sel.slice(); // Kopie der Auswahl
         confirmDeletePopup.open();
     }
 
-    function dummyDeleteEntriesFromXml(indices) {
-        console.log("🗑️ [DUMMY] Entferne aus XML:", JSON.stringify(indices))
+    /* ===== XML-Entfernung: echte Implementierung ===== */
+    function deleteEntriesFromXml(indices) {
+        if (!indices || indices.length === 0) return true;
+        if (!packagePath) {
+            console.warn("❌ deleteEntriesFromXml: packagePath fehlt");
+            return false;
+        }
+
+        // Set der zu löschenden Indizes
+        const skip = {};
+        indices.forEach(i => { if (i >= 0) skip[i] = true; });
+
+        // Daten neu aufbauen (wie saveCurrentModelToXml), aber OHNE die zu löschenden Einträge
+        const data = {
+            name: uebungenNameField.text,
+            frageText: frageTextField.text,
+            frageTextUmgekehrt: frageTextUmgekehrtField.text,
+            sequentiell: sequentiellCheckBox.checked,
+            umgekehrt: umgekehrtCheckBox.checked,
+            hideAuthorByQuestion: hideAuthorByQuestionCheckBox.checked,
+            uebungsliste: []
+        };
+
+        for (let i = 0; i < uebungModel.count; ++i) {
+            if (skip[i]) continue; // diesen Eintrag auslassen
+            let eintrag = JSON.parse(JSON.stringify(uebungModel.get(i)));
+            delete eintrag[""]; // evtl. leere Key-Leiche
+            data.uebungsliste.push(eintrag);
+        }
+
+        const ok = ExersizeLoader.savePackage(packagePath, data);
+        if (!ok) {
+            console.warn("❌ deleteEntriesFromXml: Speichern nach Löschung fehlgeschlagen");
+        }
+        return ok;
+    }
+
+    /* ===== eigentliche Model-Löschung (ruft jetzt deleteEntriesFromXml) ===== */
+    function performDelete(indices) {
+        if (!indices || indices.length === 0) return;
+
+        // (optional) wenn du weiterhin zuerst in der Datei löschen willst:
+        // const numsToDelete = indices.map(i => Number(uebungModel.get(i).nummer)).filter(Number.isFinite);
+        // deleteEntriesFromXml(numsToDelete); // falls vorhanden – sonst weglassen
+
+        // 1) Aus dem Model löschen (absteigend für stabile Indizes)
+        indices.sort((a,b) => b - a).forEach(i => {
+            if (i >= 0 && i < uebungModel.count) uebungModel.remove(i);
+        });
+
+        // 2) Lückenlose Nummerierung wiederherstellen (1,2,3,…)
+        renumberRowsSequentially(1);
+
+        // 3) In XML persistieren (schreibt komplette Liste inkl. neuer Nummern)
+        saveCurrentModelToXml();
+
+        // 4) Auswahl/Fokus aufräumen
+        listView.selectedIndices = [];
+        listView.currentIndex = -1;
+    }
+
+    function renumberRowsSequentially(startAt) {
+        const start = (typeof startAt === "number" && startAt > 0) ? startAt : 1;
+        for (let i = 0; i < uebungModel.count; ++i) {
+            const wanted = start + i;
+            if (uebungModel.get(i).nummer !== wanted)
+                uebungModel.setProperty(i, "nummer", wanted);
+        }
+    }
+
+    function nextFreeNumber() {
+        var maxN = 0;
+        for (let i = 0; i < uebungModel.count; ++i) {
+            const n = parseInt(uebungModel.get(i).nummer);
+            if (!isNaN(n)) maxN = Math.max(maxN, n);
+        }
+        return maxN + 1;
+    }
+
+    /* ===== Duplikate anzeigen ===== */
+    function showDuplicateRowsByFrageSubjekt() {
+        // bisherige Auswahl zurücksetzen
+        listView.selectedIndices = [];
+        listView.currentIndex = -1;
+        if ("selectionAnchor" in listView) listView.selectionAnchor = -1;
+
+        const firstIndexByKey = {};
+        const duplicates = [];
+
+        for (let i = 0; i < uebungModel.count; ++i) {
+            const raw = uebungModel.get(i).frageSubjekt;
+            const key = (raw === undefined || raw === null) ? "" : String(raw).trim().toLowerCase();
+            if (key === "") continue; // leere ignorieren – bei Bedarf entfernen, um auch "" zu zählen
+
+            if (firstIndexByKey.hasOwnProperty(key)) {
+                duplicates.push(i);   // nur ab der 2. Vorkommnis markieren
+            } else {
+                firstIndexByKey[key] = i;
+            }
+        }
+
+        if (duplicates.length === 0) {
+            infoPopup.text = "Keine doppelten Einträge in „FrageSubjekt“ gefunden.";
+            infoPopup.open();
+            return;
+        }
+
+        listView.selectedIndices = duplicates;
+        listView.currentIndex = duplicates[0];
+        if (listView.updateSelectedItems) listView.updateSelectedItems();
     }
 
 
@@ -694,40 +786,48 @@ Window {
             TextField {
                 id: textField
                 anchors.centerIn: parent
-                width: listArea.columnWidth * 0.8
                 height: parent.height * 0.8
 
+                // Breite für 4 Ziffern dynamisch nach Font bestimmen
+                FontMetrics { id: fm; font: textField.font }
+                readonly property int fourDigitWidth: Math.ceil(fm.boundingRect("8888").width) + 12
 
-                // Direkte Bindung an Modelwert
+                // Nummer-Spalte: schmal; andere Spalten: wie gehabt ~90%
+                width: currentRole === "nummer"
+                       ? Math.min(parent.width * 0.9, Math.max(48, fourDigitWidth))
+                       : parent.width * 0.9
+
+                // Daten + Validierung
                 text: textVal
+                IntValidator { id: nummerValidator; bottom: 0; top: 100000000 }
+                validator: currentRole === "nummer" ? nummerValidator : null
+                horizontalAlignment: currentRole === "nummer" ? Text.AlignRight : Text.AlignLeft
+                inputMethodHints: currentRole === "nummer" ? Qt.ImhDigitsOnly : Qt.ImhNone
 
-                activeFocusOnPress: true
-
-                onPressed: {
-                    forceActiveFocus();
-                }
-
-                onTextChanged: {
-                    if (currentIndex >= 0 && currentIndex < uebungModel.count) {
-                        if (text !== uebungModel.get(currentIndex)[currentRole]) {
-                            uebungModel.setProperty(currentIndex, currentRole, text);
-
-                            // Reset Hintergrundfarbe bei URL-Änderung
-                            if (currentRole === "infoURLFrage" || currentRole === "infoURLAntwort") {
-                                uebungModel.setProperty(currentIndex, colorKey, "white");
-                            }
-                        }
-                    }
-                }
-
-                // ✅ Zuverlässige Farbbindung direkt im Rectangle
                 background: Rectangle {
                     radius: 3
                     border.color: textField.activeFocus ? "blue" : "#ccc"
                     color: bgColor
                 }
 
-                // Kontextmenü für rechte Maustaste
+                onTextChanged: {
+                    if (currentIndex < 0 || currentIndex >= uebungModel.count) return;
+
+                    if (currentRole === "nummer") {
+                        var n = parseInt(text, 10);
+                        if (!Number.isFinite(n)) n = 0;
+                        if (uebungModel.get(currentIndex).nummer !== n)
+                            uebungModel.setProperty(currentIndex, "nummer", n);
+                    } else {
+                        var modelVal = uebungModel.get(currentIndex)[currentRole] || "";
+                        if (text !== modelVal)
+                            uebungModel.setProperty(currentIndex, currentRole, text);
+                        if (currentRole === "infoURLFrage" || currentRole === "infoURLAntwort")
+                            uebungModel.setProperty(currentIndex, colorKey, "white");
+                    }
+                }
+
+                // ➜ Rechte-Maustaste (Kontextmenüs) weiterhin vorhanden
                 MouseArea {
                     anchors.fill: parent
                     acceptedButtons: Qt.RightButton
@@ -739,13 +839,12 @@ Window {
                             mouse.accepted = false;
                             return;
                         }
+                        var role = textField.parent.roleName;
 
-                        var currentRole = textField.parent.roleName;
-
-                        if (currentRole === "infoURLFrage" || currentRole === "infoURLAntwort") {
-                            openContextMenu(urlContextMenu, currentRole, textField.parent.rowIndex, mouse);
-                        } else if (currentRole === "imagefileFrage" || currentRole === "imagefileAntwort") {
-                            openContextMenu(imageContextMenu, currentRole, textField.parent.rowIndex, mouse, true);
+                        if (role === "infoURLFrage" || role === "infoURLAntwort") {
+                            openContextMenu(urlContextMenu, role, textField.parent.rowIndex, mouse);
+                        } else if (role === "imagefileFrage" || role === "imagefileAntwort") {
+                            openContextMenu(imageContextMenu, role, textField.parent.rowIndex, mouse, true);
                         } else {
                             mouse.accepted = false;
                         }
@@ -756,10 +855,10 @@ Window {
                         menu.rowIndex = rowIndex;
 
                         const selected = listView.selectedIndices.filter(i => i >= 0);
-
-                        // 👉 Nur für urlContextMenu Breite anpassen
                         if (menu === urlContextMenu && menu.adjustWidth) {
-                            menu.dynamicMenuText = selected.length === 0 ? "Webseite anzeigen" : "Alle markierten Webseiten anzeigen";
+                            menu.dynamicMenuText = selected.length === 0
+                                ? "Webseite anzeigen"
+                                : "Alle markierten Webseiten anzeigen";
                             menu.adjustWidth();
                         }
 
@@ -767,9 +866,7 @@ Window {
                         menu.x = globalPos.x;
                         menu.y = globalPos.y;
 
-                        if (isImage && menu.buildMenu) {
-                            menu.buildMenu();
-                        }
+                        if (isImage && menu.buildMenu) menu.buildMenu();
 
                         menu.open();
                         mouse.accepted = true;
@@ -798,6 +895,9 @@ Window {
             for (var i = 0; i < uebungenData.uebungsliste.length; ++i) {
                 let eintrag = JSON.parse(JSON.stringify(uebungenData.uebungsliste[i]));
                 // ✅ Neue Farb-            // ✅ hier fügst du die Defaults ein:
+                if (!("nummer" in eintrag)) {
+                    eintrag.nummer = i + 1; // Fallback, falls Parser das Attribut noch nicht liefert
+                }
                 if (!("hideAuthor" in eintrag)) {
                     eintrag.hideAuthor = false;
                 }
@@ -882,22 +982,27 @@ Window {
             Layout.fillHeight: true
 
             Item {
-                anchors.fill: parent
                 id: listArea
+                anchors.fill: parent
 
+                // Breite für 4 Ziffern + etwas Padding (dynamisch per FontMetrics)
+                FontMetrics { id: numFM }
+                property real numColWidth: Math.max(56, numFM.boundingRect("8888").width + 16)
+
+                // übrige Spalten (Minimum)
                 property real columnWidth: 150
-                property real totalContentWidth: 150 * columnCount + (columnCount - 1) * columnSpacing
+                property real totalContentWidth: 0
 
-                onWidthChanged: {
-                    columnWidth = Math.max(150, (width - (columnCount - 1) * columnSpacing) / columnCount);
-                    totalContentWidth = columnWidth * columnCount + (columnCount - 1) * columnSpacing;
+                onWidthChanged: recalcWidths()
+                Component.onCompleted: recalcWidths()
+
+                function recalcWidths() {
+                    const restCols = columnCount - 1
+                    const spacing  = columnSpacing * (columnCount - 1)
+                    const restWidth = Math.max(0, width - numColWidth - spacing)
+                    columnWidth = Math.max(150, restWidth / restCols)
+                    totalContentWidth = numColWidth + restCols * columnWidth + spacing
                 }
-
-                Component.onCompleted: {
-                    columnWidth = Math.max(150, (width - (columnCount - 1) * columnSpacing) / columnCount);
-                    totalContentWidth = columnWidth * columnCount + (columnCount - 1) * columnSpacing;
-                }
-
                 // Kopfzeile
                 Rectangle {
                     id: header
@@ -911,16 +1016,17 @@ Window {
                         spacing: columnSpacing
 
                         Repeater {
-                            model: ["FrageSubjekt", "AntwortSubjekt", "SubjektPrefixFrage",
-                                   "SubjektPrefixAntwort", "ImagefileFrage", "ImagefileAntwort",
-                                   "InfoURLFrage", "InfoURLAntwort"]
+                            model: ["Nummer","FrageSubjekt","AntwortSubjekt","SubjektPrefixFrage",
+                                    "SubjektPrefixAntwort","ImagefileFrage","ImagefileAntwort",
+                                    "InfoURLFrage","InfoURLAntwort"]
 
                             Item {
-                                width: listArea.columnWidth
+                                width: (index === 0 ? listArea.numColWidth : listArea.columnWidth)
                                 height: parent.height
 
                                 Label {
-                                    width: listArea.columnWidth * 0.8
+                                    // statt fester Breite relative nehmen, damit es auch in der schmalen Spalte passt
+                                    width: parent.width * 0.9
                                     height: parent.height * 0.8
                                     anchors.centerIn: parent
                                     text: modelData
@@ -1025,13 +1131,13 @@ Window {
                             spacing: columnSpacing
 
                             Repeater {
-                                model: [ "frageSubjekt", "antwortSubjekt", "subjektPrefixFrage", "subjektPrefixAntwort",
-                                         "imagefileFrage", "imagefileAntwort", "infoURLFrage", "infoURLAntwort" ]
+                                model: ["nummer","frageSubjekt","antwortSubjekt","subjektPrefixFrage",
+                                        "subjektPrefixAntwort","imagefileFrage","imagefileAntwort",
+                                        "infoURLFrage","infoURLAntwort"]
 
                                 Item {
-                                    width: listArea.columnWidth
+                                    width: (index === 0 ? listArea.numColWidth : listArea.columnWidth)
                                     height: parent.height
-                                    property string bgColor: "white"
 
                                     Loader {
                                         id: loaderId
@@ -1044,31 +1150,24 @@ Window {
                                             const bgKey = roleName + "_bgcolor";
                                             loaderId.item.roleName = roleName;
                                             loaderId.item.rowIndex = rowIndex;
-                                            loaderId.item.bgColor = uebungModel.get(rowIndex)[bgKey] || "white";
-                                            loaderId.item.textVal = uebungModel.get(rowIndex)[roleName];
+                                            loaderId.item.bgColor  = uebungModel.get(rowIndex)[bgKey] || "white";
+                                            const v = uebungModel.get(rowIndex)[roleName];
+                                            loaderId.item.textVal = (v === undefined || v === null) ? "" : String(v);
                                         }
 
                                         Connections {
                                             target: uebungModel
                                             property string roleNameCopy: modelData
                                             property int rowIndexCopy: indexOutside
-
                                             function onDataChanged(index, roles) {
                                                 const realIndex = (typeof index === "object" && typeof index.row === "number") ? index.row : index;
+                                                if (realIndex !== rowIndexCopy || !loaderId.item) return;
 
-                                                if (realIndex !== rowIndexCopy || !loaderId.item)
-                                                    return;
-
-                                                const updatedData = uebungModel.get(rowIndexCopy);
-                                                const targetItem = loaderId.item;
-
-                                                // 🔁 Hintergrundfarbe setzen (bestehende Funktionalität)
+                                                const updated = uebungModel.get(rowIndexCopy);
                                                 const bgKey = roleNameCopy + "_bgcolor";
-                                                targetItem.bgColor = updatedData[bgKey] || "white";
-
-
-                                                // 🔁 Option: falls weitere Properties am Item existieren, die im Model abgebildet sind
-                                                targetItem.textVal = updatedData[roleNameCopy];
+                                                loaderId.item.bgColor = updated[bgKey] || "white";
+                                                const v = updated[roleNameCopy];
+                                                loaderId.item.textVal = (v === undefined || v === null) ? "" : String(v);
                                             }
                                         }
                                     }
@@ -1099,12 +1198,18 @@ Window {
                         }
                     }
                 }
-
                 Button {
                     text: "Hinzufügen"
-                    onClicked: uebungModel.append({})
+                    onClicked: {
+                        // optional: automatisch nächste freie Nummer
+                        var maxNum = -1;
+                        for (var i = 0; i < uebungModel.count; ++i) {
+                            var n = Number(uebungModel.get(i).nummer);
+                            if (Number.isFinite(n) && n > maxNum) maxNum = n;
+                        }
+                        uebungModel.append({ nummer: maxNum + 1 });
+                    }
                 }
-
                 Button {
                     text: "Löschen"
                     onClicked: requestDeleteSelectedRows()
@@ -1121,6 +1226,10 @@ Window {
                             });
                         }
                     }
+                }
+                Button {
+                    text: "Zeige doppelte Zeilen"
+                    onClicked: showDuplicateRowsByFrageSubjekt()
                 }
             }
 
