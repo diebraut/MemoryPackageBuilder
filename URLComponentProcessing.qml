@@ -402,56 +402,30 @@ Window {
             handleDownloadSucceeded(filePath);
         }
 
-        onDownloadFailed: {
-            console.log("❌ Fehler beim Download:", errorString);
-            handleDownloadFailed(errorString);
+        onDownloadFailed: function(filePath) {
+            console.log("❌ Fehler beim Download:", filePath);
+            handleDownloadFailed(filePath);
         }
     }
 
     LicenceInfoWiki {
         id: licenceFetcher
+        // falls du eine andere Standardbreite möchtest:
+        thumbWidth: 500
 
         onInfoReady: function(info) {
             currentImageLicenceInfo = info;
 
-            console.log("✅ Lizenzinfo erhalten name :", info.licenceName);
-            console.log("✅authorName:",info.authorName);
-            console.log("✅authorUrl:",info.authorUrl);
-            console.log("✅licenceName:",info.licenceName);
-            console.log("✅licenceUrl:",info.licenceUrl);
-            console.log("✅imageDescriptionUrl",info.imageDescriptionUrl);
-            console.log("✅imageUrl:",info.imageUrl);
+            var urlToLoad = info.thumbUrl && info.thumbUrl.length > 0
+                          ? info.thumbUrl
+                          : info.imageUrl; // Fallback: Originalgröße
 
-            if (licenceFetchMode === "bildLaden" && info.imageUrl.includes("wikimedia.org")) {
-                var thumbUrl = build500pxThumbnailUrl(info.imageUrl);
-                console.log("🌐 Lade 500px-Thumbnail:", thumbUrl);
-                saveImageTemporarily(thumbUrl);
-            } else if (licenceFetchMode === "rechteck" || licenceFetchMode === "rechteckTransp") {
-                console.log("🟩 Lizenzinfo für Rechteck gespeichert. Rechteck wird jetzt erzeugt.");
-                handleRechteckErzeugen(info,licenceFetchMode === "rechteckTransp");
-            } else {
-                console.log("ℹ️ Lizenzinfo erhalten, aber kein weiterer Vorgang definiert.");
-            }
+            console.log("🌐 Lade Thumbnail/Original:", urlToLoad);
+            saveImageTemporarily(urlToLoad);
         }
 
         onErrorOccurred: function(message) {
             console.warn("❌ Fehler beim Abrufen der Lizenzinfos:", message);
-        }
-
-        function build500pxThumbnailUrl(originalUrl) {
-            // Beispiel: https://upload.wikimedia.org/wikipedia/commons/b/be/FILENAME.svg
-            var parts = originalUrl.split('/');
-            if (parts.length < 7) {
-                console.warn("❗ Ungültige Wikimedia-URL:", originalUrl);
-                return originalUrl;  // Fallback: Original verwenden
-            }
-
-            var dir1 = parts[parts.length - 3];  // z.B. 'b'
-            var dir2 = parts[parts.length - 2];  // z.B. 'be'
-            var file = parts[parts.length - 1];  // z.B. 'FILENAME.svg'
-
-            return "https://upload.wikimedia.org/wikipedia/commons/thumb/"
-                + dir1 + "/" + dir2 + "/" + file + "/500px-" + file + ".png";
         }
     }
 

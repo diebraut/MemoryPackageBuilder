@@ -772,62 +772,66 @@ Window {
             id: columnItemId
             property string roleName
             property int rowIndex
-            property int colWidth
+
+            // Guard gegen Ping-Pong bei programmatischen Updates
+            property bool _updatingFromModel: false
+
+            // vom Loader befüllt
+            property string bgColor: "white"
+            property string textVal: ""
 
             height: 40
-
-            // Eigenschaften zur Bindung
-            property string currentRole: roleName
-            property int currentIndex: rowIndex
-            property string colorKey: currentRole + "_bgcolor"
-            property string bgColor: "white"  // neu
-            property string textVal: ""  // neu
 
             TextField {
                 id: textField
                 anchors.centerIn: parent
                 height: parent.height * 0.8
 
-                // Breite für 4 Ziffern dynamisch nach Font bestimmen
+                // Breite für 4 Ziffern dynamisch
                 FontMetrics { id: fm; font: textField.font }
                 readonly property int fourDigitWidth: Math.ceil(fm.boundingRect("8888").width) + 12
 
-                // Nummer-Spalte: schmal; andere Spalten: wie gehabt ~90%
-                width: currentRole === "nummer"
+                // Nummer-Spalte schmaler, Rest ~90%
+                width: columnItemId.roleName === "nummer"
                        ? Math.min(parent.width * 0.9, Math.max(48, fourDigitWidth))
                        : parent.width * 0.9
 
-                // Daten + Validierung
-                text: textVal
+                // Datenbindung (zweirichtig); Guard verhindert Echo zurück
+                text: columnItemId.textVal
+
                 IntValidator { id: nummerValidator; bottom: 0; top: 100000000 }
-                validator: currentRole === "nummer" ? nummerValidator : null
-                horizontalAlignment: currentRole === "nummer" ? Text.AlignRight : Text.AlignLeft
-                inputMethodHints: currentRole === "nummer" ? Qt.ImhDigitsOnly : Qt.ImhNone
+                validator: columnItemId.roleName === "nummer" ? nummerValidator : null
+                horizontalAlignment: columnItemId.roleName === "nummer" ? Text.AlignRight : Text.AlignLeft
+                inputMethodHints: columnItemId.roleName === "nummer" ? Qt.ImhDigitsOnly : Qt.ImhNone
 
                 background: Rectangle {
                     radius: 3
                     border.color: textField.activeFocus ? "blue" : "#ccc"
-                    color: bgColor
+                    color: columnItemId.bgColor
                 }
 
                 onTextChanged: {
-                    if (currentIndex < 0 || currentIndex >= uebungModel.count) return;
+                    if (columnItemId._updatingFromModel) return;
+                    if (columnItemId.rowIndex < 0 || columnItemId.rowIndex >= uebungModel.count) return;
 
-                    if (currentRole === "nummer") {
+                    if (columnItemId.roleName === "nummer") {
                         var n = parseInt(text, 10);
                         if (!Number.isFinite(n)) n = 0;
-                        if (uebungModel.get(currentIndex).nummer !== n)
-                            uebungModel.setProperty(currentIndex, "nummer", n);
+                        if (uebungModel.get(columnItemId.rowIndex).nummer !== n)
+                            uebungModel.setProperty(columnItemId.rowIndex, "nummer", n);
                     } else {
-                        var modelVal = uebungModel.get(currentIndex)[currentRole] || "";
+                        var modelVal = uebungModel.get(columnItemId.rowIndex)[columnItemId.roleName] || "";
                         if (text !== modelVal)
-                            uebungModel.setProperty(currentIndex, currentRole, text);
-                        if (currentRole === "infoURLFrage" || currentRole === "infoURLAntwort")
-                            uebungModel.setProperty(currentIndex, colorKey, "white");
+                            uebungModel.setProperty(columnItemId.rowIndex, columnItemId.roleName, text);
+
+                        if (columnItemId.roleName === "infoURLFrage" || columnItemId.roleName === "infoURLAntwort") {
+                            const colorKey = columnItemId.roleName + "_bgcolor";
+                            uebungModel.setProperty(columnItemId.rowIndex, colorKey, "white");
+                        }
                     }
                 }
 
-                // ➜ Rechte-Maustaste (Kontextmenüs) weiterhin vorhanden
+                // ===== RECHTSKLICK-KONTEXTMENÜS (wie bei dir, nur robust auf columnItemId referenziert) =====
                 MouseArea {
                     anchors.fill: parent
                     acceptedButtons: Qt.RightButton
@@ -839,12 +843,12 @@ Window {
                             mouse.accepted = false;
                             return;
                         }
-                        var role = textField.parent.roleName;
+                        var role = columnItemId.roleName;
 
                         if (role === "infoURLFrage" || role === "infoURLAntwort") {
-                            openContextMenu(urlContextMenu, role, textField.parent.rowIndex, mouse);
+                            openContextMenu(urlContextMenu, role, columnItemId.rowIndex, mouse);
                         } else if (role === "imagefileFrage" || role === "imagefileAntwort") {
-                            openContextMenu(imageContextMenu, role, textField.parent.rowIndex, mouse, true);
+                            openContextMenu(imageContextMenu, role, columnItemId.rowIndex, mouse, true);
                         } else {
                             mouse.accepted = false;
                         }
@@ -1139,6 +1143,7 @@ Window {
                                     width: (index === 0 ? listArea.numColWidth : listArea.columnWidth)
                                     height: parent.height
 
+                                    // ===================== Loader im Delegate =====================
                                     Loader {
                                         id: loaderId
                                         anchors.fill: parent
@@ -1146,28 +1151,42 @@ Window {
                                         property int rowIndex: indexOutside
                                         sourceComponent: columnEditor
 
-                                        onLoaded: {
+                                        function refreshFromModel() {
+                                            if (!item) return;
+                                            const rec = (rowIndex >= 0 && rowIndex < uebungModel.count) ? uebungModel.get(rowIndex) : null;
                                             const bgKey = roleName + "_bgcolor";
-                                            loaderId.item.roleName = roleName;
-                                            loaderId.item.rowIndex = rowIndex;
-                                            loaderId.item.bgColor  = uebungModel.get(rowIndex)[bgKey] || "white";
-                                            const v = uebungModel.get(rowIndex)[roleName];
-                                            loaderId.item.textVal = (v === undefined || v === null) ? "" : String(v);
+
+                                            item._updatingFromModel = true; // Guard ein
+                                            item.bgColor = (rec && rec[bgKey]) || "white";
+                                            const v = rec ? rec[roleName] : "";
+                                            item.textVal = (v === undefined || v === null) ? "" : String(v);
+                                            item._updatingFromModel = false; // Guard aus
                                         }
+
+                                        onLoaded: {
+                                            // Kritisch: dynamische Bindungen, damit Delegate-Recycling korrekt wirkt
+                                            item.roleName = Qt.binding(() => loaderId.roleName);
+                                            item.rowIndex = Qt.binding(() => loaderId.rowIndex);
+                                            refreshFromModel();
+                                        }
+
+                                        onRoleNameChanged: refreshFromModel()
+                                        onRowIndexChanged:  refreshFromModel()
 
                                         Connections {
                                             target: uebungModel
-                                            property string roleNameCopy: modelData
-                                            property int rowIndexCopy: indexOutside
-                                            function onDataChanged(index, roles) {
-                                                const realIndex = (typeof index === "object" && typeof index.row === "number") ? index.row : index;
-                                                if (realIndex !== rowIndexCopy || !loaderId.item) return;
+                                            function onDataChanged(changedIndex, roles) {
+                                                const realIndex = (typeof changedIndex === "object" && typeof changedIndex.row === "number")
+                                                                  ? changedIndex.row : changedIndex;
+                                                if (realIndex !== loaderId.rowIndex || !loaderId.item) return;
 
-                                                const updated = uebungModel.get(rowIndexCopy);
-                                                const bgKey = roleNameCopy + "_bgcolor";
-                                                loaderId.item.bgColor = updated[bgKey] || "white";
-                                                const v = updated[roleNameCopy];
-                                                loaderId.item.textVal = (v === undefined || v === null) ? "" : String(v);
+                                                // Optional: nur reagieren, wenn unsere Rolle (oder deren _bgcolor) betroffen ist
+                                                if (roles && roles.length &&
+                                                    roles.indexOf(loaderId.roleName) === -1 &&
+                                                    roles.indexOf(loaderId.roleName + "_bgcolor") === -1)
+                                                    return;
+
+                                                loaderId.refreshFromModel();
                                             }
                                         }
                                     }

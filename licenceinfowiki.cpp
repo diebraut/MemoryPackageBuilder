@@ -1,4 +1,5 @@
 #include "LicenceInfoWiki.h"
+
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
@@ -16,96 +17,132 @@ LicenceInfoWiki::LicenceInfoWiki(QObject *parent) : QObject(parent)
 
 void LicenceInfoWiki::fetchLicenceInfo(const QString &fileTitle)
 {
-    lastFileTitle = fileTitle;
-    QUrl url("https://commons.wikimedia.org/w/api.php");
-    QUrlQuery query;
-    query.addQueryItem("action", "query");
-    query.addQueryItem("format", "json");
-    query.addQueryItem("prop", "imageinfo");
-    query.addQueryItem("iiprop", "url|size|mime|extmetadata");
+    // Titel merken und normalisieren (Unterstriche statt Leerzeichen)
+    lastFileTitle = fileTitle.trimmed();
+    if (lastFileTitle.contains(' '))
+        lastFileTitle.replace(' ', '_');
 
-    // Titel korrekt encodieren
-    QString encodedTitle = QString::fromUtf8(QUrl::toPercentEncoding(fileTitle));
-    query.addQueryItem("titles", encodedTitle);
+    // 1) Zuerst Commons versuchen
+    triedEnwiki = false;
+    makeRequest(QUrl(QStringLiteral("https://commons.wikimedia.org/w/api.php")), "commons");
+}
+
+void LicenceInfoWiki::makeRequest(const QUrl &apiBase, const char *apiKind)
+{
+    QUrl url(apiBase);
+    QUrlQuery query;
+    query.addQueryItem("action",  "query");
+    query.addQueryItem("format",  "json");
+    query.addQueryItem("prop",    "imageinfo");
+    query.addQueryItem("iiprop",  "url|size|mime|extmetadata"); // Original + Metadaten
+    query.addQueryItem("iiurlwidth", QString::number(m_thumbWidth)); // ← gewünschte Breite
+    // query.addQueryItem("iiurlheight", "500"); // optional, wenn du lieber Höhe vorgibst
+    query.addQueryItem("titles",  lastFileTitle); // nicht manuell double-encoden
 
     url.setQuery(query);
-
-    manager.get(QNetworkRequest(url));
+    QNetworkRequest req(url);
+    QNetworkReply *rep = manager.get(req);
+    rep->setProperty("api_kind", QString::fromUtf8(apiKind));
 }
 
 void LicenceInfoWiki::onReplyFinished(QNetworkReply *reply)
 {
+    const QString apiKind = reply->property("api_kind").toString();
+
     if (reply->error() != QNetworkReply::NoError) {
-        emit errorOccurred(reply->errorString());
+        // Fehler – Fallback auf enwiki, falls noch nicht versucht
+        const QString err = reply->errorString();
         reply->deleteLater();
+
+        if (apiKind == QLatin1String("commons") && !triedEnwiki) {
+            triedEnwiki = true;
+            makeRequest(QUrl(QStringLiteral("https://en.wikipedia.org/w/api.php")), "enwiki");
+            return;
+        }
+
+        emit errorOccurred(err);
         return;
     }
 
-    QByteArray data = reply->readAll();
-    //qDebug().noquote() << "📥 Antwort JSON:" << QString::fromUtf8(data);
-    QJsonDocument doc = QJsonDocument::fromJson(data);
-    QJsonObject root = doc.object();
+    const QByteArray data = reply->readAll();
+    reply->deleteLater();
 
-    QJsonObject pages = root.value("query").toObject().value("pages").toObject();
-    if (pages.isEmpty()) {
-        emit errorOccurred("Keine Bildinformationen gefunden");
-        reply->deleteLater();
+    QJsonParseError jerr{};
+    const QJsonDocument doc = QJsonDocument::fromJson(data, &jerr);
+    if (jerr.error != QJsonParseError::NoError) {
+        // JSON defekt – Fallback auf enwiki, falls noch nicht versucht
+        if (apiKind == QLatin1String("commons") && !triedEnwiki) {
+            triedEnwiki = true;
+            makeRequest(QUrl(QStringLiteral("https://en.wikipedia.org/w/api.php")), "enwiki");
+            return;
+        }
+        emit errorOccurred(QStringLiteral("JSON-Fehler: %1").arg(jerr.errorString()));
         return;
     }
 
-    WikiLicenceInfo info;
+    const QJsonObject root = doc.object();
+
+    // Versuchen zu parsen; wenn keine imageinfo → Fallback
+    const bool ok = parseAndEmit(root, apiKind);
+    if (!ok) {
+        if (apiKind == QLatin1String("commons") && !triedEnwiki) {
+            triedEnwiki = true;
+            makeRequest(QUrl(QStringLiteral("https://en.wikipedia.org/w/api.php")), "enwiki");
+            return;
+        }
+        emit errorOccurred(QStringLiteral("Keine 'imageinfo' in der Antwort vorhanden."));
+    }
+}
+
+bool LicenceInfoWiki::parseAndEmit(const QJsonObject &root, const QString &apiKind)
+{
+    const QJsonObject pages = root.value("query").toObject().value("pages").toObject();
+    if (pages.isEmpty()) return false;
 
     for (const auto &pageVal : pages) {
-        QJsonObject page = pageVal.toObject();
-        QJsonArray imageinfoArray = page.value("imageinfo").toArray();
+        const QJsonObject page = pageVal.toObject();
+        const QJsonArray imageinfoArray = page.value("imageinfo").toArray();
         if (imageinfoArray.isEmpty()) continue;
 
-        QJsonObject imageinfo = imageinfoArray.at(0).toObject();
+        const QJsonObject imageinfo = imageinfoArray.at(0).toObject();
+        const QJsonObject extMeta   = imageinfo.value("extmetadata").toObject();
 
-        QJsonObject extMeta = imageinfo.value("extmetadata").toObject();
+        const QString originalUrl = imageinfo.value("url").toString();
+        const QString thumbUrl    = imageinfo.value("thumburl").toString(); // ← fertig generiertes Thumb
 
-        // Helper-Lambda für sicheren Zugriff
-        auto getExtMetaValue = [](const QJsonObject &extMeta, const QString &key) -> QString {
-            if (extMeta.contains(key)) {
-                return extMeta.value(key).toObject().value("value").toString();
-            }
-            return QString();
+        auto getExt = [](const QJsonObject &m, const char *k){
+            return m.value(QLatin1String(k)).toObject().value("value").toString();
         };
-        info.imageUrl = imageinfo.value("url").toString();
-        info.imageDescriptionUrl = "https://commons.wikimedia.org/wiki/" + lastFileTitle;
-        // Autor
-        info.authorName = getExtMetaValue(extMeta, "Artist");
-        info.authorUrl = "";
 
-        // Autor-Name und Link extrahieren
-        static const QRegularExpression rx("<a[^>]*href=\"([^\"]+)\"[^>]*>([^<]+)</a>");
-        QRegularExpressionMatch match = rx.match(info.authorName);
-        if (match.hasMatch()) {
-            info.authorUrl = match.captured(1);
-            info.authorName = match.captured(2);
+        // Autor
+        QString authorName = getExt(extMeta, "Artist");
+        QString authorUrl;
+        static const QRegularExpression rx("<a[^>]*href=\"([^\"]+)\"[^>]*>([^<]+)</a>", QRegularExpression::CaseInsensitiveOption);
+        if (auto m = rx.match(authorName); m.hasMatch()) {
+            authorUrl  = m.captured(1);
+            authorName = m.captured(2);
         }
 
         // Lizenz
-        info.licenceName = getExtMetaValue(extMeta, "LicenseShortName");
-        info.licenceUrl = getExtMetaValue(extMeta, "LicenseUrl");
+        const QString licenceName = getExt(extMeta, "LicenseShortName");
+        const QString licenceUrl  = getExt(extMeta, "LicenseUrl");
 
-        // Debug-Ausgabe (optional)
-        /*
-        qDebug() << "✅ Bildquelle:" << info.imageDescriptionUrl;
-        qDebug() << "👤 Autor:" << info.authorName << info.authorUrl;
-        qDebug() << "📜 Lizenz:" << info.licenceName << info.licenceUrl;
-        */
+        // Beschreibungsseite
+        const QString descHost = (apiKind == QLatin1String("commons")) ? "commons.wikimedia.org"
+                                                                       : "en.wikipedia.org";
+        const QString imageDescriptionUrl = QString("https://%1/wiki/%2").arg(descHost, lastFileTitle);
 
-        QJsonObject jsonInfo;
-        jsonInfo["imageUrl"] = info.imageUrl;
-        jsonInfo["imageDescriptionUrl"] = info.imageDescriptionUrl;
-        jsonInfo["authorName"] = info.authorName;
-        jsonInfo["authorUrl"] = info.authorUrl;
-        jsonInfo["licenceName"] = info.licenceName;
-        jsonInfo["licenceUrl"] = info.licenceUrl;
-        emit infoReady(jsonInfo);
-        break; // Nur erstes gefundenes Bild verwenden
+        QJsonObject out;
+        out["imageUrl"]            = originalUrl;              // Original
+        out["thumbUrl"]            = thumbUrl;                 // ← skaliert (falls vorhanden)
+        out["imageDescriptionUrl"] = imageDescriptionUrl;
+        out["authorName"]          = authorName;
+        out["authorUrl"]           = authorUrl;
+        out["licenceName"]         = licenceName;
+        out["licenceUrl"]          = licenceUrl;
+
+        emit infoReady(out);
+        return true;
     }
-
-    reply->deleteLater();
+    return false;
 }

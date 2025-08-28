@@ -4,43 +4,45 @@
 #include <QObject>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
-#include <QString>
+#include <QUrl>
 #include <QJsonObject>
 
-struct WikiLicenceInfo
-{
+struct WikiLicenceInfo {
+    QString imageUrl;
+    QString imageDescriptionUrl;
     QString authorName;
     QString authorUrl;
     QString licenceName;
     QString licenceUrl;
-    QString imageDescriptionUrl;
-    QString imageUrl;
 };
 
-Q_DECLARE_METATYPE(WikiLicenceInfo)
-
-class LicenceInfoWiki : public QObject
-{
+class LicenceInfoWiki : public QObject {
     Q_OBJECT
+    Q_PROPERTY(int thumbWidth READ thumbWidth WRITE setThumbWidth NOTIFY thumbWidthChanged)
 public:
     explicit LicenceInfoWiki(QObject *parent = nullptr);
 
-    // Startet den Abruf der Lizenzinformationen zu einem Wikipedia-Dateibild
     Q_INVOKABLE void fetchLicenceInfo(const QString &fileTitle);
 
-signals:
-    // Wird ausgelöst, wenn die Infos erfolgreich geladen wurden
-    void infoReady(QJsonObject info);
+    int thumbWidth() const { return m_thumbWidth; }
+    void setThumbWidth(int w) { if (m_thumbWidth == w) return; m_thumbWidth = w; emit thumbWidthChanged(); }
 
-    // Wird ausgelöst, wenn ein Fehler aufgetreten ist
+signals:
+    void infoReady(const QJsonObject &info);
     void errorOccurred(const QString &message);
+    void thumbWidthChanged();
 
 private slots:
     void onReplyFinished(QNetworkReply *reply);
 
 private:
+    void makeRequest(const QUrl &apiBase, const char *apiKind);
+    bool parseAndEmit(const QJsonObject &root, const QString &apiKind);
+
     QNetworkAccessManager manager;
     QString lastFileTitle;
+    bool triedEnwiki = false;
+    int m_thumbWidth = 500; // Standardbreite
 };
 
 #endif // LICENCEINFOWIKI_H
