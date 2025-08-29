@@ -7,6 +7,26 @@
 BuildExercisePackage::BuildExercisePackage(QObject *parent)
     : QObject(parent) {}
 
+#include <QFile>
+#include <QDebug>
+
+QString BuildExercisePackage::readTextFile(const QString& path) const {
+    QFile f(path);
+    if (!f.exists()) {
+        qWarning() << "readTextFile: Datei existiert nicht:" << path;
+        return {};
+    }
+    if (!f.open(QIODevice::ReadOnly)) {
+        qWarning() << "readTextFile: Öffnen fehlgeschlagen:" << path << f.errorString();
+        return {};
+    }
+    QByteArray data = f.readAll();
+    // UTF-8 BOM entfernen, falls vorhanden
+    if (data.startsWith("\xEF\xBB\xBF")) data.remove(0, 3);
+    return QString::fromUtf8(data);
+}
+
+
 bool BuildExercisePackage::buildPackage(const QString &csvPath, const QString &exerciseName, const QString &targetFolder) {
     QList<QVariantMap> dataList = parseCsv(csvPath);
     if (dataList.isEmpty()) {

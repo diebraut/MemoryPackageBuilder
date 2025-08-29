@@ -26,6 +26,21 @@ Window {
         id: buildExercize;
     }
 
+    function openDialog(packageData) {
+        console.log("🔍 Öffne Dialog für:", packageData.displayName)
+        let component = Qt.createComponent("UebungenDialog.qml")
+        if (component.status === Component.Ready) {
+            let dialog = component.createObject(window, {
+                packagePath: packageData.path,
+                io: buildExercize              // <<<<<<<<<<  NEU: Reader-Objekt durchreichen
+            })
+            if (dialog) dialog.show()
+            else console.error("❌ Dialog konnte nicht erzeugt werden.")
+        } else {
+            console.error("❌ Fehler beim Laden des Dialogs:", component.errorString())
+        }
+    }
+
     FileDialog {
         id: csvFileDialog
         title: "CSV-Datei auswählen"
@@ -333,23 +348,6 @@ Window {
     Component.onCompleted: {
         console.log("📦 Lade Packages aus:", packagesFolder)
         packageModel.loadPackages(packagesFolder)
-    }
-
-    function openDialog(packageData) {
-        console.log("🔍 Öffne Dialog für:", packageData.displayName)
-        let component = Qt.createComponent("UebungenDialog.qml")
-        if (component.status === Component.Ready) {
-            let dialog = component.createObject(window, {
-                packagePath: packageData.path  // 🔧 Hier übergeben wir den Pfad
-            })
-            if (dialog) {
-                dialog.show()
-            } else {
-                console.error("❌ Dialog konnte nicht erzeugt werden.")
-            }
-        } else {
-            console.error("❌ Fehler beim Laden des Dialogs:", component.errorString())
-        }
     }
 
 }

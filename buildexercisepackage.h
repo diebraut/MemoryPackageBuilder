@@ -12,6 +12,7 @@ public:
     explicit BuildExercisePackage(QObject *parent = nullptr);
 
     Q_INVOKABLE bool buildPackage(const QString &csvPath, const QString &exerciseName, const QString &targetFolder);
+    Q_INVOKABLE QString readTextFile(const QString& path) const;
 
 private:
     QList<QVariantMap> parseCsv(const QString &csvPath);

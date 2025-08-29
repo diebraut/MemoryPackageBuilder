@@ -2,6 +2,9 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 import QtQuick.Controls.Fusion 2.15
+import Qt.labs.platform 1.1 as Platform
+
+import FileHelper 1.0
 
 import ExersizeLoader 1.0
 
@@ -29,6 +32,8 @@ Window {
     property int columnCount: 9
     // Zwischenraum zwischen den Spalten (Row.spacing)
     property int columnSpacing: 5
+
+    property var io    // kommt aus main.qml, z.B. buildExercize
 
     EditExersizeDialog {
         id: editExersizeDialog
@@ -164,6 +169,204 @@ Window {
             });
         }
     }
+    /* ===== CSV-Import ===== */
+    Platform.FileDialog {
+        id: csvImportDialog
+        title: "CSV-Datei importieren"
+        folder: "file:///" + buildSourcenFolder  // ← wichtig
+        nameFilters: ["CSV-Dateien (*.csv)", "Alle Dateien (*.*)"]
+        fileMode: FileDialog.OpenFile
+        onAccepted: {
+            const url = (files && files.length) ? files[0].toString()
+                      : (file && file.toString ? file.toString() : String(file));
+            importCsvFromUrl(url);
+        }
+        onRejected: console.log("❌ CSV-Import abgebrochen.")
+    }
+
+    // --- Helfer: Separator erkennen ---
+    function _sniffSeparator(headerLine) {
+        if (headerLine.indexOf("\t") !== -1) return "\t";
+        const sc = (headerLine.match(/;/g) || []).length;
+        const cc = (headerLine.match(/,/g) || []).length;
+        return sc > cc ? ";" : ",";
+    }
+
+    // --- Helfer: CSV-Zeile in Felder zerlegen (mit Quotes) ---
+    function _splitCsvLine(line, sep) {
+        let out = [], cur = "", inQuotes = false;
+        for (let i = 0; i < line.length; i++) {
+            const ch = line[i];
+            if (ch === '"') {
+                if (inQuotes && line[i + 1] === '"') { cur += '"'; i++; }
+                else inQuotes = !inQuotes;
+            } else if (ch === sep && !inQuotes) {
+                out.push(cur); cur = "";
+            } else {
+                cur += ch;
+            }
+        }
+        out.push(cur);
+        return out;
+    }
+
+    // --- CSV-Text in Objekte parsen (FrageSubjekt, AntwortSubjekt, InfoUrlFrage, InfoUrlAntwort) ---
+    function _parseCsv(text) {
+        // BOM entfernen + Zeilen normalisieren
+        if (text.length && text.charCodeAt(0) === 0xFEFF) text = text.slice(1);
+        text = text.replace(/\r\n/g, "\n").replace(/\r/g, "\n");
+
+        const lines = text.split("\n").filter(l => l.trim().length > 0);
+        if (lines.length === 0) return [];
+
+        const sep = _sniffSeparator(lines[0]);
+
+        const headers = _splitCsvLine(lines[0], sep).map(h => h.trim());
+        // Header-Index-Suche (tolerant gegenüber Schreibweisen)
+        function idxOf(name) {
+            const target = name.toLowerCase().replace(/[\s_]/g, "");
+            for (let i = 0; i < headers.length; i++) {
+                const h = headers[i].toLowerCase().replace(/[\s_]/g, "");
+                if (h === target) return i;
+            }
+            return -1;
+        }
+        let iFrage = idxOf("FrageSubjekt");
+        let iAntwort = idxOf("AntwortSubjekt");
+        let iUrlF = idxOf("InfoUrlFrage");
+        let iUrlA = idxOf("InfoUrlAntwort");
+
+        // Falls kein Header: als 4 feste Spalten interpretieren
+        let startIdx = 1;
+        if (iFrage === -1 && iAntwort === -1 && iUrlF === -1 && iUrlA === -1) {
+            iFrage = 0; iAntwort = 1; iUrlF = 2; iUrlA = 3;
+            startIdx = 0;
+        }
+
+        const rows = [];
+        for (let li = startIdx; li < lines.length; li++) {
+            const cols = _splitCsvLine(lines[li], sep);
+            function get(i) {
+                const v = (i >= 0 && i < cols.length) ? cols[i] : "";
+                return String(v).trim().replace(/^"|"$/g, "");
+            }
+            const r = {
+                FrageSubjekt: get(iFrage),
+                AntwortSubjekt: get(iAntwort),
+                InfoUrlFrage: get(iUrlF),
+                InfoUrlAntwort: get(iUrlA)
+            };
+            if (r.FrageSubjekt) rows.push(r);
+        }
+        return rows;
+    }
+
+    // --- Datei laden und importieren ---
+    // Hilfsfunktion: file:///... → lokaler Pfad
+    function _urlToLocalPath(u) {
+        let s = String(u || "");
+        if (s.startsWith("file:///")) s = s.substring(8);     // "C:/foo/bar.csv" (Windows)
+        else if (s.startsWith("file://")) s = s.substring(7);
+        s = decodeURIComponent(s);
+        // Windows: manchmal beginnt es noch mit "/" vor "C:"
+        if (Qt.platform.os === "windows" && s.length >= 3 && s[0] === "/" && s[2] === ":") {
+            s = s.substring(1);
+        }
+        return s;
+    }
+
+    function importCsvFromUrl(fileUrl) {
+        if (/^file:/i.test(fileUrl)) {
+            const localPath = _urlToLocalPath(fileUrl);
+            console.log("📄 CSV fileUrl:", fileUrl);
+            console.log("📄 CSV localPath:", localPath);
+
+            let text = "";
+            try {
+                if (io && io.readTextFile) {           // <<<<<<<<  übergebenen Reader nutzen
+                    text = io.readTextFile(localPath);
+                }
+            } catch (e) {
+                console.warn("⚠️ Ausnahme beim Lesen:", e);
+                text = "";
+            }
+
+            if (!text || text.length === 0) {
+                infoPopup.text = "CSV konnte nicht gelesen werden:\n" + localPath;
+                infoPopup.open();
+                return;
+            }
+
+            const rows = _parseCsv(text);
+            _appendRowsToModel(rows);
+            return;
+        }
+
+        // HTTP/HTTPS bleibt wie gehabt …
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", fileUrl, true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status >= 200 && xhr.status < 300) {
+                    const rows = _parseCsv(xhr.responseText || "");
+                    _appendRowsToModel(rows);
+                } else {
+                    infoPopup.text = "CSV konnte nicht gelesen werden:\n" + fileUrl;
+                    infoPopup.open();
+                }
+            }
+        };
+        xhr.onerror = function() {
+            infoPopup.text = "Fehler beim Lesen der CSV:\n" + fileUrl;
+            infoPopup.open();
+        };
+        xhr.send();
+    }
+
+    // --- Rows ans Model hängen (mit Duplikat-Check auf FrageSubjekt) ---
+    function _appendRowsToModel(rows) {
+        if (!rows || rows.length === 0) {
+            infoPopup.text = "Keine gültigen Einträge in der CSV gefunden.";
+            infoPopup.open();
+            return;
+        }
+
+        // Duplikat-Set aus aktuellem Model
+        const exists = {};
+        for (let i = 0; i < uebungModel.count; i++) {
+            const k = (uebungModel.get(i).frageSubjekt || "").toString().trim().toLowerCase();
+            if (k) exists[k] = true;
+        }
+
+        let added = 0, skipped = 0;
+        let num = nextFreeNumber();
+
+        for (let r of rows) {
+            const key = (r.FrageSubjekt || "").toString().trim().toLowerCase();
+            if (!key || exists[key]) { skipped++; continue; }
+
+            exists[key] = true;
+
+            uebungModel.append({
+                nummer: num++,
+                frageSubjekt: r.FrageSubjekt || "",
+                antwortSubjekt: r.AntwortSubjekt || "",
+                infoURLFrage: r.InfoUrlFrage || "",
+                infoURLAntwort: r.InfoUrlAntwort || "",
+                hideAuthor: false,
+                infoURLFrage_bgcolor: "white",
+                infoURLAntwort_bgcolor: "white",
+                selected: false
+            });
+            added++;
+        }
+
+        // Persistieren
+        saveCurrentModelToXml();
+
+        infoPopup.text = "Import abgeschlossen:\nHinzugefügt: " + added + "\nÜbersprungen (Duplikate): " + skipped;
+        infoPopup.open();
+    }
 
     /* ===== Lösch-Workflow ===== */
     // --- Helfer: Auswahl aus der ListView holen ---
@@ -246,6 +449,9 @@ Window {
 
         // 3) In XML persistieren (schreibt komplette Liste inkl. neuer Nummern)
         saveCurrentModelToXml();
+        const data = ExersizeLoader.loadPackage(packagePath);
+        uebungModel.clear();
+        for (let e of data.uebungsliste) uebungModel.append(e);
 
         // 4) Auswahl/Fokus aufräumen
         listView.selectedIndices = [];
@@ -509,7 +715,7 @@ Window {
 
         function adjustWidth() {
             let maxTextWidth = 0;
-            for (let i = 0; i < count; ++i) {
+            for (let i = 0; i < urlContextMenu.count; ++i) {
                 const item = itemAt(i);
                 if (item && item.text) {
                     const width = urlMenuFontMetrics.boundingRect(item.text).width;
@@ -1292,6 +1498,11 @@ Window {
                 enabled: true
                 text: "Neu anlegen"
                 onClicked: csvFileDialog.open()
+            }
+            Button {
+                enabled: true
+                text: "Import aus CSV"
+                onClicked: csvImportDialog.open()
             }
         }
     }
