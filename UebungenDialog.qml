@@ -108,6 +108,100 @@ Window {
             });
         }
     }
+    Popup {
+        id: imageFileConflictPopup
+        modal: true
+        focus: true
+        width: 460
+
+        property alias text: conflictText.text
+        property var onSkip
+        property var onContinue
+
+        background: Rectangle {
+            color: "#fff7e6"
+            radius: 8
+            border.color: "black"
+            border.width: 2
+        }
+
+        contentItem: Column {
+            spacing: 8        // vorher 12
+            padding: 14       // vorher 18
+
+            Label {
+                id: conflictText
+                text: ""
+                textFormat: Text.RichText          // fett via <b> möglich
+                wrapMode: Text.WordWrap            // sauberer Umbruch
+                horizontalAlignment: Text.AlignLeft// << linksbündig
+                width: imageFileConflictPopup.width - 28   // vorher -36, enger
+                elide: Text.ElideNone
+            }
+
+            RowLayout {
+                spacing: 10
+
+                Button {
+                    text: "Überspringen"
+                    Layout.fillWidth: true
+                    onClicked: {
+                        imageFileConflictPopup.close();
+                        if (typeof imageFileConflictPopup.onSkip === "function")
+                            imageFileConflictPopup.onSkip();
+                    }
+                }
+
+                Button {
+                    text: "Fortfahren"              // schon umbenannt
+                    Layout.fillWidth: true
+                    onClicked: {
+                        imageFileConflictPopup.close();
+                        if (typeof imageFileConflictPopup.onContinue === "function")
+                            imageFileConflictPopup.onContinue();
+                    }
+                }
+            }
+        }
+
+        onVisibleChanged: if (visible) {
+            Qt.callLater(() => {
+                imageFileConflictPopup.x = (dialogWindow.width  - imageFileConflictPopup.width)  / 2;
+                imageFileConflictPopup.y = (dialogWindow.height - imageFileConflictPopup.height) / 2;
+            });
+        }
+    }
+    function findExistingImageAntwortForSubject(subject, exceptIndex) {
+        const key = (subject || "").toString().trim().toLowerCase();
+        if (!key) return null;
+
+        for (let i = 0; i < uebungModel.count; i++) {
+            if (i === exceptIndex) continue;
+            const rec = uebungModel.get(i);
+            const subj = (rec.antwortSubjekt || "").toString().trim().toLowerCase();
+            if (subj === key) {
+                const img = (rec.imagefileAntwort || "").toString().trim();
+                if (img) return { index: i, value: img };
+            }
+        }
+        return null;
+    }
+
+    function hasOtherImageAntwortForSubject(subject, exceptIndex) {
+        const key = (subject || "").toString().trim().toLowerCase();
+        if (!key) return false;
+
+        for (let i = 0; i < uebungModel.count; i++) {
+            if (i === exceptIndex) continue;
+            const rec = uebungModel.get(i);
+            const subj = (rec.antwortSubjekt || "").toString().trim().toLowerCase();
+            if (subj === key) {
+                const img = (rec.imagefileAntwort || "").toString().trim();
+                if (img) return true;  // es gibt schon eine Bilddatei für dieses Subjekt
+            }
+        }
+        return false;
+    }
 
     /* ===== Meldungen via Popup ===== */
     // ------------------------------------------------------------------
@@ -175,7 +269,7 @@ Window {
         title: "CSV-Datei importieren"
         folder: "file:///" + buildSourcenFolder  // ← wichtig
         nameFilters: ["CSV-Dateien (*.csv)", "Alle Dateien (*.*)"]
-        fileMode: FileDialog.OpenFile
+        fileMode: Platform.FileDialog.OpenFile
         onAccepted: {
             const url = (files && files.length) ? files[0].toString()
                       : (file && file.toString ? file.toString() : String(file));
@@ -748,20 +842,17 @@ Window {
                     console.warn("❌ Ungültiger rowIndex");
                     return;
                 }
-
                 const url = uebungModel.get(urlContextMenu.rowIndex)[role];
                 if (!url || url.trim() === "") {
                     console.log("⚠️ Kein URL-Wert vorhanden");
                     return;
                 }
-
                 validIndices = [urlContextMenu.rowIndex];
             } else {
                 validIndices = allIndices.filter(i => {
                     const url = uebungModel.get(i)[role];
                     return url && url.trim() !== "";
                 });
-
                 if (validIndices.length === 0) {
                     console.log("⚠️ Keine gültigen URLs");
                     return;
@@ -770,6 +861,85 @@ Window {
 
             let current = 0;
 
+            function openUrlDialogForIndex(index) {
+                const url = uebungModel.get(index)[role] || "";
+                const extraProp = (role === "infoURLFrage")
+                                  ? uebungModel.get(index).frageSubjekt
+                                  : uebungModel.get(index).antwortSubjekt;
+
+                const component = Qt.createComponent("qrc:/MemoryPackagesBuilder/URLComponentProcessing.qml");
+                if (component.status !== Component.Ready) {
+                    console.warn("❌ Fehler beim Laden:", component.errorString());
+                    return;
+                }
+
+                const win = component.createObject(null, {
+                    urlString: url,
+                    subjektName: extraProp,
+                    packagePath: packagePath,
+                    isMultiEdit: true,
+                    multiEditCurrentIndex: current,
+                    multiEditCount: validIndices.length,
+                    isLastStep: current === validIndices.length - 1
+                });
+
+                if (!win) {
+                    console.warn("❌ Fehler beim Erstellen des Dialogfensters.");
+                    return;
+                }
+
+                win.accepted.connect(function(newUrl, licenceInfo, savedFileExtension) {
+                    uebungModel.setProperty(index, role, newUrl);
+
+                    const prefix = (role === "infoURLFrage") ? "imageFrage"
+                                 : (role === "infoURLAntwort") ? "imageAntwort" : null;
+
+                    if (licenceInfo) {
+                        uebungModel.setProperty(index, prefix + "Author",
+                            licenceInfo.authorName + "[" + licenceInfo.authorUrl + "]");
+                        uebungModel.setProperty(index, prefix + "Lizenz",
+                            licenceInfo.licenceName + "[" + licenceInfo.licenceUrl + "]");
+                        uebungModel.setProperty(index, prefix + "BildDescription",
+                            licenceInfo.imageDescriptionUrl);
+                    }
+
+                    if (prefix) {
+                        const imageFileKey = (prefix === "imageFrage") ? "imagefileFrage" : "imagefileAntwort";
+                        let currentFileName = uebungModel.get(index)[imageFileKey];
+                        const subjectKey = (prefix === "imageFrage") ? "frageSubjekt" : "antwortSubjekt";
+                        const subjectValue = uebungModel.get(index)[subjectKey] || "";
+
+                        if (currentFileName && currentFileName.trim() !== "") {
+                            const baseName = currentFileName.substring(0, currentFileName.lastIndexOf("."));
+                            const currentExt = currentFileName.split(".").pop().toLowerCase();
+                            if (currentExt !== savedFileExtension.toLowerCase()) {
+                                const newName = baseName + "." + savedFileExtension;
+                                uebungModel.setProperty(index, imageFileKey, newName);
+                            }
+                        } else {
+                            const newName = subjectValue.trim() + "." + savedFileExtension;
+                            uebungModel.setProperty(index, imageFileKey, newName);
+                        }
+                    }
+
+                    saveCurrentModelToXml();
+                    current++;
+                    editNext();
+                });
+
+                win.continueRequested.connect(function() {
+                    current++;
+                    editNext();
+                });
+
+                win.rejected.connect(function() {
+                    console.log("🚫 Bearbeitung abgebrochen bei Index", index);
+                    // Kette hier nicht fortsetzen
+                });
+
+                win.show();
+            }
+
             function editNext() {
                 if (current >= validIndices.length) {
                     console.log("✅ Alle URLs bearbeitet.");
@@ -777,84 +947,47 @@ Window {
                 }
 
                 const index = validIndices[current];
-                const url = uebungModel.get(index)[role] || "";
-                const extraProp = (role === "infoURLFrage")
-                                  ? uebungModel.get(index).frageSubjekt
-                                  : uebungModel.get(index).antwortSubjekt;
 
-                const component = Qt.createComponent("qrc:/MemoryPackagesBuilder/URLComponentProcessing.qml");
+                // 💡 NEU: Nur für infoURLAntwort prüfen, ob ein anderes Item mit gleichem
+                // antwortSubjekt bereits eine imagefileAntwort gesetzt hat:
+                if (role === "infoURLAntwort") {
+                    const subj = uebungModel.get(index).antwortSubjekt || "";
+                    const hit = findExistingImageAntwortForSubject(subj, index);
+                    if (hit) {
+                        imageFileConflictPopup.text =
+                            "Bilddatei für „" + subj + "“ ist bereits vorhanden – " +
+                            "<b>&lt;Überspringen&gt;</b> oder Webseite bearbeiten <b>&lt;Fortfahren&gt;</b>?";
 
-                if (component.status === Component.Ready) {
-                    const win = component.createObject(null, {
-                        urlString: url,
-                        subjektName: extraProp,
-                        packagePath: packagePath,
-                        isMultiEdit: true,
-                        multiEditCurrentIndex: current,
-                        multiEditCount: validIndices.length,
-                        isLastStep: current === validIndices.length - 1 // 👈 wichtig
-                    });
-
-                    if (!win) {
-                        console.warn("❌ Fehler beim Erstellen des Dialogfensters.");
-                        return;
-                    }
-
-                    win.accepted.connect(function(newUrl, licenceInfo, savedFileExtension) {
-                        uebungModel.setProperty(index, role, newUrl);
-
-                        const prefix = (role === "infoURLFrage") ? "imageFrage"
-                                     : (role === "infoURLAntwort") ? "imageAntwort" : null;
-
-                        if (licenceInfo) {
-                            uebungModel.setProperty(index, prefix + "Author",
-                                licenceInfo.authorName + "[" + licenceInfo.authorUrl + "]");
-
-                            uebungModel.setProperty(index, prefix + "Lizenz",
-                                licenceInfo.licenceName + "[" + licenceInfo.licenceUrl + "]");
-
-                            uebungModel.setProperty(index, prefix + "BildDescription",
-                                licenceInfo.imageDescriptionUrl);
-
-                        }
-                        if (prefix) {
-                            const imageFileKey = (prefix === "imageFrage") ? "imagefileFrage" : "imagefileAntwort";
-                            let currentFileName = uebungModel.get(index)[imageFileKey];
-                            const subjectKey = (prefix === "imageFrage") ? "frageSubjekt" : "antwortSubjekt";
-                            const subjectValue = uebungModel.get(index)[subjectKey] || "";
-
-                            if (currentFileName && currentFileName.trim() !== "") {
-                                const baseName = currentFileName.substring(0, currentFileName.lastIndexOf("."));
-                                const currentExt = currentFileName.split(".").pop().toLowerCase();
-                                if (currentExt !== savedFileExtension.toLowerCase()) {
-                                    const newName = baseName + "." + savedFileExtension;
-                                    uebungModel.setProperty(index, imageFileKey, newName);
+                        imageFileConflictPopup.onSkip = function() {
+                            // 👉 Jetzt (und nur jetzt) die Datei aus der anderen Zeile übernehmen
+                            if (hit.value) {
+                                const currentImg = (uebungModel.get(index).imagefileAntwort || "").toString().trim();
+                                if (currentImg !== hit.value) {
+                                    uebungModel.setProperty(index, "imagefileAntwort", hit.value);
+                                    saveCurrentModelToXml(); // optional, aber sinnvoll
                                 }
-                            } else {
-                                const newName = subjectValue.trim() + "." + savedFileExtension;
-                                uebungModel.setProperty(index, imageFileKey, newName);
                             }
-                        }
-                        saveCurrentModelToXml();
-                        current++;
-                        editNext();
-                    });
-                    win.continueRequested.connect(function() {
-                        current++;
-                        editNext();
-                    });
-                    win.rejected.connect(function() {
-                        console.log("🚫 Bearbeitung abgebrochen bei Index", index);
-                        // ❗️ Kette hier nicht fortsetzen
-                    });
+                            // Mehrfachbearbeitung: weiter / sonst Ende
+                            if (current < validIndices.length - 1) {
+                                current++;
+                                editNext();
+                            } else {
+                                console.log("ℹ️ Vorgang beendet (letzter Eintrag übersprungen).");
+                            }
+                        };
 
-                    win.show();
+                        imageFileConflictPopup.onContinue = function() {
+                            // Kein Kopieren – direkt mit der Webseitenbearbeitung fortfahren
+                            openUrlDialogForIndex(index);
+                        };
 
-                } else {
-                    console.warn("❌ Fehler beim Laden:", component.errorString());
+                        imageFileConflictPopup.open();
+                        return; // auf Benutzerentscheidung warten
+                    }
                 }
+                // Keine Kollision → normal fortfahren
+                openUrlDialogForIndex(index);
             }
-
             editNext();
         }
     }
