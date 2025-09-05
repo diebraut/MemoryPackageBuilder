@@ -1,23 +1,25 @@
-# Qt Creator
-*.user
-*.user.*
-*.autosave
-*.pro.user
-*.qmake.stash
+# exakt ein Verzeichnis ignorieren
+build/
 
-# Build & temp
+# alle build-Ordner-Varianten (Qt/CMake/Xcode)
 build-*/
-*.o
-*.obj
-*.exe
-*.dll
-*.so
-*.a
-*.log
-*.tmp
-Makefile*
-moc_*
-ui_*
-qrc_*
-*.qmlc
-*.jsc
+memorytrainer.build*/
+memorytrainer.pro*/
+cmake-build-*/
+DerivedData/
+Makefile
+
+# Beispiel: deine Trainingspakete
+exercisepackages/
+
+# IDE/OS-Kleinkram
+*.pro.user
+*.user
+*.qmlproject.user
+.qmake.stash
+.DS_Store
+.idea/
+.vscode/
+*.xcworkspace/xcuserdata/
+*.xcodeproj/project.xcworkspace/xcuserdata/
+*.xcodeproj/project.xcworkspace/xcuserdata/

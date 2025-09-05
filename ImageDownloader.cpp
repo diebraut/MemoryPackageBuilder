@@ -32,6 +32,7 @@ void ImageDownloader::downloadImage(const QString &url, const QString &savePath)
         }
 
         QByteArray data = reply->readAll();
+        qDebug() << "SavePath=" <<savePath;
         QFile file(savePath);
         if (!file.open(QIODevice::WriteOnly)) {
             emit downloadFailed("Fehler beim Öffnen der Datei: " + file.errorString());
