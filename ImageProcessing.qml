@@ -211,6 +211,20 @@ Window {
         }
     }
 
+    function popupAtMouse(menu, mouse, sourceItem) {
+        if (!menu || !sourceItem )
+            return;
+
+        // Lokale → Fensterkoordinaten
+        let pos = sourceItem.mapToItem(sourceItem, mouse.x, mouse.y)
+
+        let x = isNaN(pos.x) ? 0 : pos.x
+        let y = isNaN(pos.y) ? 0 : pos.y
+
+        // WICHTIG: Qt 6 → popup(Qt.point())
+        menu.popup(Qt.point(x, y))
+    }
+
     Item {
         id: globalHelper
         anchors.fill: parent
@@ -874,7 +888,7 @@ Window {
 
                                         onClicked: (mouse) => {
                                             if (mouse.button === Qt.RightButton) {
-                                                rectMenu.popup(mouse.screenX, mouse.screenY) // Kontextmenü nur bei Rechtsklick
+                                                popupAtMouse(rectMenu, mouse, moveMA)
                                                 mouse.accepted = true
                                             } else {
                                                 // Linksklick: keine Sonderbehandlung – Drag läuft über onPressed/onPositionChanged
@@ -1118,6 +1132,7 @@ Window {
                                 }
 
                                 MouseArea {
+                                    id: arrowMA
                                     anchors.fill: parent
                                     drag.target: parent
                                     cursorShape: Qt.OpenHandCursor
@@ -1141,7 +1156,7 @@ Window {
 
                                     onClicked: (mouse) => {
                                         if (mouse.button === Qt.RightButton) {
-                                            colorMenu.popup(mouse.screenX, mouse.screenY)
+                                            popupAtMouse(colorMenu, mouse, arrowMA)
                                             mouse.accepted = true
                                         }
                                     }
