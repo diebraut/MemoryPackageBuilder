@@ -1,10 +1,10 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
-import QtQuick.Controls.Fusion 2.15
+import QtQuick.Controls.Fusion
 import Qt.labs.platform 1.1 as Platform
 
-import FileHelper 1.0
+//import FileHelper 1.0
 
 import ExersizeLoader 1.0
 
@@ -18,6 +18,8 @@ Window {
 
     // Eigenschaften
     property string packagePath
+    property int package_count: 1
+
     property bool sequentiell: sequentiellCheckBox.checked
     property bool hideAuthorByQuestion: hideAuthorByQuestionCheckBox.checked
     property bool umgekehrt: umgekehrtCheckBox.checked

@@ -13,6 +13,9 @@ public:
     Q_INVOKABLE static bool fileExists(const QString &path);
     Q_INVOKABLE bool removeFilesWithSameBaseName(const QString& filePath);
     Q_INVOKABLE bool removeTMPFiles(const QString &path);
+    // ✅ NEU
+    Q_INVOKABLE static QStringList directoryEntries(const QString &path);
+
 
 };
 

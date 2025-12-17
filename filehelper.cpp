@@ -66,3 +66,26 @@ bool FileHelper::removeTMPFiles(const QString &path) {
     return allSuccess;
 }
 
+QStringList FileHelper::directoryEntries(const QString &path)
+{
+    QStringList result;
+
+    if (path.isEmpty())
+        return result;
+
+    QDir dir(path);
+    if (!dir.exists())
+        return result;
+
+    // Nur Dateien, keine Unterordner
+    QFileInfoList files = dir.entryInfoList(
+        QDir::Files | QDir::NoDotAndDotDot,
+        QDir::Name
+        );
+
+    for (const QFileInfo &info : files) {
+        result << info.fileName();
+    }
+
+    return result;
+}

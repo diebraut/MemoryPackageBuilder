@@ -5,6 +5,8 @@ import QtQuick.Window
 import Package 1.0
 import ExerciseIO 1.0
 
+import FileHelper 1.0
+
 import Qt.labs.platform 1.1
 import QtQuick.Controls.Fusion 2.15
 
@@ -28,14 +30,43 @@ Window {
 
     function openDialog(packageData) {
         console.log("🔍 Öffne Dialog für:", packageData.displayName)
+
+        // --- 1) Anzahl der package-XML-Dateien bestimmen ---
+        let count = 1    // Standardwert falls nur package.xml existiert
+        try {
+            let folder = packageData.path
+            let files = Qt.openUrlExternally ? [] : []  // Dummy, wird gleich ersetzt
+
+            // Qt.labs.platform FileDialog kann nicht lesen – aber FileHelper kann es!
+            // Falls du schon ein C++-FileHelper hast, ersetzen wir das durch:
+            if (typeof FileHelper !== "undefined" && FileHelper.directoryEntries) {
+                let entries = FileHelper.directoryEntries(folder)
+                count = entries.filter(
+                    f => /^package(_\d+)?\.xml$/i.test(f)
+                ).length
+            } else {
+                // Fallback: nur package.xml → count = 1
+                count = 1
+            }
+
+            if (count < 1)
+                count = 1
+
+            console.log("📦 Anzahl package-XML-Dateien im Ordner:", count)
+        } catch (e) {
+            console.error("❌ Fehler beim Prüfen der XML-Dateien:", e)
+            count = 1
+        }
+
+        // --- 2) Dialog laden + neue Property übergeben ---
         let component = Qt.createComponent("UebungenDialog.qml")
         if (component.status === Component.Ready) {
             let dialog = component.createObject(window, {
                 packagePath: packageData.path,
-                io: buildExercize              // <<<<<<<<<<  NEU: Reader-Objekt durchreichen
+                package_count: count,          // <<<<<<<<<< NEUE PROPERTY
+                io: buildExercize
             })
             if (dialog) dialog.show()
-            else console.error("❌ Dialog konnte nicht erzeugt werden.")
         } else {
             console.error("❌ Fehler beim Laden des Dialogs:", component.errorString())
         }
