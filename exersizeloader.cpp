@@ -8,9 +8,9 @@ ExersizeLoader::ExersizeLoader(QObject *parent)
     // Falls keine spezielle Initialisierung notwendig ist, bleibt der Konstruktor leer
 }
 
-QVariantMap ExersizeLoader::loadPackage(const QString &path) {
+QVariantMap ExersizeLoader::loadPackage(const QString &fullPackageXMLName) {
     // → Paketpfad, erwarte darin: /path/package.xml
-    PackageParser parser(path); // erwartet Verzeichnis – intern wird /package.xml ergänzt
+    PackageParser parser(fullPackageXMLName); // erwartet Verzeichnis
     return parser.getPackageData();
 }
 

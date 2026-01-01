@@ -8,7 +8,7 @@ PackageParser::PackageParser(const QString &xmlFilePath)
 QVariantMap PackageParser::getPackageData() {
     QVariantMap result;
 
-    QFile file(m_xmlFilePath + QDir::separator() + PACKAGE_NAME );
+    QFile file(m_xmlFilePath );
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qWarning() << "❌ Fehler beim Öffnen der Datei:" << m_xmlFilePath;
         return result;

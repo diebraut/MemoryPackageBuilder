@@ -18,7 +18,10 @@ Window {
 
     // Eigenschaften
     property string packagePath
-    property int package_count: 1
+    property int package_count: 1    
+    property int currentPackageIndex: 0
+    property var packageXmlPaths: []
+
 
     property bool sequentiell: sequentiellCheckBox.checked
     property bool hideAuthorByQuestion: hideAuthorByQuestionCheckBox.checked
@@ -1073,6 +1076,48 @@ Window {
         }
     }
 
+    function loadPackage(index) {
+        if (index < 0 || index >= packageXmlPaths.length)
+            return
+
+        currentPackageIndex = index
+        const xmlPath = packageXmlPaths[index]
+
+        console.log("📦 Lade Package:", xmlPath)
+
+        const uebungenData = ExersizeLoader.loadPackage(xmlPath)
+        if (!uebungenData) {
+            console.warn("❌ Konnte XML nicht laden:", xmlPath)
+            return
+        }
+
+        // ===== Eigenschaften =====
+        uebungenNameField.text               = uebungenData.name || ""
+        frageTextField.text                  = uebungenData.frageText || ""
+        frageTextUmgekehrtField.text         = uebungenData.frageTextUmgekehrt || ""
+        sequentiellCheckBox.checked          = !!uebungenData.sequentiell
+        umgekehrtCheckBox.checked            = !!uebungenData.umgekehrt
+        hideAuthorByQuestionCheckBox.checked = !!uebungenData.hideAuthorByQuestion
+
+        // ===== Liste =====
+        uebungModel.clear()
+
+        for (var i = 0; i < uebungenData.uebungsliste.length; ++i) {
+            let eintrag = JSON.parse(JSON.stringify(uebungenData.uebungsliste[i]))
+
+            if (!("nummer" in eintrag)) eintrag.nummer = i + 1
+            if (!("hideAuthor" in eintrag)) eintrag.hideAuthor = false
+            if (!("infoURLFrage_bgcolor" in eintrag)) eintrag.infoURLFrage_bgcolor = "white"
+            if (!("infoURLAntwort_bgcolor" in eintrag)) eintrag.infoURLAntwort_bgcolor = "white"
+            if (!("selected" in eintrag)) eintrag.selected = false
+
+            uebungModel.append(eintrag)
+        }
+
+        if (listView && listView.forceActiveFocus)
+            listView.forceActiveFocus()
+    }
+
     Item {
         id: windowContent
         anchors.fill: parent
@@ -1226,38 +1271,32 @@ Window {
     }
 
     Component.onCompleted: {
-        if (packagePath) {
-            uebungenData = ExersizeLoader.loadPackage(packagePath);
-            uebungenNameField.text = uebungenData.name;
-            frageTextField.text = uebungenData.frageText;
-            frageTextUmgekehrtField.text = uebungenData.frageTextUmgekehrt;
-            sequentiellCheckBox.checked = !!uebungenData.sequentiell;
-            umgekehrtCheckBox.checked = !!uebungenData.umgekehrt;
-            hideAuthorByQuestionCheckBox.checked = !!uebungenData.hideAuthorByQuestion; // neu
+        if (!packagePath) {
+            console.warn("❌ packagePath fehlt")
+            return
+        }
 
-            uebungModel.clear();
+        // =====================================================
+        // Multi-Package: XML-Pfade vorbereiten
+        // =====================================================
+        packageXmlPaths = []
 
-            for (var i = 0; i < uebungenData.uebungsliste.length; ++i) {
-                let eintrag = JSON.parse(JSON.stringify(uebungenData.uebungsliste[i]));
-                // ✅ Neue Farb-            // ✅ hier fügst du die Defaults ein:
-                if (!("nummer" in eintrag)) {
-                    eintrag.nummer = i + 1; // Fallback, falls Parser das Attribut noch nicht liefert
-                }
-                if (!("hideAuthor" in eintrag)) {
-                    eintrag.hideAuthor = false;
-                }
-                if (!("infoURLFrage_bgcolor" in eintrag)) {
-                    eintrag.infoURLFrage_bgcolor = "white"; // oder dein Standard
-                }
-                if (!("infoURLAntwort_bgcolor" in eintrag)) {
-                    eintrag.infoURLAntwort_bgcolor = "white";
-                }
-                if (!("selected" in eintrag)) {
-                    eintrag.selected = false;
-                }
-                uebungModel.append(eintrag);
+        for (let i = 0; i < package_count; i++) {
+            if (i === 0) {
+                packageXmlPaths.push(packagePath + "/package.xml")
+            } else {
+                packageXmlPaths.push(packagePath + "/package_0" + i + ".xml")
             }
         }
+
+        // =====================================================
+        // Start mit Page 01
+        // Tabs sind nur ein Selector → Daten laden zentral
+        // =====================================================
+        if (pageTabs) {
+            pageTabs.currentIndex = 0
+        }
+        loadPackage(0)
 
         // Dynamische Breite berechnen (mindestens 900px)
         const colWidth = 150;
@@ -1269,20 +1308,37 @@ Window {
 
         listView.forceActiveFocus();
     }
-
     ColumnLayout {
         anchors.fill: parent
-        spacing: 10
+        spacing: 0
 
+        TabBar {
+            id: pageTabs
+            //Layout.fillWidth: true
+             Layout.fillWidth: true
+
+            Repeater {
+                model: package_count
+                TabButton {
+                    text: "Page_" + String(index + 1).padStart(2, "0")
+                }
+            }
+
+            onCurrentIndexChanged: {
+                if (currentIndex < 0)
+                    return
+                loadPackage(currentIndex)
+            }
+        }
         // Obere Eingabefelder
-        GroupBox {
-            title: "Uebungen Eigenschaften"
-            Layout.fillWidth: true
-            padding: 10
+        FramedSection {
+            title: "Übungen Eigenschaften"
+            fillHeight: false
+            frameInset: 4
+
 
             ColumnLayout {
-                spacing: 2
-                Layout.fillWidth: true
+                spacing: 6
 
                 RowLayout {
                     Label { text: "Name:"; Layout.preferredWidth: labelWidth }
@@ -1299,18 +1355,14 @@ Window {
                     TextField { id: frageTextUmgekehrtField; Layout.fillWidth: true }
                 }
 
-                // << geändert: HideAuthorByQuestion neben Sequentiell >>
                 RowLayout {
                     Label { text: "Sequentiell:"; Layout.preferredWidth: labelWidth }
                     CheckBox { id: sequentiellCheckBox }
 
-                    Item { width: 24; height: 1 } // kleiner Abstand
+                    Item { width: 24 }
 
                     Label { text: "HideAuthorByQuestion:" }
-                    CheckBox {
-                        id: hideAuthorByQuestionCheckBox
-                        checked: false // Default
-                    }
+                    CheckBox { id: hideAuthorByQuestionCheckBox }
                 }
 
                 RowLayout {
@@ -1319,12 +1371,10 @@ Window {
                 }
             }
         }
-
-        // Listenbereich
-        GroupBox {
+        FramedSection {
             title: "Übungsliste"
-            Layout.fillWidth: true
-            Layout.fillHeight: true
+            fillHeight: true
+            frameInset: 4
 
             Item {
                 id: listArea
@@ -1538,7 +1588,7 @@ Window {
                 }
             }
         }
-        // Button-Zeile
+
         RowLayout {
             Layout.fillWidth: true
             spacing: 10
@@ -1628,7 +1678,6 @@ Window {
                     }
                 }
             }
-
             Button {
                 enabled: true
                 text: "Neu anlegen"
@@ -1641,5 +1690,4 @@ Window {
             }
         }
     }
-
 }
