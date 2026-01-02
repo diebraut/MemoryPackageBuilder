@@ -1308,276 +1308,319 @@ Window {
 
         listView.forceActiveFocus();
     }
-    ColumnLayout {
+
+
+    FramedRoot {
+        title: "Übungen"
         anchors.fill: parent
-        spacing: 0
+        ColumnLayout {
+            anchors.fill: parent
+            spacing: 0
+            // ===============================
+            // Übungsname (Header-Eingabe)
+            // ===============================
+            RowLayout {
+                Layout.fillWidth: true
+                Layout.bottomMargin: 15   // Abstand zur TabBar
+                spacing: 12
 
-        TabBar {
-            id: pageTabs
-            //Layout.fillWidth: true
-             Layout.fillWidth: true
+                Label {
+                    text: "Übungsname:"
+                    font.pixelSize: 16
+                    font.bold: true
+                    horizontalAlignment: Text.AlignLeft
+                    Layout.alignment: Qt.AlignVCenter
+                }
 
-            Repeater {
-                model: package_count
-                TabButton {
-                    text: "Page_" + String(index + 1).padStart(2, "0")
+                TextField {
+                    id: exerciseNameField
+                    Layout.preferredWidth: pageTabs.width * 0.5   // 50 %
+                    Layout.alignment: Qt.AlignVCenter
+                    placeholderText: "Name der Übung"
                 }
             }
+            TabBar {
+                id: pageTabs
+                Layout.fillWidth: true
+                spacing: 0
 
-            onCurrentIndexChanged: {
-                if (currentIndex < 0)
-                    return
-                loadPackage(currentIndex)
+                property color activeGreen: "#3cb371"
+                property color inactiveBorder: "#b0b0b0"
+
+                Repeater {
+                    model: package_count
+
+                    TabButton {
+                        id: tabBtn
+
+                        // 🔑 Index explizit sichern
+                        property int tabIndex: index
+
+                        text: "Einheit_" + String(tabIndex + 1).padStart(2, "0")
+
+                        implicitHeight: 40
+                        padding: 10
+
+                        // Schriftstil
+                        font.bold: tabBtn.checked
+                        font.pixelSize: tabBtn.checked ? 15 : 13
+
+                        // ✅ eigenes contentItem mit sauberem Scope
+                        contentItem: Text {
+                            text: tabBtn.text
+                            anchors.centerIn: parent
+                            font: tabBtn.font
+                            color: tabBtn.checked ? "white" : "#333"
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                            elide: Text.ElideRight
+                        }
+
+                        // Hintergrund + Borders
+                        background: Item {
+                            // Gesamter Hintergrund + Rahmen
+                            Rectangle {
+                                anchors.fill: parent
+                                color: tabBtn.checked ? pageTabs.activeGreen : "transparent"
+                                border.color: tabBtn.checked
+                                               ? pageTabs.activeGreen
+                                               : pageTabs.inactiveBorder
+                                border.width: 1
+                            }
+
+                            // Untere Linie (Akzent)
+                            Rectangle {
+                                anchors.left: parent.left
+                                anchors.right: parent.right
+                                anchors.bottom: parent.bottom
+                                height: tabBtn.checked ? 3 : 1
+                                color: tabBtn.checked
+                                       ? pageTabs.activeGreen
+                                       : pageTabs.inactiveBorder
+                            }
+                        }
+
+                        Behavior on font.pixelSize {
+                            NumberAnimation { duration: 120 }
+                        }
+                    }
+                }
+                onCurrentIndexChanged: {
+                    if (currentIndex < 0)
+                        return
+                    loadPackage(currentIndex)
+                }
             }
-        }
-        // Obere Eingabefelder
-        FramedSection {
-            title: "Übungen Eigenschaften"
-            fillHeight: false
-            frameInset: 4
+            // Obere Eingabefelder
 
-
-            ColumnLayout {
-                spacing: 6
-
-                RowLayout {
-                    Label { text: "Name:"; Layout.preferredWidth: labelWidth }
-                    TextField { id: uebungenNameField; Layout.preferredWidth: 300 }
-                }
-
-                RowLayout {
-                    Label { text: "Fragetext:"; Layout.preferredWidth: labelWidth }
-                    TextField { id: frageTextField; Layout.preferredWidth: 600 }
-                }
-
-                RowLayout {
-                    Label { text: "Fragetext umgekehrt:"; Layout.preferredWidth: labelWidth }
-                    TextField { id: frageTextUmgekehrtField; Layout.fillWidth: true }
-                }
-
-                RowLayout {
-                    Label { text: "Sequentiell:"; Layout.preferredWidth: labelWidth }
-                    CheckBox { id: sequentiellCheckBox }
-
-                    Item { width: 24 }
-
-                    Label { text: "HideAuthorByQuestion:" }
-                    CheckBox { id: hideAuthorByQuestionCheckBox }
-                }
-
-                RowLayout {
-                    Label { text: "Umgekehrt:"; Layout.preferredWidth: labelWidth }
-                    CheckBox { id: umgekehrtCheckBox }
+            FramedSection {
+                title: "Übungen Eigenschaften"
+                fillHeight: false
+                ColumnLayout {
+                    spacing: 6
+                    RowLayout {
+                        Label { text: "Name:"; Layout.preferredWidth: labelWidth }
+                        TextField { id: uebungenNameField; Layout.preferredWidth: 300 }
+                    }
+                    RowLayout {
+                        Label { text: "Fragetext:"; Layout.preferredWidth: labelWidth }
+                        TextField { id: frageTextField; Layout.preferredWidth: 600 }
+                    }
+                    RowLayout {
+                        Label { text: "Fragetext umgekehrt:"; Layout.preferredWidth: labelWidth }
+                        TextField { id: frageTextUmgekehrtField; Layout.fillWidth: true }
+                    }
+                    RowLayout {
+                        Label { text: "Sequentiell:"; Layout.preferredWidth: labelWidth }
+                        CheckBox { id: sequentiellCheckBox }
+                        Item { width: 24 }
+                        Label { text: "HideAuthorByQuestion:" }
+                        CheckBox { id: hideAuthorByQuestionCheckBox }
+                    }
+                    RowLayout {
+                        Label { text: "Umgekehrt:"; Layout.preferredWidth: labelWidth }
+                        CheckBox { id: umgekehrtCheckBox }
+                    }
                 }
             }
-        }
-        FramedSection {
-            title: "Übungsliste"
-            fillHeight: true
-            frameInset: 4
-
-            Item {
-                id: listArea
-                anchors.fill: parent
-
-                // Breite für 4 Ziffern + etwas Padding (dynamisch per FontMetrics)
-                FontMetrics { id: numFM }
-                property real numColWidth: Math.max(56, numFM.boundingRect("8888").width + 16)
-
-                // übrige Spalten (Minimum)
-                property real columnWidth: 150
-                property real totalContentWidth: 0
-
-                onWidthChanged: recalcWidths()
-                Component.onCompleted: recalcWidths()
-
-                function recalcWidths() {
-                    const restCols = columnCount - 1
-                    const spacing  = columnSpacing * (columnCount - 1)
-                    const restWidth = Math.max(0, width - numColWidth - spacing)
-                    columnWidth = Math.max(150, restWidth / restCols)
-                    totalContentWidth = numColWidth + restCols * columnWidth + spacing
-                }
-                // Kopfzeile
-                Rectangle {
-                    id: header
-                    height: 40
-                    width: parent.width
-                    anchors.top: parent.top
-                    color: "#dddddd"
-
-                    Row {
-                        anchors.fill: parent
-                        spacing: columnSpacing
-
-                        Repeater {
-                            model: ["Nummer","FrageSubjekt","AntwortSubjekt","SubjektPrefixFrage",
-                                    "SubjektPrefixAntwort","ImagefileFrage","ImagefileAntwort",
-                                    "InfoURLFrage","InfoURLAntwort"]
-
-                            Item {
-                                width: (index === 0 ? listArea.numColWidth : listArea.columnWidth)
-                                height: parent.height
-
-                                Label {
-                                    // statt fester Breite relative nehmen, damit es auch in der schmalen Spalte passt
-                                    width: parent.width * 0.9
-                                    height: parent.height * 0.8
-                                    anchors.centerIn: parent
-                                    text: modelData
-                                    horizontalAlignment: Text.AlignLeft
-                                    verticalAlignment: Text.AlignVCenter
-                                    elide: Text.ElideRight
-                                    font.bold: true
-                                    color: "#333"
+            FramedSection {
+                title: "Übungsliste"
+                fillHeight: true
+                Item {
+                    id: listArea
+                    anchors.fill: parent
+                    // Breite für 4 Ziffern + etwas Padding (dynamisch per FontMetrics)
+                    FontMetrics { id: numFM }
+                    property real numColWidth: Math.max(56, numFM.boundingRect("8888").width + 16)
+                    // übrige Spalten (Minimum)
+                    property real columnWidth: 150
+                    property real totalContentWidth: 0
+                    onWidthChanged: recalcWidths()
+                    Component.onCompleted: recalcWidths()
+                    function recalcWidths() {
+                        const restCols = columnCount - 1
+                        const spacing  = columnSpacing * (columnCount - 1)
+                        const restWidth = Math.max(0, width - numColWidth - spacing)
+                        columnWidth = Math.max(150, restWidth / restCols)
+                        totalContentWidth = numColWidth + restCols * columnWidth + spacing
+                    }
+                    // Kopfzeile
+                    Rectangle {
+                        id: header
+                        height: 40
+                        width: parent.width
+                        anchors.top: parent.top
+                        color: "#dddddd"
+                        Row {
+                            anchors.fill: parent
+                            spacing: columnSpacing
+                            Repeater {
+                                model: ["Nummer","FrageSubjekt","AntwortSubjekt","SubjektPrefixFrage",
+                                        "SubjektPrefixAntwort","ImagefileFrage","ImagefileAntwort",
+                                        "InfoURLFrage","InfoURLAntwort"]
+                                Item {
+                                    width: (index === 0 ? listArea.numColWidth : listArea.columnWidth)
+                                    height: parent.height
+                                    Label {
+                                        // statt fester Breite relative nehmen, damit es auch in der schmalen Spalte passt
+                                        width: parent.width * 0.9
+                                        height: parent.height * 0.8
+                                        anchors.centerIn: parent
+                                        text: modelData
+                                        horizontalAlignment: Text.AlignLeft
+                                        verticalAlignment: Text.AlignVCenter
+                                        elide: Text.ElideRight
+                                        font.bold: true
+                                        color: "#333"
+                                    }
                                 }
                             }
                         }
                     }
-                }
-
-                // Liste
-                MultiSelectListView {
-                    id: listView
-                    anchors.top: header.bottom
-                    anchors.left: parent.left
-                    width: listArea.totalContentWidth
-                    anchors.bottom: parent.bottom
-                    clip: true
-                    modelData: uebungModel
-                    currentIndex: -1
-                    interactive: true
-                    focus: true
-                    spacing: 0
-                    flickableDirection: Flickable.VerticalFlick | Flickable.HorizontalFlick
-                    boundsBehavior: Flickable.StopAtBounds
-                    ScrollBar.horizontal: ScrollBar {}
-                    ScrollBar.vertical: ScrollBar {}
-
-                    // 👇 NEU: Scroll-Verhinderung bei gezieltem currentIndex-Setzen
-                    property bool blockedPositioning: false
-
-                    Component.onCompleted: forceActiveFocus()
-
-                    delegate: Rectangle {
-                        id: delegateRoot
-                        property int indexOutside: index
-                        property bool selected: model.selected
+                    // Liste
+                    MultiSelectListView {
+                        id: listView
+                        anchors.top: header.bottom
+                        anchors.left: parent.left
                         width: listArea.totalContentWidth
-                        height: 40
-
-                        color: selected ? "#cce5ff" : (indexOutside % 2 === 0 ? "#f9f9f9" : "#ffffff")
-                        border.color: listView.currentIndex === indexOutside ? "blue" : "transparent"
-                        border.width: 1
-
-                        function handleDoubleClick(index) {
-                            console.log("Doubleclick für Zeile:", index);
-                            if (listView.currentIndex >= 0) {
-                                editExersizeDialog.itemData = JSON.parse(JSON.stringify(uebungModel.get(listView.currentIndex)));
-                                editExersizeDialog.open();
+                        anchors.bottom: parent.bottom
+                        clip: true
+                        modelData: uebungModel
+                        currentIndex: -1
+                        interactive: true
+                        focus: true
+                        spacing: 0
+                        flickableDirection: Flickable.VerticalFlick | Flickable.HorizontalFlick
+                        boundsBehavior: Flickable.StopAtBounds
+                        ScrollBar.horizontal: ScrollBar {}
+                        ScrollBar.vertical: ScrollBar {}
+                        // 👇 NEU: Scroll-Verhinderung bei gezieltem currentIndex-Setzen
+                        property bool blockedPositioning: false
+                        Component.onCompleted: forceActiveFocus()
+                        delegate: Rectangle {
+                            id: delegateRoot
+                            property int indexOutside: index
+                            property bool selected: model.selected
+                            width: listArea.totalContentWidth
+                            height: 40
+                            color: selected ? "#cce5ff" : (indexOutside % 2 === 0 ? "#f9f9f9" : "#ffffff")
+                            border.color: listView.currentIndex === indexOutside ? "blue" : "transparent"
+                            border.width: 1
+                            function handleDoubleClick(index) {
+                                console.log("Doubleclick für Zeile:", index);
+                                if (listView.currentIndex >= 0) {
+                                    editExersizeDialog.itemData = JSON.parse(JSON.stringify(uebungModel.get(listView.currentIndex)));
+                                    editExersizeDialog.open();
+                                }
                             }
-                        }
-                        MouseArea {
-                            anchors.fill: parent
-                            acceptedButtons: Qt.RightButton
-                            propagateComposedEvents: true
-                            preventStealing: true
-
-                            onPressed: function(mouse) {
-                                if (mouse.button === Qt.RightButton) {
-                                    const globalPos = mapToItem(windowContent, mouse.x, mouse.y);
-                                    rowContextMenu.x = globalPos.x;
-                                    rowContextMenu.y = globalPos.y;
-                                    rowContextMenu.open();
+                            MouseArea {
+                                anchors.fill: parent
+                                acceptedButtons: Qt.RightButton
+                                propagateComposedEvents: true
+                                preventStealing: true
+                                onPressed: function(mouse) {
+                                    if (mouse.button === Qt.RightButton) {
+                                        const globalPos = mapToItem(windowContent, mouse.x, mouse.y);
+                                        rowContextMenu.x = globalPos.x;
+                                        rowContextMenu.y = globalPos.y;
+                                        rowContextMenu.open();
+                                        mouse.accepted = true;
+                                    }
+                                }
+                            }
+                            MouseArea {
+                                anchors.fill: parent
+                                acceptedButtons: Qt.LeftButton
+                                onClicked: function(mouse) {
+                                    const clickedIndex = indexOutside;
+                                    listView.currentListViewIndex = clickedIndex;
+                                    listView.currentIndex = clickedIndex;
+                                    listView.forceActiveFocus();
+                                    if (mouse.modifiers & Qt.ShiftModifier) {
+                                        if (listView.selectionAnchor === -1)
+                                            listView.selectionAnchor = listView.currentListViewIndex;
+                                        listView.selectRange(listView.selectionAnchor, clickedIndex, mouse.modifiers & Qt.ControlModifier);
+                                    } else if (mouse.modifiers & Qt.ControlModifier) {
+                                        listView.toggleSelection(clickedIndex);
+                                    } else {
+                                        listView.selectedIndices = [clickedIndex];
+                                        listView.selectionAnchor = clickedIndex;
+                                    }
+                                    listView.updateSelectedItems();
+                                }
+                                onDoubleClicked: function(mouse) {
+                                    handleDoubleClick(indexOutside);
                                     mouse.accepted = true;
                                 }
                             }
-                        }
-
-                        MouseArea {
-                            anchors.fill: parent
-                            acceptedButtons: Qt.LeftButton
-                            onClicked: function(mouse) {
-                                const clickedIndex = indexOutside;
-                                listView.currentListViewIndex = clickedIndex;
-                                listView.currentIndex = clickedIndex;
-                                listView.forceActiveFocus();
-
-                                if (mouse.modifiers & Qt.ShiftModifier) {
-                                    if (listView.selectionAnchor === -1)
-                                        listView.selectionAnchor = listView.currentListViewIndex;
-                                    listView.selectRange(listView.selectionAnchor, clickedIndex, mouse.modifiers & Qt.ControlModifier);
-                                } else if (mouse.modifiers & Qt.ControlModifier) {
-                                    listView.toggleSelection(clickedIndex);
-                                } else {
-                                    listView.selectedIndices = [clickedIndex];
-                                    listView.selectionAnchor = clickedIndex;
-                                }
-                                listView.updateSelectedItems();
-                            }
-                            onDoubleClicked: function(mouse) {
-                                handleDoubleClick(indexOutside);
-                                mouse.accepted = true;
-                            }
-                        }
-
-                        Row {
-                            anchors.fill: parent
-                            spacing: columnSpacing
-
-                            Repeater {
-                                model: ["nummer","frageSubjekt","antwortSubjekt","subjektPrefixFrage",
-                                        "subjektPrefixAntwort","imagefileFrage","imagefileAntwort",
-                                        "infoURLFrage","infoURLAntwort"]
-
-                                Item {
-                                    width: (index === 0 ? listArea.numColWidth : listArea.columnWidth)
-                                    height: parent.height
-
-                                    // ===================== Loader im Delegate =====================
-                                    Loader {
-                                        id: loaderId
-                                        anchors.fill: parent
-                                        property string roleName: modelData
-                                        property int rowIndex: indexOutside
-                                        sourceComponent: columnEditor
-
-                                        function refreshFromModel() {
-                                            if (!item) return;
-                                            const rec = (rowIndex >= 0 && rowIndex < uebungModel.count) ? uebungModel.get(rowIndex) : null;
-                                            const bgKey = roleName + "_bgcolor";
-
-                                            item._updatingFromModel = true; // Guard ein
-                                            item.bgColor = (rec && rec[bgKey]) || "white";
-                                            const v = rec ? rec[roleName] : "";
-                                            item.textVal = (v === undefined || v === null) ? "" : String(v);
-                                            item._updatingFromModel = false; // Guard aus
-                                        }
-
-                                        onLoaded: {
-                                            // Kritisch: dynamische Bindungen, damit Delegate-Recycling korrekt wirkt
-                                            item.roleName = Qt.binding(() => loaderId.roleName);
-                                            item.rowIndex = Qt.binding(() => loaderId.rowIndex);
-                                            refreshFromModel();
-                                        }
-
-                                        onRoleNameChanged: refreshFromModel()
-                                        onRowIndexChanged:  refreshFromModel()
-
-                                        Connections {
-                                            target: uebungModel
-                                            function onDataChanged(changedIndex, roles) {
-                                                const realIndex = (typeof changedIndex === "object" && typeof changedIndex.row === "number")
-                                                                  ? changedIndex.row : changedIndex;
-                                                if (realIndex !== loaderId.rowIndex || !loaderId.item) return;
-
-                                                // Optional: nur reagieren, wenn unsere Rolle (oder deren _bgcolor) betroffen ist
-                                                if (roles && roles.length &&
-                                                    roles.indexOf(loaderId.roleName) === -1 &&
-                                                    roles.indexOf(loaderId.roleName + "_bgcolor") === -1)
-                                                    return;
-
-                                                loaderId.refreshFromModel();
+                            Row {
+                                anchors.fill: parent
+                                spacing: columnSpacing
+                                Repeater {
+                                    model: ["nummer","frageSubjekt","antwortSubjekt","subjektPrefixFrage",
+                                            "subjektPrefixAntwort","imagefileFrage","imagefileAntwort",
+                                            "infoURLFrage","infoURLAntwort"]
+                                    Item {
+                                        width: (index === 0 ? listArea.numColWidth : listArea.columnWidth)
+                                        height: parent.height
+                                        // ===================== Loader im Delegate =====================
+                                        Loader {
+                                            id: loaderId
+                                            anchors.fill: parent
+                                            property string roleName: modelData
+                                            property int rowIndex: indexOutside
+                                            sourceComponent: columnEditor
+                                            function refreshFromModel() {
+                                                if (!item) return;
+                                                const rec = (rowIndex >= 0 && rowIndex < uebungModel.count) ? uebungModel.get(rowIndex) : null;
+                                                const bgKey = roleName + "_bgcolor";
+                                                item._updatingFromModel = true; // Guard ein
+                                                item.bgColor = (rec && rec[bgKey]) || "white";
+                                                const v = rec ? rec[roleName] : "";
+                                                item.textVal = (v === undefined || v === null) ? "" : String(v);
+                                                item._updatingFromModel = false; // Guard aus
+                                            }
+                                            onLoaded: {
+                                                // Kritisch: dynamische Bindungen, damit Delegate-Recycling korrekt wirkt
+                                                item.roleName = Qt.binding(() => loaderId.roleName);
+                                                item.rowIndex = Qt.binding(() => loaderId.rowIndex);
+                                                refreshFromModel();
+                                            }
+                                            onRoleNameChanged: refreshFromModel()
+                                            onRowIndexChanged:  refreshFromModel()
+                                            Connections {
+                                                target: uebungModel
+                                                function onDataChanged(changedIndex, roles) {
+                                                    const realIndex = (typeof changedIndex === "object" && typeof changedIndex.row === "number")
+                                                                      ? changedIndex.row : changedIndex;
+                                                    if (realIndex !== loaderId.rowIndex || !loaderId.item) return;
+                                                    // Optional: nur reagieren, wenn unsere Rolle (oder deren _bgcolor) betroffen ist
+                                                    if (roles && roles.length &&
+                                                        roles.indexOf(loaderId.roleName) === -1 &&
+                                                        roles.indexOf(loaderId.roleName + "_bgcolor") === -1)
+                                                        return;
+                                                    loaderId.refreshFromModel();
+                                                }
                                             }
                                         }
                                     }
@@ -1587,106 +1630,98 @@ Window {
                     }
                 }
             }
-        }
-
-        RowLayout {
-            Layout.fillWidth: true
-            spacing: 10
-
-            // Linksbündige Buttons
             RowLayout {
-                Layout.alignment: Qt.AlignLeft
+                Layout.fillWidth: true
                 spacing: 10
-
-                Button {
-                    text: "Bearbeiten"
-                    icon.name: "edit"
-                    onClicked: {
-                        if (listView.currentIndex >= 0) {
-                            editExersizeDialog.itemData = JSON.parse(JSON.stringify(uebungModel.get(listView.currentIndex)));
-                            editExersizeDialog.open();
+                // Linksbündige Buttons
+                RowLayout {
+                    Layout.alignment: Qt.AlignLeft
+                    spacing: 10
+                    Button {
+                        text: "Bearbeiten"
+                        icon.name: "edit"
+                        onClicked: {
+                            if (listView.currentIndex >= 0) {
+                                editExersizeDialog.itemData = JSON.parse(JSON.stringify(uebungModel.get(listView.currentIndex)));
+                                editExersizeDialog.open();
+                            }
                         }
                     }
+                    Button {
+                        text: "Hinzufügen"
+                        onClicked: {
+                            // optional: automatisch nächste freie Nummer
+                            var maxNum = -1;
+                            for (var i = 0; i < uebungModel.count; ++i) {
+                                var n = Number(uebungModel.get(i).nummer);
+                                if (Number.isFinite(n) && n > maxNum) maxNum = n;
+                            }
+                            uebungModel.append({ nummer: maxNum + 1 });
+                        }
+                    }
+                    Button {
+                        text: "Löschen"
+                        onClicked: requestDeleteSelectedRows()
+                    }
+                    Button {
+                        text: "Check Websites"
+                        onClicked: {
+                            for (let i = 0; i < uebungModel.count; i++) {
+                                ["infoURLFrage", "infoURLAntwort"].forEach(function(role) {
+                                    let url = uebungModel.get(i)[role];
+                                    if (url && url.trim() !== "") {
+                                        checkWebsite(url, i, role);
+                                    }
+                                });
+                            }
+                        }
+                    }
+                    Button {
+                        text: "Zeige doppelte Zeilen"
+                        onClicked: showDuplicateRowsByFrageSubjekt()
+                    }
                 }
+                // Spacer in der Mitte
+                Item { Layout.fillWidth: true }
+                // Rechtsbündige Buttons
                 Button {
-                    text: "Hinzufügen"
+                    text: "Speichern"
+                    icon.name: "save"
                     onClicked: {
-                        // optional: automatisch nächste freie Nummer
-                        var maxNum = -1;
+                        var data = {
+                            name: uebungenNameField.text,
+                            frageText: frageTextField.text,
+                            frageTextUmgekehrt: frageTextUmgekehrtField.text,
+                            sequentiell: sequentiellCheckBox.checked,
+                            umgekehrt: umgekehrtCheckBox.checked,
+                            hideAuthorByQuestion: hideAuthorByQuestionCheckBox.checked, // neu
+                            uebungsliste: []
+                        }
                         for (var i = 0; i < uebungModel.count; ++i) {
-                            var n = Number(uebungModel.get(i).nummer);
-                            if (Number.isFinite(n) && n > maxNum) maxNum = n;
+                            let eintrag = JSON.parse(JSON.stringify(uebungModel.get(i)));
+                            delete eintrag[""];
+                            data.uebungsliste.push(eintrag);
                         }
-                        uebungModel.append({ nummer: maxNum + 1 });
-                    }
-                }
-                Button {
-                    text: "Löschen"
-                    onClicked: requestDeleteSelectedRows()
-                }
-                Button {
-                    text: "Check Websites"
-                    onClicked: {
-                        for (let i = 0; i < uebungModel.count; i++) {
-                            ["infoURLFrage", "infoURLAntwort"].forEach(function(role) {
-                                let url = uebungModel.get(i)[role];
-                                if (url && url.trim() !== "") {
-                                    checkWebsite(url, i, role);
-                                }
-                            });
+                        console.log("📦 Zu speichernde Daten:", JSON.stringify(data, null, 2));
+                        const result = ExersizeLoader.savePackage(packagePath, data);
+                        if (!result) {
+                            console.warn("❌ Speichern fehlgeschlagen!");
+                        } else {
+                            console.log("✅ Speichern erfolgreich.");
+                            dialogWindow.close();
                         }
                     }
                 }
                 Button {
-                    text: "Zeige doppelte Zeilen"
-                    onClicked: showDuplicateRowsByFrageSubjekt()
+                    enabled: true
+                    text: "Neu anlegen"
+                    onClicked: csvFileDialog.open()
                 }
-            }
-
-            // Spacer in der Mitte
-            Item { Layout.fillWidth: true }
-
-            // Rechtsbündige Buttons
-            Button {
-                text: "Speichern"
-                icon.name: "save"
-                onClicked: {
-                    var data = {
-                        name: uebungenNameField.text,
-                        frageText: frageTextField.text,
-                        frageTextUmgekehrt: frageTextUmgekehrtField.text,
-                        sequentiell: sequentiellCheckBox.checked,
-                        umgekehrt: umgekehrtCheckBox.checked,
-                        hideAuthorByQuestion: hideAuthorByQuestionCheckBox.checked, // neu
-                        uebungsliste: []
-                    }
-
-                    for (var i = 0; i < uebungModel.count; ++i) {
-                        let eintrag = JSON.parse(JSON.stringify(uebungModel.get(i)));
-                        delete eintrag[""];
-                        data.uebungsliste.push(eintrag);
-                    }
-
-                    console.log("📦 Zu speichernde Daten:", JSON.stringify(data, null, 2));
-
-                    const result = ExersizeLoader.savePackage(packagePath, data);
-                    if (!result) {
-                        console.warn("❌ Speichern fehlgeschlagen!");
-                    } else {
-                        console.log("✅ Speichern erfolgreich.");
-                        dialogWindow.close();
-                    }
+                Button {
+                    enabled: true
+                    text: "Import aus CSV"
+                    onClicked: csvImportDialog.open()
                 }
-            }
-            Button {
-                enabled: true
-                text: "Neu anlegen"
-                onClicked: csvFileDialog.open()
-            }
-            Button {
-                enabled: true
-                text: "Import aus CSV"
-                onClicked: csvImportDialog.open()
             }
         }
     }
