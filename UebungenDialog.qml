@@ -1067,8 +1067,8 @@ Window {
             delete eintrag[""];
             data.uebungsliste.push(eintrag);
         }
-
-        const result = ExersizeLoader.savePackage(packagePath, data);
+        const xmlPath = packageXmlPaths[index]
+        const result = ExersizeLoader.savePackage(xmlPath, data);
         if (result) {
             console.log("💾 Änderungen in XML gespeichert.");
         } else {
@@ -1093,6 +1093,8 @@ Window {
 
         // ===== Eigenschaften =====
         uebungenNameField.text               = uebungenData.name || ""
+
+        frageTypeField.text                  = uebungenData.frageType || ""
         frageTextField.text                  = uebungenData.frageText || ""
         frageTextUmgekehrtField.text         = uebungenData.frageTextUmgekehrt || ""
         sequentiellCheckBox.checked          = !!uebungenData.sequentiell
@@ -1333,7 +1335,7 @@ Window {
                 }
 
                 TextField {
-                    id: exerciseNameField
+                    id: uebungenNameField
                     Layout.preferredWidth: pageTabs.width * 0.5   // 50 %
                     Layout.alignment: Qt.AlignVCenter
                     placeholderText: "Name der Übung"
@@ -1419,8 +1421,8 @@ Window {
                 ColumnLayout {
                     spacing: 6
                     RowLayout {
-                        Label { text: "Name:"; Layout.preferredWidth: labelWidth }
-                        TextField { id: uebungenNameField; Layout.preferredWidth: 300 }
+                        Label { text: "Fragetype:"; Layout.preferredWidth: labelWidth }
+                        TextField { id: frageTypeField; Layout.preferredWidth: 300 }
                     }
                     RowLayout {
                         Label { text: "Fragetext:"; Layout.preferredWidth: labelWidth }
@@ -1690,6 +1692,7 @@ Window {
                     onClicked: {
                         var data = {
                             name: uebungenNameField.text,
+                            frageType: frageTypeField.text,
                             frageText: frageTextField.text,
                             frageTextUmgekehrt: frageTextUmgekehrtField.text,
                             sequentiell: sequentiellCheckBox.checked,
@@ -1703,7 +1706,8 @@ Window {
                             data.uebungsliste.push(eintrag);
                         }
                         console.log("📦 Zu speichernde Daten:", JSON.stringify(data, null, 2));
-                        const result = ExersizeLoader.savePackage(packagePath, data);
+                        const xmlPath = packageXmlPaths[pageTabs.currentIndex]
+                        const result = ExersizeLoader.savePackage(xmlPath, data);
                         if (!result) {
                             console.warn("❌ Speichern fehlgeschlagen!");
                         } else {

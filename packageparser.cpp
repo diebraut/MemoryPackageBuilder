@@ -36,6 +36,7 @@ QVariantMap PackageParser::getPackageData() {
     auto attrTrue = [](const QString &s){ return s.compare("true", Qt::CaseInsensitive) == 0 || s == "1"; };
 
     result["name"] = QVariant(uebungenElem.attribute("name"));
+    result["frageType"] = QVariant(uebungenElem.attribute("frageType"));
     result["sequentiell"] = QVariant(uebungenElem.attribute("sequentiell") == "true");
     result["hideAuthorByQuestion"] = attrTrue(uebungenElem.attribute("hideAuthorByQuestion")); // NEU (Default false, wenn leer)
     result["umgekehrt"] = QVariant(uebungenElem.attribute("umgekehrt") == "true");

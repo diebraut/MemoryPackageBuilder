@@ -15,11 +15,10 @@ QVariantMap ExersizeLoader::loadPackage(const QString &fullPackageXMLName) {
 }
 
 bool ExersizeLoader::savePackage(const QString &path, const QVariantMap &data) {
-    QString filePath = path + QDir::separator() + PACKAGE_NAME;
-    QFile file(filePath);
+    QFile file(path);
 
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        qWarning() << "❌ Konnte Datei nicht zum Lesen öffnen:" << filePath;
+        qWarning() << "❌ Konnte Datei nicht zum Lesen öffnen:" << path;
         return false;
     }
 
@@ -42,6 +41,7 @@ bool ExersizeLoader::savePackage(const QString &path, const QVariantMap &data) {
 
     // Update Attribute
     uebungenElem.setAttribute("name", data.value("name").toString());
+    uebungenElem.setAttribute("frageType", data.value("frageType").toString());
     uebungenElem.setAttribute("sequentiell", data.value("sequentiell").toBool() ? "true" : "false");
     uebungenElem.setAttribute("umgekehrt", data.value("umgekehrt").toBool() ? "true" : "false");
     uebungenElem.setAttribute("hideAuthorByQuestion", data.value("hideAuthorByQuestion").toBool() ? "true" : "false"); // neu
@@ -93,7 +93,7 @@ bool ExersizeLoader::savePackage(const QString &path, const QVariantMap &data) {
 
     // Speichern
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate)) {
-        qWarning() << "❌ Konnte Datei nicht zum Schreiben öffnen:" << filePath;
+        qWarning() << "❌ Konnte Datei nicht zum Schreiben öffnen:" << path;
         return false;
     }
 
