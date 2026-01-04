@@ -10,5 +10,6 @@
         <file>arrow-right-yellow.png</file>
         <file>layout_2_parts_horicentral.png</file>
         <file>layout_2_parts_vertical.png</file>
+        <file>add.png</file>
     </qresource>
 </RCC>

@@ -1340,6 +1340,36 @@ Window {
                     Layout.alignment: Qt.AlignVCenter
                     placeholderText: "Name der Übung"
                 }
+                // =====================
+                // Flex-Spacer
+                // =====================
+                Item {
+                    Layout.fillWidth: true
+                }
+
+                // =====================
+                // Rechte Seite: Plus-Button
+                // =====================
+                Button {
+                    id: addPackageButton
+                    Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
+                    implicitWidth: 48
+                    implicitHeight: 48
+
+                    contentItem: Image {
+                        source: "qrc:/icons/add.png"
+                        anchors.centerIn: parent
+                        //width: 32
+                        //height: 24
+                    }
+
+                    ToolTip.visible: hovered
+                    ToolTip.text: "Neue Einheit hinzufügen"
+
+                    onClicked: {
+                        console.log("➕ Plus-Button geklickt (noch ohne Funktion)")
+                    }
+                }
             }
             TabBar {
                 id: pageTabs
