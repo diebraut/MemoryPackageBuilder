@@ -40,6 +40,10 @@ Window {
 
     property var io    // kommt aus main.qml, z.B. buildExercize
 
+    property int pendingTabIndex: -1
+
+    property bool isDirty: false
+
     EditExersizeDialog {
         id: editExersizeDialog
 
@@ -67,6 +71,118 @@ Window {
             }
         }
     }
+
+    Popup {
+        id: validationErrorPopup
+        modal: true
+        focus: true
+        width: 400
+
+        // API wie bei confirmDeletePopup
+        property alias text: errorLabel.text
+
+        background: Rectangle {
+            color: "#fff0f0"
+            radius: 8
+            border.color: "black"
+            border.width: 2
+        }
+
+        contentItem: Column {
+            spacing: 10
+            padding: 20
+
+            Label {
+                id: errorLabel
+                text: ""
+                wrapMode: Text.WordWrap
+            }
+
+            RowLayout {
+                spacing: 10
+
+                Button {
+                    text: "OK"
+                    Layout.preferredWidth: 120
+                    onClicked: validationErrorPopup.close()
+                }
+            }
+        }
+
+        onVisibleChanged: if (visible) {
+            Qt.callLater(() => {
+                validationErrorPopup.x =
+                    (dialogWindow.width  - validationErrorPopup.width)  / 2;
+                validationErrorPopup.y =
+                    (dialogWindow.height - validationErrorPopup.height) / 2;
+            });
+        }
+    }
+
+    function showValidationError(msg) {
+        validationErrorPopup.text = msg
+        validationErrorPopup.open()
+    }
+
+    Popup {
+        id: unsavedChangesPopup
+        modal: true
+        focus: true
+        width: 420
+
+        // Zielindex, zu dem gewechselt werden soll
+        property int targetIndex: -1
+
+        background: Rectangle {
+            color: "#f8f8f8"
+            radius: 8
+            border.color: "black"
+            border.width: 2
+        }
+
+        contentItem: Column {
+            spacing: 12
+            padding: 20
+
+            Label {
+                text: "Die Daten wurden noch nicht gespeichert."
+                wrapMode: Text.WordWrap
+            }
+
+            RowLayout {
+                spacing: 10
+
+                Button {
+                    text: "Speichern"
+                    onClicked: {
+                        if (saveCurrentPackage()) {
+                            unsavedChangesPopup.close()
+                            switchToPage(unsavedChangesPopup.targetIndex)
+                        }
+                    }
+                }
+
+                Button {
+                    text: "Abbrechen"
+                    Layout.preferredWidth: 120
+                    onClicked: {
+                        unsavedChangesPopup.targetIndex = -1
+                        unsavedChangesPopup.close()
+                    }
+                }
+            }
+        }
+
+        onVisibleChanged: if (visible) {
+            Qt.callLater(() => {
+                unsavedChangesPopup.x =
+                    (dialogWindow.width  - unsavedChangesPopup.width)  / 2;
+                unsavedChangesPopup.y =
+                    (dialogWindow.height - unsavedChangesPopup.height) / 2;
+            });
+        }
+    }
+
     // ------------------------------------------------------------------
     // Info-Popup (OK)
     // ------------------------------------------------------------------
@@ -113,6 +229,7 @@ Window {
             });
         }
     }
+
     Popup {
         id: imageFileConflictPopup
         modal: true
@@ -1268,6 +1385,85 @@ Window {
         }
     }
 
+    function createEmptyPackage(index) {
+        console.log("Erzeuge leeres Package für Index", index)
+
+        // Eigenschaften zurücksetzen
+        clearExerciseProperties()
+        uebungModel.clear()
+        // Optional: internen Status setzen
+        currentPackageIndex = index
+    }
+
+    function clearExerciseProperties() {
+        uebungenNameField.text = ""
+        frageTypeField.text = ""
+        frageTextField.text = ""
+        frageTextUmgekehrtField.text = ""
+        sequentiellCheckBox.checked = false
+        umgekehrtCheckBox.checked = false
+        hideAuthorByQuestionCheckBox.checked = false
+    }
+
+    function validateCurrentPage() {
+        if (frageTypeField.text.trim() === "") {
+            showValidationError("Fragetype muss ausgefüllt sein.")
+            return false
+        }
+
+        if (frageTextField.text.trim() === "") {
+            showValidationError("Fragetext muss ausgefüllt sein.")
+            return false
+        }
+
+        if (umgekehrtCheckBox.checked &&
+            frageTextUmgekehrtField.text.trim() === "") {
+            showValidationError("Fragetext umgekehrt muss ausgefüllt sein.")
+            return false
+        }
+
+        return true
+    }
+
+    function switchToPage(index) {
+        pendingTabIndex = -1
+        isDirty = false
+        currentPackageIndex = index
+        pageTabs.currentIndex = index
+        loadPackage(index)
+    }
+    function saveCurrentPackage() {
+        var data = {
+            name: uebungenNameField.text,
+            frageType: frageTypeField.text,
+            frageText: frageTextField.text,
+            frageTextUmgekehrt: frageTextUmgekehrtField.text,
+            sequentiell: sequentiellCheckBox.checked,
+            umgekehrt: umgekehrtCheckBox.checked,
+            hideAuthorByQuestion: hideAuthorByQuestionCheckBox.checked,
+            uebungsliste: []
+        }
+
+        for (var i = 0; i < uebungModel.count; ++i) {
+            let eintrag = JSON.parse(JSON.stringify(uebungModel.get(i)))
+            delete eintrag[""]
+            data.uebungsliste.push(eintrag)
+        }
+
+        const xmlPath = packageXmlPaths[currentPackageIndex]
+        const result = ExersizeLoader.savePackage(xmlPath, data)
+
+        if (!result) {
+            console.warn("❌ Speichern fehlgeschlagen:", xmlPath)
+            return false
+        }
+
+        console.log("💾 Package gespeichert:", xmlPath)
+        isDirty = false
+        return true
+    }
+
+
     ListModel {
         id: uebungModel
     }
@@ -1311,7 +1507,6 @@ Window {
         listView.forceActiveFocus();
     }
 
-
     FramedRoot {
         title: "Übungen"
         anchors.fill: parent
@@ -1352,22 +1547,37 @@ Window {
                 // =====================
                 Button {
                     id: addPackageButton
-                    Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                    implicitWidth: 48
-                    implicitHeight: 48
+                    implicitWidth: 36
+                    implicitHeight: 36
 
                     contentItem: Image {
                         source: "qrc:/icons/add.png"
                         anchors.centerIn: parent
-                        //width: 32
-                        //height: 24
+                        width: parent.width * 0.6
+                        height: width
+                        fillMode: Image.PreserveAspectFit
                     }
 
                     ToolTip.visible: hovered
                     ToolTip.text: "Neue Einheit hinzufügen"
 
                     onClicked: {
-                        console.log("➕ Plus-Button geklickt (noch ohne Funktion)")
+                        // 1️⃣ Pflichtfelder prüfen
+                        if (!validateCurrentPage())
+                            return
+
+                        // 2️⃣ Ungespeichert?
+                        if (isDirty) {
+                            unsavedChangesPopup.targetIndex = package_count
+                            unsavedChangesPopup.open()
+                            return
+                        }
+
+                        // 3️⃣ Neue Seite anlegen
+                        const newIndex = package_count
+                        package_count++
+                        createEmptyPackage(newIndex)
+                        pageTabs.currentIndex = newIndex
                     }
                 }
             }
@@ -1438,9 +1648,27 @@ Window {
                     }
                 }
                 onCurrentIndexChanged: {
-                    if (currentIndex < 0)
+                    if (pendingTabIndex !== -1)
                         return
-                    loadPackage(currentIndex)
+
+                    const target = currentIndex
+                    const source = currentPackageIndex
+
+                    if (target === source)
+                        return
+
+                    // sofort zurückspringen
+                    currentIndex = source
+
+                    if (!validateCurrentPage())
+                        return
+
+                    if (isDirty) {
+                        unsavedChangesPopup.targetIndex = target
+                        unsavedChangesPopup.open()
+                        return
+                    }
+                    switchToPage(target)
                 }
             }
             // Obere Eingabefelder
@@ -1452,15 +1680,27 @@ Window {
                     spacing: 6
                     RowLayout {
                         Label { text: "Fragetype:"; Layout.preferredWidth: labelWidth }
-                        TextField { id: frageTypeField; Layout.preferredWidth: 300 }
+                        TextField {
+                            id: frageTypeField;
+                            Layout.preferredWidth: 300
+                            onTextEdited: isDirty = true
+                        }
                     }
                     RowLayout {
                         Label { text: "Fragetext:"; Layout.preferredWidth: labelWidth }
-                        TextField { id: frageTextField; Layout.preferredWidth: 600 }
+                        TextField {
+                            id: frageTextField;
+                            Layout.preferredWidth: 600
+                            onTextEdited: isDirty = true
+                        }
                     }
                     RowLayout {
                         Label { text: "Fragetext umgekehrt:"; Layout.preferredWidth: labelWidth }
-                        TextField { id: frageTextUmgekehrtField; Layout.fillWidth: true }
+                        TextField {
+                            id: frageTextUmgekehrtField;
+                            Layout.fillWidth: true
+                            onTextEdited: isDirty = true
+                        }
                     }
                     RowLayout {
                         Label { text: "Sequentiell:"; Layout.preferredWidth: labelWidth }
@@ -1720,29 +1960,8 @@ Window {
                     text: "Speichern"
                     icon.name: "save"
                     onClicked: {
-                        var data = {
-                            name: uebungenNameField.text,
-                            frageType: frageTypeField.text,
-                            frageText: frageTextField.text,
-                            frageTextUmgekehrt: frageTextUmgekehrtField.text,
-                            sequentiell: sequentiellCheckBox.checked,
-                            umgekehrt: umgekehrtCheckBox.checked,
-                            hideAuthorByQuestion: hideAuthorByQuestionCheckBox.checked, // neu
-                            uebungsliste: []
-                        }
-                        for (var i = 0; i < uebungModel.count; ++i) {
-                            let eintrag = JSON.parse(JSON.stringify(uebungModel.get(i)));
-                            delete eintrag[""];
-                            data.uebungsliste.push(eintrag);
-                        }
-                        console.log("📦 Zu speichernde Daten:", JSON.stringify(data, null, 2));
-                        const xmlPath = packageXmlPaths[pageTabs.currentIndex]
-                        const result = ExersizeLoader.savePackage(xmlPath, data);
-                        if (!result) {
-                            console.warn("❌ Speichern fehlgeschlagen!");
-                        } else {
-                            console.log("✅ Speichern erfolgreich.");
-                            dialogWindow.close();
+                        if (saveCurrentPackage()) {
+                            dialogWindow.close()
                         }
                     }
                 }
