@@ -12,6 +12,7 @@ public:
 
     Q_INVOKABLE QVariantMap loadPackage(const QString &path);
     Q_INVOKABLE bool savePackage(const QString &path, const QVariantMap &data);
+    Q_INVOKABLE static bool removePackageFile(const QString &filePath);
 
 private:
          // keine Notwendigkeit für Memberparser, da Methode lokal arbeitet

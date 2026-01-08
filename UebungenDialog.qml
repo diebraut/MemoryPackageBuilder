@@ -4,9 +4,10 @@ import QtQuick.Layouts 1.15
 import QtQuick.Controls.Fusion
 import Qt.labs.platform 1.1 as Platform
 
-//import FileHelper 1.0
-
+import FileHelper 1.0
 import ExersizeLoader 1.0
+
+
 
 Window {
     id: dialogWindow
@@ -17,11 +18,13 @@ Window {
     modality: Qt.ApplicationModal
 
     // Eigenschaften
-    property string packagePath
-    property int package_count: 1    
-    property int currentPackageIndex: 0
-    property var packageXmlPaths: []
+    property string packagePath    
+    ArrayStore {
+        id: packageXmlPaths
+    }
 
+    property int currentPackageIndex: -1
+    required property int package_count
 
     property bool sequentiell: sequentiellCheckBox.checked
     property bool hideAuthorByQuestion: hideAuthorByQuestionCheckBox.checked
@@ -40,9 +43,12 @@ Window {
 
     property var io    // kommt aus main.qml, z.B. buildExercize
 
-    property int pendingTabIndex: -1
-
     property bool isDirty: false
+
+    property bool pendingAddPage: false
+
+    property Item pendingFocusItem: null
+
 
     EditExersizeDialog {
         id: editExersizeDialog
@@ -54,7 +60,7 @@ Window {
                     uebungModel.setProperty(index, key, updatedData[key]);
                 }
                 // Optionales Refresh der View
-                saveCurrentModelToXml();
+                saveCurrentModelToXml(index);
             } else {
                 console.warn("❌ Ungültiger Index beim Speichern:", index);
             }
@@ -69,6 +75,86 @@ Window {
             if (mouse.button === Qt.RightButton) {
                 customContextMenu.popup(mouse.x, mouse.y)
             }
+        }
+    }
+
+    Popup {
+        id: removePagePopup
+        modal: true
+        focus: true
+        width: 420
+
+        property int pageIndex: -1
+
+        background: Rectangle {
+            color: "#fff5f5"
+            radius: 8
+            border.color: "black"
+            border.width: 2
+        }
+
+        contentItem: Column {
+            spacing: 12
+            padding: 20
+
+            Label {
+                text: "Soll diese Einheit wirklich gelöscht werden?\nDie Daten gehen unwiderruflich verloren."
+                wrapMode: Text.WordWrap
+            }
+
+            RowLayout {
+                spacing: 12
+
+                Button {
+                    text: "Löschen"
+                    Layout.preferredWidth: 120
+
+                    onClicked: {
+                        const idx = removePagePopup.pageIndex
+                        removePagePopup.close()
+
+                        if (idx < 0 || idx >= packageXmlPaths.count)
+                            return
+
+                        const filename = packageXmlPaths.at(idx)
+
+                        // 🔴 C++ Dateioperation
+                        if (!ExersizeLoader.removePackageFile(filename)) {
+                            console.warn("❌ Datei konnte nicht gelöscht werden:", filename)
+                            return
+                        }
+
+                        packageXmlPaths.splice(idx, 1)
+
+                        // 🔹 neuer Zielindex NUR aus Runtime-State
+                        if (packageXmlPaths.count === 0) {
+                            currentPackageIndex = -1
+                            clearExerciseProperties()
+                            uebungModel.clear()
+                            return
+                        }
+
+                        const newIndex = Math.min(idx, packageXmlPaths.count - 1)
+
+                        // 🔹 EINZIGE Umschaltung
+                        currentPackageIndex = newIndex
+                        loadPackage(newIndex)
+                    }
+                }
+
+                Button {
+                    text: "Abbrechen"
+                    Layout.preferredWidth: 120
+                    onClicked: removePagePopup.close()
+                }
+            }
+        }
+
+        onVisibleChanged: if (visible) {
+            Qt.callLater(() => {
+                removePagePopup.x = (dialogWindow.width  - removePagePopup.width)  / 2
+                removePagePopup.y = (dialogWindow.height - removePagePopup.height) / 2
+            });
         }
     }
 
@@ -117,6 +203,17 @@ Window {
                     (dialogWindow.height - validationErrorPopup.height) / 2;
             });
         }
+        onClosed: {
+            if (pendingFocusItem) {
+                const item = pendingFocusItem    // 🔥 lokale Kopie
+                pendingFocusItem = null
+
+                Qt.callLater(() => {
+                    if (item)                     // optionaler Schutz
+                        item.forceActiveFocus()
+                })
+            }
+        }
     }
 
     function showValidationError(msg) {
@@ -155,10 +252,33 @@ Window {
                 Button {
                     text: "Speichern"
                     onClicked: {
-                        if (saveCurrentPackage()) {
-                            unsavedChangesPopup.close()
-                            switchToPage(unsavedChangesPopup.targetIndex)
+                        if (!saveCurrentPackage())
+                            return
+
+                        const idx = unsavedChangesPopup.targetIndex
+                        unsavedChangesPopup.targetIndex = -1
+                        unsavedChangesPopup.close()
+
+                        // 🔵 FALL 1: Add war gewünscht
+                        if (pendingAddPage) {
+                            pendingAddPage = false
+
+                            const newIndex = packageXmlPaths.count
+                            createEmptyPackage(newIndex)
+
+                            // 🔥 nach dem Anlegen explizit zur neuen Seite wechseln
+                            switchToPage(newIndex)
+                            return
                         }
+
+                        // 🔵 FALL 2: normaler Tabwechsel
+                        if (idx >= 0) {
+                            switchToPage(idx)
+                            return
+                        }
+
+                        // 🔵 FALL 3: Dialog schließen
+                        dialogWindow.close()
                     }
                 }
 
@@ -166,6 +286,7 @@ Window {
                     text: "Abbrechen"
                     Layout.preferredWidth: 120
                     onClicked: {
+                        pendingAddPage = false
                         unsavedChangesPopup.targetIndex = -1
                         unsavedChangesPopup.close()
                     }
@@ -1184,7 +1305,7 @@ Window {
             delete eintrag[""];
             data.uebungsliste.push(eintrag);
         }
-        const xmlPath = packageXmlPaths[index]
+        const xmlPath = packageXmlPaths.at(currentPackageIndex)
         const result = ExersizeLoader.savePackage(xmlPath, data);
         if (result) {
             console.log("💾 Änderungen in XML gespeichert.");
@@ -1194,11 +1315,11 @@ Window {
     }
 
     function loadPackage(index) {
-        if (index < 0 || index >= packageXmlPaths.length)
+        if (index < 0 || index >= packageXmlPaths.count)
             return
 
         currentPackageIndex = index
-        const xmlPath = packageXmlPaths[index]
+        const xmlPath = packageXmlPaths.at(index)
 
         console.log("📦 Lade Package:", xmlPath)
 
@@ -1388,15 +1509,19 @@ Window {
     function createEmptyPackage(index) {
         console.log("Erzeuge leeres Package für Index", index)
 
-        // Eigenschaften zurücksetzen
         clearExerciseProperties()
         uebungModel.clear()
-        // Optional: internen Status setzen
+
+        const newPath = buildPackagePathForIndex(index)
+
+        packageXmlPaths.push(newPath)
         currentPackageIndex = index
+        pageTabs.currentIndex = index
+
+        pendingAddPage = false
     }
 
     function clearExerciseProperties() {
-        uebungenNameField.text = ""
         frageTypeField.text = ""
         frageTextField.text = ""
         frageTextUmgekehrtField.text = ""
@@ -1406,33 +1531,36 @@ Window {
     }
 
     function validateCurrentPage() {
+
+         if (pendingAddPage) return true
+
         if (frageTypeField.text.trim() === "") {
             showValidationError("Fragetype muss ausgefüllt sein.")
+            pendingFocusItem = frageTypeField
             return false
         }
 
         if (frageTextField.text.trim() === "") {
             showValidationError("Fragetext muss ausgefüllt sein.")
+            pendingFocusItem = frageTextField
             return false
         }
 
         if (umgekehrtCheckBox.checked &&
             frageTextUmgekehrtField.text.trim() === "") {
             showValidationError("Fragetext umgekehrt muss ausgefüllt sein.")
+            pendingFocusItem =frageTextUmgekehrtField
             return false
         }
 
         return true
     }
 
-    function switchToPage(index) {
-        pendingTabIndex = -1
-        isDirty = false
-        currentPackageIndex = index
-        pageTabs.currentIndex = index
-        loadPackage(index)
-    }
     function saveCurrentPackage() {
+        // 🔴 1️⃣ Plausibilitätsprüfung
+        if (!validateCurrentPage()) {
+            return false
+        }
         var data = {
             name: uebungenNameField.text,
             frageType: frageTypeField.text,
@@ -1450,7 +1578,7 @@ Window {
             data.uebungsliste.push(eintrag)
         }
 
-        const xmlPath = packageXmlPaths[currentPackageIndex]
+        const xmlPath = packageXmlPaths.at(currentPackageIndex)
         const result = ExersizeLoader.savePackage(xmlPath, data)
 
         if (!result) {
@@ -1463,6 +1591,121 @@ Window {
         return true
     }
 
+    function isCurrentPageEmpty(index) {
+        if (index < 0 || index >= packageXmlPaths.count)
+            return true
+
+        // 🔹 Eigenschaften prüfen
+        if (frageTypeField.text.trim() !== "") return false
+        if (frageTextField.text.trim() !== "") return false
+        if (frageTextUmgekehrtField.text.trim() !== "") return false
+        if (sequentiellCheckBox.checked) return false
+        if (umgekehrtCheckBox.checked) return false
+        if (hideAuthorByQuestionCheckBox.checked) return false
+
+        // 🔹 Übungsliste prüfen
+        if (uebungModel.count > 0) return false
+
+        return true
+    }
+
+    function removeTabpage(index) {
+        if (index < 0 || index >= packageXmlPaths.count)
+            return
+        const removedPath = packageXmlPaths.at(index)
+        ExersizeLoader.removePackageFile(removedPath)
+        packageXmlPaths.splice(index, 1)
+        const newCount = packageXmlPaths.count
+        if (newCount === 0) {
+            Qt.callLater(() => {
+                currentPackageIndex = -1
+                clearExerciseProperties()
+            })
+            return
+        }
+
+        // 🔥 Nachfolgende Dateien umbenennen
+        for (let i = index; i < newCount; ++i) {
+            const oldPath = packageXmlPaths.at(i)
+            const newPath = buildPackagePathForIndex(i)
+
+            if (oldPath !== newPath) {
+                FileHelper.renameFile(oldPath, newPath)
+                packageXmlPaths.set(i, newPath)   // ❗ wichtig bei ArrayStore
+            }
+        }
+
+        const newIndex = Math.min(index, newCount - 1)
+
+        Qt.callLater(() => {
+            currentPackageIndex = newIndex
+            pageTabs.currentIndex = newIndex
+            loadPackage(newIndex)
+        })
+    }
+
+    function buildPackagePathForIndex(idx) {
+        if (idx === 0)
+            return packagePath + "/package.xml"
+
+        return packagePath + "/package_" + String(idx).padStart(2, "0") + ".xml"
+    }
+
+    function initPackageXmlPaths() {
+        packageXmlPaths.clear()
+
+        for (let i = 0; i < package_count; ++i) {
+            packageXmlPaths.push(buildPackagePathForIndex(i))
+        }
+
+        if (packageXmlPaths.count > 0) {
+            currentPackageIndex = 0
+            pageTabs.currentIndex = 0
+            loadPackage(0)
+        } else {
+            currentPackageIndex = -1
+            clearExerciseProperties()
+        }
+    }
+
+    function switchToPage(idx) {
+        if (idx < 0 || idx >= packageXmlPaths.count)
+            return
+
+        currentPackageIndex = idx
+
+        // TabBar sauber mitziehen (gegen Timing/Auto-Selection)
+        if (pageTabs.currentIndex !== idx)
+            pageTabs.currentIndex = idx
+
+        loadPackage(idx)
+    }
+
+    function requestPageSwitch(targetIndex) {
+        if (targetIndex === currentPackageIndex)
+            return
+
+        // UI hat den Tab evtl. schon optisch umgestellt -> zurück auf "Wahrheit"
+        if (pageTabs.currentIndex !== currentPackageIndex)
+            pageTabs.currentIndex = currentPackageIndex
+
+        // Optional: wenn aktuelle Seite leer ist, ohne Stress wechseln
+        if (pendingAddPage && isCurrentPageEmpty(currentPackageIndex)) {
+            switchToPage(targetIndex)
+            return
+        }
+
+        if (!validateCurrentPage())
+            return
+
+        if (isDirty) {
+            unsavedChangesPopup.targetIndex = targetIndex
+            unsavedChangesPopup.open()
+            return
+        }
+
+        switchToPage(targetIndex)
+    }
 
     ListModel {
         id: uebungModel
@@ -1473,28 +1716,10 @@ Window {
             console.warn("❌ packagePath fehlt")
             return
         }
-
-        // =====================================================
-        // Multi-Package: XML-Pfade vorbereiten
-        // =====================================================
-        packageXmlPaths = []
-
-        for (let i = 0; i < package_count; i++) {
-            if (i === 0) {
-                packageXmlPaths.push(packagePath + "/package.xml")
-            } else {
-                packageXmlPaths.push(packagePath + "/package_0" + i + ".xml")
-            }
-        }
-
-        // =====================================================
-        // Start mit Page 01
-        // Tabs sind nur ein Selector → Daten laden zentral
-        // =====================================================
-        if (pageTabs) {
-            pageTabs.currentIndex = 0
-        }
-        loadPackage(0)
+        console.log("ON COMPLETED")
+        console.log("package_count =", package_count)
+        initPackageXmlPaths()
+        console.log("paths =", packageXmlPaths.count)
 
         // Dynamische Breite berechnen (mindestens 900px)
         const colWidth = 150;
@@ -1565,110 +1790,98 @@ Window {
                         // 1️⃣ Pflichtfelder prüfen
                         if (!validateCurrentPage())
                             return
-
                         // 2️⃣ Ungespeichert?
                         if (isDirty) {
-                            unsavedChangesPopup.targetIndex = package_count
+                            pendingAddPage = true
+                            unsavedChangesPopup.targetIndex = packageXmlPaths.count
                             unsavedChangesPopup.open()
                             return
                         }
 
                         // 3️⃣ Neue Seite anlegen
-                        const newIndex = package_count
-                        package_count++
+                        const newIndex = packageXmlPaths.count
                         createEmptyPackage(newIndex)
-                        pageTabs.currentIndex = newIndex
+                        Qt.callLater(() => {
+                            pendingAddPage = false     // ✅ HIER
+                        })
                     }
                 }
             }
             TabBar {
                 id: pageTabs
+                currentIndex: currentPackageIndex
                 Layout.fillWidth: true
+                Layout.preferredHeight: 40   // ← 🔥 DAS FEHLT
                 spacing: 0
-
                 property color activeGreen: "#3cb371"
                 property color inactiveBorder: "#b0b0b0"
 
                 Repeater {
-                    model: package_count
-
+                    model: packageXmlPaths.count
                     TabButton {
                         id: tabBtn
-
-                        // 🔑 Index explizit sichern
-                        property int tabIndex: index
-
-                        text: "Einheit_" + String(tabIndex + 1).padStart(2, "0")
-
+                        implicitWidth: 160    // 🔥 DAS FEHLT
                         implicitHeight: 40
-                        padding: 10
+                        text: "Einheit_" + String(index + 1).padStart(2, "0")
 
-                        // Schriftstil
-                        font.bold: tabBtn.checked
-                        font.pixelSize: tabBtn.checked ? 15 : 13
+                        padding: 0
 
-                        // ✅ eigenes contentItem mit sauberem Scope
-                        contentItem: Text {
-                            text: tabBtn.text
-                            anchors.centerIn: parent
-                            font: tabBtn.font
-                            color: tabBtn.checked ? "white" : "#333"
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                            elide: Text.ElideRight
+                        font.bold: checked
+                        font.pixelSize: checked ? 15 : 13
+
+                        onClicked: requestPageSwitch(index)
+
+                        // =========================
+                        // ✅ HINTERGRUND (WICHTIG!)
+                        // =========================
+                        background: Rectangle {
+                            radius: 0
+                            color: tabBtn.checked ? "#45b36b" : "#e6e6e6"
+                            border.color: "#b0b0b0"
+                            border.width: 1
                         }
 
-                        // Hintergrund + Borders
-                        background: Item {
-                            // Gesamter Hintergrund + Rahmen
-                            Rectangle {
+                        // =========================
+                        // ✅ INHALT
+                        // =========================
+                        contentItem: Item {
+                            anchors.fill: parent
+
+                            RowLayout {
                                 anchors.fill: parent
-                                color: tabBtn.checked ? pageTabs.activeGreen : "transparent"
-                                border.color: tabBtn.checked
-                                               ? pageTabs.activeGreen
-                                               : pageTabs.inactiveBorder
-                                border.width: 1
-                            }
+                                anchors.margins: 10
+                                spacing: 8
 
-                            // Untere Linie (Akzent)
-                            Rectangle {
-                                anchors.left: parent.left
-                                anchors.right: parent.right
-                                anchors.bottom: parent.bottom
-                                height: tabBtn.checked ? 3 : 1
-                                color: tabBtn.checked
-                                       ? pageTabs.activeGreen
-                                       : pageTabs.inactiveBorder
+                                // 🔹 Text links – JETZT korrekt zentriert
+                                Label {
+                                    text: tabBtn.text
+                                    font: tabBtn.font
+                                    color: tabBtn.checked ? "white" : "#333"
+                                    elide: Text.ElideRight
+
+                                    Layout.fillWidth: true
+                                    Layout.alignment: Qt.AlignVCenter
+                                }
+
+                                // 🔹 Close-Button rechts (größer)
+                                Button {
+                                    text: "×"
+                                    flat: true
+                                    focusPolicy: Qt.NoFocus
+                                    padding: 0
+
+                                    font.pixelSize: 18   // ← größer
+                                    Layout.preferredWidth: 22
+                                    Layout.preferredHeight: 22
+                                    Layout.alignment: Qt.AlignVCenter
+
+                                    onClicked: {
+                                        removeTabpage(index)
+                                    }
+                                }
                             }
                         }
-
-                        Behavior on font.pixelSize {
-                            NumberAnimation { duration: 120 }
-                        }
                     }
-                }
-                onCurrentIndexChanged: {
-                    if (pendingTabIndex !== -1)
-                        return
-
-                    const target = currentIndex
-                    const source = currentPackageIndex
-
-                    if (target === source)
-                        return
-
-                    // sofort zurückspringen
-                    currentIndex = source
-
-                    if (!validateCurrentPage())
-                        return
-
-                    if (isDirty) {
-                        unsavedChangesPopup.targetIndex = target
-                        unsavedChangesPopup.open()
-                        return
-                    }
-                    switchToPage(target)
                 }
             }
             // Obere Eingabefelder
@@ -1956,24 +2169,43 @@ Window {
                 // Spacer in der Mitte
                 Item { Layout.fillWidth: true }
                 // Rechtsbündige Buttons
-                Button {
-                    text: "Speichern"
-                    icon.name: "save"
-                    onClicked: {
-                        if (saveCurrentPackage()) {
-                            dialogWindow.close()
+                // Rechtsbündige Buttons
+                RowLayout {
+                    Layout.alignment: Qt.AlignRight
+                    spacing: 10
+
+                    Button {
+                        text: "Import aus CSV"
+                        onClicked: csvImportDialog.open()
+                    }
+
+                    Button {
+                        text: "Neu anlegen"
+                        onClicked: csvFileDialog.open()
+                    }
+
+                    Button {
+                        text: "Speichern"
+                        icon.name: "save"
+                        onClicked: {
+                            saveCurrentPackage()
+                            // ❗ Dialog bleibt offen
                         }
                     }
-                }
-                Button {
-                    enabled: true
-                    text: "Neu anlegen"
-                    onClicked: csvFileDialog.open()
-                }
-                Button {
-                    enabled: true
-                    text: "Import aus CSV"
-                    onClicked: csvImportDialog.open()
+
+                    Button {
+                        text: "Abbrechen"
+                        onClicked: {
+                            if (isDirty) {
+                                // Kein Seitenwechsel, kein Add → nur Abbruch
+                                unsavedChangesPopup.targetIndex = -1
+                                pendingAddPage = false
+                                unsavedChangesPopup.open()
+                            } else {
+                                dialogWindow.close()
+                            }
+                        }
+                    }
                 }
             }
         }

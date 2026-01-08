@@ -51,6 +51,7 @@ qt_add_qml_module(appMemoryPackagesBuilder
         QML_FILES Splitter.qml
         QML_FILES FramedSection.qml
         QML_FILES FramedRoot.qml
+        QML_FILES ArrayStore.qml
 )
 
 # Linke die Qt-Bibliotheken – jetzt inklusive Qt6::Xml
