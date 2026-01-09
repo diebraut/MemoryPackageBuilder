@@ -1863,19 +1863,35 @@ Window {
                                     Layout.alignment: Qt.AlignVCenter
                                 }
 
-                                // 🔹 Close-Button rechts (größer)
+                                // 🔹 Close-Button rechts (größer) – NICHT für erste Seite
                                 Button {
                                     text: "×"
                                     flat: true
                                     focusPolicy: Qt.NoFocus
                                     padding: 0
 
-                                    font.pixelSize: 18   // ← größer
-                                    Layout.preferredWidth: 22
+                                    // ❌ erste Tabpage darf nicht gelöscht werden
+                                    visible: index !== 0
+                                    enabled: index !== 0
+
+                                    font.pixelSize: 18
+                                    Layout.preferredWidth: visible ? 22 : 0
                                     Layout.preferredHeight: 22
                                     Layout.alignment: Qt.AlignVCenter
 
                                     onClicked: {
+                                        // Sicherheit
+                                        if (index === 0)
+                                            return
+
+                                        // 🔴 Seite hat Inhalt → WARNEN
+                                        if (!isCurrentPageEmpty(index)) {
+                                            removePagePopup.pageIndex = index
+                                            removePagePopup.open()
+                                            return
+                                        }
+
+                                        // 🟢 Seite leer → direkt löschen
                                         removeTabpage(index)
                                     }
                                 }
