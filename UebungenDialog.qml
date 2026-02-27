@@ -77,6 +77,61 @@ Window {
             }
         }
     }
+    Menu {
+        id: headerContextMenu
+
+        MenuItem {
+            text: "Kopiere selektierte Felder"
+            onTriggered: copySelectedFields()
+        }
+        MenuItem {
+            text: "Füge kopierte Felder ein"
+            onTriggered: pasteCopiedFields()
+        }
+        MenuItem { text: "Selektiere alle Felder"; onTriggered: selectAllRows() }
+        MenuItem { text: "Alle abwählen";          onTriggered: clearRowSelection() }
+    }
+
+    function copySelectedFields() {
+        console.log("copySelectedFields()")
+    }
+
+    function pasteCopiedFields() {
+        console.log("pasteCopiedFields()")
+    }
+
+    function selectAllRows() {
+        if (!listView) return;
+
+        // alle Zeilen: 0..count-1
+        var n = listView.count;               // bei ListView vorhanden
+        if (n === undefined || n <= 0) {
+            // Fallback falls count nicht geht: über model.count
+            n = (listView.model && listView.model.count) ? listView.model.count : 0;
+        }
+        if (n <= 0) return;
+
+        var all = [];
+        for (var i = 0; i < n; ++i) all.push(i);
+
+        listView.selectedIndices = all;
+        listView.selectionAnchor = 0;
+
+        // optional currentIndex sinnvoll setzen
+        listView.currentListViewIndex = 0;
+        listView.currentIndex = 0;
+
+        listView.updateSelectedItems();
+    }
+
+    function clearRowSelection() {
+        if (!listView) return;
+
+        listView.selectedIndices = [];
+        listView.selectionAnchor = -1;
+
+        listView.updateSelectedItems();
+    }
 
     Popup {
         id: removePagePopup
@@ -1975,6 +2030,7 @@ Window {
                         Row {
                             anchors.fill: parent
                             spacing: columnSpacing
+                            // Kopfzeile
                             Repeater {
                                 model: ["Nummer","FrageSubjekt","AntwortSubjekt","SubjektPrefixFrage",
                                         "SubjektPrefixAntwort","ImagefileFrage","ImagefileAntwort",
@@ -1982,8 +2038,8 @@ Window {
                                 Item {
                                     width: (index === 0 ? listArea.numColWidth : listArea.columnWidth)
                                     height: parent.height
+
                                     Label {
-                                        // statt fester Breite relative nehmen, damit es auch in der schmalen Spalte passt
                                         width: parent.width * 0.9
                                         height: parent.height * 0.8
                                         anchors.centerIn: parent
@@ -1994,11 +2050,23 @@ Window {
                                         font.bold: true
                                         color: "#333"
                                     }
+
+                                    // >>> HIER NEU <<<
+                                    MouseArea {
+                                        anchors.fill: parent
+                                        acceptedButtons: Qt.RightButton
+
+                                        onPressed: function(mouse) {
+                                            if (mouse.button === Qt.RightButton && index !== 0) {
+                                                headerContextMenu.popup()
+                                                mouse.accepted = true
+                                            }
+                                        }
+                                    }
                                 }
-                            }
+                            }                    // Liste
                         }
                     }
-                    // Liste
                     MultiSelectListView {
                         id: listView
                         anchors.top: header.bottom
