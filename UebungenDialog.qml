@@ -49,6 +49,8 @@ Window {
 
     property Item pendingFocusItem: null
 
+    // am listView:
+    property var lastPasteUndo: null   // { role: "antwortSubjekt", changes: [{row:0, old:..., new:...}, ...] }
 
     EditExersizeDialog {
         id: editExersizeDialog
@@ -81,23 +83,133 @@ Window {
         id: headerContextMenu
 
         MenuItem {
-            text: "Kopiere selektierte Felder"
+            text: "Kopiere selektierte Zeilen"
+            enabled: listView.selectedIndices
+                     && listView.selectedIndices.length > 0
+                     && listView.contextColumnRole !== ""
             onTriggered: copySelectedFields()
         }
+
         MenuItem {
-            text: "Füge kopierte Felder ein"
+            text: "Füge kopierte Zeilen ein"
+            enabled: listView.copiedBuffer
+                     && listView.copiedBuffer.length > 0
+                     && listView.contextColumnRole !== ""
             onTriggered: pasteCopiedFields()
         }
+
+        MenuSeparator { }
+
         MenuItem { text: "Selektiere alle Felder"; onTriggered: selectAllRows() }
-        MenuItem { text: "Alle abwählen";          onTriggered: clearRowSelection() }
+        MenuItem { text: "Alle abwählen"; onTriggered: clearRowSelection() }
+        MenuItem {
+            text: "Letzte eingefügte Zeilen wieder entfernen"
+            enabled: listView.lastPasteUndo !== null
+            onTriggered: undoLastPaste()
+        }
+    }
+
+    function undoLastPaste() {
+        var u = listView.lastPasteUndo
+        if (!u || !u.changes) return
+
+        var role = u.role
+        for (var i = 0; i < u.changes.length; ++i) {
+            var c = u.changes[i]
+            uebungModel.setProperty(c.row, role, c.old)
+        }
+        listView.lastPasteUndo = null
+    }
+
+
+    function _rowCount() {
+        if (listView && listView.count !== undefined) return listView.count;
+        if (listView && listView.model && listView.model.count !== undefined) return listView.model.count;
+        return 0;
+    }
+
+    function _getCell(row, role) {
+        // funktioniert für ListModel: model.get(row)[role]
+        if (!listView || !listView.model) return undefined;
+        if (typeof listView.model.get === "function") {
+            var obj = listView.model.get(row);
+            return obj ? obj[role] : undefined;
+        }
+        // wenn dein Model kein ListModel ist, musst du hier ggf. auf setData/data gehen.
+        return undefined;
+    }
+
+    function _setCell(row, role, value) {
+        if (!listView || !listView.model) return;
+        // ListModel:
+        if (typeof listView.model.setProperty === "function") {
+            listView.model.setProperty(row, role, value);
+            return;
+        }
+        // sonst: ggf. QAbstractItemModel -> setData(...)
     }
 
     function copySelectedFields() {
-        console.log("copySelectedFields()")
+        var role = listView.contextColumnRole;
+        if (!role) { console.warn("COPY: no role"); return; }
+
+        var sel = listView.selectedIndices || [];
+        if (sel.length === 0) { console.warn("COPY: nothing selected"); return; }
+
+        if (!listView.model || typeof listView.model.get !== "function") {
+            console.warn("COPY: model.get missing"); return;
+        }
+
+        var buf = [];
+        for (var i = 0; i < sel.length; ++i) {
+            var r = sel[i];
+            var obj = listView.model.get(r);
+            buf.push(obj ? obj[role] : undefined);
+        }
+
+        listView.copiedBuffer = buf;
+        console.log("COPY role=", role, " count=", buf.length, " first=", buf[0]);
+
+        // Selektion entfernen
+        listView.selectedIndices = [];
+        listView.selectionAnchor = -1;
+        listView.updateSelectedItems();
+    }
+
+    function _getRoleValue(row, role) {
+        var obj = uebungModel.get(row)
+        var v = obj ? obj[role] : undefined
+        return (v === undefined || v === null) ? "" : v
     }
 
     function pasteCopiedFields() {
-        console.log("pasteCopiedFields()")
+        var role = listView.contextColumnRole
+        if (!role) return
+
+        var buf = listView.copiedBuffer || []
+        if (buf.length === 0) return
+        if (uebungModel.count <= 0) return
+
+        var m = Math.min(buf.length, uebungModel.count)
+
+        // UNDO sammeln
+        var changes = []
+        for (var i = 0; i < m; ++i) {
+            var oldVal = _getRoleValue(i, role)
+            var newVal = buf[i]
+            if (newVal === undefined || newVal === null) newVal = ""
+            changes.push({ row: i, old: oldVal, neu: newVal })
+        }
+        listView.lastPasteUndo = { role: role, changes: changes }
+
+        // Schreiben
+        for (var j = 0; j < changes.length; ++j) {
+            var c = changes[j]
+            uebungModel.setProperty(c.row, role, c.neu)
+        }
+
+        // Buffer leeren
+        listView.copiedBuffer = []
     }
 
     function selectAllRows() {
@@ -122,6 +234,12 @@ Window {
         listView.currentIndex = 0;
 
         listView.updateSelectedItems();
+    }
+
+    function headerToRoleName(headerText) {
+        if (!headerText || headerText.length === 0)
+            return ""
+        return headerText.charAt(0).toLowerCase() + headerText.slice(1)
     }
 
     function clearRowSelection() {
@@ -2057,7 +2175,11 @@ Window {
                                         acceptedButtons: Qt.RightButton
 
                                         onPressed: function(mouse) {
-                                            if (mouse.button === Qt.RightButton && index !== 0) {
+                                            if (mouse.button === Qt.RightButton && index !== 0) { // 1. Kopfspalte ignorieren
+                                                console.log("contextColumnRole=", listView.contextColumnRole)
+                                                // merke, welche Spalte im Header geklickt wurde
+                                                listView.contextColumnRole = headerToRoleName(modelData)    // z.B. "FrageSubjekt", "ImagefileFrage", ...
+                                                var val = listView.copiedBuffer[0];
                                                 headerContextMenu.popup()
                                                 mouse.accepted = true
                                             }
@@ -2086,6 +2208,13 @@ Window {
                         // 👇 NEU: Scroll-Verhinderung bei gezieltem currentIndex-Setzen
                         property bool blockedPositioning: false
                         Component.onCompleted: forceActiveFocus()
+
+                        property var copiedBuffer: []          // Array von Strings/Werten
+                        // am listView (oder im Root, aber im Scope erreichbar):
+                        // listView.contextColumnRole wird oben gesetzt
+                        property string contextColumnRole: ""
+                        property var lastPasteUndo: null
+
                         delegate: Rectangle {
                             id: delegateRoot
                             property int indexOutside: index
