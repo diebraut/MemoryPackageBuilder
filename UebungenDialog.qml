@@ -103,24 +103,171 @@ Window {
         MenuItem { text: "Selektiere alle Felder"; onTriggered: selectAllRows() }
         MenuItem { text: "Alle abwählen"; onTriggered: clearRowSelection() }
         MenuItem {
-            text: "Letzte eingefügte Zeilen wieder entfernen"
-            enabled: listView.lastPasteUndo !== null
-            onTriggered: undoLastPaste()
+            text: "letzte Änderung rückgängig"
+            enabled: listView.lastUndoAction !== null
+            onTriggered: undoLastAction()
+        }
+        MenuItem {
+            text: "RegEx auf selektierte Felder"
+            enabled: listView.selectedIndices
+                     && listView.selectedIndices.length > 0
+                     && listView.contextColumnRole !== ""
+            onTriggered: regexDlg.open()
         }
     }
 
-    function undoLastPaste() {
-        var u = listView.lastPasteUndo
-        if (!u || !u.changes) return
+    Dialog {
+        id: regexDlg
+        title: "RegEx auf selektierte Felder"
+        modal: true
+        standardButtons: Dialog.NoButton
+
+        // klein halten
+        width: 420
+
+        Column {
+            spacing: 10
+            padding: 12
+            width: parent.width
+
+            TextField {
+                id: regexPatternField
+                placeholderText: "RegEx (Pattern)"
+            }
+
+            TextField {
+                id: regexReplaceField
+                placeholderText: "Ersetzen durch (leer = Extrahieren)"
+            }
+
+            Row {
+                spacing: 10
+                anchors.right: parent.right
+
+                Button {
+                    text: "Abbrechen"
+                    onClicked: regexDlg.close()
+                }
+
+                Button {
+                    text: "Ausführen"
+                    focus: true
+                    // default-ähnlich: Enter im TextField triggert (s.u.)
+                    enabled: regexPatternField.text.length > 0
+                    onClicked: {
+                        onClicked: applyRegexToSelectedFields(regexPatternField.text, regexReplaceField.text)
+                        regexDlg.close()
+                    }
+                }
+            }
+        }
+
+        onOpened: {
+            regexPatternField.forceActiveFocus()
+            regexPatternField.selectAll()
+        }
+    }
+
+    function applyRegexToSelectedFields(pattern, replaceText) {
+        var role = listView.contextColumnRole
+        if (!role) return
+
+        var sel = listView.selectedIndices || []
+        if (sel.length === 0) return
+
+        // RegExp bauen
+        var re
+        try {
+            re = new RegExp(pattern)
+        } catch (e) {
+            console.warn("Invalid RegExp:", pattern)
+            return
+        }
+
+        var doReplace = (replaceText !== undefined && replaceText !== null && String(replaceText).length > 0)
+        var changes = []
+
+        for (var i = 0; i < sel.length; ++i) {
+            var row = sel[i]
+            var obj = uebungModel.get(row)
+            if (!obj) continue
+
+            var oldVal = obj[role]
+            if (oldVal === undefined || oldVal === null) oldVal = ""
+            var s = String(oldVal)
+
+            var newVal = s
+
+            if (doReplace) {
+                // REPLACE-MODUS
+                newVal = s.replace(re, String(replaceText))
+            } else {
+                // EXTRAKTIONS-MODUS
+                var m = s.match(re)
+                if (m) {
+                    newVal = (m.length > 1) ? m[1] : m[0]
+                } else {
+                    continue // kein Match -> keine Änderung
+                }
+            }
+
+            if (newVal === undefined || newVal === null) newVal = ""
+
+            // nur echte Änderungen übernehmen
+            if (newVal !== s) {
+                changes.push({ row: row, old: s })
+                uebungModel.setProperty(row, role, newVal)
+            }
+        }
+
+        // Undo setzen (nur wenn wirklich was geändert wurde)
+        if (changes.length > 0) {
+            listView.lastUndoAction = {
+                type: "regex",
+                role: role,
+                changes: changes,
+                addedRows: 0
+            }
+        }
+    }
+
+
+    // Enter im Feld -> Ausführen
+    Connections {
+        target: regexPatternField
+        function onAccepted() {
+            if (regexDlg.pattern.length > 0) {
+                applyRegexToSelectedFields(regexPatternField.text, regexReplaceField.text)
+                regexDlg.close()
+            }
+        }
+    }
+
+    function undoLastAction() {
+        var u = listView.lastUndoAction
+        if (!u) return
 
         var role = u.role
-        for (var i = 0; i < u.changes.length; ++i) {
-            var c = u.changes[i]
-            uebungModel.setProperty(c.row, role, c.old)
-        }
-        listView.lastPasteUndo = null
-    }
+        var changes = u.changes || []
+        var added = u.addedRows || 0
 
+        // 1) wenn Zeilen neu angefügt wurden: wieder entfernen (von hinten)
+        if (added > 0) {
+            for (var k = 0; k < added; ++k) {
+                if (uebungModel.count > 0)
+                    uebungModel.remove(uebungModel.count - 1)
+            }
+        }
+
+        // 2) alte Werte zurückschreiben
+        for (var i = 0; i < changes.length; ++i) {
+            var c = changes[i]
+            if (c.row >= 0 && c.row < uebungModel.count)
+                uebungModel.setProperty(c.row, role, c.old)
+        }
+
+        listView.lastUndoAction = null
+    }
 
     function _rowCount() {
         if (listView && listView.count !== undefined) return listView.count;
@@ -182,30 +329,77 @@ Window {
         return (v === undefined || v === null) ? "" : v
     }
 
+    function renumberAllRows() {
+        // passe den Role-Namen hier einmalig an, falls er anders heißt
+        var numRole = "nummer"; // oder "Nummer" oder "nr" etc.
+
+        // Auto-Erkennung: wenn erste Zeile existiert, nimm passende Role
+        if (uebungModel.count > 0) {
+            var o = uebungModel.get(0)
+            if (o && (o["nummer"] !== undefined)) numRole = "nummer"
+            else if (o && (o["Nummer"] !== undefined)) numRole = "Nummer"
+        }
+
+        for (var r = 0; r < uebungModel.count; ++r) {
+            uebungModel.setProperty(r, numRole, r + 1)
+        }
+    }
+
     function pasteCopiedFields() {
         var role = listView.contextColumnRole
         if (!role) return
 
         var buf = listView.copiedBuffer || []
         if (buf.length === 0) return
-        if (uebungModel.count <= 0) return
 
-        var m = Math.min(buf.length, uebungModel.count)
+        var existingCount = uebungModel.count
+        var neededCount = buf.length
 
-        // UNDO sammeln
+        // ---- UNDO vorbereiten ----
         var changes = []
-        for (var i = 0; i < m; ++i) {
-            var oldVal = _getRoleValue(i, role)
-            var newVal = buf[i]
-            if (newVal === undefined || newVal === null) newVal = ""
-            changes.push({ row: i, old: oldVal, neu: newVal })
-        }
-        listView.lastPasteUndo = { role: role, changes: changes }
 
-        // Schreiben
-        for (var j = 0; j < changes.length; ++j) {
-            var c = changes[j]
-            uebungModel.setProperty(c.row, role, c.neu)
+        for (var i = 0; i < neededCount; ++i) {
+
+            var newVal = buf[i]
+            if (newVal === undefined || newVal === null)
+                newVal = ""
+
+            if (i < existingCount) {
+                // EXISTIERENDE Zeile überschreiben
+                var oldVal = uebungModel.get(i)[role]
+                if (oldVal === undefined || oldVal === null)
+                    oldVal = ""
+
+                changes.push({ row: i, old: oldVal })
+
+                uebungModel.setProperty(i, role, newVal)
+
+            } else {
+                // ---- NEUE ZEILE ANFÜGEN ----
+
+                // komplette leere Zeile erzeugen
+                var emptyRow = {}
+
+                // alle Rollen leer initialisieren
+                var sample = existingCount > 0 ? uebungModel.get(0) : {}
+                for (var key in sample)
+                    emptyRow[key] = ""
+
+                // Zielspalte setzen
+                emptyRow[role] = newVal
+
+                uebungModel.append(emptyRow)
+
+                changes.push({ row: i, old: null }) // für Undo
+            }
+            renumberAllRows();
+        }
+
+        listView.lastUndoAction = {
+            type: "paste",
+            role: role,
+            changes: changes, // changes enthält {row, old, neu?} – old reicht für Undo
+            addedRows: Math.max(0, neededCount - existingCount)
         }
 
         // Buffer leeren
@@ -959,7 +1153,8 @@ Window {
 
         // 3) In XML persistieren (schreibt komplette Liste inkl. neuer Nummern)
         saveCurrentModelToXml();
-        const data = ExersizeLoader.loadPackage(packagePath);
+        const xmlPath = packageXmlPaths.at(currentPackageIndex)
+        const data = ExersizeLoader.loadPackage(xmlPath);
         uebungModel.clear();
         for (let e of data.uebungsliste) uebungModel.append(e);
 
@@ -2213,7 +2408,8 @@ Window {
                         // am listView (oder im Root, aber im Scope erreichbar):
                         // listView.contextColumnRole wird oben gesetzt
                         property string contextColumnRole: ""
-                        property var lastPasteUndo: null
+                        // am listView:
+                        property var lastUndoAction: null   // { type: "paste"|"regex", role: "...", changes:[{row, old, neu}], addedRows:int }
 
                         delegate: Rectangle {
                             id: delegateRoot
