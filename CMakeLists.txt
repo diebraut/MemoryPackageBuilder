@@ -14,10 +14,17 @@ qt_standard_project_setup()
 
 qt_add_resources(IMAGE_RESOURCES icons/icons.qrc)
 
+set(APP_ICON_RESOURCE_WINDOWS "")
+
+if(WIN32)
+    set(APP_ICON_RESOURCE_WINDOWS ${CMAKE_CURRENT_SOURCE_DIR}/appicon.rc)
+endif()
+
 # Füge die ausführbare Datei hinzu
 qt_add_executable(appMemoryPackagesBuilder
     main.cpp
     ${IMAGE_RESOURCES}
+    ${APP_ICON_RESOURCE_WINDOWS}
 )
 
 # Füge die QML-Dateien und C++-Quellen hinzu
@@ -80,4 +87,12 @@ install(TARGETS appMemoryPackagesBuilder
     BUNDLE DESTINATION .
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+)
+
+add_custom_command(TARGET appMemoryPackagesBuilder POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E make_directory
+        ${CMAKE_BINARY_DIR}/dist
+    COMMAND ${CMAKE_COMMAND} -E copy
+        $<TARGET_FILE:appMemoryPackagesBuilder>
+        ${CMAKE_BINARY_DIR}/dist
 )
