@@ -36,8 +36,38 @@ Window {
     property var uebungenData
     property int labelWidth: 120
 
-    // Anzahl der Spalten
-    property int columnCount: 9
+    property bool showAllFields: false
+
+    property var baseColumns: [
+        "Nummer",
+        "FrageSubjekt",
+        "AntwortSubjekt",
+        "SubjektPrefixFrage",
+        "SubjektPrefixAntwort",
+        "ImagefileFrage",
+        "ImagefileAntwort",
+        "InfoURLFrage",
+        "InfoURLAntwort"
+    ]
+
+    property var extraColumns: [
+        "ImageFrageAuthor",
+        "ImageFrageLizenz",
+        "ImageAntwortAuthor",
+        "ImageAntwortLizenz",
+        "WikiPageFraVers",
+        "WikiPageAntVers",
+        "ExcludeAereaFra",
+        "ExcludeAereaAnt",
+        "ImageFrageBildDescription",
+        "ImageAntwortBildDescription",
+        "ImageFrageUrl",
+        "ImageAntwortUrl"
+    ]
+
+    property var visibleColumns: showAllFields ? baseColumns.concat(extraColumns) : baseColumns
+    property int columnCount: visibleColumns.length
+
     // Zwischenraum zwischen den Spalten (Row.spacing)
     property int columnSpacing: 5
 
@@ -51,6 +81,8 @@ Window {
 
     // am listView:
     property var lastPasteUndo: null   // { role: "antwortSubjekt", changes: [{row:0, old:..., new:...}, ...] }
+
+    property bool initialDialogSizingDone: false
 
     EditExersizeDialog {
         id: editExersizeDialog
@@ -345,12 +377,125 @@ Window {
         }
     }
 
+    function emptyExerciseRow() {
+        return {
+            nummer: "",
+            frageSubjekt: "",
+            antwortSubjekt: "",
+            subjektPrefixFrage: "",
+            subjektPrefixAntwort: "",
+            imagefileFrage: "",
+            imagefileAntwort: "",
+            infoURLFrage: "",
+            infoURLAntwort: "",
+            imageFrageAuthor: "",
+            imageFrageLizenz: "",
+            imageAntwortAuthor: "",
+            imageAntwortLizenz: "",
+            wikiPageFraVers: "",
+            wikiPageAntVers: "",
+            excludeAereaFra: "",
+            excludeAereaAnt: "",
+            imageFrageBildDescription: "",
+            imageAntwortBildDescription: "",
+            imageFrageUrl: "",
+            imageAntwortUrl: "",
+            hideAuthor: false,
+            infoURLFrage_bgcolor: "white",
+            infoURLAntwort_bgcolor: "white",
+            selected: false
+        }
+    }
+
+    function loadPackage(index) {
+        if (index < 0 || index >= packageXmlPaths.count)
+            return
+
+        currentPackageIndex = index
+        const xmlPath = packageXmlPaths.at(index)
+
+        console.log("📦 Lade Package:", xmlPath)
+
+        const uebungenData = ExersizeLoader.loadPackage(xmlPath)
+        if (!uebungenData) {
+            console.warn("❌ Konnte XML nicht laden:", xmlPath)
+            return
+        }
+
+        // ===== Eigenschaften =====
+        uebungenNameField.text               = uebungenData.name || ""
+        frageTypeField.text                  = uebungenData.frageType || ""
+        frageTextField.text                  = uebungenData.frageText || ""
+        frageTextUmgekehrtField.text         = uebungenData.frageTextUmgekehrt || ""
+        sequentiellCheckBox.checked          = !!uebungenData.sequentiell
+        umgekehrtCheckBox.checked            = !!uebungenData.umgekehrt
+        hideAuthorByQuestionCheckBox.checked = !!uebungenData.hideAuthorByQuestion
+
+        // ===== Liste =====
+        uebungModel.clear()
+
+        const list = (uebungenData.uebungsliste && uebungenData.uebungsliste.length)
+                   ? uebungenData.uebungsliste
+                   : []
+
+        for (var i = 0; i < list.length; ++i) {
+            let eintrag = JSON.parse(JSON.stringify(list[i] || {}))
+
+            // Basisfelder
+            if (!("nummer" in eintrag)) eintrag.nummer = i + 1
+            if (!("frageSubjekt" in eintrag)) eintrag.frageSubjekt = ""
+            if (!("antwortSubjekt" in eintrag)) eintrag.antwortSubjekt = ""
+            if (!("subjektPrefixFrage" in eintrag)) eintrag.subjektPrefixFrage = ""
+            if (!("subjektPrefixAntwort" in eintrag)) eintrag.subjektPrefixAntwort = ""
+            if (!("imagefileFrage" in eintrag)) eintrag.imagefileFrage = ""
+            if (!("imagefileAntwort" in eintrag)) eintrag.imagefileAntwort = ""
+            if (!("infoURLFrage" in eintrag)) eintrag.infoURLFrage = ""
+            if (!("infoURLAntwort" in eintrag)) eintrag.infoURLAntwort = ""
+
+            // Zusatzfelder
+            if (!("imageFrageAuthor" in eintrag)) eintrag.imageFrageAuthor = ""
+            if (!("imageFrageLizenz" in eintrag)) eintrag.imageFrageLizenz = ""
+            if (!("imageAntwortAuthor" in eintrag)) eintrag.imageAntwortAuthor = ""
+            if (!("imageAntwortLizenz" in eintrag)) eintrag.imageAntwortLizenz = ""
+            if (!("wikiPageFraVers" in eintrag)) eintrag.wikiPageFraVers = ""
+            if (!("wikiPageAntVers" in eintrag)) eintrag.wikiPageAntVers = ""
+            if (!("excludeAereaFra" in eintrag)) eintrag.excludeAereaFra = ""
+            if (!("excludeAereaAnt" in eintrag)) eintrag.excludeAereaAnt = ""
+            if (!("imageFrageBildDescription" in eintrag)) eintrag.imageFrageBildDescription = ""
+            if (!("imageAntwortBildDescription" in eintrag)) eintrag.imageAntwortBildDescription = ""
+            if (!("imageFrageUrl" in eintrag)) eintrag.imageFrageUrl = ""
+            if (!("imageAntwortUrl" in eintrag)) eintrag.imageAntwortUrl = ""
+
+            // Sonstige intern genutzte Felder
+            if (!("arrowDescFra" in eintrag)) eintrag.arrowDescFra = ""
+            if (!("arrowDescAnt" in eintrag)) eintrag.arrowDescAnt = ""
+            if (!("hideAuthor" in eintrag)) eintrag.hideAuthor = false
+            if (!("infoURLFrage_bgcolor" in eintrag)) eintrag.infoURLFrage_bgcolor = "white"
+            if (!("infoURLAntwort_bgcolor" in eintrag)) eintrag.infoURLAntwort_bgcolor = "white"
+            if (!("selected" in eintrag)) eintrag.selected = false
+
+            uebungModel.append(eintrag)
+        }
+
+        if (listView) {
+            listView.selectedIndices = []
+            listView.selectionAnchor = -1
+            listView.currentIndex = -1
+            if (listView.updateSelectedItems)
+                listView.updateSelectedItems()
+            if (listView.forceActiveFocus)
+                listView.forceActiveFocus()
+        }
+    }
+
     function pasteCopiedFields() {
         var role = listView.contextColumnRole
-        if (!role) return
+        if (!role)
+            return
 
         var buf = listView.copiedBuffer || []
-        if (buf.length === 0) return
+        if (buf.length === 0)
+            return
 
         var existingCount = uebungModel.count
         var neededCount = buf.length
@@ -358,8 +503,41 @@ Window {
         // ---- UNDO vorbereiten ----
         var changes = []
 
-        for (var i = 0; i < neededCount; ++i) {
+        function createEmptyRow() {
+            return {
+                nummer: "",
+                frageSubjekt: "",
+                antwortSubjekt: "",
+                subjektPrefixFrage: "",
+                subjektPrefixAntwort: "",
+                imagefileFrage: "",
+                imagefileAntwort: "",
+                infoURLFrage: "",
+                infoURLAntwort: "",
 
+                imageFrageAuthor: "",
+                imageFrageLizenz: "",
+                imageAntwortAuthor: "",
+                imageAntwortLizenz: "",
+                wikiPageFraVers: "",
+                wikiPageAntVers: "",
+                excludeAereaFra: "",
+                excludeAereaAnt: "",
+                imageFrageBildDescription: "",
+                imageAntwortBildDescription: "",
+                imageFrageUrl: "",
+                imageAntwortUrl: "",
+
+                arrowDescFra: "",
+                arrowDescAnt: "",
+                hideAuthor: false,
+                infoURLFrage_bgcolor: "white",
+                infoURLAntwort_bgcolor: "white",
+                selected: false
+            }
+        }
+
+        for (var i = 0; i < neededCount; ++i) {
             var newVal = buf[i]
             if (newVal === undefined || newVal === null)
                 newVal = ""
@@ -371,40 +549,49 @@ Window {
                     oldVal = ""
 
                 changes.push({ row: i, old: oldVal })
-
                 uebungModel.setProperty(i, role, newVal)
 
             } else {
                 // ---- NEUE ZEILE ANFÜGEN ----
+                var emptyRow
 
-                // komplette leere Zeile erzeugen
-                var emptyRow = {}
+                if (uebungModel.count > 0) {
+                    // vorhandene Rollenstruktur übernehmen
+                    var sample = uebungModel.get(0)
+                    emptyRow = {}
+                    for (var key in sample) {
+                        if (key === "hideAuthor")
+                            emptyRow[key] = false
+                        else if (key === "selected")
+                            emptyRow[key] = false
+                        else if (key === "infoURLFrage_bgcolor" || key === "infoURLAntwort_bgcolor")
+                            emptyRow[key] = "white"
+                        else
+                            emptyRow[key] = ""
+                    }
+                } else {
+                    emptyRow = createEmptyRow()
+                }
 
-                // alle Rollen leer initialisieren
-                var sample = existingCount > 0 ? uebungModel.get(0) : {}
-                for (var key in sample)
-                    emptyRow[key] = ""
-
-                // Zielspalte setzen
                 emptyRow[role] = newVal
-
                 uebungModel.append(emptyRow)
 
-                changes.push({ row: i, old: null }) // für Undo
+                changes.push({ row: i, old: null })
             }
-            renumberAllRows();
         }
+
+        renumberAllRows()
 
         listView.lastUndoAction = {
             type: "paste",
             role: role,
-            changes: changes, // changes enthält {row, old, neu?} – old reicht für Undo
+            changes: changes,
             addedRows: Math.max(0, neededCount - existingCount)
         }
 
-        // Buffer leeren
         listView.copiedBuffer = []
     }
+
 
     function selectAllRows() {
         if (!listView) return;
@@ -1682,49 +1869,6 @@ Window {
         }
     }
 
-    function loadPackage(index) {
-        if (index < 0 || index >= packageXmlPaths.count)
-            return
-
-        currentPackageIndex = index
-        const xmlPath = packageXmlPaths.at(index)
-
-        console.log("📦 Lade Package:", xmlPath)
-
-        const uebungenData = ExersizeLoader.loadPackage(xmlPath)
-        if (!uebungenData) {
-            console.warn("❌ Konnte XML nicht laden:", xmlPath)
-            return
-        }
-
-        // ===== Eigenschaften =====
-        uebungenNameField.text               = uebungenData.name || ""
-
-        frageTypeField.text                  = uebungenData.frageType || ""
-        frageTextField.text                  = uebungenData.frageText || ""
-        frageTextUmgekehrtField.text         = uebungenData.frageTextUmgekehrt || ""
-        sequentiellCheckBox.checked          = !!uebungenData.sequentiell
-        umgekehrtCheckBox.checked            = !!uebungenData.umgekehrt
-        hideAuthorByQuestionCheckBox.checked = !!uebungenData.hideAuthorByQuestion
-
-        // ===== Liste =====
-        uebungModel.clear()
-
-        for (var i = 0; i < uebungenData.uebungsliste.length; ++i) {
-            let eintrag = JSON.parse(JSON.stringify(uebungenData.uebungsliste[i]))
-
-            if (!("nummer" in eintrag)) eintrag.nummer = i + 1
-            if (!("hideAuthor" in eintrag)) eintrag.hideAuthor = false
-            if (!("infoURLFrage_bgcolor" in eintrag)) eintrag.infoURLFrage_bgcolor = "white"
-            if (!("infoURLAntwort_bgcolor" in eintrag)) eintrag.infoURLAntwort_bgcolor = "white"
-            if (!("selected" in eintrag)) eintrag.selected = false
-
-            uebungModel.append(eintrag)
-        }
-
-        if (listView && listView.forceActiveFocus)
-            listView.forceActiveFocus()
-    }
 
     Item {
         id: windowContent
@@ -2079,26 +2223,28 @@ Window {
         id: uebungModel
     }
 
-    Component.onCompleted: {
-        if (!packagePath) {
-            console.warn("❌ packagePath fehlt")
-            return
+    function updateDialogSize() {
+        const wantedWidth = Math.max(listArea.totalContentWidth + 80, 1200)
+
+        if (!initialDialogSizingDone) {
+            dialogWindow.width = wantedWidth
+            dialogWindow.height = 650
+            initialDialogSizingDone = true
         }
-        console.log("ON COMPLETED")
-        console.log("package_count =", package_count)
-        initPackageXmlPaths()
-        console.log("paths =", packageXmlPaths.count)
 
-        // Dynamische Breite berechnen (mindestens 900px)
-        const colWidth = 150;
-        const spacing = columnSpacing;
-        const total = columnCount * colWidth + (columnCount - 1) * spacing;
-
-        dialogWindow.width = Math.max(total + 60, 900);  // etwas Puffer für Ränder
-        dialogWindow.height = 600;
-
-        listView.forceActiveFocus();
+        dialogWindow.minimumWidth = 900
+        dialogWindow.minimumHeight = 600
     }
+
+    Component.onCompleted: {
+        initPackageXmlPaths()
+        listArea.recalcWidths()
+        updateDialogSize()
+        listView.forceActiveFocus()
+    }
+
+
+    onShowAllFieldsChanged: updateDialogSize()
 
     FramedRoot {
         title: "Übungen"
@@ -2325,29 +2471,56 @@ Window {
                     property real columnWidth: 150
                     property real totalContentWidth: 0
                     onWidthChanged: recalcWidths()
-                    Component.onCompleted: recalcWidths()
-                    function recalcWidths() {
-                        const restCols = columnCount - 1
-                        const spacing  = columnSpacing * (columnCount - 1)
-                        const restWidth = Math.max(0, width - numColWidth - spacing)
-                        columnWidth = Math.max(150, restWidth / restCols)
-                        totalContentWidth = numColWidth + restCols * columnWidth + spacing
+
+                    Connections {
+                        target: dialogWindow   // oder das Root-Item mit showAllFields
+
+                        function onShowAllFieldsChanged() {
+                            listArea.recalcWidths()
+                        }
                     }
+
+                    Component.onCompleted: listArea.recalcWidths()
+
+                    function recalcWidths() {
+                        const restCols = Math.max(0, columnCount - 1)
+                        const spacing = columnSpacing * restCols
+
+                        if (restCols <= 0) {
+                            columnWidth = 150
+                            totalContentWidth = numColWidth
+                            return
+                        }
+
+                        if (!showAllFields) {
+                            const available = Math.max(0, listView.width - numColWidth - spacing)
+                            columnWidth = Math.max(150, Math.floor(available / restCols))
+                            totalContentWidth = numColWidth + restCols * columnWidth + spacing
+                        } else {
+                            columnWidth = 150
+                            totalContentWidth = numColWidth + restCols * columnWidth + spacing
+                        }
+                    }
+
                     // Kopfzeile
                     Rectangle {
                         id: header
                         height: 40
-                        width: parent.width
+                        width: listArea.totalContentWidth
                         anchors.top: parent.top
+                        x: -listView.contentX
                         color: "#dddddd"
                         Row {
                             anchors.fill: parent
                             spacing: columnSpacing
                             // Kopfzeile
                             Repeater {
+                                model: visibleColumns
+                                /*
                                 model: ["Nummer","FrageSubjekt","AntwortSubjekt","SubjektPrefixFrage",
                                         "SubjektPrefixAntwort","ImagefileFrage","ImagefileAntwort",
                                         "InfoURLFrage","InfoURLAntwort"]
+                                */
                                 Item {
                                     width: (index === 0 ? listArea.numColWidth : listArea.columnWidth)
                                     height: parent.height
@@ -2388,28 +2561,31 @@ Window {
                         id: listView
                         anchors.top: header.bottom
                         anchors.left: parent.left
-                        width: listArea.totalContentWidth
+                        anchors.right: parent.right
                         anchors.bottom: parent.bottom
+
                         clip: true
+                        onWidthChanged: listArea.recalcWidths()
+
                         modelData: uebungModel
                         currentIndex: -1
                         interactive: true
                         focus: true
                         spacing: 0
+
+                        contentWidth: listArea.totalContentWidth
+
                         flickableDirection: Flickable.VerticalFlick | Flickable.HorizontalFlick
                         boundsBehavior: Flickable.StopAtBounds
                         ScrollBar.horizontal: ScrollBar {}
                         ScrollBar.vertical: ScrollBar {}
-                        // 👇 NEU: Scroll-Verhinderung bei gezieltem currentIndex-Setzen
+
                         property bool blockedPositioning: false
                         Component.onCompleted: forceActiveFocus()
 
-                        property var copiedBuffer: []          // Array von Strings/Werten
-                        // am listView (oder im Root, aber im Scope erreichbar):
-                        // listView.contextColumnRole wird oben gesetzt
+                        property var copiedBuffer: []
                         property string contextColumnRole: ""
-                        // am listView:
-                        property var lastUndoAction: null   // { type: "paste"|"regex", role: "...", changes:[{row, old, neu}], addedRows:int }
+                        property var lastUndoAction: null
 
                         delegate: Rectangle {
                             id: delegateRoot
@@ -2420,6 +2596,7 @@ Window {
                             color: selected ? "#cce5ff" : (indexOutside % 2 === 0 ? "#f9f9f9" : "#ffffff")
                             border.color: listView.currentIndex === indexOutside ? "blue" : "transparent"
                             border.width: 1
+
                             function handleDoubleClick(index) {
                                 console.log("Doubleclick für Zeile:", index);
                                 if (listView.currentIndex >= 0) {
@@ -2427,6 +2604,7 @@ Window {
                                     editExersizeDialog.open();
                                 }
                             }
+
                             MouseArea {
                                 anchors.fill: parent
                                 acceptedButtons: Qt.RightButton
@@ -2442,6 +2620,7 @@ Window {
                                     }
                                 }
                             }
+
                             MouseArea {
                                 anchors.fill: parent
                                 acceptedButtons: Qt.LeftButton
@@ -2467,52 +2646,57 @@ Window {
                                     mouse.accepted = true;
                                 }
                             }
+
                             Row {
                                 anchors.fill: parent
                                 spacing: columnSpacing
+
                                 Repeater {
-                                    model: ["nummer","frageSubjekt","antwortSubjekt","subjektPrefixFrage",
-                                            "subjektPrefixAntwort","imagefileFrage","imagefileAntwort",
-                                            "infoURLFrage","infoURLAntwort"]
+                                    model: visibleColumns
+
                                     Item {
                                         width: (index === 0 ? listArea.numColWidth : listArea.columnWidth)
                                         height: parent.height
-                                        // ===================== Loader im Delegate =====================
+
                                         Loader {
                                             id: loaderId
                                             anchors.fill: parent
-                                            property string roleName: modelData
+                                            property string roleName: headerToRoleName(modelData)
                                             property int rowIndex: indexOutside
                                             sourceComponent: columnEditor
+
                                             function refreshFromModel() {
                                                 if (!item) return;
                                                 const rec = (rowIndex >= 0 && rowIndex < uebungModel.count) ? uebungModel.get(rowIndex) : null;
                                                 const bgKey = roleName + "_bgcolor";
-                                                item._updatingFromModel = true; // Guard ein
+                                                item._updatingFromModel = true;
                                                 item.bgColor = (rec && rec[bgKey]) || "white";
                                                 const v = rec ? rec[roleName] : "";
                                                 item.textVal = (v === undefined || v === null) ? "" : String(v);
-                                                item._updatingFromModel = false; // Guard aus
+                                                item._updatingFromModel = false;
                                             }
+
                                             onLoaded: {
-                                                // Kritisch: dynamische Bindungen, damit Delegate-Recycling korrekt wirkt
                                                 item.roleName = Qt.binding(() => loaderId.roleName);
                                                 item.rowIndex = Qt.binding(() => loaderId.rowIndex);
                                                 refreshFromModel();
                                             }
+
                                             onRoleNameChanged: refreshFromModel()
-                                            onRowIndexChanged:  refreshFromModel()
+                                            onRowIndexChanged: refreshFromModel()
                                             Connections {
                                                 target: uebungModel
                                                 function onDataChanged(changedIndex, roles) {
                                                     const realIndex = (typeof changedIndex === "object" && typeof changedIndex.row === "number")
                                                                       ? changedIndex.row : changedIndex;
-                                                    if (realIndex !== loaderId.rowIndex || !loaderId.item) return;
-                                                    // Optional: nur reagieren, wenn unsere Rolle (oder deren _bgcolor) betroffen ist
+                                                    if (realIndex !== loaderId.rowIndex || !loaderId.item)
+                                                        return;
+
                                                     if (roles && roles.length &&
                                                         roles.indexOf(loaderId.roleName) === -1 &&
                                                         roles.indexOf(loaderId.roleName + "_bgcolor") === -1)
                                                         return;
+
                                                     loaderId.refreshFromModel();
                                                 }
                                             }
@@ -2574,7 +2758,15 @@ Window {
                         text: "Zeige doppelte Zeilen"
                         onClicked: showDuplicateRowsByFrageSubjekt()
                     }
+                    Item { Layout.preferredWidth: 18 }
+                    CheckBox {
+                        id: showAllFieldsCheckBox
+                        text: "Zeige alle Felder"
+                        checked: showAllFields
+                        onToggled: showAllFields = checked
+                    }
                 }
+
                 // Spacer in der Mitte
                 Item { Layout.fillWidth: true }
                 // Rechtsbündige Buttons
