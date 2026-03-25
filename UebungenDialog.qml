@@ -2506,21 +2506,21 @@ Window {
                     Rectangle {
                         id: header
                         height: 40
-                        width: listArea.totalContentWidth
+                        width: parent.width
                         anchors.top: parent.top
-                        x: -listView.contentX
                         color: "#dddddd"
+                        clip: true
+
                         Row {
-                            anchors.fill: parent
+                            id: headerRow
+                            height: parent.height
+                            width: listArea.totalContentWidth
+                            x: -listView.contentX
                             spacing: columnSpacing
-                            // Kopfzeile
+
                             Repeater {
                                 model: visibleColumns
-                                /*
-                                model: ["Nummer","FrageSubjekt","AntwortSubjekt","SubjektPrefixFrage",
-                                        "SubjektPrefixAntwort","ImagefileFrage","ImagefileAntwort",
-                                        "InfoURLFrage","InfoURLAntwort"]
-                                */
+
                                 Item {
                                     width: (index === 0 ? listArea.numColWidth : listArea.columnWidth)
                                     height: parent.height
@@ -2537,24 +2537,20 @@ Window {
                                         color: "#333"
                                     }
 
-                                    // >>> HIER NEU <<<
                                     MouseArea {
                                         anchors.fill: parent
                                         acceptedButtons: Qt.RightButton
 
                                         onPressed: function(mouse) {
-                                            if (mouse.button === Qt.RightButton && index !== 0) { // 1. Kopfspalte ignorieren
-                                                console.log("contextColumnRole=", listView.contextColumnRole)
-                                                // merke, welche Spalte im Header geklickt wurde
-                                                listView.contextColumnRole = headerToRoleName(modelData)    // z.B. "FrageSubjekt", "ImagefileFrage", ...
-                                                var val = listView.copiedBuffer[0];
+                                            if (mouse.button === Qt.RightButton && index !== 0) {
+                                                listView.contextColumnRole = headerToRoleName(modelData)
                                                 headerContextMenu.popup()
                                                 mouse.accepted = true
                                             }
                                         }
                                     }
                                 }
-                            }                    // Liste
+                            }
                         }
                     }
                     MultiSelectListView {

@@ -478,7 +478,9 @@ Window {
             }
 
             // 7) Menü anzeigen
-            customContextMenu.popup(mouse.screenX, mouse.screenY)
+            customContextMenu.x = mouse.x
+            customContextMenu.y = mouse.y
+            customContextMenu.open()
         }
     }
 
