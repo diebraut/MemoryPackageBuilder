@@ -497,11 +497,22 @@ Window {
         if (buf.length === 0)
             return
 
-        var existingCount = uebungModel.count
-        var neededCount = buf.length
+        // Startzeile bestimmen:
+        // - bei markierten Zeilen ab erster markierter Zeile
+        // - sonst ab Zeile 0
+        var sel = listView.selectedIndices || []
+        var startRow = 0
 
-        // ---- UNDO vorbereiten ----
+        if (sel.length > 0) {
+            startRow = sel[0]
+            for (var s = 1; s < sel.length; ++s) {
+                if (sel[s] < startRow)
+                    startRow = sel[s]
+            }
+        }
+
         var changes = []
+        var addedRows = 0
 
         function createEmptyRow() {
             return {
@@ -537,26 +548,27 @@ Window {
             }
         }
 
-        for (var i = 0; i < neededCount; ++i) {
+        for (var i = 0; i < buf.length; ++i) {
+            var targetRow = startRow + i
             var newVal = buf[i]
+
             if (newVal === undefined || newVal === null)
                 newVal = ""
 
-            if (i < existingCount) {
-                // EXISTIERENDE Zeile überschreiben
-                var oldVal = uebungModel.get(i)[role]
+            if (targetRow < uebungModel.count) {
+                // existierende Zeile überschreiben
+                var oldVal = uebungModel.get(targetRow)[role]
                 if (oldVal === undefined || oldVal === null)
                     oldVal = ""
 
-                changes.push({ row: i, old: oldVal })
-                uebungModel.setProperty(i, role, newVal)
+                changes.push({ row: targetRow, old: oldVal })
+                uebungModel.setProperty(targetRow, role, newVal)
 
             } else {
-                // ---- NEUE ZEILE ANFÜGEN ----
+                // neue Zeile anhängen
                 var emptyRow
 
                 if (uebungModel.count > 0) {
-                    // vorhandene Rollenstruktur übernehmen
                     var sample = uebungModel.get(0)
                     emptyRow = {}
                     for (var key in sample) {
@@ -576,7 +588,8 @@ Window {
                 emptyRow[role] = newVal
                 uebungModel.append(emptyRow)
 
-                changes.push({ row: i, old: null })
+                changes.push({ row: targetRow, old: null })
+                addedRows++
             }
         }
 
@@ -586,12 +599,11 @@ Window {
             type: "paste",
             role: role,
             changes: changes,
-            addedRows: Math.max(0, neededCount - existingCount)
+            addedRows: addedRows
         }
 
         listView.copiedBuffer = []
     }
-
 
     function selectAllRows() {
         if (!listView) return;
