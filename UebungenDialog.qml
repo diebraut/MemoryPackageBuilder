@@ -1226,7 +1226,7 @@ Window {
         xhr.send();
     }
 
-    // --- Rows ans Model hängen (mit Duplikat-Check auf FrageSubjekt) ---
+    // --- Rows ans Model hängen (ohne Duplikat-Check) ---
     function _appendRowsToModel(rows) {
         if (!rows || rows.length === 0) {
             infoPopup.text = "Keine gültigen Einträge in der CSV gefunden.";
@@ -1234,22 +1234,10 @@ Window {
             return;
         }
 
-        // Duplikat-Set aus aktuellem Model
-        const exists = {};
-        for (let i = 0; i < uebungModel.count; i++) {
-            const k = (uebungModel.get(i).frageSubjekt || "").toString().trim().toLowerCase();
-            if (k) exists[k] = true;
-        }
-
-        let added = 0, skipped = 0;
+        let added = 0;
         let num = nextFreeNumber();
 
         for (let r of rows) {
-            const key = (r.FrageSubjekt || "").toString().trim().toLowerCase();
-            if (!key || exists[key]) { skipped++; continue; }
-
-            exists[key] = true;
-
             uebungModel.append({
                 nummer: num++,
                 frageSubjekt: r.FrageSubjekt || "",
@@ -1267,9 +1255,10 @@ Window {
         // Persistieren
         saveCurrentModelToXml();
 
-        infoPopup.text = "Import abgeschlossen:\nHinzugefügt: " + added + "\nÜbersprungen (Duplikate): " + skipped;
+        infoPopup.text = "Import abgeschlossen:\nHinzugefügt: " + added;
         infoPopup.open();
     }
+
 
     /* ===== Lösch-Workflow ===== */
     // --- Helfer: Auswahl aus der ListView holen ---
