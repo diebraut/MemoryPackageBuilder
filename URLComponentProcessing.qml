@@ -315,14 +315,16 @@ Window {
         }
     }
 
-    function handleRechteckMitBild(imageUrl,transparentBg) {
+    function handleRechteckMitBild(imageUrl, transparentBg) {
         console.log("🟩 Rechteck (mit Bild) gewählt für:", imageUrl);
 
         if (!imageUrl || imageUrl === "") {
             console.warn("⚠️ Leere Bild-URL");
             return;
         }
-        currentImageLicenceInfo = null
+
+        currentImageLicenceInfo = null;
+
         if (imageUrl.includes("upload.wikimedia.org")) {
             var fileTitle = extractOriginalFileTitle(imageUrl);
             if (!fileTitle || fileTitle === "File:") {
@@ -330,19 +332,14 @@ Window {
                 return;
             }
 
-            //licenceFetcher.autoDownloadImage = false;
-
-            if (transparentBg)
-                licenceFetchMode = "rechteckTransp"
-            else
-                licenceFetchMode = "rechteck";
+            licenceFetchMode = transparentBg ? "rechteckTransp" : "rechteck";
             licenceFetcher.fetchLicenceInfo(fileTitle);
-
         } else {
             currentImageLicenceInfo = null;
-            handleRechteckErzeugen(null,transparentBg);
+            handleRechteckErzeugen(null, transparentBg);
         }
     }
+
 
     function extractOriginalFileTitle(imageUrl) {
         var parts = imageUrl.split('/');
@@ -410,24 +407,39 @@ Window {
 
     LicenceInfoWiki {
         id: licenceFetcher
-        // falls du eine andere Standardbreite möchtest:
         thumbWidth: 500
 
         onInfoReady: function(info) {
             currentImageLicenceInfo = info;
 
-            var urlToLoad = info.thumbUrl && info.thumbUrl.length > 0
-                          ? info.thumbUrl
-                          : info.imageUrl; // Fallback: Originalgröße
+            if (licenceFetchMode === "bildLaden") {
+                var urlToLoad = info.thumbUrl && info.thumbUrl.length > 0
+                              ? info.thumbUrl
+                              : info.imageUrl; // Fallback: Originalgröße
 
-            console.log("🌐 Lade Thumbnail/Original:", urlToLoad);
-            saveImageTemporarily(urlToLoad);
+                console.log("🌐 Lade Thumbnail/Original:", urlToLoad);
+                saveImageTemporarily(urlToLoad);
+                return;
+            }
+
+            if (licenceFetchMode === "rechteck") {
+                handleRechteckErzeugen(info, false);
+                return;
+            }
+
+            if (licenceFetchMode === "rechteckTransp") {
+                handleRechteckErzeugen(info, true);
+                return;
+            }
+
+            console.warn("⚠️ Unbekannter licenceFetchMode:", licenceFetchMode);
         }
 
         onErrorOccurred: function(message) {
             console.warn("❌ Fehler beim Abrufen der Lizenzinfos:", message);
         }
     }
+
 
     function handleDownloadSucceeded(path) {
         tempImagePath = path;
@@ -530,14 +542,7 @@ Window {
 
                             var rectImageTranspItem = Qt.createQmlObject('import QtQuick.Controls 2.15; MenuItem { text: "Rechteck erzeugen (mit Bild) transp.Hg" }', dynamicMenu);
                             rectImageTranspItem.triggered.connect(function() {
-                                licenceFetchMode = "rechteckTransp";
-                                currentImageLicenceInfo = null;
-                                var fileTitle = extractOriginalFileTitle(result);
-                                if (fileTitle && fileTitle !== "File:") {
-                                    licenceFetcher.fetchLicenceInfo(fileTitle);
-                                } else {
-                                    handleRechteckMitBild(null, true);
-                                }
+                                handleRechteckMitBild(result, true);
                             });
                             dynamicMenu.addItem(rectImageTranspItem);
 
