@@ -197,17 +197,74 @@ Window {
             urlWindow.dynamicMenu = null;
         }
         if (info) currentImageLicenceInfo = info;
+
         var rect = Qt.createQmlObject(`
             import QtQuick 2.15
             import QtQuick.Controls 2.15
 
             Rectangle {
+                id: rectItem
+
                 width: 100; height: 100
                 color: "transparent"
                 x: ${lastContextMenuPosition.x}
                 y: ${lastContextMenuPosition.y}
-                border.color: "black"
+                border.color: activeFocus ? "blue" : "black"
                 border.width: 1
+                focus: true
+
+                property int keyStep: 1
+                property int minRectSize: 20
+
+                Keys.onPressed: function(event) {
+                    var step = keyStep;
+
+                    if (event.key === Qt.Key_Left) {
+                        if (event.modifiers & Qt.ShiftModifier) {
+                            var newWidth = Math.max(minRectSize, width - step);
+                            if (newWidth !== width) {
+                                width = newWidth;
+                            }
+                        } else {
+                            x -= step;
+                        }
+                        event.accepted = true;
+                        return;
+                    }
+
+                    if (event.key === Qt.Key_Right) {
+                        if (event.modifiers & Qt.ShiftModifier) {
+                            width = Math.max(minRectSize, width + step);
+                        } else {
+                            x += step;
+                        }
+                        event.accepted = true;
+                        return;
+                    }
+
+                    if (event.key === Qt.Key_Up) {
+                        if (event.modifiers & Qt.ShiftModifier) {
+                            var newHeight = Math.max(minRectSize, height - step);
+                            if (newHeight !== height) {
+                                height = newHeight;
+                            }
+                        } else {
+                            y -= step;
+                        }
+                        event.accepted = true;
+                        return;
+                    }
+
+                    if (event.key === Qt.Key_Down) {
+                        if (event.modifiers & Qt.ShiftModifier) {
+                            height = Math.max(minRectSize, height + step);
+                        } else {
+                            y += step;
+                        }
+                        event.accepted = true;
+                        return;
+                    }
+                }
 
                 MouseArea {
                     anchors.fill: parent
@@ -215,7 +272,13 @@ Window {
                     cursorShape: Qt.SizeAllCursor
                     acceptedButtons: Qt.LeftButton | Qt.RightButton
 
+                    onPressed: function(mouse) {
+                        parent.forceActiveFocus();
+                    }
+
                     onClicked: function(mouse) {
+                        parent.forceActiveFocus();
+
                         if (mouse.button === Qt.RightButton) {
                             console.log("📌 Rechtsklick auf Rechteck");
 
@@ -243,9 +306,10 @@ Window {
                                 console.log("💾 Bereich speichern als (temporär):", savePath);
 
                                 // Rahmen/Griff verschwinden lassen und erst NACH dem nächsten Frame grabben
-                                 grabAreaWithoutOverlay(parent, savePath, ${transparentBg});
+                                grabAreaWithoutOverlay(parent, savePath, ${transparentBg});
                             });
                             urlWindow.dynamicMenu.addItem(saveItem);
+
                             var removeItem = Qt.createQmlObject('import QtQuick.Controls 2.15; MenuItem { text: "Rechteck entfernen" }', urlWindow.dynamicMenu);
                             removeItem.triggered.connect(function() {
                                 console.log("🗑️ Rechteck entfernt");
@@ -270,6 +334,12 @@ Window {
                     cursorShape: Qt.SizeFDiagCursor
                     acceptedButtons: Qt.LeftButton
 
+                    onPressed: function(mouse) {
+                        parent.forceActiveFocus();
+                        dragXStart = mouse.x;
+                        dragYStart = mouse.y;
+                    }
+
                     Rectangle {
                         anchors.fill: parent
                         color: "black"
@@ -278,11 +348,6 @@ Window {
                     property real dragXStart: 0
                     property real dragYStart: 0
 
-                    onPressed: function(mouse) {
-                        dragXStart = mouse.x;
-                        dragYStart = mouse.y;
-                    }
-
                     onPositionChanged: function(mouse) {
                         var newWidth = Math.max(20, parent.width + mouse.x - dragXStart);
                         var newHeight = Math.max(20, parent.height + mouse.y - dragYStart);
@@ -290,9 +355,12 @@ Window {
                         parent.height = newHeight;
                     }
                 }
+
+                Component.onCompleted: forceActiveFocus()
             }
         `, rectangleContainer);
     }
+
     function handleBildLaden(imageUrl) {
         console.log("📌 Bild-URL:", imageUrl);
 
