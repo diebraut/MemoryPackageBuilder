@@ -20,6 +20,8 @@ Window {
     property int maxDialogWidth: Screen.width * 0.9
     property int maxDialogHeight: Screen.height * 0.9
 
+    property real minRectSize: 4
+
     Settings {
         id: ipSettings
         category: "ImageProcessingDefaults"   // eigener Namespace
@@ -49,11 +51,22 @@ Window {
                 rectanglesModel.setProperty(i, "endY",   r.endY   + dy*s);
             });
         }
-        function resizeBy(dw, dh, step) { // Größe (unten-rechts) ändern
+        function resizeBy(dw, dh, step) {
             const s = step || 1;
             applyToSelected((r,i) => {
-                rectanglesModel.setProperty(i, "endX", r.endX + dw*s);
-                rectanglesModel.setProperty(i, "endY", r.endY + dh*s);
+
+                let newEndX = r.endX + dw*s;
+                let newEndY = r.endY + dh*s;
+
+                // Mindestgröße sichern
+                if (Math.abs(newEndX - r.startX) < imageWindow.minRectSize)
+                    newEndX = r.startX + Math.sign(newEndX - r.startX) * imageWindow.minRectSize;
+
+                if (Math.abs(newEndY - r.startY) < imageWindow.minRectSize)
+                    newEndY = r.startY + Math.sign(newEndY - r.startY) * imageWindow.minRectSize;
+
+                rectanglesModel.setProperty(i, "endX", newEndX);
+                rectanglesModel.setProperty(i, "endY", newEndY);
             });
         }
         function rotateBy(deg) {
@@ -154,7 +167,6 @@ Window {
                 const height        = parseFloat(parts[3]);
                 const rotationAngle = parseFloat(parts[4]);
 
-                // Falls Farbe/Flag fehlen → persistierte Defaults verwenden
                 const color = (parts.length >= 6 && parts[5] && parts[5].trim() !== "")
                               ? parts[5].trim()
                               : drawLayer.defaultRectColor;
@@ -163,10 +175,10 @@ Window {
                               ? (parts[6] === "1" || parts[6].toLowerCase?.() === "true")
                               : drawLayer.defaultRectTranspWithLine;
 
-                // ✅ Validierung beibehalten
                 if (Number.isFinite(startX) && Number.isFinite(startY) &&
                     Number.isFinite(width)  && Number.isFinite(height) &&
-                    Number.isFinite(rotationAngle)) {
+                    Number.isFinite(rotationAngle) &&
+                    width >= 4 && height >= 4) {
 
                     rectanglesModel.append({
                         startX: startX,
@@ -178,7 +190,7 @@ Window {
                         rectTranspWithLine: rectTranspWithLine
                     });
                 } else {
-                    console.warn("❌ Ungültige Rechteckdaten (NaN):", entries[i]);
+                    console.warn("❌ Ungültige oder zu kleine Rechteckdaten:", entries[i]);
                 }
             } else {
                 console.warn("❌ Unvollständige Rechteckbeschreibung:", entries[i]);
@@ -239,12 +251,12 @@ Window {
             color: "#80FFFFFF"
             radius: 3
             z: 3000
+            visible: drawLayer.selectedRectIndex === modelIndex
 
             property string mode: ""
             property int modelIndex: -1
             property Item targetRectItem: parent
 
-            // ✅ Cursor als Enum (kein String)
             property int cursorShapeValue: Qt.ArrowCursor
 
             x: (mode === "topRight" || mode === "bottomRight") ? (targetRectItem.width - width) : 0
@@ -256,7 +268,7 @@ Window {
                 hoverEnabled: true
                 preventStealing: true
                 acceptedButtons: Qt.LeftButton
-                cursorShape: handleRect.cursorShapeValue   // bleibt als Fallback beim Drag
+                cursorShape: handleRect.cursorShapeValue
 
                 property real originalStartX: 0
                 property real originalStartY: 0
@@ -264,13 +276,15 @@ Window {
                 property real originalEndY: 0
                 property real startMouseGX: 0
                 property real startMouseGY: 0
+                property bool resizing: false
 
                 onEntered:  cursorShape = handleRect.cursorShapeValue
                 onExited:   cursorShape = Qt.ArrowCursor
 
                 onPressed: (mouse) => {
                     kbHelpers.selectedRectIndex = modelIndex;
-                    drawLayer.selectRect(modelIndex);        // << hinzufügen
+                    drawLayer.selectRect(modelIndex);
+
                     const g = parent.mapToItem(drawLayer, Qt.point(mouse.x, mouse.y))
                     startMouseGX = g.x
                     startMouseGY = g.y
@@ -282,16 +296,21 @@ Window {
                         originalEndX   = r.endX
                         originalEndY   = r.endY
                     }
+
+                    resizing = true
                     mouse.accepted = true
                     cursorShape = handleRect.cursorShapeValue
                 }
 
                 onPositionChanged: (mouse) => {
-                    if (modelIndex < 0 || modelIndex >= rectanglesModel.count) return
+                    if (!resizing)
+                        return
+                    if (modelIndex < 0 || modelIndex >= rectanglesModel.count)
+                        return
 
                     const nowG = parent.mapToItem(drawLayer, Qt.point(mouse.x, mouse.y))
-                    const dx = nowG.x - startMouseGX
-                    const dy = nowG.y - startMouseGY
+                    const dx = (nowG.x - startMouseGX) / drawLayer.scaleX
+                    const dy = (nowG.y - startMouseGY) / drawLayer.scaleY
 
                     let newStartX = originalStartX
                     let newStartY = originalStartY
@@ -317,16 +336,29 @@ Window {
                         break
                     }
 
+                    const minSize = imageWindow.minRectSize
+
+                    if (Math.abs(newEndX - newStartX) < minSize)
+                        newEndX = newStartX + Math.sign(newEndX - newStartX) * minSize
+
+                    if (Math.abs(newEndY - newStartY) < minSize)
+                        newEndY = newStartY + Math.sign(newEndY - newStartY) * minSize
+
                     rectanglesModel.setProperty(modelIndex, "startX", newStartX)
                     rectanglesModel.setProperty(modelIndex, "startY", newStartY)
                     rectanglesModel.setProperty(modelIndex, "endX",   newEndX)
                     rectanglesModel.setProperty(modelIndex, "endY",   newEndY)
                 }
+
                 onReleased: {
-                    keyScope.forceActiveFocus();                 // <— nur wenn du die Fokus-Variante nutzt
+                    resizing = false
+                    keyScope.forceActiveFocus();
+                }
+
+                onCanceled: {
+                    resizing = false
                 }
             }
-
             Image {
                 anchors.fill: parent
                 fillMode: Image.Stretch
@@ -370,9 +402,6 @@ Window {
                     property int originalImageWidth: 0
                     property int originalImageHeight: 0
 
-                    onStatusChanged: if (status === Image.Ready) {
-                        console.log("Image loaded:", sourceSize.width, sourceSize.height)
-                    }
                 }
 
                 // =======================
@@ -816,13 +845,14 @@ Window {
                                 }
 
                                 // ---- Move-Zone (mittleres Drittel) ----
+
                                 Rectangle {
                                     id: innerArea
                                     anchors.verticalCenter: parent.verticalCenter
                                     x: parent.width / 3
                                     width: parent.width / 3
                                     height: parent.height
-                                    color: "#80000000"
+                                    color: (drawLayer.selectedRectIndex === rectItem.modelIndex) ? "#80000000" : "#4000AA00"
                                     z: 1001
 
                                     MouseArea {
@@ -834,19 +864,19 @@ Window {
                                         propagateComposedEvents: true
                                         cursorShape: rectItem.dragging ? Qt.ClosedHandCursor : Qt.OpenHandCursor
 
-                                        // Drag-Hilfsvariablen
                                         property real startGX: 0
                                         property real startGY: 0
                                         property real origStartX: 0
                                         property real origStartY: 0
                                         property real origEndX: 0
                                         property real origEndY: 0
+                                        property real snappedAngleDeg: 0
 
                                         onPressed: (mouse) => {
                                             drawLayer.selectRect(rectItem.modelIndex);
                                             if (mouse.button === Qt.LeftButton) {
-                                                kbHelpers.selectedRectIndex = rectItem.modelIndex;  // <— NEU
-                                                // Drag vorbereiten
+                                                kbHelpers.selectedRectIndex = rectItem.modelIndex;
+
                                                 const g = moveMA.mapToItem(drawLayer, Qt.point(mouse.x, mouse.y))
                                                 startGX = g.x
                                                 startGY = g.y
@@ -857,27 +887,65 @@ Window {
                                                     origStartY = r.startY
                                                     origEndX   = r.endX
                                                     origEndY   = r.endY
+
+                                                    snappedAngleDeg = drawLayer.snappedRightAngle(Number(r.rotationAngle) || 0)
+                                                    rectanglesModel.setProperty(rectItem.modelIndex, "rotationAngle", snappedAngleDeg)
+                                                } else {
+                                                    snappedAngleDeg = 0
                                                 }
+
                                                 rectItem.dragging = true
                                                 cursorShape = Qt.ClosedHandCursor
                                                 mouse.accepted = true
                                             } else if (mouse.button === Qt.RightButton) {
-                                                // Rechtsklick akzeptieren; Menü wird in onClicked geöffnet
                                                 mouse.accepted = true
                                             }
                                         }
 
                                         onPositionChanged: (mouse) => {
-                                            if (!rectItem.dragging) return
+                                            if (!rectItem.dragging)
+                                                return
 
                                             const g = moveMA.mapToItem(drawLayer, Qt.point(mouse.x, mouse.y))
-                                            const dx = (g.x - startGX) / drawLayer.scaleX
-                                            const dy = (g.y - startGY) / drawLayer.scaleY
 
-                                            rectanglesModel.setProperty(rectItem.modelIndex, "startX", origStartX + dx)
-                                            rectanglesModel.setProperty(rectItem.modelIndex, "startY", origStartY + dy)
-                                            rectanglesModel.setProperty(rectItem.modelIndex, "endX",   origEndX   + dx)
-                                            rectanglesModel.setProperty(rectItem.modelIndex, "endY",   origEndY   + dy)
+                                            let dx = (g.x - startGX) / drawLayer.scaleX
+                                            let dy = (g.y - startGY) / drawLayer.scaleY
+
+                                            const angle = snappedAngleDeg * Math.PI / 180.0
+                                            const cosA = Math.cos(-angle)
+                                            const sinA = Math.sin(-angle)
+
+                                            const rdx = dx * cosA - dy * sinA
+                                            const rdy = dx * sinA + dy * cosA
+
+                                            const widthSigned  = origEndX - origStartX
+                                            const heightSigned = origEndY - origStartY
+                                            const widthAbs     = Math.abs(widthSigned)
+                                            const heightAbs    = Math.abs(heightSigned)
+
+                                            let newStartX = origStartX + rdx
+                                            let newStartY = origStartY + rdy
+
+                                            const minX = (widthSigned >= 0) ? 0 : widthAbs
+                                            const maxX = (widthSigned >= 0)
+                                                       ? (imagePreview.originalImageWidth - widthAbs)
+                                                       : imagePreview.originalImageWidth
+
+                                            const minY = (heightSigned >= 0) ? 0 : heightAbs
+                                            const maxY = (heightSigned >= 0)
+                                                       ? (imagePreview.originalImageHeight - heightAbs)
+                                                       : imagePreview.originalImageHeight
+
+                                            newStartX = Math.max(minX, Math.min(newStartX, maxX))
+                                            newStartY = Math.max(minY, Math.min(newStartY, maxY))
+
+                                            const newEndX = newStartX + widthSigned
+                                            const newEndY = newStartY + heightSigned
+
+                                            rectanglesModel.setProperty(rectItem.modelIndex, "startX", newStartX)
+                                            rectanglesModel.setProperty(rectItem.modelIndex, "startY", newStartY)
+                                            rectanglesModel.setProperty(rectItem.modelIndex, "endX",   newEndX)
+                                            rectanglesModel.setProperty(rectItem.modelIndex, "endY",   newEndY)
                                         }
 
                                         onReleased: {
@@ -891,30 +959,23 @@ Window {
                                                 popupAtMouse(rectMenu, mouse, moveMA)
                                                 mouse.accepted = true
                                             } else {
-                                                // Linksklick: keine Sonderbehandlung – Drag läuft über onPressed/onPositionChanged
                                                 mouse.accepted = false
                                             }
                                         }
 
-                                        // Kontextmenü (wie bei den Pfeilen)
                                         Menu {
                                             id: rectMenu
 
-                                            // aktuelles Rechteck bequem lesen
                                             function currentRect() {
                                                 return rectanglesModel.get(rectItem.modelIndex) || {};
                                             }
 
-                                            // nur die Farbe des aktuellen Objekts setzen
                                             function setColor(c) {
                                                 if (rectItem.modelIndex < 0 || rectItem.modelIndex >= rectanglesModel.count) return;
-                                                // aktuelles Objekt färben
                                                 rectanglesModel.setProperty(rectItem.modelIndex, "color", c);
-                                                // ⚙️ Default für künftige Objekte mit umstellen (wird automatisch in Settings persistiert)
                                                 drawLayer.defaultRectColor = c;
                                             }
 
-                                            // ---- Farbwahl (Häkchen zeigt Objektfarbe; fällt bei fehlendem Wert auf Default zurück) ----
                                             MenuItem { text: "Schwarz"; checkable: true;
                                                 checked: (rectMenu.currentRect().color !== undefined && rectMenu.currentRect().color !== "" ? rectMenu.currentRect().color : drawLayer.defaultRectColor) === "black";
                                                 onTriggered: rectMenu.setColor("black")
@@ -942,28 +1003,23 @@ Window {
 
                                             MenuSeparator {}
 
-                                            // ---- Strichmodus (transparent + gestrichelter Rahmen + Mittellinie) objektbezogen ----
                                             MenuItem {
                                                 text: "Strich (transp. Hintergrund)"
                                                 checkable: true
                                                 checked: !!rectMenu.currentRect().rectTranspWithLine
                                                 onTriggered: {
                                                     const cur = !!rectMenu.currentRect().rectTranspWithLine;
-                                                    // aktuelles Objekt toggeln
                                                     rectanglesModel.setProperty(rectItem.modelIndex, "rectTranspWithLine", !cur);
-                                                    // ⚙️ Default für künftige Objekte mit umstellen (persistiert über onDefault…Changed)
                                                     drawLayer.defaultRectTranspWithLine = !cur;
                                                 }
                                             }
 
                                             MenuSeparator {}
 
-                                            // ---- Löschen des aktuellen Rechtecks ----
                                             MenuItem { text: "Löschen"; onTriggered: rectanglesModel.remove(rectItem.modelIndex) }
                                         }
                                     }
                                 }
-
                                 // ---- Außenfläche: Cursor/Rotation ----
                                 MouseArea {
                                     id: outerMouseArea
@@ -975,7 +1031,7 @@ Window {
 
                                     property real dragStartAngle: 0
                                     property real dragInitialRotation: 0
-                                    property real centerGlobalX: 0
+                                                                        property real centerGlobalX: 0
                                     property real centerGlobalY: 0
 
                                     function pointInPoly(px, py, pts) {
@@ -1275,17 +1331,31 @@ Window {
                         anchors.fill: parent
                         acceptedButtons: Qt.LeftButton
 
+                        enabled: drawLayer.selectedRectIndex < 0
+                        propagateComposedEvents: false
+
+                        function clampToImageX(v) {
+                            return Math.max(0, Math.min(v, imagePreview.originalImageWidth))
+                        }
+
+                        function clampToImageY(v) {
+                            return Math.max(0, Math.min(v, imagePreview.originalImageHeight))
+                        }
+
                         onPressed: (mouse) => {
                             if (!drawLayer.isPointInImage(mouse.x, mouse.y)) {
-                                drawLayer.selectNone();   // außerhalb: immer abwählen
+                                drawLayer.selectNone()
                                 return;
                             }
 
-                            var imgX = (mouse.x - drawLayer.offsetX) / drawLayer.scaleX
-                            var imgY = (mouse.y - drawLayer.offsetY) / drawLayer.scaleY
+                            let imgX = (mouse.x - drawLayer.offsetX) / drawLayer.scaleX
+                            let imgY = (mouse.y - drawLayer.offsetY) / drawLayer.scaleY
+
+                            imgX = clampToImageX(imgX)
+                            imgY = clampToImageY(imgY)
 
                             if (drawLayer.pointInExistingRect(imgX, imgY)) {
-                                mouse.accepted = false; // bestehendes Rechteck bewegt
+                                mouse.accepted = false;
                                 return;
                             }
 
@@ -1297,28 +1367,36 @@ Window {
                         }
 
                         onPositionChanged: (mouse) => {
-                            if (drawLayer.drawing) {
-                                drawLayer.currentX = (mouse.x - drawLayer.offsetX) / drawLayer.scaleX
-                                drawLayer.currentY = (mouse.y - drawLayer.offsetY) / drawLayer.scaleY
-                            }
+                            if (!drawLayer.drawing)
+                                return
+
+                            if (drawLayer.selectedRectIndex >= 0)
+                                return
+
+                            let x = (mouse.x - drawLayer.offsetX) / drawLayer.scaleX
+                            let y = (mouse.y - drawLayer.offsetY) / drawLayer.scaleY
+
+                            drawLayer.currentX = clampToImageX(x)
+                            drawLayer.currentY = clampToImageY(y)
                         }
 
                         onReleased: (mouse) => {
                             if (!drawLayer.drawing) return
-                            drawLayer.drawing = false
-                            drawLayer.currentX = (mouse.x - drawLayer.offsetX) / drawLayer.scaleX
-                            drawLayer.currentY = (mouse.y - drawLayer.offsetY) / drawLayer.scaleY
 
+                            drawLayer.drawing = false
+
+                            let x = (mouse.x - drawLayer.offsetX) / drawLayer.scaleX
+                            let y = (mouse.y - drawLayer.offsetY) / drawLayer.scaleY
+
+                            drawLayer.currentX = clampToImageX(x)
+                            drawLayer.currentY = clampToImageY(y)
                             const w = Math.abs(drawLayer.currentX - drawLayer.startX)
                             const h = Math.abs(drawLayer.currentY - drawLayer.startY)
 
-                            // Nur Klick (ohne Drag): Selektion entfernen, kein neues Objekt
-                            if (w < 1 && h < 1) {
-                                drawLayer.selectNone()
-                                return
+                            if (w < imageWindow.minRectSize || h < imageWindow.minRectSize) {
+                                return // NICHT speichern
                             }
 
-                            // Ansonsten: Rechteck anlegen
                             rectanglesModel.append({
                                 startX: drawLayer.startX,
                                 startY: drawLayer.startY,
@@ -1328,13 +1406,13 @@ Window {
                                 color:  drawLayer.defaultRectColor,
                                 rectTranspWithLine: drawLayer.defaultRectTranspWithLine
                             })
+
                             const idx = rectanglesModel.count - 1;
                             drawLayer.selectRect(idx);
                             kbHelpers.selectedRectIndex = idx;
                             keyScope.forceActiveFocus();
                         }
                     }
-
                     // ---- Dreh-Helfer ----
                     QtObject {
                         id: rotationHelper
