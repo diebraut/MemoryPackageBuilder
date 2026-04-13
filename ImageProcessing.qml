@@ -1331,7 +1331,6 @@ Window {
                         anchors.fill: parent
                         acceptedButtons: Qt.LeftButton
 
-                        enabled: drawLayer.selectedRectIndex < 0
                         propagateComposedEvents: false
 
                         function clampToImageX(v) {
@@ -1359,18 +1358,22 @@ Window {
                                 return;
                             }
 
+                            // außerhalb bestehender Rechtecke: neue Zeichnung starten
+                            drawLayer.selectNone()
+
                             drawLayer.startX = imgX
                             drawLayer.startY = imgY
                             drawLayer.currentX = imgX
                             drawLayer.currentY = imgY
                             drawLayer.drawing = true
+
+                            mouse.accepted = true;
                         }
+
+
 
                         onPositionChanged: (mouse) => {
                             if (!drawLayer.drawing)
-                                return
-
-                            if (drawLayer.selectedRectIndex >= 0)
                                 return
 
                             let x = (mouse.x - drawLayer.offsetX) / drawLayer.scaleX
@@ -1379,6 +1382,7 @@ Window {
                             drawLayer.currentX = clampToImageX(x)
                             drawLayer.currentY = clampToImageY(y)
                         }
+
 
                         onReleased: (mouse) => {
                             if (!drawLayer.drawing) return
