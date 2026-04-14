@@ -481,6 +481,7 @@ Window {
             listView.selectedIndices = []
             listView.selectionAnchor = -1
             listView.currentIndex = -1
+            listView.editingRowIndex = -1
             if (listView.updateSelectedItems)
                 listView.updateSelectedItems()
             if (listView.forceActiveFocus)
@@ -642,6 +643,7 @@ Window {
         listView.selectionAnchor = -1;
 
         listView.updateSelectedItems();
+        listView.editingRowIndex = -1
     }
 
     Popup {
@@ -1545,11 +1547,17 @@ Window {
 
             function editNext() {
                 if (current >= validIndices.length) {
+                    listView.editingRowIndex = -1
                     console.log("✅ Alle Bilder bearbeitet.");
                     return;
                 }
 
                 const index = validIndices[current];
+                listView.editingRowIndex = index
+                listView.currentIndex = index
+                if (listView.positionViewAtIndex)
+                    listView.positionViewAtIndex(index, ListView.Contain)
+
                 const fileName = uebungModel.get(index)[role];
                 const fullPath = packagePath + "/" + fileName;
                 const sanitizedPath = fullPath.replace(/\\/g, '/');
@@ -1588,6 +1596,7 @@ Window {
 
                 win.rejected.connect(function() {
                     console.log("🚫 Bildbearbeitung vom Benutzer abgebrochen bei Index", index);
+                    listView.editingRowIndex = -1
                     // ❗️Keine weiteren Schritte – Kette wird gestoppt.
                 });
             }
@@ -1666,6 +1675,11 @@ Window {
                                   ? uebungModel.get(index).frageSubjekt
                                   : uebungModel.get(index).antwortSubjekt;
 
+                listView.editingRowIndex = index
+                listView.currentIndex = index
+                if (listView.positionViewAtIndex)
+                    listView.positionViewAtIndex(index, ListView.Contain)
+
                 const component = Qt.createComponent("qrc:/MemoryPackagesBuilder/URLComponentProcessing.qml");
                 if (component.status !== Component.Ready) {
                     console.warn("❌ Fehler beim Laden:", component.errorString());
@@ -1733,14 +1747,16 @@ Window {
 
                 win.rejected.connect(function() {
                     console.log("🚫 Bearbeitung abgebrochen bei Index", index);
-                    // Kette hier nicht fortsetzen
+                    listView.editingRowIndex = -1
                 });
 
                 win.show();
             }
 
             function editNext() {
+
                 if (current >= validIndices.length) {
+                    listView.editingRowIndex = -1
                     console.log("✅ Alle URLs bearbeitet.");
                     return;
                 }
@@ -1763,14 +1779,16 @@ Window {
                                 const currentImg = (uebungModel.get(index).imagefileAntwort || "").toString().trim();
                                 if (currentImg !== hit.value) {
                                     uebungModel.setProperty(index, "imagefileAntwort", hit.value);
-                                    saveCurrentModelToXml(); // optional, aber sinnvoll
+                                    saveCurrentModelToXml();
                                 }
                             }
+
                             // Mehrfachbearbeitung: weiter / sonst Ende
                             if (current < validIndices.length - 1) {
                                 current++;
                                 editNext();
                             } else {
+                                listView.editingRowIndex = -1
                                 console.log("ℹ️ Vorgang beendet (letzter Eintrag übersprungen).");
                             }
                         };
@@ -2584,16 +2602,22 @@ Window {
                         property string contextColumnRole: ""
                         property var lastUndoAction: null
 
+                        property int editingRowIndex: -1
+
                         delegate: Rectangle {
                             id: delegateRoot
                             property int indexOutside: index
                             property bool selected: model.selected
                             width: listArea.totalContentWidth
                             height: 40
-                            color: selected ? "#cce5ff" : (indexOutside % 2 === 0 ? "#f9f9f9" : "#ffffff")
-                            border.color: listView.currentIndex === indexOutside ? "blue" : "transparent"
-                            border.width: 1
-
+                            border.color: listView.editingRowIndex === indexOutside
+                                          ? "#ff3300"
+                                          : (listView.currentIndex === indexOutside ? "blue" : "transparent")
+                            border.width: listView.editingRowIndex === indexOutside ? 4
+                                         : (listView.currentIndex === indexOutside ? 2 : 0)
+                            color: listView.editingRowIndex === indexOutside
+                                   ? "#ffe7e0"
+                                   : (selected ? "#cce5ff" : (indexOutside % 2 === 0 ? "#f9f9f9" : "#ffffff"))
                             function handleDoubleClick(index) {
                                 console.log("Doubleclick für Zeile:", index);
                                 if (listView.currentIndex >= 0) {

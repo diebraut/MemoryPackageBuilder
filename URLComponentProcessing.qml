@@ -729,9 +729,10 @@ Window {
                         function continueNextStep() {
                             cleanupTempFile();
                             if (urlWindow.isLastStep || urlWindow.multiEditCount <= 1) {
-                                urlWindow.close(); // Letzter Schritt → Fenster schließen
+                                rejected();      // <<< wichtig
+                                urlWindow.close();
                             } else {
-                                continueRequested(); // Signal für nächsten Bearbeitungsschritt
+                                continueRequested();
                                 urlWindow.close();
                             }
                         }
@@ -789,6 +790,7 @@ Window {
                             cancelWarningPopup.open();
                         } else {
                             cleanupTempFile();
+                            rejected();      // <<< wichtig
                             urlWindow.close();
                         }
                     }
@@ -828,6 +830,7 @@ Window {
                     onClicked: {
                         cancelWarningPopup.close();
                         cleanupTempFile();
+                        rejected();      // <<< wichtig
                         urlWindow.close();
                     }
                 }
