@@ -94,6 +94,8 @@ QString BuildExercisePackage::generateXml(const QString &exerciseName, const QLi
         stream << "        <ImageAntwortBildDescription></ImageAntwortBildDescription>\n";
         stream << "        <ImageFrageUrl></ImageFrageUrl>\n";
         stream << "        <ImageAntwortUrl></ImageAntwortUrl>\n";
+        stream << "        <ArrowDescFra></ArrowDescFra>\n";
+        stream << "        <ArrowDescAnt></ArrowDescAnt>\n";
         stream << "      </Übung>\n";
     }
 

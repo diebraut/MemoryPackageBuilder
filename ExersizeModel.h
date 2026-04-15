@@ -28,6 +28,8 @@ struct Uebung {
     QString imageAntwortBildDescription;
     QString imageFrageUrl;
     QString imageAntwortUrl;
+    QString arrowDescFra;
+    QString arrowDescAnt;
 };
 
 // Die Hauptliste der Übungen

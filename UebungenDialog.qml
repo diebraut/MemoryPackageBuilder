@@ -1,4 +1,4 @@
-import QtQuick 2.15
+﻿import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 import QtQuick.Controls.Fusion
@@ -62,7 +62,9 @@ Window {
         "ImageFrageBildDescription",
         "ImageAntwortBildDescription",
         "ImageFrageUrl",
-        "ImageAntwortUrl"
+        "ImageAntwortUrl",
+        "ArrowDescFra",
+        "ArrowDescAnt"
     ]
 
     property var visibleColumns: showAllFields ? baseColumns.concat(extraColumns) : baseColumns
@@ -93,6 +95,7 @@ Window {
                 for (let key of keys) {
                     uebungModel.setProperty(index, key, updatedData[key]);
                 }
+                markDirty()
                 // Optionales Refresh der View
                 saveCurrentModelToXml(index);
             } else {
@@ -200,6 +203,7 @@ Window {
         }
     }
 
+
     function applyRegexToSelectedFields(pattern, replaceText) {
         var role = listView.contextColumnRole
         if (!role) return
@@ -249,6 +253,7 @@ Window {
             if (newVal !== s) {
                 changes.push({ row: row, old: s })
                 uebungModel.setProperty(row, role, newVal)
+                markDirty()
             }
         }
 
@@ -260,9 +265,9 @@ Window {
                 changes: changes,
                 addedRows: 0
             }
+            markDirty()
         }
     }
-
 
     // Enter im Feld -> Ausführen
     Connections {
@@ -299,6 +304,7 @@ Window {
         }
 
         listView.lastUndoAction = null
+        markDirty()
     }
 
     function _rowCount() {
@@ -400,6 +406,8 @@ Window {
             imageAntwortBildDescription: "",
             imageFrageUrl: "",
             imageAntwortUrl: "",
+            arrowDescFra: "",
+            arrowDescAnt: "",
             hideAuthor: false,
             infoURLFrage_bgcolor: "white",
             infoURLAntwort_bgcolor: "white",
@@ -564,6 +572,7 @@ Window {
 
                 changes.push({ row: targetRow, old: oldVal })
                 uebungModel.setProperty(targetRow, role, newVal)
+                markDirty()
 
             } else {
                 // neue Zeile anhängen
@@ -588,6 +597,7 @@ Window {
 
                 emptyRow[role] = newVal
                 uebungModel.append(emptyRow)
+                markDirty()
 
                 changes.push({ row: targetRow, old: null })
                 addedRows++
@@ -602,6 +612,7 @@ Window {
             changes: changes,
             addedRows: addedRows
         }
+        markDirty()
 
         listView.copiedBuffer = []
     }
@@ -789,6 +800,10 @@ Window {
         validationErrorPopup.open()
     }
 
+    function markDirty() {
+        isDirty = true
+    }
+
     Popup {
         id: unsavedChangesPopup
         modal: true
@@ -827,25 +842,51 @@ Window {
                         unsavedChangesPopup.targetIndex = -1
                         unsavedChangesPopup.close()
 
-                        // 🔵 FALL 1: Add war gewünscht
+                        // FALL 1: Add war gewünscht
                         if (pendingAddPage) {
                             pendingAddPage = false
 
                             const newIndex = packageXmlPaths.count
                             createEmptyPackage(newIndex)
 
-                            // 🔥 nach dem Anlegen explizit zur neuen Seite wechseln
+                            // nach dem Anlegen explizit zur neuen Seite wechseln
                             switchToPage(newIndex)
                             return
                         }
 
-                        // 🔵 FALL 2: normaler Tabwechsel
+                        // FALL 2: normaler Tabwechsel
                         if (idx >= 0) {
                             switchToPage(idx)
                             return
                         }
 
-                        // 🔵 FALL 3: Dialog schließen
+                        // FALL 3: Dialog schließen
+                        dialogWindow.close()
+                    }
+                }
+
+                Button {
+                    text: "Änderungen verwerfen"
+                    Layout.preferredWidth: 120
+                    onClicked: {
+                        const idx = unsavedChangesPopup.targetIndex
+                        const wantsAddPage = pendingAddPage
+                        unsavedChangesPopup.targetIndex = -1
+                        unsavedChangesPopup.close()
+
+                        if (wantsAddPage) {
+                            pendingAddPage = false
+                            const newIndex = packageXmlPaths.count
+                            createEmptyPackage(newIndex)
+                            switchToPage(newIndex)
+                            return
+                        }
+
+                        if (idx >= 0) {
+                            switchToPage(idx)
+                            return
+                        }
+
                         dialogWindow.close()
                     }
                 }
@@ -1337,6 +1378,7 @@ Window {
         indices.sort((a,b) => b - a).forEach(i => {
             if (i >= 0 && i < uebungModel.count) uebungModel.remove(i);
         });
+        markDirty()
 
         // 2) Lückenlose Nummerierung wiederherstellen (1,2,3,…)
         renumberRowsSequentially(1);
@@ -1563,6 +1605,12 @@ Window {
                 const sanitizedPath = fullPath.replace(/\\/g, '/');
 
                 const win = imageProcessingComponent.createObject(dialogWindow);
+                let cleanedUp = false
+                function cleanupEditingState() {
+                    if (cleanedUp) return
+                    cleanedUp = true
+                    listView.editingRowIndex = -1
+                }
 
                 let excludeRect = (role === "imagefileFrage") ? uebungModel.get(index).excludeAereaFra
                                                                : uebungModel.get(index).excludeAereaAnt;
@@ -1596,8 +1644,15 @@ Window {
 
                 win.rejected.connect(function() {
                     console.log("🚫 Bildbearbeitung vom Benutzer abgebrochen bei Index", index);
-                    listView.editingRowIndex = -1
+                    cleanupEditingState()
                     // ❗️Keine weiteren Schritte – Kette wird gestoppt.
+                });
+                win.visibleChanged.connect(function() {
+                    if (!win.visible)
+                        cleanupEditingState()
+                });
+                win.destroyed.connect(function() {
+                    cleanupEditingState()
                 });
             }
 
@@ -1695,6 +1750,12 @@ Window {
                     multiEditCount: validIndices.length,
                     isLastStep: current === validIndices.length - 1
                 });
+                let cleanedUp = false
+                function cleanupEditingState() {
+                    if (cleanedUp) return
+                    cleanedUp = true
+                    listView.editingRowIndex = -1
+                }
 
                 if (!win) {
                     console.warn("❌ Fehler beim Erstellen des Dialogfensters.");
@@ -1747,7 +1808,14 @@ Window {
 
                 win.rejected.connect(function() {
                     console.log("🚫 Bearbeitung abgebrochen bei Index", index);
-                    listView.editingRowIndex = -1
+                    cleanupEditingState()
+                });
+                win.visibleChanged.connect(function() {
+                    if (!win.visible)
+                        cleanupEditingState()
+                });
+                win.destroyed.connect(function() {
+                    cleanupEditingState()
                 });
 
                 win.show();
@@ -1866,6 +1934,7 @@ Window {
     function saveCurrentModelToXml() {
         var data = {
             name: uebungenNameField.text,
+            frageType: frageTypeField.text,
             frageText: frageTextField.text,
             frageTextUmgekehrt: frageTextUmgekehrtField.text,
             sequentiell: sequentiellCheckBox.checked,
@@ -1882,9 +1951,9 @@ Window {
         const xmlPath = packageXmlPaths.at(currentPackageIndex)
         const result = ExersizeLoader.savePackage(xmlPath, data);
         if (result) {
-            console.log("💾 Änderungen in XML gespeichert.");
+            console.log("Änderungen in XML gespeichert.");
         } else {
-            console.warn("❌ Fehler beim Speichern.");
+            console.warn("Fehler beim Speichern.");
         }
     }
 
@@ -1974,12 +2043,16 @@ Window {
                     if (columnItemId.roleName === "nummer") {
                         var n = parseInt(text, 10);
                         if (!Number.isFinite(n)) n = 0;
-                        if (uebungModel.get(columnItemId.rowIndex).nummer !== n)
+                        if (uebungModel.get(columnItemId.rowIndex).nummer !== n) {
                             uebungModel.setProperty(columnItemId.rowIndex, "nummer", n);
+                            markDirty()
+                        }
                     } else {
                         var modelVal = uebungModel.get(columnItemId.rowIndex)[columnItemId.roleName] || "";
-                        if (text !== modelVal)
+                        if (text !== modelVal) {
                             uebungModel.setProperty(columnItemId.rowIndex, columnItemId.roleName, text);
+                            markDirty()
+                        }
 
                         if (columnItemId.roleName === "infoURLFrage" || columnItemId.roleName === "infoURLAntwort") {
                             const colorKey = columnItemId.roleName + "_bgcolor";
@@ -2088,7 +2161,7 @@ Window {
     }
 
     function saveCurrentPackage() {
-        // 🔴 1️⃣ Plausibilitätsprüfung
+        // 1) Plausibilitätsprüfung
         if (!validateCurrentPage()) {
             return false
         }
@@ -2113,11 +2186,11 @@ Window {
         const result = ExersizeLoader.savePackage(xmlPath, data)
 
         if (!result) {
-            console.warn("❌ Speichern fehlgeschlagen:", xmlPath)
+            console.warn("? Speichern fehlgeschlagen:", xmlPath)
             return false
         }
 
-        console.log("💾 Package gespeichert:", xmlPath)
+        console.log("?? Package gespeichert:", xmlPath)
         isDirty = false
         return true
     }
@@ -2755,7 +2828,10 @@ Window {
                                 var n = Number(uebungModel.get(i).nummer);
                                 if (Number.isFinite(n) && n > maxNum) maxNum = n;
                             }
-                            uebungModel.append({ nummer: maxNum + 1 });
+                            var row = emptyExerciseRow()
+                            row.nummer = maxNum + 1
+                            uebungModel.append(row);
+                            markDirty()
                         }
                     }
                     Button {
@@ -2833,3 +2909,6 @@ Window {
         }
     }
 }
+
+
+

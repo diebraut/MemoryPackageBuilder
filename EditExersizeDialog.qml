@@ -153,7 +153,8 @@ Dialog {
                                 "imageFrageAuthor", "imageFrageLizenz", "imageAntwortAuthor", "imageAntwortLizenz",
                                 "imageFrageBildDescription", "imageAntwortBildDescription",
                                 "wikiPageFraVers", "wikiPageAntVers",
-                                "excludeAereaFra", "excludeAereaAnt"
+                                "excludeAereaFra", "excludeAereaAnt",
+                                "arrowDescFra", "arrowDescAnt"
                             ]
 
                             delegate: Column {
