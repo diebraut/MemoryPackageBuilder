@@ -10,12 +10,11 @@ Item {
     property int contentTopMargin: 18
 
     property color frameColor: "#888"
-    property color titleBackgroundColor: "white"
+    property color titleBackgroundColor: palette.window
+    property color titleTextColor: palette.windowText
 
-    // ✅ Slot für Inhalt (damit Children NICHT über Titel/Rahmen liegen)
     default property alias content: contentItem.data
 
-    // --- Inhalt (liegt unten) ---
     Item {
         id: contentItem
         anchors.fill: parent
@@ -26,7 +25,6 @@ Item {
         z: 0
     }
 
-    // --- Rahmen (liegt über Inhalt) ---
     Rectangle {
         anchors.fill: parent
         anchors.margins: frameInset
@@ -37,17 +35,17 @@ Item {
         z: 1
     }
 
-    // --- Titel (ganz oben) ---
     Label {
         visible: title !== ""
         text: title
         font.bold: true
+        color: "black"
         anchors.left: parent.left
         anchors.leftMargin: frameInset + 12
         anchors.top: parent.top
         anchors.topMargin: frameInset - 8
         padding: 4
-        background: Rectangle { color: titleBackgroundColor; radius: 2 }
+        background: Rectangle { color: "white"; radius: 2 }
         z: 2
     }
 }

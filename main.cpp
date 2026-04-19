@@ -3,6 +3,7 @@
 #include <QQmlContext>
 #include <QDir>
 #include <QCursor>
+#include <QQuickStyle>
 #include "packagemodel.h"
 #include "exersizeloader.h"
 #include "ImageDownloader.h"
@@ -17,6 +18,8 @@
 int main(int argc, char *argv[])
 {
     qmlRegisterModule("MemoryPackagesBuilder", 1, 0);
+
+    QQuickStyle::setStyle("Windows");
     QtWebEngineQuick::initialize();
     QGuiApplication app(argc, argv);
     QCoreApplication::setOrganizationName("DeineOrg");
@@ -70,5 +73,6 @@ int main(int argc, char *argv[])
     QPoint pos = QCursor::pos();  // globale Mausposition
     engine.rootContext()->setContextProperty("globalMousePos", pos);
 
+    qDebug() << "Qt Quick Controls Style:" << QQuickStyle::name();
     return app.exec();
 }

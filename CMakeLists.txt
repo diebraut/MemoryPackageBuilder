@@ -7,6 +7,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # Qt6 Komponenten finden – jetzt inklusive Xml
 find_package(Qt6 6.4 REQUIRED COMPONENTS Quick Core Gui Xml WebEngineQuick)
 
+find_package(Qt6 6.4 REQUIRED COMPONENTS Quick Core Gui Xml WebEngineQuick QuickControls2)
+
 #qt_policy(SET QTP0001 NEW)
 
 # Standard Projekt Setup für Qt
@@ -63,7 +65,13 @@ qt_add_qml_module(appMemoryPackagesBuilder
 
 # Linke die Qt-Bibliotheken – jetzt inklusive Qt6::Xml
 target_link_libraries(appMemoryPackagesBuilder
-    PRIVATE Qt6::Quick Qt6::Core Qt6::Gui Qt6::Xml Qt6::WebEngineQuick
+    PRIVATE
+        Qt6::Quick
+        Qt6::QuickControls2
+        Qt6::Core
+        Qt6::Gui
+        Qt6::Xml
+        Qt6::WebEngineQuick
 )
 
 # 📂 Kopiere exercisepackages-Verzeichnis nach Build-Ausgabeordner
