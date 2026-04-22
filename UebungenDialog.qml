@@ -1651,9 +1651,6 @@ Window {
                     if (!win.visible)
                         cleanupEditingState()
                 });
-                win.destroyed.connect(function() {
-                    cleanupEditingState()
-                });
             }
 
             editNext();
@@ -1797,6 +1794,8 @@ Window {
                     }
 
                     saveCurrentModelToXml();
+                    if (win.visible)
+                        win.close();
                     current++;
                     editNext();
                 });
@@ -1813,9 +1812,6 @@ Window {
                 win.visibleChanged.connect(function() {
                     if (!win.visible)
                         cleanupEditingState()
-                });
-                win.destroyed.connect(function() {
-                    cleanupEditingState()
                 });
 
                 win.show();

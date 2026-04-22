@@ -882,9 +882,8 @@ Window {
                     text: unsavedWarningDialog.currentActionText + " mit Speichern"
                     Layout.preferredWidth: 160
                     onClicked: {
-                        saveButton.onClicked();
                         unsavedWarningDialog.close();
-                        unsavedWarningDialog.continueCallback();
+                        saveButton.onClicked();
                     }
                 }
 
