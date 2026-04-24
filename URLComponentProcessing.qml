@@ -91,6 +91,7 @@ Window {
     property string licenceFetchMode: ""  // z.B. "bildLaden" oder "rechteck"
 
     property var composer: null  // ❗ Füge das hinzu, falls noch nicht vorhanden
+    property var activeRectangle: null
 
     Component.onCompleted: {
         const composerComponent = Qt.createComponent("qrc:/MemoryPackagesBuilder/ImageComposer.qml");
@@ -163,6 +164,16 @@ Window {
         FileHelper.removeTMPFiles(packagePath);
     }
 
+    function resizeActiveRectangleToPoint(pointX, pointY) {
+        if (!activeRectangle)
+            return false;
+
+        activeRectangle.forceActiveFocus();
+        activeRectangle.width = Math.max(activeRectangle.minRectSize, pointX - activeRectangle.x);
+        activeRectangle.height = Math.max(activeRectangle.minRectSize, pointY - activeRectangle.y);
+        return true;
+    }
+
     // Wartet einen Render-Tick, nachdem 'rect' ausgeblendet wurde, und grabbt dann.
     function grabAreaWithoutOverlay(rect, savePath, transparentBg) {
         // Koordinaten sichern (da 'rect' gleich zerstört wird)
@@ -215,6 +226,16 @@ Window {
 
                 property int keyStep: 1
                 property int minRectSize: 20
+
+                onActiveFocusChanged: if (activeFocus) urlWindow.activeRectangle = rectItem
+                Component.onCompleted: {
+                    urlWindow.activeRectangle = rectItem
+                    forceActiveFocus()
+                }
+                Component.onDestruction: {
+                    if (urlWindow.activeRectangle === rectItem)
+                        urlWindow.activeRectangle = null
+                }
 
                 Keys.onPressed: function(event) {
                     var step = keyStep;
@@ -313,6 +334,8 @@ Window {
                             var removeItem = Qt.createQmlObject('import QtQuick.Controls 2.15; MenuItem { text: "Rechteck entfernen" }', urlWindow.dynamicMenu);
                             removeItem.triggered.connect(function() {
                                 console.log("🗑️ Rechteck entfernt");
+                                if (urlWindow.activeRectangle === parent)
+                                    urlWindow.activeRectangle = null;
                                 parent.destroy();
                             });
                             urlWindow.dynamicMenu.addItem(removeItem);
@@ -356,7 +379,6 @@ Window {
                     }
                 }
 
-                Component.onCompleted: forceActiveFocus()
             }
         `, rectangleContainer);
     }
@@ -380,6 +402,30 @@ Window {
 
         } else {
             saveImageTemporarily(imageUrl);
+        }
+    }
+
+    function handleErzeugeLizenzInfos(imageUrl) {
+        console.log("📄 Lizenz-Infos erzeugen für:", imageUrl);
+
+        if (!imageUrl || imageUrl === "") {
+            console.warn("⚠️ Leere Bild-URL");
+            return;
+        }
+
+        currentImageLicenceInfo = null;
+
+        if (imageUrl.includes("upload.wikimedia.org")) {
+            var fileTitle = extractOriginalFileTitle(imageUrl);
+            if (!fileTitle || fileTitle === "File:") {
+                console.warn("❌ Kein gültiger Dateititel extrahiert.");
+                return;
+            }
+
+            licenceFetchMode = "lizenzInfo";
+            licenceFetcher.fetchLicenceInfo(fileTitle);
+        } else {
+            console.warn("⚠️ Lizenz-Infos können aktuell nur für Wikimedia-Bilder erzeugt werden.");
         }
     }
 
@@ -500,6 +546,11 @@ Window {
                 return;
             }
 
+            if (licenceFetchMode === "lizenzInfo") {
+                console.log("✅ Lizenz-Infos erzeugt:", info.authorName, "-", info.licenceName);
+                return;
+            }
+
             console.warn("⚠️ Unbekannter licenceFetchMode:", licenceFetchMode);
         }
 
@@ -602,6 +653,12 @@ Window {
                             });
                             dynamicMenu.addItem(imgItem);
 
+                            var licenceInfoItem = Qt.createQmlObject('import QtQuick.Controls 2.15; MenuItem { text: "Erzeuge Lizenz Infos" }', dynamicMenu);
+                            licenceInfoItem.triggered.connect(function() {
+                                handleErzeugeLizenzInfos(result);
+                            });
+                            dynamicMenu.addItem(licenceInfoItem);
+
                             var rectImageItem = Qt.createQmlObject('import QtQuick.Controls 2.15; MenuItem { text: "Rechteck erzeugen (mit Bild)" }', dynamicMenu);
                             rectImageItem.triggered.connect(function() {
                                 handleRechteckMitBild(result);
@@ -638,6 +695,35 @@ Window {
                         }
                     });
 
+                }
+            }
+
+            MouseArea {
+                anchors.fill: parent
+                z: 10
+                acceptedButtons: Qt.LeftButton
+                propagateComposedEvents: true
+                preventStealing: false
+
+                onPressed: function(mouse) {
+                    const wantsResize = activeRectangle !== null
+                                     && mouse.button === Qt.LeftButton
+                                     && (mouse.modifiers & Qt.ControlModifier);
+                    mouse.accepted = wantsResize;
+                }
+
+                onClicked: function(mouse) {
+                    const wantsResize = activeRectangle !== null
+                                     && mouse.button === Qt.LeftButton
+                                     && (mouse.modifiers & Qt.ControlModifier);
+
+                    if (wantsResize) {
+                        resizeActiveRectangleToPoint(mouse.x, mouse.y);
+                        mouse.accepted = true;
+                        return;
+                    }
+
+                    mouse.accepted = false;
                 }
             }
         }
