@@ -148,6 +148,38 @@ Item {
         image.visible = true
     }
 
+    function adjustZoom(multiplier) {
+        if (image.status !== Image.Ready)
+            return false
+
+        let newZoom = zoomFactor * multiplier
+        newZoom = Math.max(minZoom, Math.min(maxZoom, newZoom))
+
+        if (Math.abs(newZoom - zoomFactor) < 0.001)
+            return false
+
+        const centerX = imageFrame.x + imageFrame.width / 2
+        const centerY = imageFrame.y + imageFrame.height / 2
+
+        zoomFactor = newZoom
+        resizedByUser = true
+        frameWidth = image.sourceSize.width * zoomFactor
+        frameHeight = image.sourceSize.height * zoomFactor
+        imageFrame.x = centerX - frameWidth / 2
+        imageFrame.y = centerY - frameHeight / 2
+        return true
+    }
+
+    function moveImage(deltaX, deltaY) {
+        if (image.status !== Image.Ready)
+            return false
+
+        resizedByUser = true
+        imageFrame.x += deltaX
+        imageFrame.y += deltaY
+        return true
+    }
+
     function updateImageFrameSize() {
 
         if (resizing || resizedByUser) return;
@@ -208,6 +240,8 @@ Item {
                 part.frameGeometryChanged()
             }
             onWheel: function(wheel) {
+                adjustZoom(wheel.angleDelta.y > 0 ? 1.1 : 0.9)
+                return
                 let delta = wheel.angleDelta.y > 0 ? 1.1 : 0.9
                 let newZoom = zoomFactor * delta
                 newZoom = Math.max(minZoom, Math.min(maxZoom, newZoom))
@@ -225,6 +259,15 @@ Item {
                 // Zentriert im Parent (part)
                 imageFrame.x = (part.width - frameWidth) / 2
                 imageFrame.y = (part.height - frameHeight) / 2
+            }
+        }
+
+        WheelHandler {
+            target: null
+            acceptedDevices: PointerDevice.Mouse | PointerDevice.TouchPad
+            onWheel: function(event) {
+                if (adjustZoom(event.angleDelta.y > 0 ? 1.1 : 0.9))
+                    event.accepted = true
             }
         }
 

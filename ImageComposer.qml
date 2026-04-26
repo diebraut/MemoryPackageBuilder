@@ -162,6 +162,9 @@ Window {
     property bool isComposing: false
     property int  composeGen: 0
     property var  lastComposeStage: null
+    property real keyboardZoomInFactor: 1.01
+    property real keyboardZoomOutFactor: 0.99
+    property int keyboardMoveStep: 1
 
     // Kann z. B. ganz oben im QML stehen
     QtObject {
@@ -217,6 +220,80 @@ Window {
             const max = (anzeigeZustand === 3) ? 3 : (anzeigeZustand === 2 ? 2 : 1);
             selectedPartIndex = (targetIndex % max) + 1;
         }
+    }
+
+    function zoomSelectedPart(multiplier) {
+        const parts = rootItem && rootItem.activeParts ? rootItem.activeParts() : []
+        let fallbackPart = null
+
+        for (let i = 0; i < parts.length; ++i) {
+            const part = parts[i]
+            if (!fallbackPart && part && typeof part.adjustZoom === "function" && part.imageSource && part.imageSource !== "")
+                fallbackPart = part
+
+            if (part && part.index === composerWindow.selectedPartIndex
+                    && part.imageSource && part.imageSource !== ""
+                    && typeof part.adjustZoom === "function") {
+                return part.adjustZoom(multiplier)
+            }
+        }
+
+        return fallbackPart ? fallbackPart.adjustZoom(multiplier) : false
+    }
+
+    function moveSelectedPart(deltaX, deltaY) {
+        const parts = rootItem && rootItem.activeParts ? rootItem.activeParts() : []
+        let fallbackPart = null
+
+        for (let i = 0; i < parts.length; ++i) {
+            const part = parts[i]
+            if (!fallbackPart && part && typeof part.moveImage === "function" && part.imageSource && part.imageSource !== "")
+                fallbackPart = part
+
+            if (part && part.index === composerWindow.selectedPartIndex
+                    && part.imageSource && part.imageSource !== ""
+                    && typeof part.moveImage === "function") {
+                return part.moveImage(deltaX, deltaY)
+            }
+        }
+
+        return fallbackPart ? fallbackPart.moveImage(deltaX, deltaY) : false
+    }
+
+    Shortcut {
+        sequence: "Ctrl+Up"
+        context: Qt.ApplicationShortcut
+        onActivated: composerWindow.zoomSelectedPart(composerWindow.keyboardZoomInFactor)
+    }
+
+    Shortcut {
+        sequence: "Ctrl+Down"
+        context: Qt.ApplicationShortcut
+        onActivated: composerWindow.zoomSelectedPart(composerWindow.keyboardZoomOutFactor)
+    }
+
+    Shortcut {
+        sequence: "Left"
+        context: Qt.WindowShortcut
+        onActivated: composerWindow.moveSelectedPart(-composerWindow.keyboardMoveStep, 0)
+    }
+
+    Shortcut {
+        sequence: "Right"
+        context: Qt.WindowShortcut
+        onActivated: composerWindow.moveSelectedPart(composerWindow.keyboardMoveStep, 0)
+    }
+
+    Shortcut {
+        sequence: "Up"
+        context: Qt.WindowShortcut
+        onActivated: composerWindow.moveSelectedPart(0, -composerWindow.keyboardMoveStep)
+    }
+
+    Shortcut {
+        sequence: "Down"
+        context: Qt.WindowShortcut
+        onActivated: composerWindow.moveSelectedPart(0, composerWindow.keyboardMoveStep)
     }
 
     // Eigene minimalistische Titelzeile
@@ -653,6 +730,24 @@ Window {
                     // Qt sendet bei Shift+Tab meist Key_Backtab – das OR deckt beide Fälle ab
                     selectNextPart(-1);
                     event.accepted = true;
+                } else if ((event.modifiers & Qt.ControlModifier)
+                           && (event.key === Qt.Key_Up || event.key === Qt.Key_Down)) {
+                    const parts = activeParts()
+                    let activePart = null
+
+                    for (let i = 0; i < parts.length; ++i) {
+                        if (parts[i] && parts[i].index === composerWindow.selectedPartIndex) {
+                            activePart = parts[i]
+                            break
+                        }
+                    }
+
+                    if (activePart && typeof activePart.adjustZoom === "function") {
+                        activePart.adjustZoom(event.key === Qt.Key_Up
+                                              ? composerWindow.keyboardZoomInFactor
+                                              : composerWindow.keyboardZoomOutFactor)
+                        event.accepted = true;
+                    }
                 }
             }
 
