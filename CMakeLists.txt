@@ -35,6 +35,7 @@ qt_add_qml_module(appMemoryPackagesBuilder
     VERSION 1.0
     QML_FILES
         Main.qml
+        CheckExportDialog.qml
         UebungenDialog.qml
         EditExersizeDialog.qml
         ImageProcessing.qml

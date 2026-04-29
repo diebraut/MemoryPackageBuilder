@@ -72,6 +72,19 @@ Window {
         }
     }
 
+    function openCheckExportDialog(packageData) {
+        let component = Qt.createComponent("CheckExportDialog.qml")
+        if (component.status === Component.Ready) {
+            let dialog = component.createObject(window, {
+                packageName: packageData.displayName,
+                packagePath: packageData.path
+            })
+            if (dialog) dialog.open()
+        } else {
+            console.error("Fehler beim Laden des Pruefen/Exportieren-Dialogs:", component.errorString())
+        }
+    }
+
     FileDialog {
         id: csvFileDialog
         title: "CSV-Datei auswählen"
@@ -332,6 +345,34 @@ Window {
                     anchors.centerIn: parent
                     font.pixelSize: 16
                 }
+
+                Menu {
+                    id: packageContextMenu
+
+                    MenuItem {
+                        text: "Pr\u00fcfen/Exportieren"
+                        onTriggered: {
+                            packageListView.currentIndex = index
+                            openCheckExportDialog(packageModel.get(index))
+                        }
+                    }
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    acceptedButtons: Qt.RightButton
+                    propagateComposedEvents: true
+                    onPressed: function(mouse) {
+                        if (mouse.button === Qt.RightButton) {
+                            packageListView.currentIndex = index
+                            packageContextMenu.x = mouse.x
+                            packageContextMenu.y = mouse.y
+                            packageContextMenu.open()
+                            mouse.accepted = true
+                        }
+                    }
+                }
+
                 TapHandler {
                     acceptedButtons: Qt.LeftButton
                     gesturePolicy: TapHandler.WithinBounds
