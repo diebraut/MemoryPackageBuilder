@@ -151,6 +151,38 @@ Window {
         }
     }
 
+    Menu {
+        id: rowContextMenu
+        property int rowIndex: -1
+
+        MenuItem {
+            text: "Eintrag löschen"
+            enabled: rowContextMenu.rowIndex >= 0 && rowContextMenu.rowIndex < uebungModel.count
+            onTriggered: {
+                selectSingleRow(rowContextMenu.rowIndex)
+                requestDeleteSelectedRows()
+            }
+        }
+
+        MenuItem {
+            text: "Eintrag einfügen (davor)"
+            enabled: rowContextMenu.rowIndex >= 0 && rowContextMenu.rowIndex < uebungModel.count
+            onTriggered: insertExerciseRowAt(rowContextMenu.rowIndex)
+        }
+
+        MenuItem {
+            text: "Eintrag einfügen (dahinter)"
+            enabled: rowContextMenu.rowIndex >= 0 && rowContextMenu.rowIndex < uebungModel.count
+            onTriggered: insertExerciseRowAt(rowContextMenu.rowIndex + 1)
+        }
+
+        MenuItem {
+            text: "Eintrag bearbeiten"
+            enabled: rowContextMenu.rowIndex >= 0 && rowContextMenu.rowIndex < uebungModel.count
+            onTriggered: editRow(rowContextMenu.rowIndex)
+        }
+    }
+
     Dialog {
         id: regexDlg
         title: "RegEx auf selektierte Felder"
@@ -413,6 +445,43 @@ Window {
             infoURLAntwort_bgcolor: "white",
             selected: false
         }
+    }
+
+    function selectSingleRow(index) {
+        if (!listView || index < 0 || index >= uebungModel.count)
+            return
+
+        listView.currentListViewIndex = index
+        listView.currentIndex = index
+        listView.selectedIndices = [index]
+        listView.selectionAnchor = index
+        if (listView.updateSelectedItems)
+            listView.updateSelectedItems()
+        if (listView.forceActiveFocus)
+            listView.forceActiveFocus()
+    }
+
+    function editRow(index) {
+        if (index < 0 || index >= uebungModel.count)
+            return
+
+        selectSingleRow(index)
+        editExersizeDialog.itemData = JSON.parse(JSON.stringify(uebungModel.get(index)))
+        editExersizeDialog.originalData = JSON.parse(JSON.stringify(editExersizeDialog.itemData))
+        editExersizeDialog.open()
+    }
+
+    function insertExerciseRowAt(index) {
+        if (index < 0 || index > uebungModel.count)
+            return
+
+        var row = emptyExerciseRow()
+        uebungModel.insert(index, row)
+        renumberRowsSequentially(1)
+        markDirty()
+        selectSingleRow(index)
+        if (listView.positionViewAtIndex)
+            listView.positionViewAtIndex(index, ListView.Contain)
     }
 
     function loadPackage(index) {
@@ -2687,13 +2756,10 @@ Window {
                             color: listView.editingRowIndex === indexOutside
                                    ? "#ffe7e0"
                                    : (selected ? "#cce5ff" : (indexOutside % 2 === 0 ? "#f9f9f9" : "#ffffff"))
-                            function handleDoubleClick(index) {
-                                console.log("Doubleclick für Zeile:", index);
-                                if (listView.currentIndex >= 0) {
-                                    editExersizeDialog.itemData = JSON.parse(JSON.stringify(uebungModel.get(listView.currentIndex)));
-                                    editExersizeDialog.open();
-                                }
-                            }
+            function handleDoubleClick(index) {
+                console.log("Doubleclick für Zeile:", index);
+                editRow(index);
+            }
 
                             MouseArea {
                                 anchors.fill: parent
@@ -2702,6 +2768,8 @@ Window {
                                 preventStealing: true
                                 onPressed: function(mouse) {
                                     if (mouse.button === Qt.RightButton) {
+                                        selectSingleRow(indexOutside);
+                                        rowContextMenu.rowIndex = indexOutside;
                                         const globalPos = mapToItem(windowContent, mouse.x, mouse.y);
                                         rowContextMenu.x = globalPos.x;
                                         rowContextMenu.y = globalPos.y;
@@ -2810,8 +2878,7 @@ Window {
                         icon.name: "edit"
                         onClicked: {
                             if (listView.currentIndex >= 0) {
-                                editExersizeDialog.itemData = JSON.parse(JSON.stringify(uebungModel.get(listView.currentIndex)));
-                                editExersizeDialog.open();
+                                editRow(listView.currentIndex);
                             }
                         }
                     }
