@@ -83,6 +83,8 @@ Window {
     property var dynamicMenu
     property var lastContextMenuPosition
     property bool pageReady: false
+    property var pendingTransparentColorRect: null
+    property point pendingTransparentColorPoint: Qt.point(0, 0)
 
     property string tempImagePath: ""
     property string finalImagePath: ""
@@ -272,15 +274,44 @@ Window {
     function grabAreaWithoutOverlay(rect, savePath, transparentBg) {
         // Koordinaten sichern (da 'rect' gleich zerstört wird)
         const rx = rect.x, ry = rect.y, rw = rect.width, rh = rect.height;
+        const transparentColor = transparentBg ? String(rect.transparentColor) : "";
 
         rect.visible = false;
         urlWindow.requestUpdate();  // ⬅️ sorgt für Redraw ohne das Rechteck
 
         nextFrameTimer.callback = function() {
-            imgDownloader.grabAndSaveCropped(urlWindow, rx, ry, rw, rh, savePath, transparentBg);
+            imgDownloader.grabAndSaveCropped(urlWindow, rx, ry, rw, rh, savePath, transparentBg, transparentColor);
             rect.destroy();
         };
 
+        nextFrameTimer.interval = 16;
+        nextFrameTimer.start();
+    }
+
+    function startTransparentColorPick(rect) {
+        pendingTransparentColorRect = rect;
+    }
+
+    function finishTransparentColorPick() {
+        const rect = pendingTransparentColorRect;
+        pendingTransparentColorRect = null;
+
+        if (!rect)
+            return;
+
+        rect.visible = false;
+        urlWindow.requestUpdate();
+
+        nextFrameTimer.callback = function() {
+            const color = imgDownloader.sampleWindowColor(urlWindow,
+                                                          pendingTransparentColorPoint.x,
+                                                          pendingTransparentColorPoint.y);
+            rect.visible = true;
+            if (color && color.length > 0) {
+                rect.transparentColor = color;
+                rect.forceActiveFocus();
+            }
+        };
         nextFrameTimer.interval = 16;
         nextFrameTimer.start();
     }
@@ -311,14 +342,16 @@ Window {
                 id: rectItem
 
                 width: 100; height: 100
-                color: "transparent"
+                property bool transparentBackground: ${transparentBg}
+                property color transparentColor: "#ffffff"
+                color: transparentBackground ? Qt.rgba(transparentColor.r, transparentColor.g, transparentColor.b, 0.35) : "transparent"
                 x: ${lastContextMenuPosition.x}
                 y: ${lastContextMenuPosition.y}
                 border.color: urlWindow.activeRectangle === rectItem ? "blue" : "black"
                 border.width: 1
                 focus: true
                 Keys.priority: Keys.BeforeItem
-                opacity: urlWindow.activeRectangle === rectItem ? 0.9 : 0.65
+                opacity: 1.0
 
                 property int keyStep: 1
                 property int minRectSize: 20
@@ -399,6 +432,14 @@ Window {
                                 grabAreaWithoutOverlay(parent, savePath, ${transparentBg});
                             });
                             urlWindow.dynamicMenu.addItem(saveItem);
+
+                            if (parent.transparentBackground) {
+                                var transparentColorItem = Qt.createQmlObject('import QtQuick.Controls 2.15; MenuItem { text: "Transparentfarbe ändern" }', urlWindow.dynamicMenu);
+                                transparentColorItem.triggered.connect(function() {
+                                    urlWindow.startTransparentColorPick(parent);
+                                });
+                                urlWindow.dynamicMenu.addItem(transparentColorItem);
+                            }
 
                             var removeItem = Qt.createQmlObject('import QtQuick.Controls 2.15; MenuItem { text: "Rechteck entfernen" }', urlWindow.dynamicMenu);
                             removeItem.triggered.connect(function() {
@@ -1091,6 +1132,22 @@ Window {
         id: rectangleContainer
         anchors.fill: parent
         z: 1000
+
+        MouseArea {
+            id: transparentColorPickerArea
+            anchors.fill: parent
+            z: 10000
+            enabled: urlWindow.pendingTransparentColorRect !== null
+            visible: enabled
+            acceptedButtons: Qt.LeftButton
+            cursorShape: Qt.CrossCursor
+
+            onClicked: function(mouse) {
+                urlWindow.pendingTransparentColorPoint = Qt.point(mouse.x, mouse.y)
+                urlWindow.finishTransparentColorPick()
+                mouse.accepted = true
+            }
+        }
 
         FocusScope {
             id: rectangleKeyCatcher

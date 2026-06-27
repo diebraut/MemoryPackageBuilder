@@ -5,6 +5,7 @@
 #include <QNetworkReply>
 #include <QDebug>
 #include <QImageWriter>
+#include <QColor>
 
 ImageDownloader::ImageDownloader(QObject *parent)
     : QObject(parent)
@@ -152,7 +153,26 @@ static void colorToAlphaAgainstBg(QImage &img, const QColor &bg, int t0 = 8, int
 }
 
 // --- 3) Deine Funktion: grab → crop (HiDPI!) → bg erkennen → color-to-alpha → PNG ---
-bool ImageDownloader::grabAndSaveCropped(QQuickWindow *window, int x, int y, int w, int h, const QString &path, bool transparentBackground)
+QString ImageDownloader::sampleWindowColor(QQuickWindow *window, int x, int y)
+{
+    if (!window)
+        return QString();
+
+    QImage fb = window->grabWindow();
+    if (fb.isNull())
+        return QString();
+
+    const qreal dpr = fb.devicePixelRatio() > 0 ? fb.devicePixelRatio() : 1.0;
+    const int px = qRound(x * dpr);
+    const int py = qRound(y * dpr);
+
+    if (px < 0 || py < 0 || px >= fb.width() || py >= fb.height())
+        return QString();
+
+    return QColor::fromRgb(fb.pixel(px, py)).name(QColor::HexRgb);
+}
+
+bool ImageDownloader::grabAndSaveCropped(QQuickWindow *window, int x, int y, int w, int h, const QString &path, bool transparentBackground, const QString &transparentColor)
 {
     if (!window || w <= 0 || h <= 0) {
         qWarning() << "grabAndSaveCropped: invalid args";
@@ -179,8 +199,9 @@ bool ImageDownloader::grabAndSaveCropped(QQuickWindow *window, int x, int y, int
     img.setDevicePixelRatio(1.0);
 
     if (transparentBackground) {
-        // Automatische Hintergrundfarbe erkennen
-        const QColor bg = detectDominantEdgeColor(img);
+        QColor bg(transparentColor);
+        if (!bg.isValid())
+            bg = detectDominantEdgeColor(img);
         colorToAlphaAgainstBg(img, bg, /*t0=*/8, /*t1=*/40, /*gamma=*/1.2);
     }
 
