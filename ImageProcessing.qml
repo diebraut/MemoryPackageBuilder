@@ -21,6 +21,7 @@ Window {
     property int maxDialogHeight: Screen.height * 0.9
 
     property real minRectSize: 4
+    property bool debugKeyboard: false
 
     Settings {
         id: ipSettings
@@ -88,12 +89,32 @@ Window {
     }
 
     // --- Shortcuts: Pfeile bewegen; Shift+Pfeil = Resize; Ctrl = 10px; Alt+Links/Rechts = drehen ---
-    Shortcut { enabled: imageWindow.visible; context: Qt.WindowShortcut; autoRepeat: true; sequence: "Shift+Left";    onActivated: kbHelpers.resizeBy(-1, 0, 1) }
-    Shortcut { enabled: imageWindow.visible; context: Qt.WindowShortcut; autoRepeat: true; sequence: "Shift+Right";   onActivated: kbHelpers.resizeBy( 1, 0, 1) }
-    Shortcut { enabled: imageWindow.visible; context: Qt.WindowShortcut; autoRepeat: true; sequence: "Shift+Up";      onActivated: kbHelpers.resizeBy( 0,-1, 1) }
-    Shortcut { enabled: imageWindow.visible; context: Qt.WindowShortcut; autoRepeat: true; sequence: "Shift+Down";    onActivated: kbHelpers.resizeBy( 0, 1, 1) }
+    Shortcut { enabled: imageWindow.visible; context: Qt.WindowShortcut; autoRepeat: true; sequence: "Left";        onActivated: drawLayer.handleArrowShortcut(Qt.Key_Left,  Qt.NoModifier) }
+    Shortcut { enabled: imageWindow.visible; context: Qt.WindowShortcut; autoRepeat: true; sequence: "Right";       onActivated: drawLayer.handleArrowShortcut(Qt.Key_Right, Qt.NoModifier) }
+    Shortcut { enabled: imageWindow.visible; context: Qt.WindowShortcut; autoRepeat: true; sequence: "Up";          onActivated: drawLayer.handleArrowShortcut(Qt.Key_Up,    Qt.NoModifier) }
+    Shortcut { enabled: imageWindow.visible; context: Qt.WindowShortcut; autoRepeat: true; sequence: "Down";        onActivated: drawLayer.handleArrowShortcut(Qt.Key_Down,  Qt.NoModifier) }
+
+    Shortcut { enabled: imageWindow.visible; context: Qt.WindowShortcut; autoRepeat: true; sequence: "Ctrl+Left";   onActivated: drawLayer.handleArrowShortcut(Qt.Key_Left,  Qt.ControlModifier) }
+    Shortcut { enabled: imageWindow.visible; context: Qt.WindowShortcut; autoRepeat: true; sequence: "Ctrl+Right";  onActivated: drawLayer.handleArrowShortcut(Qt.Key_Right, Qt.ControlModifier) }
+    Shortcut { enabled: imageWindow.visible; context: Qt.WindowShortcut; autoRepeat: true; sequence: "Ctrl+Up";     onActivated: drawLayer.handleArrowShortcut(Qt.Key_Up,    Qt.ControlModifier) }
+    Shortcut { enabled: imageWindow.visible; context: Qt.WindowShortcut; autoRepeat: true; sequence: "Ctrl+Down";   onActivated: drawLayer.handleArrowShortcut(Qt.Key_Down,  Qt.ControlModifier) }
+
+    Shortcut { enabled: imageWindow.visible; context: Qt.WindowShortcut; autoRepeat: true; sequence: "Shift+Left";  onActivated: drawLayer.handleArrowShortcut(Qt.Key_Left,  Qt.ShiftModifier) }
+    Shortcut { enabled: imageWindow.visible; context: Qt.WindowShortcut; autoRepeat: true; sequence: "Shift+Right"; onActivated: drawLayer.handleArrowShortcut(Qt.Key_Right, Qt.ShiftModifier) }
+    Shortcut { enabled: imageWindow.visible; context: Qt.WindowShortcut; autoRepeat: true; sequence: "Shift+Up";    onActivated: drawLayer.handleArrowShortcut(Qt.Key_Up,    Qt.ShiftModifier) }
+    Shortcut { enabled: imageWindow.visible; context: Qt.WindowShortcut; autoRepeat: true; sequence: "Shift+Down";  onActivated: drawLayer.handleArrowShortcut(Qt.Key_Down,  Qt.ShiftModifier) }
 
     Shortcut { enabled: imageWindow.visible; context: Qt.WindowShortcut; sequence: "Esc"; onActivated: drawLayer.selectNone() }
+
+    function focusKeyboardSink() {
+        Qt.callLater(function() {
+            if (keyboardSink) {
+                if (debugKeyboard)
+                    console.log("[ImageProcessing][keys] focusKeyboardSink")
+                keyboardSink.forceActiveFocus()
+            }
+        })
+    }
 
     function openWithImage(path, screenW, screenH, excludeRect, arrowDesc) {
 
@@ -352,7 +373,7 @@ Window {
 
                 onReleased: {
                     resizing = false
-                    keyScope.forceActiveFocus();
+                    imageWindow.focusKeyboardSink();
                 }
 
                 onCanceled: {
@@ -411,6 +432,9 @@ Window {
                     id: drawLayer
                     anchors.fill: parent
                     z: 2
+                    focus: true
+                    Keys.priority: Keys.BeforeItem
+                    Keys.onPressed: (event) => handleKeyEvent(event)
 
                     // ---- Geometrie & Status ----
                     property real offsetX: (width - imagePreview.paintedWidth) / 2
@@ -473,11 +497,17 @@ Window {
                     function selectRect(i)  {
                         selectedRectIndex  = i;
                         selectedArrowIndex = -1;
+                        if (imageWindow.debugKeyboard)
+                            console.log("[ImageProcessing][keys] selectRect", i)
+                        imageWindow.focusKeyboardSink();
                         kbHelpers.selectedRectIndex = i;     // Sync für alte Shortcuts/Handles
                     }
                     function selectArrow(i) {
                         selectedArrowIndex = i;
                         selectedRectIndex  = -1;
+                        if (imageWindow.debugKeyboard)
+                            console.log("[ImageProcessing][keys] selectArrow", i)
+                        imageWindow.focusKeyboardSink();
                         kbHelpers.selectedRectIndex = -1;    // sicher: kein Rect mehr selektiert
                     }
 
@@ -490,6 +520,7 @@ Window {
                         rotatingKind = "";
                         rotatingIndex = -1;
                         globalCircleCanvas.requestPaint();
+                        imageWindow.focusKeyboardSink();
                     }
 
                     function cycleRect(dir) {
@@ -514,10 +545,20 @@ Window {
                     function moveSelectedRect(dx, dy) {
                         const i = selectedRectIndex; if (i < 0) return;
                         const r = rectanglesModel.get(i);
+                        if (imageWindow.debugKeyboard)
+                            console.log("[ImageProcessing][keys] moveSelectedRect",
+                                        "index=", i,
+                                        "dx=", dx, "dy=", dy,
+                                        "from=", r.startX, r.startY, r.endX, r.endY)
                         rectanglesModel.setProperty(i, "startX", r.startX + dx);
                         rectanglesModel.setProperty(i, "startY", r.startY + dy);
                         rectanglesModel.setProperty(i, "endX",   r.endX   + dx);
                         rectanglesModel.setProperty(i, "endY",   r.endY   + dy);
+                        if (imageWindow.debugKeyboard) {
+                            const nr = rectanglesModel.get(i);
+                            console.log("[ImageProcessing][keys] moveSelectedRect result",
+                                        nr.startX, nr.startY, nr.endX, nr.endY)
+                        }
                     }
                     function moveSelectedArrow(dx, dy) {
                         const i = selectedArrowIndex; if (i < 0) return;
@@ -561,6 +602,140 @@ Window {
                         let ang = reset ? 0 : (Number(a.rotationAngle)||0) + (deltaDeg||0);
                         if (snap) ang = drawLayer.snappedRightAngle(ang);
                         arrowModel.setProperty(i, "rotationAngle", ang);
+                    }
+
+                    function handleKeyEvent(event) {
+                        if (imageWindow.debugKeyboard)
+                            console.log("[ImageProcessing][keys] handleKeyEvent",
+                                        "key=", event.key,
+                                        "mods=", event.modifiers,
+                                        "rect=", selectedRectIndex,
+                                        "arrow=", selectedArrowIndex,
+                                        "sinkFocus=", keyboardSink ? keyboardSink.activeFocus : false,
+                                        "drawFocus=", activeFocus)
+                        if ((event.modifiers & Qt.AltModifier) &&
+                            (event.key === Qt.Key_Left || event.key === Qt.Key_Right ||
+                             event.key === Qt.Key_Up   || event.key === Qt.Key_Down)) {
+
+                            const step = (event.modifiers & Qt.ShiftModifier) ? 15 : 1;
+
+                            if (event.key === Qt.Key_Left || event.key === Qt.Key_Right) {
+                                const d = (event.key === Qt.Key_Left) ? -step : +step;
+                                if (selectedRectIndex >= 0)
+                                    rotateSelectedRect(d, false, false);
+                                else if (selectedArrowIndex >= 0)
+                                    rotateSelectedArrow(d, false, false);
+                                event.accepted = true;
+                                return;
+                            }
+                            if (event.key === Qt.Key_Up) {
+                                if (selectedRectIndex >= 0)      rotateSelectedRect(0, true,  false);
+                                else if (selectedArrowIndex >= 0) rotateSelectedArrow(0, true,  false);
+                                event.accepted = true;
+                                return;
+                            }
+                            if (event.key === Qt.Key_Down) {
+                                if (selectedRectIndex >= 0)      rotateSelectedRect(0, false, true);
+                                else if (selectedArrowIndex >= 0) rotateSelectedArrow(0, false, true);
+                                event.accepted = true;
+                                return;
+                            }
+                        }
+
+                        if (event.key === Qt.Key_Tab) {
+                            const dir = (event.modifiers & Qt.ShiftModifier) ? -1 : +1;
+                            cycleAll(dir);
+                            event.accepted = true;
+                            return;
+                        }
+
+                        if (event.key === Qt.Key_Delete || event.key === Qt.Key_Backspace) {
+                            if (selectedRectIndex >= 0) {
+                                rectanglesModel.remove(selectedRectIndex);
+                                selectedRectIndex = Math.min(selectedRectIndex, rectanglesModel.count - 1);
+                                kbHelpers.selectedRectIndex = selectedRectIndex;
+                            } else if (selectedArrowIndex >= 0) {
+                                arrowModel.remove(selectedArrowIndex);
+                                selectedArrowIndex = Math.min(selectedArrowIndex, arrowModel.count - 1);
+                            }
+                            event.accepted = true;
+                            return;
+                        }
+
+                        if (event.key === Qt.Key_Space && selectedRectIndex >= 0) {
+                            const i = selectedRectIndex;
+                            const r = rectanglesModel.get(i);
+                            rectanglesModel.setProperty(i, "rectTranspWithLine", !r.rectTranspWithLine);
+                            event.accepted = true;
+                            return;
+                        }
+
+                        const isArrowKey = (event.key === Qt.Key_Left || event.key === Qt.Key_Right ||
+                                            event.key === Qt.Key_Up   || event.key === Qt.Key_Down);
+                        if (isArrowKey) {
+                            if ((event.modifiers & Qt.ShiftModifier) && selectedRectIndex >= 0) {
+                                const step = keyMoveStep(event.modifiers & ~Qt.ShiftModifier);
+                                const stepX = step / Math.max(scaleX, 0.0001);
+                                const stepY = step / Math.max(scaleY, 0.0001);
+                                if (event.key === Qt.Key_Left)  resizeSelectedRect("left",  -stepX);
+                                if (event.key === Qt.Key_Right) resizeSelectedRect("right", +stepX);
+                                if (event.key === Qt.Key_Up)    resizeSelectedRect("up",    -stepY);
+                                if (event.key === Qt.Key_Down)  resizeSelectedRect("down",  +stepY);
+                                event.accepted = true;
+                                return;
+                            }
+
+                            const step = keyMoveStep(event.modifiers);
+                            const stepX = step / Math.max(scaleX, 0.0001);
+                            const stepY = step / Math.max(scaleY, 0.0001);
+                            let dx = 0, dy = 0;
+                            if (event.key === Qt.Key_Left)  dx = -stepX;
+                            if (event.key === Qt.Key_Right) dx = +stepX;
+                            if (event.key === Qt.Key_Up)    dy = -stepY;
+                            if (event.key === Qt.Key_Down)  dy = +stepY;
+
+                            if (selectedRectIndex >= 0)      moveSelectedRect(dx, dy);
+                            else if (selectedArrowIndex >= 0) moveSelectedArrow(dx, dy);
+                            event.accepted = true;
+                            return;
+                        }
+
+                        if (event.key === Qt.Key_R && selectedRectIndex >= 0) {
+                            rotateSelectedRect(0, true, false);
+                            event.accepted = true;
+                            return;
+                        }
+                    }
+
+                    function handleArrowShortcut(key, modifiers) {
+                        const mods = modifiers || Qt.NoModifier;
+                        if (imageWindow.debugKeyboard)
+                            console.log("[ImageProcessing][keys] handleArrowShortcut",
+                                        "key=", key,
+                                        "mods=", mods,
+                                        "rect=", selectedRectIndex,
+                                        "arrow=", selectedArrowIndex,
+                                        "scale=", scaleX, scaleY)
+                        const step = keyMoveStep(mods & ~Qt.ShiftModifier);
+                        const stepX = step / Math.max(scaleX, 0.0001);
+                        const stepY = step / Math.max(scaleY, 0.0001);
+
+                        if ((mods & Qt.ShiftModifier) && selectedRectIndex >= 0) {
+                            if (key === Qt.Key_Left)  resizeSelectedRect("left",  -stepX);
+                            if (key === Qt.Key_Right) resizeSelectedRect("right", +stepX);
+                            if (key === Qt.Key_Up)    resizeSelectedRect("up",    -stepY);
+                            if (key === Qt.Key_Down)  resizeSelectedRect("down",  +stepY);
+                            return;
+                        }
+
+                        let dx = 0, dy = 0;
+                        if (key === Qt.Key_Left)  dx = -stepX;
+                        if (key === Qt.Key_Right) dx = +stepX;
+                        if (key === Qt.Key_Up)    dy = -stepY;
+                        if (key === Qt.Key_Down)  dy = +stepY;
+
+                        if (selectedRectIndex >= 0)      moveSelectedRect(dx, dy);
+                        else if (selectedArrowIndex >= 0) moveSelectedArrow(dx, dy);
                     }
                     function imageOffsetX() { return (imagePreview.width - imagePreview.paintedWidth) / 2 }
                     function imageOffsetY() { return (imagePreview.height - imagePreview.paintedHeight) / 2 }
@@ -951,7 +1126,7 @@ Window {
                                         onReleased: {
                                             rectItem.dragging = false
                                             cursorShape = Qt.OpenHandCursor
-                                            keyScope.forceActiveFocus();
+                                            imageWindow.focusKeyboardSink();
                                         }
 
                                         onClicked: (mouse) => {
@@ -1133,7 +1308,7 @@ Window {
                                         rectanglesModel.setProperty(rectItem.modelIndex, "rotationAngle", snapped);
 
                                         globalCircleCanvas.requestPaint();
-                                        keyScope.forceActiveFocus();
+                                        imageWindow.focusKeyboardSink();
                                     }
                                 }
                             }
@@ -1414,7 +1589,7 @@ Window {
                             const idx = rectanglesModel.count - 1;
                             drawLayer.selectRect(idx);
                             kbHelpers.selectedRectIndex = idx;
-                            keyScope.forceActiveFocus();
+                            imageWindow.focusKeyboardSink();
                         }
                     }
                     // ---- Dreh-Helfer ----
@@ -1468,15 +1643,15 @@ Window {
             FocusScope {
                 id: keyScope
                 anchors.fill: parent
-                focus: true
+                focus: false
                 Keys.priority: Keys.BeforeItem
 
-                Component.onCompleted: forceActiveFocus()
-                onActiveFocusChanged: if (activeFocus && imageWindow.visible) forceActiveFocus()
+                Component.onCompleted: imageWindow.focusKeyboardSink()
+                onActiveFocusChanged: if (activeFocus && imageWindow.visible) imageWindow.focusKeyboardSink()
                 Connections {
                     target: imageWindow
                     function onVisibleChanged(visible) {  // Qt 6: bool-Argument vorhanden
-                        if (visible) keyScope.forceActiveFocus();
+                        if (visible) imageWindow.focusKeyboardSink();
                     }
                 }
 
@@ -1732,6 +1907,33 @@ Window {
 
             // rechter Flex-Spacing
             Item { Layout.fillWidth: true }
+        }
+    }
+
+    TextEdit {
+        id: keyboardSink
+        x: -100
+        y: -100
+        width: 1
+        height: 1
+        opacity: 0
+        focus: true
+        readOnly: true
+        cursorVisible: false
+        text: "\n"
+        Keys.priority: Keys.BeforeItem
+        Keys.onPressed: (event) => {
+            if (imageWindow.debugKeyboard)
+                console.log("[ImageProcessing][keys] keyboardSink onPressed",
+                            "key=", event.key,
+                            "mods=", event.modifiers,
+                            "activeFocus=", keyboardSink.activeFocus)
+            drawLayer.handleKeyEvent(event)
+        }
+        Component.onCompleted: {
+            if (imageWindow.debugKeyboard)
+                console.log("[ImageProcessing][keys] keyboardSink completed")
+            imageWindow.focusKeyboardSink()
         }
     }
 }

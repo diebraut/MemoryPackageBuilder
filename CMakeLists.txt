@@ -52,6 +52,7 @@ qt_add_qml_module(appMemoryPackagesBuilder
         SOURCES licenceinfowiki.h licenceinfowiki.cpp
         SOURCES filehelper.h filehelper.cpp
         SOURCES buildexercisepackage.h buildexercisepackage.cpp
+        SOURCES rectanglekeyfilter.h rectanglekeyfilter.cpp
         QML_FILES MultiSelectListView.qml
         QML_FILES ImageComposer.qml
         QML_FILES

@@ -53,7 +53,7 @@ bool FileHelper::removeTMPFiles(const QString &path) {
     bool allSuccess = true;
 
     for (const QFileInfo& fileInfo : allFiles) {
-        if (fileInfo.fileName().contains("_TEMP.")) {
+        if (fileInfo.completeBaseName().contains("_TEMP")) {
             if (!QFile::remove(fileInfo.absoluteFilePath())) {
                 qWarning() << "❌ TEMP-Datei konnte nicht gelöscht werden:" << fileInfo.absoluteFilePath();
                 allSuccess = false;

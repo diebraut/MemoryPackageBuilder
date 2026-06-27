@@ -3,6 +3,7 @@ import QtQuick.Controls 2.15
 import QtQuick.Window 2.15
 import QtQuick.Shapes 1.15
 import QtCore
+import FileHelper 1.0
 
 
 Window {
@@ -634,8 +635,11 @@ Window {
                         if (myGen !== composeGen) return
                         if (!res || !res.saveToFile(fileName))
                             console.warn("❌ Speichern fehlgeschlagen:", fileName)
-                        else
+                        else {
                             console.log("✅ Compose gespeichert:", fileName, stage.width, "x", stage.height)
+                            if (packagePath && packagePath.length)
+                                FileHelper.removeTMPFiles(packagePath)
+                        }
                     }, Qt.size(targetW, targetH))
                 })
             })

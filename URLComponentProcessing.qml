@@ -6,6 +6,7 @@ import QtCore
 
 import Helpers 1.0
 import FileHelper 1.0
+import RectKeyFilter 1.0
 
 import Wiki 1.0  // Dein C++ Modul
 
@@ -92,6 +93,98 @@ Window {
 
     property var composer: null  // ❗ Füge das hinzu, falls noch nicht vorhanden
     property var activeRectangle: null
+    property bool debugRectangleKeys: false
+
+    onActiveRectangleChanged: {
+        if (debugRectangleKeys)
+            console.log("[URLComponent][rectKeys] activeRectangle changed", activeRectangle)
+        RectKeyFilter.enabled = activeRectangle !== null
+        focusRectangleKeyCatcher()
+    }
+
+    Connections {
+        target: RectKeyFilter
+        function onArrowKeyPressed(key, modifiers) {
+            if (urlWindow.debugRectangleKeys)
+                console.log("[URLComponent][rectKeys] eventFilter arrow",
+                            "key=", key,
+                            "mods=", modifiers)
+            urlWindow.handleActiveRectangleKey(key, modifiers)
+        }
+    }
+
+    function focusRectangleKeyCatcher() {
+        if (!activeRectangle)
+            return
+
+        Qt.callLater(function() {
+            if (activeRectangle) {
+                if (debugRectangleKeys)
+                    console.log("[URLComponent][rectKeys] focus activeRectangle")
+                activeRectangle.forceActiveFocus()
+            }
+        })
+    }
+
+    function handleActiveRectangleKey(key, modifiers) {
+        if (!activeRectangle) {
+            if (debugRectangleKeys)
+                console.log("[URLComponent][rectKeys] no activeRectangle", "key=", key, "mods=", modifiers)
+            return
+        }
+
+        const rect = activeRectangle
+        const step = (modifiers & Qt.ControlModifier) ? 10 : 1
+        const leftKey = key === Qt.Key_Left
+        const rightKey = key === Qt.Key_Right
+        const upKey = key === Qt.Key_Up
+        const downKey = key === Qt.Key_Down
+
+        if (debugRectangleKeys)
+            console.log("[URLComponent][rectKeys] shortcut",
+                        "key=", key,
+                        "mods=", modifiers,
+                        "step=", step,
+                        "before=", rect.x, rect.y, rect.width, rect.height)
+
+        if (modifiers & Qt.ShiftModifier) {
+            if (leftKey)
+                rect.width = Math.max(rect.minRectSize, rect.width - step)
+            else if (rightKey)
+                rect.width = Math.max(rect.minRectSize, rect.width + step)
+            else if (upKey)
+                rect.height = Math.max(rect.minRectSize, rect.height - step)
+            else if (downKey)
+                rect.height = Math.max(rect.minRectSize, rect.height + step)
+        } else {
+            if (leftKey)
+                rect.x -= step
+            else if (rightKey)
+                rect.x += step
+            else if (upKey)
+                rect.y -= step
+            else if (downKey)
+                rect.y += step
+        }
+
+        focusRectangleKeyCatcher()
+
+        if (debugRectangleKeys)
+            console.log("[URLComponent][rectKeys] after=", rect.x, rect.y, rect.width, rect.height)
+    }
+
+    Shortcut { enabled: urlWindow.visible && activeRectangle !== null; context: Qt.ApplicationShortcut; autoRepeat: true; sequence: "Left";        onActivated: handleActiveRectangleKey(Qt.Key_Left,  Qt.NoModifier) }
+    Shortcut { enabled: urlWindow.visible && activeRectangle !== null; context: Qt.ApplicationShortcut; autoRepeat: true; sequence: "Right";       onActivated: handleActiveRectangleKey(Qt.Key_Right, Qt.NoModifier) }
+    Shortcut { enabled: urlWindow.visible && activeRectangle !== null; context: Qt.ApplicationShortcut; autoRepeat: true; sequence: "Up";          onActivated: handleActiveRectangleKey(Qt.Key_Up,    Qt.NoModifier) }
+    Shortcut { enabled: urlWindow.visible && activeRectangle !== null; context: Qt.ApplicationShortcut; autoRepeat: true; sequence: "Down";        onActivated: handleActiveRectangleKey(Qt.Key_Down,  Qt.NoModifier) }
+    Shortcut { enabled: urlWindow.visible && activeRectangle !== null; context: Qt.ApplicationShortcut; autoRepeat: true; sequence: "Ctrl+Left";   onActivated: handleActiveRectangleKey(Qt.Key_Left,  Qt.ControlModifier) }
+    Shortcut { enabled: urlWindow.visible && activeRectangle !== null; context: Qt.ApplicationShortcut; autoRepeat: true; sequence: "Ctrl+Right";  onActivated: handleActiveRectangleKey(Qt.Key_Right, Qt.ControlModifier) }
+    Shortcut { enabled: urlWindow.visible && activeRectangle !== null; context: Qt.ApplicationShortcut; autoRepeat: true; sequence: "Ctrl+Up";     onActivated: handleActiveRectangleKey(Qt.Key_Up,    Qt.ControlModifier) }
+    Shortcut { enabled: urlWindow.visible && activeRectangle !== null; context: Qt.ApplicationShortcut; autoRepeat: true; sequence: "Ctrl+Down";   onActivated: handleActiveRectangleKey(Qt.Key_Down,  Qt.ControlModifier) }
+    Shortcut { enabled: urlWindow.visible && activeRectangle !== null; context: Qt.ApplicationShortcut; autoRepeat: true; sequence: "Shift+Left";  onActivated: handleActiveRectangleKey(Qt.Key_Left,  Qt.ShiftModifier) }
+    Shortcut { enabled: urlWindow.visible && activeRectangle !== null; context: Qt.ApplicationShortcut; autoRepeat: true; sequence: "Shift+Right"; onActivated: handleActiveRectangleKey(Qt.Key_Right, Qt.ShiftModifier) }
+    Shortcut { enabled: urlWindow.visible && activeRectangle !== null; context: Qt.ApplicationShortcut; autoRepeat: true; sequence: "Shift+Up";    onActivated: handleActiveRectangleKey(Qt.Key_Up,    Qt.ShiftModifier) }
+    Shortcut { enabled: urlWindow.visible && activeRectangle !== null; context: Qt.ApplicationShortcut; autoRepeat: true; sequence: "Shift+Down";  onActivated: handleActiveRectangleKey(Qt.Key_Down,  Qt.ShiftModifier) }
 
     Component.onCompleted: {
         const composerComponent = Qt.createComponent("qrc:/MemoryPackagesBuilder/ImageComposer.qml");
@@ -151,6 +244,7 @@ Window {
     Connections {
         target: urlWindow
         function onClosing(close) {
+            RectKeyFilter.enabled = false
             if (composer) {
                 // Diese Kombination schließt das Tool-Fenster zuverlässig
                 composer.destroy()
@@ -168,7 +262,7 @@ Window {
         if (!activeRectangle)
             return false;
 
-        activeRectangle.forceActiveFocus();
+        focusRectangleKeyCatcher();
         activeRectangle.width = Math.max(activeRectangle.minRectSize, pointX - activeRectangle.x);
         activeRectangle.height = Math.max(activeRectangle.minRectSize, pointY - activeRectangle.y);
         return true;
@@ -220,17 +314,24 @@ Window {
                 color: "transparent"
                 x: ${lastContextMenuPosition.x}
                 y: ${lastContextMenuPosition.y}
-                border.color: activeFocus ? "blue" : "black"
+                border.color: urlWindow.activeRectangle === rectItem ? "blue" : "black"
                 border.width: 1
                 focus: true
+                Keys.priority: Keys.BeforeItem
+                opacity: urlWindow.activeRectangle === rectItem ? 0.9 : 0.65
 
                 property int keyStep: 1
                 property int minRectSize: 20
 
+                onXChanged: if (urlWindow.debugRectangleKeys) console.log("[URLComponent][rectKeys] rectItem xChanged", x)
+                onYChanged: if (urlWindow.debugRectangleKeys) console.log("[URLComponent][rectKeys] rectItem yChanged", y)
+                onWidthChanged: if (urlWindow.debugRectangleKeys) console.log("[URLComponent][rectKeys] rectItem widthChanged", width)
+                onHeightChanged: if (urlWindow.debugRectangleKeys) console.log("[URLComponent][rectKeys] rectItem heightChanged", height)
+
                 onActiveFocusChanged: if (activeFocus) urlWindow.activeRectangle = rectItem
                 Component.onCompleted: {
                     urlWindow.activeRectangle = rectItem
-                    forceActiveFocus()
+                    urlWindow.focusRectangleKeyCatcher()
                 }
                 Component.onDestruction: {
                     if (urlWindow.activeRectangle === rectItem)
@@ -238,50 +339,16 @@ Window {
                 }
 
                 Keys.onPressed: function(event) {
-                    var step = keyStep;
+                    if (urlWindow.debugRectangleKeys)
+                        console.log("[URLComponent][rectKeys] rectangle Keys.onPressed",
+                                    "key=", event.key,
+                                    "mods=", event.modifiers,
+                                    "focus=", activeFocus)
 
-                    if (event.key === Qt.Key_Left) {
-                        if (event.modifiers & Qt.ShiftModifier) {
-                            var newWidth = Math.max(minRectSize, width - step);
-                            if (newWidth !== width) {
-                                width = newWidth;
-                            }
-                        } else {
-                            x -= step;
-                        }
-                        event.accepted = true;
-                        return;
-                    }
-
-                    if (event.key === Qt.Key_Right) {
-                        if (event.modifiers & Qt.ShiftModifier) {
-                            width = Math.max(minRectSize, width + step);
-                        } else {
-                            x += step;
-                        }
-                        event.accepted = true;
-                        return;
-                    }
-
-                    if (event.key === Qt.Key_Up) {
-                        if (event.modifiers & Qt.ShiftModifier) {
-                            var newHeight = Math.max(minRectSize, height - step);
-                            if (newHeight !== height) {
-                                height = newHeight;
-                            }
-                        } else {
-                            y -= step;
-                        }
-                        event.accepted = true;
-                        return;
-                    }
-
-                    if (event.key === Qt.Key_Down) {
-                        if (event.modifiers & Qt.ShiftModifier) {
-                            height = Math.max(minRectSize, height + step);
-                        } else {
-                            y += step;
-                        }
+                    if (event.key === Qt.Key_Left || event.key === Qt.Key_Right ||
+                        event.key === Qt.Key_Up || event.key === Qt.Key_Down) {
+                        urlWindow.activeRectangle = rectItem
+                        urlWindow.handleActiveRectangleKey(event.key, event.modifiers)
                         event.accepted = true;
                         return;
                     }
@@ -294,11 +361,13 @@ Window {
                     acceptedButtons: Qt.LeftButton | Qt.RightButton
 
                     onPressed: function(mouse) {
-                        parent.forceActiveFocus();
+                        urlWindow.activeRectangle = parent;
+                        urlWindow.focusRectangleKeyCatcher();
                     }
 
                     onClicked: function(mouse) {
-                        parent.forceActiveFocus();
+                        urlWindow.activeRectangle = parent;
+                        urlWindow.focusRectangleKeyCatcher();
 
                         if (mouse.button === Qt.RightButton) {
                             console.log("📌 Rechtsklick auf Rechteck");
@@ -358,7 +427,8 @@ Window {
                     acceptedButtons: Qt.LeftButton
 
                     onPressed: function(mouse) {
-                        parent.forceActiveFocus();
+                        urlWindow.activeRectangle = parent;
+                        urlWindow.focusRectangleKeyCatcher();
                         dragXStart = mouse.x;
                         dragYStart = mouse.y;
                     }
@@ -594,6 +664,7 @@ Window {
             WebEngineView {
                 id: webView
                 anchors.fill: parent
+                focus: urlWindow.activeRectangle === null
 
                 property url expectedUrl
 
@@ -843,6 +914,25 @@ Window {
                             return;
                         }
 
+                        if (composer && composer.anzeigeZustand > 1) {
+                            const composedPath = packagePath + "/" + subjektName + ".png";
+                            if (!FileHelper.fileExists(composedPath)) {
+                                console.warn("Compose-Bild wurde noch nicht gespeichert:", composedPath);
+                                return;
+                            }
+
+                            cleanupTempFile();
+
+                            var composedUrl = webView.url.toString();
+                            accepted(composedUrl, currentImageLicenceInfo, "png");
+
+                            tempImagePath = "";
+                            finalImagePath = "";
+                            imageAvailable = false;
+                            saveButton.enabled = false;
+                            return;
+                        }
+
                         if (FileHelper.removeFilesWithSameBaseName(finalImagePath)) {
                             console.log("🧹 Alle Varianten von", finalImagePath, "wurden gelöscht");
                         } else {
@@ -853,6 +943,7 @@ Window {
                             console.log("💾 Bild gespeichert als:", finalImagePath);
                         } else {
                             console.warn("❌ Umbenennen fehlgeschlagen");
+                            return;
                         }
 
                         // Signal senden an aufrufenden Dialog
@@ -864,7 +955,7 @@ Window {
                         tempImagePath = "";
                         finalImagePath = "";
                         imageAvailable = false;
-                        cleanupTempFile();  // ❗ Falls du das willst – sonst weglassen
+                        cleanupTempFile();
                         saveButton.enabled = false
                     }
                 }
@@ -1000,5 +1091,30 @@ Window {
         id: rectangleContainer
         anchors.fill: parent
         z: 1000
+
+        FocusScope {
+            id: rectangleKeyCatcher
+            anchors.fill: parent
+            enabled: false
+            focus: false
+            Keys.priority: Keys.BeforeItem
+            Keys.onPressed: function(event) {
+                if (urlWindow.debugRectangleKeys)
+                    console.log("[URLComponent][rectKeys] rectangleKeyCatcher",
+                                "key=", event.key,
+                                "mods=", event.modifiers,
+                                "focus=", activeFocus)
+
+                if (event.key === Qt.Key_Left || event.key === Qt.Key_Right ||
+                    event.key === Qt.Key_Up || event.key === Qt.Key_Down) {
+                    urlWindow.handleActiveRectangleKey(event.key, event.modifiers)
+                    event.accepted = true
+                    return
+                }
+            }
+
+            onActiveFocusChanged: if (urlWindow.debugRectangleKeys)
+                console.log("[URLComponent][rectKeys] rectangleKeyCatcher focus", activeFocus)
+        }
     }
 }

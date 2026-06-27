@@ -10,6 +10,7 @@
 #include "licenceinfowiki.h"
 #include "filehelper.h"
 #include "buildexercisepackage.h"
+#include "rectanglekeyfilter.h"
 
 
 #include <QtWebEngineQuick/qtwebenginequickglobal.h>
@@ -35,6 +36,10 @@ int main(int argc, char *argv[])
     qRegisterMetaType<WikiLicenceInfo>("WikiLicenceInfo");
 
     qmlRegisterType<BuildExercisePackage>("ExerciseIO", 1, 0, "BuildExercisePackage");
+
+    RectangleKeyFilter rectangleKeyFilter;
+    app.installEventFilter(&rectangleKeyFilter);
+    qmlRegisterSingletonInstance("RectKeyFilter", 1, 0, "RectKeyFilter", &rectangleKeyFilter);
 
     qmlRegisterSingletonType<FileHelper>("FileHelper", 1, 0, "FileHelper", [](QQmlEngine*, QJSEngine*) -> QObject* {
         return new FileHelper();
