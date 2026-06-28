@@ -153,6 +153,7 @@ Window {
     property real layout2_splitX: 0.5
 
     signal modeSelected(string type)
+    signal contentChanged()
 
     FontMetrics { id: menuFont }
 
@@ -222,6 +223,7 @@ Window {
             const max = (anzeigeZustand === 3) ? 3 : (anzeigeZustand === 2 ? 2 : 1);
             selectedPartIndex = (targetIndex % max) + 1;
         }
+        contentChanged();
     }
 
     function temporaryPartIndex() {
@@ -300,6 +302,7 @@ Window {
 
         if (FileHelper.makeImageColorTransparent(imageSource, imageX, imageY)) {
             reloadImageInPart(partIndex, imageSource);
+            contentChanged();
         }
     }
 
@@ -563,15 +566,6 @@ Window {
             return true
         }
 
-        // optionaler Callback für Compose
-        function triggerCompose() {
-            if (typeof composerWindow.composeImages === "function") {
-                composerWindow.composeImages()
-            } else {
-                console.log("⚙️ <Compose-Image> triggered")
-            }
-        }
-
         onPressed: (mouse) => {
             if (mouse.button !== Qt.RightButton) return
 
@@ -595,14 +589,10 @@ Window {
                 texts.push("Dreiteilung: 1 Unten, 2 Oben")
             }
 
-            // 3) Breite berechnen (Compose-Image ggf. mitrechnen)
+            // 3) Breite berechnen
             let maxTextWidth = 0
             for (let y = 0; y < texts.length; ++y) {
                 const w = menuFont.boundingRect(texts[y]).width
-                if (w > maxTextWidth) maxTextWidth = w
-            }
-            if (allVisibleImagesReady()) {
-                const w = menuFont.boundingRect("Compose-Image").width
                 if (w > maxTextWidth) maxTextWidth = w
             }
             customContextMenu.custLength = maxTextWidth + 20
@@ -625,7 +615,7 @@ Window {
                 return sep
             }
 
-            // 5) ✨ Compose-Image + Separator (nur wenn alle ready)
+            // 5) Bildfunktionen
             addMenuItem("Aus Zwischenablage einfügen",
                         () => composerWindow.pasteImageFromClipboard(),
                         FileHelper.clipboardHasImage())
@@ -633,14 +623,8 @@ Window {
                         () => composerWindow.startTransparentBackgroundPick(),
                         composerWindow.anyPartHasImage())
 
-            if (allVisibleImagesReady() || anzeigeZustand === 2 || anzeigeZustand === 3)
+            if (anzeigeZustand === 2 || anzeigeZustand === 3)
                 addSeparator()
-
-            if (allVisibleImagesReady()) {
-                addMenuItem("<Compose-Image>", triggerCompose)
-                if (anzeigeZustand === 2 || anzeigeZustand === 3)
-                    addSeparator()
-            }
 
             // 6) Normale Einträge gemäß Zustand
             if (anzeigeZustand === 2) {
@@ -660,7 +644,12 @@ Window {
         }
     }
 
-    function composeImages() {
+    function composeImages(doneCallback) {
+        function notifyDone(success, fileName) {
+            if (doneCallback)
+                doneCallback(success, fileName)
+        }
+
         // neue Generation starten und evtl. alte Stage wegwerfen
         composeGen++
         const myGen = composeGen
@@ -670,7 +659,7 @@ Window {
         }
 
         const parts = rootItem.activeParts ? rootItem.activeParts() : []
-        if (!parts.length) { console.warn("Keine Parts"); return }
+        if (!parts.length) { console.warn("Keine Parts"); notifyDone(false, ""); return }
 
         // Union + maximale Skala (= höchste Quellauflösung)
         let minX=Infinity, minY=Infinity, maxX=-Infinity, maxY=-Infinity
@@ -679,9 +668,9 @@ Window {
 
         for (let i=0;i<parts.length;i++) {
             const p = parts[i]
-            if (!p || typeof p.frameRectIn !== "function") { console.warn("Part ohne frameRectIn"); return }
+            if (!p || typeof p.frameRectIn !== "function") { console.warn("Part ohne frameRectIn"); notifyDone(false, ""); return }
             const r = p.frameRectIn(rootItem)
-            if (!r.ready || !r.visible) { console.warn("Nicht alle Bilder geladen"); return }
+            if (!r.ready || !r.visible) { console.warn("Nicht alle Bilder geladen"); notifyDone(false, ""); return }
 
             minX = Math.min(minX, r.x);  minY = Math.min(minY, r.y)
             maxX = Math.max(maxX, r.x + r.w);  maxY = Math.max(maxY, r.y + r.h)
@@ -737,6 +726,7 @@ Window {
                             console.log("✅ Compose gespeichert:", fileName, stage.width, "x", stage.height)
                             if (packagePath && packagePath.length)
                                 FileHelper.removeTMPFiles(packagePath)
+                            notifyDone(true, fileName)
                         }
                     }, Qt.size(targetW, targetH))
                 })
@@ -766,7 +756,7 @@ Window {
 
             const img = Qt.createQmlObject(
                 'import QtQuick 2.15; Image {' +
-                '  asynchronous: false; cache: true; smooth: true; mipmap: true;' +
+                '  asynchronous: false; cache: false; smooth: true; mipmap: true;' +
                 '  fillMode: Image.Stretch; visible: true;' +
                 '}',
                 stage
@@ -793,6 +783,7 @@ Window {
         if (need === 0) {
             console.warn("Keine gültigen Einträge")
             try { stage.destroy() } catch(e) {}
+            notifyDone(false, "")
             return
         }
     }

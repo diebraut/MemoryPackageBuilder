@@ -26,6 +26,7 @@ Item {
     property bool pipetteCursorVisible: false
 
     property alias imageSource: image.source
+    property alias imageSourceSize: image.sourceSize
 
     signal clicked(int index)
     signal transparentColorPicked(int index, string imageSource, int imageX, int imageY)

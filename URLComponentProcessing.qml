@@ -240,6 +240,10 @@ Window {
     Connections {
         target: composer
         function onAnzeigeZustandChanged() { syncPartsChecks() }
+        function onContentChanged() {
+            imageAvailable = true;
+            saveButton.enabled = true;
+        }
     }
 
     // Kindfenster schließen, wenn Hauptfenster geschlossen wird
@@ -950,27 +954,28 @@ Window {
                     enabled: false
                     text: "Speichern"
                     onClicked: {
-                        if (tempImagePath === "" || finalImagePath === "") {
-                            console.warn("⚠️ Kein temporäres Bild zum Speichern");
+                        if (composer && composer.anzeigeZustand > 1) {
+                            saveButton.enabled = false;
+                            composer.composeImages(function(success, composedPath) {
+                                if (!success) {
+                                    console.warn("Compose-Bild konnte nicht erzeugt werden:", composedPath);
+                                    saveButton.enabled = true;
+                                    return;
+                                }
+
+                                var composedUrl = webView.url.toString();
+                                accepted(composedUrl, currentImageLicenceInfo, "png");
+
+                                tempImagePath = "";
+                                finalImagePath = "";
+                                imageAvailable = false;
+                                saveButton.enabled = false;
+                            });
                             return;
                         }
 
-                        if (composer && composer.anzeigeZustand > 1) {
-                            const composedPath = packagePath + "/" + subjektName + ".png";
-                            if (!FileHelper.fileExists(composedPath)) {
-                                console.warn("Compose-Bild wurde noch nicht gespeichert:", composedPath);
-                                return;
-                            }
-
-                            cleanupTempFile();
-
-                            var composedUrl = webView.url.toString();
-                            accepted(composedUrl, currentImageLicenceInfo, "png");
-
-                            tempImagePath = "";
-                            finalImagePath = "";
-                            imageAvailable = false;
-                            saveButton.enabled = false;
+                        if (tempImagePath === "" || finalImagePath === "") {
+                            console.warn("⚠️ Kein temporäres Bild zum Speichern");
                             return;
                         }
 
