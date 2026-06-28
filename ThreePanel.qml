@@ -21,8 +21,11 @@ Item {
     property real borderMargin: 3
     property real gapToSplitter: 2
     property real splitterSize: 4 // Splitter width/height
+    property bool transparentColorPickMode: false
 
     signal partClicked(int index)
+    signal transparentColorPicked(int index, string imageSource, int imageX, int imageY)
+    signal transparentColorPickCanceled()
 
     property var part1: null
     property var part2: null
@@ -81,7 +84,10 @@ Item {
                 index: 1
                 label: "1"
                 selected: root.selectedPartIndex === 1
+                transparentColorPickMode: root.transparentColorPickMode
                 onClicked: (idx) => root.partClicked(idx)
+                onTransparentColorPicked: (idx, imageSource, imageX, imageY) => root.transparentColorPicked(idx, imageSource, imageX, imageY)
+                onTransparentColorPickCanceled: root.transparentColorPickCanceled()
                 x: root.borderMargin
                 y: root.borderMargin
                 width: isVertical ? totalContentWidth * root.splitterRatio1 : parent.width - 2 * root.borderMargin
@@ -108,7 +114,10 @@ Item {
                 index: 2
                 label: "2"
                 selected: root.selectedPartIndex === 2
+                transparentColorPickMode: root.transparentColorPickMode
                 onClicked: (idx) => root.partClicked(idx)
+                onTransparentColorPicked: (idx, imageSource, imageX, imageY) => root.transparentColorPicked(idx, imageSource, imageX, imageY)
+                onTransparentColorPickCanceled: root.transparentColorPickCanceled()
                 x: isVertical ? splitter1.x + splitter1.width : root.borderMargin
                 y: isVertical ? root.borderMargin : splitter1.y + splitter1.height
                 width: isVertical
@@ -140,7 +149,10 @@ Item {
                 index: 3
                 label: "3"
                 selected: root.selectedPartIndex === 3
+                transparentColorPickMode: root.transparentColorPickMode
                 onClicked: (idx) => root.partClicked(idx)
+                onTransparentColorPicked: (idx, imageSource, imageX, imageY) => root.transparentColorPicked(idx, imageSource, imageX, imageY)
+                onTransparentColorPickCanceled: root.transparentColorPickCanceled()
                 x: isVertical ? splitter2.x + splitter2.width : root.borderMargin
                 y: isVertical ? root.borderMargin : splitter2.y + splitter2.height
                 width: isVertical ? totalContentWidth * (1 - root.splitterRatio2) : parent.width - 2 * root.borderMargin
@@ -175,7 +187,10 @@ Item {
                 index: 1
                 label: "1"
                 selected: root.selectedPartIndex === 1
+                transparentColorPickMode: root.transparentColorPickMode
                 onClicked: (idx) => root.partClicked(idx)
+                onTransparentColorPicked: (idx, imageSource, imageX, imageY) => root.transparentColorPicked(idx, imageSource, imageX, imageY)
+                onTransparentColorPickCanceled: root.transparentColorPickCanceled()
                 x: root.borderMargin
                 y: root.borderMargin
                 width: (parent.width - 2 * root.borderMargin) * root.layout1_splitX - 2
@@ -189,7 +204,10 @@ Item {
                 index: 2
                 label: "2"
                 selected: root.selectedPartIndex === 2
+                transparentColorPickMode: root.transparentColorPickMode
                 onClicked: (idx) => root.partClicked(idx)
+                onTransparentColorPicked: (idx, imageSource, imageX, imageY) => root.transparentColorPicked(idx, imageSource, imageX, imageY)
+                onTransparentColorPickCanceled: root.transparentColorPickCanceled()
                 x: part1L1.x + part1L1.width + 4
                 y: root.borderMargin
                 width: (parent.width - 2 * root.borderMargin) * (1 - root.layout1_splitX) - 2
@@ -203,7 +221,10 @@ Item {
                 index: 3
                 label: "3"
                 selected: root.selectedPartIndex === 3
+                transparentColorPickMode: root.transparentColorPickMode
                 onClicked: (idx) => root.partClicked(idx)
+                onTransparentColorPicked: (idx, imageSource, imageX, imageY) => root.transparentColorPicked(idx, imageSource, imageX, imageY)
+                onTransparentColorPickCanceled: root.transparentColorPickCanceled()
                 x: root.borderMargin
                 y: part1L1.y + part1L1.height + 4
                 width: parent.width - 2 * root.borderMargin
@@ -253,7 +274,10 @@ Item {
                 index: 1
                 label: "1"
                 selected: root.selectedPartIndex === 1
+                transparentColorPickMode: root.transparentColorPickMode
                 onClicked: (idx) => root.partClicked(idx)
+                onTransparentColorPicked: (idx, imageSource, imageX, imageY) => root.transparentColorPicked(idx, imageSource, imageX, imageY)
+                onTransparentColorPickCanceled: root.transparentColorPickCanceled()
                 x: root.borderMargin
                 y: root.borderMargin
                 width: parent.width - 2 * root.borderMargin
@@ -266,7 +290,10 @@ Item {
                 index: 2
                 label: "2"
                 selected: root.selectedPartIndex === 2
+                transparentColorPickMode: root.transparentColorPickMode
                 onClicked: (idx) => root.partClicked(idx)
+                onTransparentColorPicked: (idx, imageSource, imageX, imageY) => root.transparentColorPicked(idx, imageSource, imageX, imageY)
+                onTransparentColorPickCanceled: root.transparentColorPickCanceled()
                 x: root.borderMargin
                 y: part1L2.y + part1L2.height + 4
                 width: (parent.width - 2 * root.borderMargin) * root.layout2_splitX - 2
@@ -280,7 +307,10 @@ Item {
                 index: 3
                 label: "3"
                 selected: root.selectedPartIndex === 3
+                transparentColorPickMode: root.transparentColorPickMode
                 onClicked: (idx) => root.partClicked(idx)
+                onTransparentColorPicked: (idx, imageSource, imageX, imageY) => root.transparentColorPicked(idx, imageSource, imageX, imageY)
+                onTransparentColorPickCanceled: root.transparentColorPickCanceled()
                 x: part2L2.x + part2L2.width + 4
                 y: part2L2.y
                 width: parent.width - x - root.borderMargin

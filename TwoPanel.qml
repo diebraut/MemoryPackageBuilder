@@ -14,8 +14,11 @@ Item {
 
     property real borderMargin: 3
     property real gapToSplitter: 2
+    property bool transparentColorPickMode: false
 
     signal partClicked(int index)
+    signal transparentColorPicked(int index, string imageSource, int imageX, int imageY)
+    signal transparentColorPickCanceled()
 
     property alias part1: part1View
     property alias part2: part2View
@@ -33,7 +36,10 @@ Item {
         index: 1
         label: "1"
         selected: root.selectedPartIndex === 1
+        transparentColorPickMode: root.transparentColorPickMode
         onClicked: root.partClicked(index)
+        onTransparentColorPicked: (index, imageSource, imageX, imageY) => root.transparentColorPicked(index, imageSource, imageX, imageY)
+        onTransparentColorPickCanceled: root.transparentColorPickCanceled()
 
         anchors.left: parent.left
         anchors.top: parent.top
@@ -69,7 +75,10 @@ Item {
         index: 2
         label: "2"
         selected: root.selectedPartIndex === 2
+        transparentColorPickMode: root.transparentColorPickMode
         onClicked: root.partClicked(index)
+        onTransparentColorPicked: (index, imageSource, imageX, imageY) => root.transparentColorPicked(index, imageSource, imageX, imageY)
+        onTransparentColorPickCanceled: root.transparentColorPickCanceled()
 
         anchors.margins: borderMargin
 

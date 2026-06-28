@@ -1,9 +1,27 @@
 // FileHelper.cpp
 #include "FileHelper.h"
+#include <QClipboard>
+#include <QColor>
 #include <QFile>
 #include <QFileInfo>
+#include <QGuiApplication>
+#include <QImage>
+#include <QImageReader>
 #include <QDir>
+#include <QMimeData>
+#include <QPixmap>
+#include <QUrl>
+#include <QVariant>
 
+namespace {
+QString localFilePathFromString(const QString &path)
+{
+    const QUrl url(path);
+    if (url.isValid() && url.isLocalFile())
+        return url.toLocalFile();
+    return path;
+}
+}
 
 bool FileHelper::removeFile(const QString &path) {
     return QFile::remove(path);
@@ -64,6 +82,149 @@ bool FileHelper::removeTMPFiles(const QString &path) {
     }
 
     return allSuccess;
+}
+
+QString FileHelper::saveClipboardImageTemporary(const QString &path, const QString &baseName, int partIndex)
+{
+    if (path.isEmpty() || baseName.isEmpty()) {
+        qWarning() << "Clipboard-Bild: Zielpfad oder Basisname fehlt";
+        return QString();
+    }
+
+    QClipboard *clipboard = QGuiApplication::clipboard();
+    if (!clipboard) {
+        qWarning() << "Clipboard-Bild: Keine Zwischenablage verfuegbar";
+        return QString();
+    }
+
+    const QMimeData *mime = clipboard->mimeData();
+    if (!mime) {
+        qWarning() << "Clipboard-Bild: Keine Mime-Daten verfuegbar";
+        return QString();
+    }
+
+    QImage image;
+    if (mime->hasImage()) {
+        const QVariant imageData = mime->imageData();
+        if (imageData.canConvert<QImage>())
+            image = qvariant_cast<QImage>(imageData);
+        if (image.isNull() && imageData.canConvert<QPixmap>())
+            image = qvariant_cast<QPixmap>(imageData).toImage();
+    }
+
+    if (image.isNull() && mime->hasUrls()) {
+        const QList<QUrl> urls = mime->urls();
+        for (const QUrl &url : urls) {
+            if (!url.isLocalFile())
+                continue;
+
+            QImageReader reader(url.toLocalFile());
+            reader.setAutoTransform(true);
+            QImage loaded = reader.read();
+            if (!loaded.isNull()) {
+                image = loaded;
+                break;
+            }
+        }
+    }
+
+    if (image.isNull()) {
+        qWarning() << "Clipboard-Bild: Keine Bilddaten in der Zwischenablage gefunden";
+        return QString();
+    }
+
+    QDir dir(path);
+    if (!dir.exists() && !dir.mkpath(QStringLiteral("."))) {
+        qWarning() << "Clipboard-Bild: Zielordner kann nicht erstellt werden:" << path;
+        return QString();
+    }
+
+    QString suffix = QStringLiteral("_TEMP");
+    if (partIndex > 0)
+        suffix += QString::number(partIndex);
+
+    const QString filePath = dir.filePath(baseName + suffix + QStringLiteral(".png"));
+    if (!image.save(filePath, "PNG")) {
+        qWarning() << "Clipboard-Bild: Speichern fehlgeschlagen:" << filePath;
+        return QString();
+    }
+
+    qDebug() << "Clipboard-Bild gespeichert:" << filePath;
+    return filePath;
+}
+
+bool FileHelper::clipboardHasImage()
+{
+    QClipboard *clipboard = QGuiApplication::clipboard();
+    if (!clipboard)
+        return false;
+
+    const QMimeData *mime = clipboard->mimeData();
+    if (!mime)
+        return false;
+
+    if (mime->hasImage())
+        return true;
+
+    if (!mime->hasUrls())
+        return false;
+
+    const QList<QUrl> urls = mime->urls();
+    for (const QUrl &url : urls) {
+        if (!url.isLocalFile())
+            continue;
+        QImageReader reader(url.toLocalFile());
+        if (reader.canRead())
+            return true;
+    }
+
+    return false;
+}
+
+bool FileHelper::makeImageColorTransparent(const QString &path, int imageX, int imageY)
+{
+    const QString filePath = localFilePathFromString(path);
+    if (filePath.isEmpty()) {
+        qWarning() << "Transparenz: Kein Bildpfad angegeben";
+        return false;
+    }
+
+    QImage image(filePath);
+    if (image.isNull()) {
+        qWarning() << "Transparenz: Bild kann nicht geladen werden:" << filePath;
+        return false;
+    }
+
+    if (imageX < 0 || imageY < 0 || imageX >= image.width() || imageY >= image.height()) {
+        qWarning() << "Transparenz: Klickposition ausserhalb des Bildes:" << imageX << imageY;
+        return false;
+    }
+
+    const QImage source = image.convertToFormat(QImage::Format_ARGB32);
+    image = source;
+
+    const QColor picked = image.pixelColor(imageX, imageY);
+    const int tolerance = 16;
+
+    for (int y = 0; y < image.height(); ++y) {
+        QRgb *line = reinterpret_cast<QRgb *>(image.scanLine(y));
+        for (int x = 0; x < image.width(); ++x) {
+            const QColor current = QColor::fromRgba(line[x]);
+            if (qAbs(current.red() - picked.red()) <= tolerance
+                    && qAbs(current.green() - picked.green()) <= tolerance
+                    && qAbs(current.blue() - picked.blue()) <= tolerance) {
+                line[x] = qRgba(current.red(), current.green(), current.blue(), 0);
+            }
+        }
+    }
+
+    if (!image.save(filePath, "PNG")) {
+        qWarning() << "Transparenz: Speichern fehlgeschlagen:" << filePath;
+        return false;
+    }
+
+    qDebug() << "Transparenzfarbe angewendet:" << filePath << picked;
+    return true;
 }
 
 QStringList FileHelper::directoryEntries(const QString &path)

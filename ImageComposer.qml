@@ -163,6 +163,7 @@ Window {
     property bool isComposing: false
     property int  composeGen: 0
     property var  lastComposeStage: null
+    property bool transparentColorPickMode: false
     property real keyboardZoomInFactor: 1.01
     property real keyboardZoomOutFactor: 0.99
     property int keyboardMoveStep: 1
@@ -223,6 +224,85 @@ Window {
         }
     }
 
+    function temporaryPartIndex() {
+        return anzeigeZustand > 1 ? selectedPartIndex : 0;
+    }
+
+    function pasteImageFromClipboard() {
+        const partIndex = temporaryPartIndex();
+        const filePath = FileHelper.saveClipboardImageTemporary(packagePath, subjektName, partIndex);
+        if (!filePath || filePath === "") {
+            console.warn("Kein Bild aus der Zwischenablage eingefuegt");
+            return;
+        }
+
+        loadImageInCurrentMode(filePath);
+    }
+
+    function selectedPart() {
+        const parts = rootItem && rootItem.activeParts ? rootItem.activeParts() : [];
+        for (let i = 0; i < parts.length; ++i) {
+            if (parts[i] && parts[i].index === selectedPartIndex)
+                return parts[i];
+        }
+        return null;
+    }
+
+    function anyPartHasImage() {
+        const parts = rootItem && rootItem.activeParts ? rootItem.activeParts() : [];
+        for (let i = 0; i < parts.length; ++i) {
+            if (parts[i] && parts[i].imageSource && parts[i].imageSource !== "")
+                return true;
+        }
+        return false;
+    }
+
+    function startTransparentBackgroundPick() {
+        if (!anyPartHasImage()) {
+            console.warn("Hintergrund transparent: Es ist kein Bild geladen");
+            return;
+        }
+
+        transparentColorPickMode = true;
+    }
+
+    function cancelTransparentBackgroundPick() {
+        transparentColorPickMode = false;
+    }
+
+    function handlePartClicked(index) {
+        if (transparentColorPickMode) {
+            cancelTransparentBackgroundPick();
+            return;
+        }
+
+        selectedPartIndex = index;
+    }
+
+    function reloadImageInPart(partIndex, sourcePath) {
+        const url = toFileUrl(sourcePath);
+        if (anzeigeZustand === 1) {
+            singlePartView.setImage(url);
+        } else if (anzeigeZustand === 2 && twoSplitter && twoSplitter.setImageForPart) {
+            twoSplitter.setImageForPart(partIndex, url);
+        } else if (anzeigeZustand === 3 && threeSplitter && threeSplitter.setImageForPart) {
+            threeSplitter.setImageForPart(partIndex, url);
+        }
+    }
+
+    function handleTransparentColorPicked(partIndex, imageSource, imageX, imageY) {
+        if (!transparentColorPickMode)
+            return;
+
+        transparentColorPickMode = false;
+        if (!imageSource || imageSource === "")
+            return;
+
+        if (FileHelper.makeImageColorTransparent(imageSource, imageX, imageY)) {
+            reloadImageInPart(partIndex, imageSource);
+        }
+    }
+
     function zoomSelectedPart(multiplier) {
         const parts = rootItem && rootItem.activeParts ? rootItem.activeParts() : []
         let fallbackPart = null
@@ -265,6 +345,12 @@ Window {
         sequence: "Ctrl+Up"
         context: Qt.ApplicationShortcut
         onActivated: composerWindow.zoomSelectedPart(composerWindow.keyboardZoomInFactor)
+    }
+
+    Shortcut {
+        sequence: "Ctrl+V"
+        context: Qt.ApplicationShortcut
+        onActivated: composerWindow.pasteImageFromClipboard()
     }
 
     Shortcut {
@@ -498,16 +584,15 @@ Window {
             customContextMenu.dynamicItems = []
 
             // 2) Texte für normale Layout-Einträge
-            let texts = []
+            let texts = ["Aus Zwischenablage einfügen", "Hintergrund transparent"]
             if (anzeigeZustand === 2) {
-                texts = ["Zweiteilung Vertikal", "Zweiteilung Horizontal"]
+                texts.push("Zweiteilung Vertikal")
+                texts.push("Zweiteilung Horizontal")
             } else if (anzeigeZustand === 3) {
-                texts = [
-                    "Dreiteilung Vertikal",
-                    "Dreiteilung Horizontal",
-                    "Dreiteilung: 2 Oben, 1 Unten",
-                    "Dreiteilung: 1 Unten, 2 Oben"
-                ]
+                texts.push("Dreiteilung Vertikal")
+                texts.push("Dreiteilung Horizontal")
+                texts.push("Dreiteilung: 2 Oben, 1 Unten")
+                texts.push("Dreiteilung: 1 Unten, 2 Oben")
             }
 
             // 3) Breite berechnen (Compose-Image ggf. mitrechnen)
@@ -523,9 +608,11 @@ Window {
             customContextMenu.custLength = maxTextWidth + 20
 
             // 4) Hilfsfunktion zum Erzeugen von Items
-            function addMenuItem(text, handler) {
+            function addMenuItem(text, handler, enabled) {
                 const item = Qt.createQmlObject('import QtQuick.Controls 2.15; MenuItem { text: "' + text.replace(/"/g, '\\"') + '" }',
                                                 customContextMenu)
+                if (enabled !== undefined)
+                    item.enabled = enabled
                 if (handler) item.onTriggered.connect(handler)
                 customContextMenu.addItem(item)
                 customContextMenu.dynamicItems.push(item)
@@ -539,9 +626,20 @@ Window {
             }
 
             // 5) ✨ Compose-Image + Separator (nur wenn alle ready)
+            addMenuItem("Aus Zwischenablage einfügen",
+                        () => composerWindow.pasteImageFromClipboard(),
+                        FileHelper.clipboardHasImage())
+            addMenuItem("Hintergrund transparent",
+                        () => composerWindow.startTransparentBackgroundPick(),
+                        composerWindow.anyPartHasImage())
+
+            if (allVisibleImagesReady() || anzeigeZustand === 2 || anzeigeZustand === 3)
+                addSeparator()
+
             if (allVisibleImagesReady()) {
                 addMenuItem("<Compose-Image>", triggerCompose)
-                addSeparator()
+                if (anzeigeZustand === 2 || anzeigeZustand === 3)
+                    addSeparator()
             }
 
             // 6) Normale Einträge gemäß Zustand
@@ -839,9 +937,12 @@ Window {
                 visible: anzeigeZustand === 1
                 index: 1
                 selected: true
+                transparentColorPickMode: composerWindow.transparentColorPickMode
                 label: "Teil 1"
 
-                onClicked: (index) => composerWindow.selectedPartIndex = index
+                onClicked: (index) => composerWindow.handlePartClicked(index)
+                onTransparentColorPicked: (index, imageSource, imageX, imageY) => composerWindow.handleTransparentColorPicked(index, imageSource, imageX, imageY)
+                onTransparentColorPickCanceled: composerWindow.cancelTransparentBackgroundPick()
             }
             // ===================== ZWEITEILUNG =====================
             TwoPanel {
@@ -852,8 +953,11 @@ Window {
                 isVertical: composerWindow.isVertical
                 splitterRatio: composerWindow.splitterRatio
                 selectedPartIndex: composerWindow.selectedPartIndex
+                transparentColorPickMode: composerWindow.transparentColorPickMode
 
-                onPartClicked: (index) => composerWindow.selectedPartIndex = index
+                onPartClicked: (index) => composerWindow.handlePartClicked(index)
+                onTransparentColorPicked: (index, imageSource, imageX, imageY) => composerWindow.handleTransparentColorPicked(index, imageSource, imageX, imageY)
+                onTransparentColorPickCanceled: composerWindow.cancelTransparentBackgroundPick()
                 onSplitterRatioChanged: composerWindow.splitterRatio = splitterRatio
             }
             ThreePanel {
@@ -870,8 +974,11 @@ Window {
                 layout2_splitX: composerWindow.layout2_splitX
                 layout2_splitY: composerWindow.layout2_splitY
                 selectedPartIndex: composerWindow.selectedPartIndex
+                transparentColorPickMode: composerWindow.transparentColorPickMode
 
-                onPartClicked: (index) => composerWindow.selectedPartIndex = index
+                onPartClicked: (index) => composerWindow.handlePartClicked(index)
+                onTransparentColorPicked: (index, imageSource, imageX, imageY) => composerWindow.handleTransparentColorPicked(index, imageSource, imageX, imageY)
+                onTransparentColorPickCanceled: composerWindow.cancelTransparentBackgroundPick()
                 onSplitterRatio1Changed: composerWindow.splitterRatio1 = splitterRatio1
                 onSplitterRatio2Changed: composerWindow.splitterRatio2 = splitterRatio2
                 onLayout1_splitXChanged: composerWindow.layout1_splitX = layout1_splitX
