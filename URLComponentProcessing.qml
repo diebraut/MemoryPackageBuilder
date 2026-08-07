@@ -207,31 +207,36 @@ Window {
             const x = urlWindow.x + urlWindow.width + 10 ;
             const y = urlWindow.y
 
-            // ⛳ Fenster erzeugen und positionieren
-            const composer = composerComponent.createObject(null);
+            const composer = composerComponent.createObject(null, {
+                packagePath: urlWindow.packagePath,
+                subjektName: urlWindow.subjektName
+            });
+
             if (composer) {
-                urlWindow.composer = composer; // ⬅️ speichere Referenz im Fenster
+                urlWindow.composer = composer;
                 composer.parentWindow = urlWindow
+
                 composer.width = w;
                 composer.height = h;
                 composer.x = x;
                 composer.y = y;
 
-                // 💡 Verknüpfe mit Hauptfenster
-                composer.transientParent = urlWindow;  // 👈 Schlüsselzeile
-                composer.visible = true;
-                // Composer-Parts aus eigener Persistenz initial setzen
-                if (urlState.imageComposerParts >= 1 && urlState.imageComposerParts <= 3)
-                    composer.anzeigeZustand = urlState.imageComposerParts
-                syncPartsChecks()
-                composer.raise();              // bringt es über das Parent
-                composer.requestActivate();    // setzt den Fokus
-                composer.packagePath = packagePath
-                composer.subjektName = subjektName
+                composer.transientParent = urlWindow;
 
+                if (urlState.imageComposerParts >= 1 &&
+                    urlState.imageComposerParts <= 3) {
+                    composer.anzeigeZustand = urlState.imageComposerParts;
+                }
+
+                syncPartsChecks();
+
+                composer.visible = true;
+                composer.raise();
+                composer.requestActivate();
             } else {
-                console.warn("❌ Fehler beim Erzeugen des Composer-Fensters");
+                console.warn("❌ Fehler beim Laden von ImageComposer:", composerComponent.errorString());
             }
+
         } else {
             console.warn("❌ Fehler beim Laden von ImageComposer:", composerComponent.errorString());
         }

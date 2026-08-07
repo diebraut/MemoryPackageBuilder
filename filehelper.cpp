@@ -84,42 +84,78 @@ bool FileHelper::removeTMPFiles(const QString &path) {
     return allSuccess;
 }
 
-QString FileHelper::saveClipboardImageTemporary(const QString &path, const QString &baseName, int partIndex)
+
+QString FileHelper::saveClipboardImageTemporary(
+    const QString &path,
+    const QString &baseName,
+    int partIndex)
 {
     if (path.isEmpty() || baseName.isEmpty()) {
         qWarning() << "Clipboard-Bild: Zielpfad oder Basisname fehlt";
-        return QString();
+        return {};
     }
 
     QClipboard *clipboard = QGuiApplication::clipboard();
     if (!clipboard) {
         qWarning() << "Clipboard-Bild: Keine Zwischenablage verfuegbar";
-        return QString();
+        return {};
     }
 
     const QMimeData *mime = clipboard->mimeData();
     if (!mime) {
         qWarning() << "Clipboard-Bild: Keine Mime-Daten verfuegbar";
-        return QString();
+        return {};
     }
+
+    qDebug() << "Clipboard MIME-Formate:" << mime->formats();
 
     QImage image;
-    if (mime->hasImage()) {
-        const QVariant imageData = mime->imageData();
-        if (imageData.canConvert<QImage>())
-            image = qvariant_cast<QImage>(imageData);
-        if (image.isNull() && imageData.canConvert<QPixmap>())
-            image = qvariant_cast<QPixmap>(imageData).toImage();
+
+    // 1. Qt-eigene Bildrepräsentation
+    const QVariant imageData = mime->imageData();
+
+    if (imageData.canConvert<QImage>())
+        image = qvariant_cast<QImage>(imageData);
+
+    if (image.isNull() && imageData.canConvert<QPixmap>())
+        image = qvariant_cast<QPixmap>(imageData).toImage();
+
+    // 2. Explizite MIME-Bilddaten
+    if (image.isNull()) {
+        static const QStringList imageFormats = {
+            QStringLiteral("image/png"),
+            QStringLiteral("image/jpeg"),
+            QStringLiteral("image/jpg"),
+            QStringLiteral("image/bmp"),
+            QStringLiteral("image/webp")
+        };
+
+        for (const QString &format : imageFormats) {
+            if (!mime->hasFormat(format))
+                continue;
+
+            const QByteArray data = mime->data(format);
+            if (data.isEmpty())
+                continue;
+
+            if (image.loadFromData(data)) {
+                qDebug() << "Clipboard-Bild aus MIME geladen:" << format;
+                break;
+            }
+        }
     }
 
+    // 3. Kopierte Bilddatei aus Explorer etc.
     if (image.isNull() && mime->hasUrls()) {
         const QList<QUrl> urls = mime->urls();
+
         for (const QUrl &url : urls) {
             if (!url.isLocalFile())
                 continue;
 
             QImageReader reader(url.toLocalFile());
             reader.setAutoTransform(true);
+
             QImage loaded = reader.read();
             if (!loaded.isNull()) {
                 image = loaded;
@@ -129,27 +165,36 @@ QString FileHelper::saveClipboardImageTemporary(const QString &path, const QStri
     }
 
     if (image.isNull()) {
-        qWarning() << "Clipboard-Bild: Keine Bilddaten in der Zwischenablage gefunden";
-        return QString();
+        qWarning() << "Clipboard-Bild: Keine lesbaren Bilddaten gefunden.";
+        qWarning() << "Vorhandene MIME-Formate:" << mime->formats();
+        return {};
     }
 
-    QDir dir(path);
+    QDir dir(localFilePathFromString(path));
+
     if (!dir.exists() && !dir.mkpath(QStringLiteral("."))) {
-        qWarning() << "Clipboard-Bild: Zielordner kann nicht erstellt werden:" << path;
-        return QString();
+        qWarning() << "Clipboard-Bild: Zielordner kann nicht erstellt werden:"
+                   << dir.absolutePath();
+        return {};
     }
 
     QString suffix = QStringLiteral("_TEMP");
+
     if (partIndex > 0)
         suffix += QString::number(partIndex);
 
-    const QString filePath = dir.filePath(baseName + suffix + QStringLiteral(".png"));
+    const QString filePath =
+        dir.filePath(baseName + suffix + QStringLiteral(".png"));
+
     if (!image.save(filePath, "PNG")) {
-        qWarning() << "Clipboard-Bild: Speichern fehlgeschlagen:" << filePath;
-        return QString();
+        qWarning() << "Clipboard-Bild: Speichern fehlgeschlagen:"
+                   << filePath;
+        return {};
     }
 
-    qDebug() << "Clipboard-Bild gespeichert:" << filePath;
+    qDebug() << "Clipboard-Bild gespeichert:" << filePath
+             << image.size();
+
     return filePath;
 }
 

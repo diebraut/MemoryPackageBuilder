@@ -231,14 +231,63 @@ Window {
     }
 
     function pasteImageFromClipboard() {
-        const partIndex = temporaryPartIndex();
-        const filePath = FileHelper.saveClipboardImageTemporary(packagePath, subjektName, partIndex);
-        if (!filePath || filePath === "") {
-            console.warn("Kein Bild aus der Zwischenablage eingefuegt");
-            return;
+        const partIndex = temporaryPartIndex()
+
+        const effectivePackagePath =
+                parentWindow && parentWindow.packagePath
+                ? parentWindow.packagePath
+                : packagePath
+
+        const effectiveSubjektName =
+                parentWindow && parentWindow.subjektName
+                ? parentWindow.subjektName
+                : subjektName
+
+        console.log("[Clipboard] composer.packagePath =", packagePath)
+        console.log("[Clipboard] composer.subjektName =", subjektName)
+        console.log("[Clipboard] parent.packagePath =",
+                    parentWindow ? parentWindow.packagePath : "<kein parent>")
+        console.log("[Clipboard] parent.subjektName =",
+                    parentWindow ? parentWindow.subjektName : "<kein parent>")
+        console.log("[Clipboard] effektiv path =", effectivePackagePath)
+        console.log("[Clipboard] effektiv name =", effectiveSubjektName)
+        console.log("[Clipboard] part =", partIndex)
+
+        if (!effectivePackagePath || effectivePackagePath === "") {
+            console.warn("[Clipboard] packagePath fehlt")
+            return
         }
 
-        loadImageInCurrentMode(filePath);
+        let effectiveBaseName = effectiveSubjektName
+
+        if (!effectiveBaseName || effectiveBaseName.trim() === "") {
+            effectiveBaseName = "ClipboardImage"
+            console.log("[Clipboard] subjektName leer -> verwende:", effectiveBaseName)
+        }
+
+        const filePath = FileHelper.saveClipboardImageTemporary(
+            effectivePackagePath,
+            effectiveBaseName,
+            partIndex
+        )
+
+        if (!filePath || filePath === "") {
+            console.warn("Kein Bild aus der Zwischenablage eingefuegt")
+            return
+        }
+
+        /*
+         * Wichtig:
+         * URLComponentProcessing benötigt diese beiden Werte später beim
+         * Speichern eines einzelnen Bildes.
+         */
+        if (parentWindow) {
+            parentWindow.tempImagePath = filePath
+            parentWindow.finalImagePath = filePath.replace("_TEMP", "")
+            parentWindow.imageAvailable = true
+        }
+
+        loadImageInCurrentMode(filePath)
     }
 
     function selectedPart() {
