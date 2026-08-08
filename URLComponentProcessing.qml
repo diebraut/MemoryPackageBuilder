@@ -350,14 +350,26 @@ Window {
             Rectangle {
                 id: rectItem
 
-                width: 100; height: 100
+                width: 100
+                height: 100
+
                 property bool transparentBackground: ${transparentBg}
                 property color transparentColor: "#ffffff"
-                color: transparentBackground ? Qt.rgba(transparentColor.r, transparentColor.g, transparentColor.b, 0.35) : "transparent"
+
+                // Keine halbtransparente Überlagerung mehr.
+                // Der Webseiteninhalt bleibt optisch unverändert.
+                color: "transparent"
+
                 x: ${lastContextMenuPosition.x}
                 y: ${lastContextMenuPosition.y}
-                border.color: urlWindow.activeRectangle === rectItem ? "blue" : "black"
+
+                border.color:
+                    urlWindow.activeRectangle === rectItem
+                    ? "blue"
+                    : "black"
+
                 border.width: 1
+
                 focus: true
                 Keys.priority: Keys.BeforeItem
                 opacity: 1.0

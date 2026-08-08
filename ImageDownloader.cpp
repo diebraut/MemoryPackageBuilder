@@ -1,4 +1,5 @@
 #include "ImageDownloader.h"
+
 #include <QFile>
 #include <QFileInfo>
 #include <QImage>
@@ -6,6 +7,7 @@
 #include <QDebug>
 #include <QImageWriter>
 #include <QColor>
+#include <QHash>
 
 ImageDownloader::ImageDownloader(QObject *parent)
     : QObject(parent)
@@ -13,211 +15,451 @@ ImageDownloader::ImageDownloader(QObject *parent)
     // Kein globaler Slot nötig
 }
 
-void ImageDownloader::downloadImage(const QString &url, const QString &savePath)
+void ImageDownloader::downloadImage(const QString &url,
+                                    const QString &savePath)
 {
     QUrl qurl(url);
+
     if (!qurl.isValid()) {
         emit downloadFailed("Ungültige URL");
         return;
     }
 
     QNetworkRequest request(qurl);
-    QNetworkReply* reply = manager.get(request);
+    QNetworkReply *reply = manager.get(request);
 
-    // Pro-Request-Handling mit Lambda
-    connect(reply, &QNetworkReply::finished, this, [reply, savePath, this]() {
-        if (reply->error() != QNetworkReply::NoError) {
-            emit downloadFailed("Netzwerkfehler: " + reply->errorString());
-            reply->deleteLater();
-            return;
-        }
+    connect(reply,
+            &QNetworkReply::finished,
+            this,
+            [reply, savePath, this]() {
 
-        QByteArray data = reply->readAll();
-        qDebug() << "SavePath=" <<savePath;
-        QFile file(savePath);
-        if (!file.open(QIODevice::WriteOnly)) {
-            emit downloadFailed("Fehler beim Öffnen der Datei: " + file.errorString());
-            reply->deleteLater();
-            return;
-        }
+                if (reply->error() != QNetworkReply::NoError) {
+                    emit downloadFailed(
+                        "Netzwerkfehler: " + reply->errorString()
+                        );
 
-        file.write(data);
-        file.close();
+                    reply->deleteLater();
+                    return;
+                }
 
-        qDebug() << "✅ Bild gespeichert unter:" << savePath;
-        emit downloadSucceeded(savePath);
+                QByteArray data = reply->readAll();
 
-        reply->deleteLater();
-    });
+                qDebug() << "SavePath =" << savePath;
+
+                QFile file(savePath);
+
+                if (!file.open(QIODevice::WriteOnly)) {
+                    emit downloadFailed(
+                        "Fehler beim Öffnen der Datei: "
+                        + file.errorString()
+                        );
+
+                    reply->deleteLater();
+                    return;
+                }
+
+                file.write(data);
+                file.close();
+
+                qDebug() << "✅ Bild gespeichert unter:" << savePath;
+
+                emit downloadSucceeded(savePath);
+
+                reply->deleteLater();
+            });
 }
 
 
-// --- 1) Dominante Randfarbe robust bestimmen (farb-quantisierte Histogramm) ---
-static QColor detectDominantEdgeColor(const QImage &img, int step = 2)
+// ---------------------------------------------------------------------
+// Dominante Randfarbe bestimmen
+// ---------------------------------------------------------------------
+
+static QColor detectDominantEdgeColor(const QImage &img,
+                                      int step = 2)
 {
-    const int w = img.width(), h = img.height();
-    if (w <= 0 || h <= 0) return QColor(255,255,255);
+    const int w = img.width();
+    const int h = img.height();
 
-    // 5 Bits pro Kanal (32 Stufen) → robust gegen Rauschen
-    auto keyOf = [](QRgb c){
-        int r = qRed(c)   >> 3;
-        int g = qGreen(c) >> 3;
-        int b = qBlue(c)  >> 3;
-        return (r<<10) | (g<<5) | b;
+    if (w <= 0 || h <= 0)
+        return QColor(255, 255, 255);
+
+    // 5 Bits pro Kanal = 32 Stufen.
+    // Dadurch ist die Erkennung robust gegen geringes Rauschen.
+    auto keyOf = [](QRgb c) {
+        const int r = qRed(c)   >> 3;
+        const int g = qGreen(c) >> 3;
+        const int b = qBlue(c)  >> 3;
+
+        return (r << 10) | (g << 5) | b;
     };
 
-    QHash<int,int> hist; hist.reserve((w+h)*2/step+4);
-    auto addEdgeLine = [&](int x, int y){ hist[keyOf(img.pixel(x,y))]++; };
+    QHash<int, int> hist;
+    hist.reserve((w + h) * 2 / step + 4);
 
-    for (int x=0; x<w; x+=step) { addEdgeLine(x,0); addEdgeLine(x,h-1); }
-    for (int y=0; y<h; y+=step) { addEdgeLine(0,y); addEdgeLine(w-1,y); }
-
-    int bestKey = 0, bestCount = -1;
-    for (auto it = hist.constBegin(); it != hist.constEnd(); ++it)
-        if (it.value() > bestCount) { bestCount = it.value(); bestKey = it.key(); }
-
-    // Feineres Mittel im gefundenen Bin
-    int tr=0,tg=0,tb=0,cnt=0;
-    int br = (bestKey>>10)&31, bg=(bestKey>>5)&31, bb=bestKey&31;
-    auto inBin = [&](QRgb c){
-        return ((qRed(c)>>3)==br) && ((qGreen(c)>>3)==bg) && ((qBlue(c)>>3)==bb);
+    auto addEdgePixel = [&](int x, int y) {
+        hist[keyOf(img.pixel(x, y))]++;
     };
 
-    for (int x=0; x<w; x+=step) {
-        QRgb c1 = img.pixel(x,0);     if (inBin(c1)) { tr+=qRed(c1); tg+=qGreen(c1); tb+=qBlue(c1); cnt++; }
-        QRgb c2 = img.pixel(x,h-1);   if (inBin(c2)) { tr+=qRed(c2); tg+=qGreen(c2); tb+=qBlue(c2); cnt++; }
-    }
-    for (int y=0; y<h; y+=step) {
-        QRgb c1 = img.pixel(0,y);     if (inBin(c1)) { tr+=qRed(c1); tg+=qGreen(c1); tb+=qBlue(c1); cnt++; }
-        QRgb c2 = img.pixel(w-1,y);   if (inBin(c2)) { tr+=qRed(c2); tg+=qGreen(c2); tb+=qBlue(c2); cnt++; }
+    for (int x = 0; x < w; x += step) {
+        addEdgePixel(x, 0);
+        addEdgePixel(x, h - 1);
     }
 
-    if (cnt == 0) return QColor(255,255,255);
-    return QColor(tr/cnt, tg/cnt, tb/cnt);
+    for (int y = 0; y < h; y += step) {
+        addEdgePixel(0, y);
+        addEdgePixel(w - 1, y);
+    }
+
+    int bestKey = 0;
+    int bestCount = -1;
+
+    for (auto it = hist.constBegin();
+         it != hist.constEnd();
+         ++it) {
+
+        if (it.value() > bestCount) {
+            bestCount = it.value();
+            bestKey = it.key();
+        }
+    }
+
+    // Exakte Durchschnittsfarbe innerhalb des dominanten Bins.
+    int tr = 0;
+    int tg = 0;
+    int tb = 0;
+    int count = 0;
+
+    const int br = (bestKey >> 10) & 31;
+    const int bg = (bestKey >> 5) & 31;
+    const int bb = bestKey & 31;
+
+    auto inBin = [&](QRgb c) {
+        return ((qRed(c) >> 3) == br)
+        && ((qGreen(c) >> 3) == bg)
+            && ((qBlue(c) >> 3) == bb);
+    };
+
+    for (int x = 0; x < w; x += step) {
+        QRgb c1 = img.pixel(x, 0);
+
+        if (inBin(c1)) {
+            tr += qRed(c1);
+            tg += qGreen(c1);
+            tb += qBlue(c1);
+            count++;
+        }
+
+        QRgb c2 = img.pixel(x, h - 1);
+
+        if (inBin(c2)) {
+            tr += qRed(c2);
+            tg += qGreen(c2);
+            tb += qBlue(c2);
+            count++;
+        }
+    }
+
+    for (int y = 0; y < h; y += step) {
+        QRgb c1 = img.pixel(0, y);
+
+        if (inBin(c1)) {
+            tr += qRed(c1);
+            tg += qGreen(c1);
+            tb += qBlue(c1);
+            count++;
+        }
+
+        QRgb c2 = img.pixel(w - 1, y);
+
+        if (inBin(c2)) {
+            tr += qRed(c2);
+            tg += qGreen(c2);
+            tb += qBlue(c2);
+            count++;
+        }
+    }
+
+    if (count == 0)
+        return QColor(255, 255, 255);
+
+    return QColor(
+        tr / count,
+        tg / count,
+        tb / count
+        );
 }
 
-// --- 2) „Color-to-Alpha“ per Distanz zur Randfarbe (weiche Kanten, text bleibt) ---
-//   t0 = Distanz (RGB) ab der es transparent wird
-//   t1 = Distanz ab der es voll deckend bleibt
-static void colorToAlphaAgainstBg(QImage &img, const QColor &bg, int t0 = 8, int t1 = 40, double gamma = 1.2)
-{
-    if (img.isNull()) return;
 
-    if (img.format() != QImage::Format_ARGB32 &&
-        img.format() != QImage::Format_ARGB32_Premultiplied)
+// ---------------------------------------------------------------------
+// Hintergrundfarbe transparent machen
+//
+// Wichtig:
+// Es gibt KEINEN weichen Alpha-Übergang mehr.
+//
+// Pixel nahe der Hintergrundfarbe:
+//     alpha = 0
+//
+// Alle anderen Pixel:
+//     alpha = 255
+//
+// RGB-Werte des eigentlichen Inhalts bleiben unverändert.
+// Dadurch bleiben Schrift, Linien und Grafiken scharf.
+// ---------------------------------------------------------------------
+
+static void colorToAlphaAgainstBg(QImage &img,
+                                  const QColor &bg,
+                                  int tolerance = 10)
+{
+    if (img.isNull())
+        return;
+
+    if (img.format() != QImage::Format_ARGB32)
         img = img.convertToFormat(QImage::Format_ARGB32);
 
-    const int w = img.width(), h = img.height();
-    const int br = bg.red(), bgc = bg.green(), bb = bg.blue();
-    const double invRange = (t1 > t0) ? 1.0 / (t1 - t0) : 1.0;
+    const int w = img.width();
+    const int h = img.height();
 
-    for (int y=0; y<h; ++y) {
-        QRgb *line = reinterpret_cast<QRgb*>(img.scanLine(y));
-        for (int x=0; x<w; ++x) {
-            const int r = qRed(line[x]);
-            const int g = qGreen(line[x]);
-            const int b = qBlue(line[x]);
+    const int br = bg.red();
+    const int bgc = bg.green();
+    const int bb = bg.blue();
 
-            // euklidische Distanz zur Randfarbe
-            const double dr = double(r - br);
-            const double dg = double(g - bgc);
-            const double db = double(b - bb);
-            const double d = std::sqrt(dr*dr + dg*dg + db*db); // 0..~441
+    const int toleranceSquared =
+        tolerance * tolerance;
 
-            // weiche Alpha-Maske aus Distanz
-            double a;
-            if (d <= t0)        a = 0.0;                         // Hintergrund → voll transparent
-            else if (d >= t1)   a = 1.0;                         // weit weg vom HG → voll deckend (Text)
-            else                a = (d - t0) * invRange;         // Übergangsbereich
+    for (int y = 0; y < h; ++y) {
 
-            if (gamma != 1.0 && gamma > 0.0) {
-                a = std::pow(a, gamma);                          // Kante schärfen/weicher machen
+        QRgb *line =
+            reinterpret_cast<QRgb *>(img.scanLine(y));
+
+        for (int x = 0; x < w; ++x) {
+
+            const QRgb pixel = line[x];
+
+            const int r = qRed(pixel);
+            const int g = qGreen(pixel);
+            const int b = qBlue(pixel);
+
+            const int dr = r - br;
+            const int dg = g - bgc;
+            const int db = b - bb;
+
+            const int distanceSquared =
+                dr * dr +
+                dg * dg +
+                db * db;
+
+            if (distanceSquared <= toleranceSquared) {
+
+                // Hintergrund vollständig transparent.
+                //
+                // RGB trotzdem erhalten. Das vermeidet unnötige
+                // Farbänderungen im Bild.
+                line[x] = qRgba(
+                    r,
+                    g,
+                    b,
+                    0
+                    );
+
+            } else {
+
+                // Inhalt vollständig deckend lassen.
+                //
+                // Besonders wichtig für Schrift-Antialiasing,
+                // dünne Linien und kleine Symbole.
+                line[x] = qRgba(
+                    r,
+                    g,
+                    b,
+                    255
+                    );
             }
-            a = std::clamp(a, 0.0, 1.0);
-
-            // Farbkompensation (ungefähr): ziele Richtung „entmischte“ Farbe
-            // (leicht, damit Kante nicht ausbleicht)
-            const double aa = a;
-            const int nr = int((r - (1.0-aa)*br) / (aa>0 ? aa : 1.0));
-            const int ng = int((g - (1.0-aa)*bgc) / (aa>0 ? aa : 1.0));
-            const int nb = int((b - (1.0-aa)*bb) / (aa>0 ? aa : 1.0));
-
-            const int outR = std::clamp(nr, 0, 255);
-            const int outG = std::clamp(ng, 0, 255);
-            const int outB = std::clamp(nb, 0, 255);
-            const int outA = int(aa * 255.0 + 0.5);
-
-            line[x] = qRgba(outR, outG, outB, outA);
         }
     }
 }
 
-// --- 3) Deine Funktion: grab → crop (HiDPI!) → bg erkennen → color-to-alpha → PNG ---
-QString ImageDownloader::sampleWindowColor(QQuickWindow *window, int x, int y)
+
+// ---------------------------------------------------------------------
+// Farbe an einer Fensterposition abfragen
+// ---------------------------------------------------------------------
+
+QString ImageDownloader::sampleWindowColor(QQuickWindow *window,
+                                           int x,
+                                           int y)
 {
     if (!window)
         return QString();
 
     QImage fb = window->grabWindow();
+
     if (fb.isNull())
         return QString();
 
-    const qreal dpr = fb.devicePixelRatio() > 0 ? fb.devicePixelRatio() : 1.0;
+    const qreal dpr =
+        fb.devicePixelRatio() > 0
+            ? fb.devicePixelRatio()
+            : 1.0;
+
     const int px = qRound(x * dpr);
     const int py = qRound(y * dpr);
 
-    if (px < 0 || py < 0 || px >= fb.width() || py >= fb.height())
-        return QString();
+    if (px < 0 ||
+        py < 0 ||
+        px >= fb.width() ||
+        py >= fb.height()) {
 
-    return QColor::fromRgb(fb.pixel(px, py)).name(QColor::HexRgb);
+        return QString();
+    }
+
+    return QColor::fromRgb(
+               fb.pixel(px, py)
+               ).name(QColor::HexRgb);
 }
 
-bool ImageDownloader::grabAndSaveCropped(QQuickWindow *window, int x, int y, int w, int h, const QString &path, bool transparentBackground, const QString &transparentColor)
+
+// ---------------------------------------------------------------------
+// Fenster aufnehmen, ausschneiden und speichern
+// ---------------------------------------------------------------------
+
+bool ImageDownloader::grabAndSaveCropped(
+    QQuickWindow *window,
+    int x,
+    int y,
+    int w,
+    int h,
+    const QString &path,
+    bool transparentBackground,
+    const QString &transparentColor)
 {
     if (!window || w <= 0 || h <= 0) {
-        qWarning() << "grabAndSaveCropped: invalid args";
+
+        qWarning()
+        << "grabAndSaveCropped: invalid args";
+
         return false;
     }
 
-    // Qt 6: QuickWindow vollständig rendern
+    // Qt Quick Fenster vollständig rendern.
     QImage fb = window->grabWindow();
+
     if (fb.isNull()) {
-        qWarning() << "grabAndSaveCropped: grabWindow() returned null";
+
+        qWarning()
+        << "grabAndSaveCropped: grabWindow() returned null";
+
         return false;
     }
 
-    // HiDPI: Umrechnung von DIP auf DevicePixel
-    const qreal dpr = fb.devicePixelRatio() > 0 ? fb.devicePixelRatio() : 1.0;
-    QRect crop = QRect(qRound(x * dpr), qRound(y * dpr), qRound(w * dpr), qRound(h * dpr))
-                     .intersected(QRect(QPoint(0, 0), fb.size()));
+    // -------------------------------------------------------------
+    // HiDPI:
+    // QML-Koordinaten sind DIP,
+    // QImage arbeitet mit Device-Pixeln.
+    // -------------------------------------------------------------
+
+    const qreal dpr =
+        fb.devicePixelRatio() > 0
+            ? fb.devicePixelRatio()
+            : 1.0;
+
+    QRect crop(
+        qRound(x * dpr),
+        qRound(y * dpr),
+        qRound(w * dpr),
+        qRound(h * dpr)
+        );
+
+    crop = crop.intersected(
+        QRect(QPoint(0, 0), fb.size())
+        );
+
     if (crop.isEmpty()) {
-        qWarning() << "grabAndSaveCropped: crop empty after clamp";
+
+        qWarning()
+        << "grabAndSaveCropped: crop empty after clamp";
+
         return false;
     }
 
-    QImage img = fb.copy(crop).convertToFormat(QImage::Format_ARGB32);
+    QImage img =
+        fb.copy(crop)
+            .convertToFormat(QImage::Format_ARGB32);
+
+    // Datei soll normale Pixelmaße erhalten.
     img.setDevicePixelRatio(1.0);
 
+    // -------------------------------------------------------------
+    // Optional Hintergrund entfernen
+    // -------------------------------------------------------------
+
     if (transparentBackground) {
+
         QColor bg(transparentColor);
+
+        // Falls keine Farbe über die Pipette angegeben wurde,
+        // dominante Randfarbe automatisch bestimmen.
         if (!bg.isValid())
             bg = detectDominantEdgeColor(img);
-        colorToAlphaAgainstBg(img, bg, /*t0=*/8, /*t1=*/40, /*gamma=*/1.2);
+
+        qDebug()
+            << "Transparent background:"
+            << bg.name()
+            << "tolerance = 10";
+
+        /*
+         * Nur echte bzw. sehr ähnliche Hintergrundpixel entfernen.
+         *
+         * Kein Alpha-Verlauf und keine RGB-Farbkorrektur.
+         */
+        colorToAlphaAgainstBg(
+            img,
+            bg,
+            10
+            );
     }
 
-    // Immer als PNG speichern (auch wenn z.B. .jpg als Pfad angegeben ist)
-    QFileInfo fi(path);
-    const QString outPath = fi.path() + "/" + fi.completeBaseName() + ".png";
-    QImageWriter wr(outPath, "png");
-    wr.setCompression(9);
+    // -------------------------------------------------------------
+    // Immer PNG speichern
+    // -------------------------------------------------------------
 
-    if (!wr.write(img)) {
-        qWarning() << "grabAndSaveCropped: write failed:" << wr.errorString() << "->" << outPath;
-        emit downloadFailed("Screenshot fehlgeschlagen");
+    QFileInfo fi(path);
+
+    const QString outPath =
+        fi.path()
+        + "/"
+        + fi.completeBaseName()
+        + ".png";
+
+    QImageWriter writer(
+        outPath,
+        "png"
+        );
+
+    writer.setCompression(9);
+
+    if (!writer.write(img)) {
+
+        qWarning()
+        << "grabAndSaveCropped: write failed:"
+        << writer.errorString()
+        << "->"
+        << outPath;
+
+        emit downloadFailed(
+            "Screenshot fehlgeschlagen"
+            );
+
         return false;
     }
 
-    qDebug() << "✅ Saved PNG:" << outPath << img.size() << (transparentBackground ? "(transparent)" : "");
+    qDebug()
+        << "✅ Saved PNG:"
+        << outPath
+        << img.size()
+        << (transparentBackground
+                ? "(transparent)"
+                : "");
+
     emit downloadSucceeded(outPath);
+
     return true;
 }
