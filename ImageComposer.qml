@@ -699,130 +699,233 @@ Window {
                 doneCallback(success, fileName)
         }
 
-        // neue Generation starten und evtl. alte Stage wegwerfen
         composeGen++
         const myGen = composeGen
+
         if (lastComposeStage) {
-            try { lastComposeStage.destroy() } catch (e) {}
+            try {
+                lastComposeStage.destroy()
+            } catch (e) {
+            }
             lastComposeStage = null
         }
 
         const parts = rootItem.activeParts ? rootItem.activeParts() : []
-        if (!parts.length) { console.warn("Keine Parts"); notifyDone(false, ""); return }
 
-        // Union + maximale Skala (= höchste Quellauflösung)
-        let minX=Infinity, minY=Infinity, maxX=-Infinity, maxY=-Infinity
-        let scaleMax = 1.0
-        const entries = []
-
-        for (let i=0;i<parts.length;i++) {
-            const p = parts[i]
-            if (!p || typeof p.frameRectIn !== "function") { console.warn("Part ohne frameRectIn"); notifyDone(false, ""); return }
-            const r = p.frameRectIn(rootItem)
-            if (!r.ready || !r.visible) { console.warn("Nicht alle Bilder geladen"); notifyDone(false, ""); return }
-
-            minX = Math.min(minX, r.x);  minY = Math.min(minY, r.y)
-            maxX = Math.max(maxX, r.x + r.w);  maxY = Math.max(maxY, r.y + r.h)
-
-            const iw = (p.imageSourceSize && p.imageSourceSize.width)  ? p.imageSourceSize.width  : r.w
-            const ih = (p.imageSourceSize && p.imageSourceSize.height) ? p.imageSourceSize.height : r.h
-            const sx = iw / Math.max(1, r.w)
-            const sy = ih / Math.max(1, r.h)
-            scaleMax = Math.max(scaleMax, sx, sy)
-
-            const url = p.imageSource || ""
-            entries.push({ url, rect: r })
+        if (!parts.length) {
+            console.warn("Keine Parts")
+            notifyDone(false, "")
+            return
         }
 
-        if (!isFinite(minX)) { console.warn("Union ungültig"); return }
-        const targetW = Math.round((maxX - minX) * scaleMax)
-        const targetH = Math.round((maxY - minY) * scaleMax)
-        if (targetW<=0 || targetH<=0) { console.warn("Zielgröße 0"); return }
+        let minX = Infinity
+        let minY = Infinity
+        let maxX = -Infinity
+        let maxY = -Infinity
 
-        // eigene Stage für diese Runde anlegen (alle Timer/Signals hängen daran)
+        const entries = []
+
+        for (let i = 0; i < parts.length; i++) {
+            const p = parts[i]
+
+            if (!p || typeof p.frameRectIn !== "function") {
+                console.warn("Part ohne frameRectIn")
+                notifyDone(false, "")
+                return
+            }
+
+            const r = p.frameRectIn(rootItem)
+
+            if (!r.ready || !r.visible) {
+                console.warn("Nicht alle Bilder geladen")
+                notifyDone(false, "")
+                return
+            }
+
+            minX = Math.min(minX, r.x)
+            minY = Math.min(minY, r.y)
+            maxX = Math.max(maxX, r.x + r.w)
+            maxY = Math.max(maxY, r.y + r.h)
+
+            entries.push({
+                url: p.imageSource || "",
+                rect: r
+            })
+        }
+
+        if (!isFinite(minX) ||
+            !isFinite(minY) ||
+            !isFinite(maxX) ||
+            !isFinite(maxY)) {
+
+            console.warn("Union ungültig")
+            notifyDone(false, "")
+            return
+        }
+
+        const targetW = Math.round(maxX - minX)
+        const topMargin = 5
+        const targetH = Math.round(maxY - minY) + topMargin
+
+        if (targetW <= 0 || targetH <= 0) {
+            console.warn("Ungültige Zielgröße")
+            notifyDone(false, "")
+            return
+        }
+
         const stage = Qt.createQmlObject(
             'import QtQuick 2.15; Item { visible: false; layer.enabled: true }',
             rootItem
         )
+
         stage.width = targetW
         stage.height = targetH
+
         lastComposeStage = stage
 
-        // Kinder erzeugen & auf Ready warten
-        let need = 0, ready = 0, finalized = false
+        let need = 0
+        let ready = 0
+        let finalized = false
 
         function finalizeOnce() {
-            if (finalized) return
+            if (finalized)
+                return
+
             finalized = true
 
-            // wenn inzwischen eine neue Runde gestartet wurde → ignorieren & eigene Stage entsorgen
-            if (myGen !== composeGen) { try { stage.destroy() } catch(e) {} return }
+            if (myGen !== composeGen) {
+                try {
+                    stage.destroy()
+                } catch (e) {
+                }
+                return
+            }
 
-            // 2 kleine Ticks warten, damit die Stage sicher gezeichnet ist
             Qt.callLater(function() {
-                const tick = Qt.createQmlObject('import QtQuick 2.15; Timer { interval: 0; running: true }', stage)
+
+                const tick = Qt.createQmlObject(
+                    'import QtQuick 2.15; Timer { interval: 0; running: true }',
+                    stage
+                )
+
                 tick.triggered.connect(function() {
-                    if (myGen !== composeGen) { try { stage.destroy() } catch(e) {} return }
-                    const fileName = (packagePath && packagePath.length)
-                                     ? packagePath + "/" + subjektName + ".png"
-                                     : subjektName + ".png"
+
+                    if (myGen !== composeGen) {
+                        try {
+                            stage.destroy()
+                        } catch (e) {
+                        }
+                        return
+                    }
+
+                    const fileName =
+                            (packagePath && packagePath.length)
+                            ? packagePath + "/" + subjektName + ".png"
+                            : subjektName + ".png"
+
                     stage.grabToImage(function(res) {
-                        try { stage.destroy() } catch(e) {}
-                        if (myGen !== composeGen) return
-                        if (!res || !res.saveToFile(fileName))
-                            console.warn("❌ Speichern fehlgeschlagen:", fileName)
-                        else {
-                            console.log("✅ Compose gespeichert:", fileName, stage.width, "x", stage.height)
+
+                        const savedWidth = stage.width
+                        const savedHeight = stage.height
+
+                        try {
+                            stage.destroy()
+                        } catch (e) {
+                        }
+
+                        if (myGen !== composeGen)
+                            return
+
+                        if (!res || !res.saveToFile(fileName)) {
+                            console.warn("Speichern fehlgeschlagen")
+                            notifyDone(false, "")
+                        } else {
+
+                            console.log(
+                                "Compose gespeichert:",
+                                savedWidth,
+                                "x",
+                                savedHeight
+                            )
+
                             if (packagePath && packagePath.length)
                                 FileHelper.removeTMPFiles(packagePath)
+
                             notifyDone(true, fileName)
                         }
+
                     }, Qt.size(targetW, targetH))
                 })
             })
         }
 
-        // harte Deadline: falls ein Image nie fertig wird, trotzdem abschließen
         const deadlineTimer = Qt.createQmlObject(
             'import QtQuick 2.15; Timer { interval: 6000; running: true; repeat: false }',
             stage
         )
+
         deadlineTimer.triggered.connect(function() {
-            if (myGen !== composeGen) return
-            console.warn("⚠️ Compose: Timeout – speichere mit", ready, "von", need)
+
+            if (myGen !== composeGen)
+                return
+
+            console.warn("Compose Timeout")
+
             finalizeOnce()
         })
 
-        for (let i=0;i<entries.length;i++) {
+        for (let i = 0; i < entries.length; i++) {
+
             const e = entries[i]
-            if (!e.url) continue
+
+            if (!e.url)
+                continue
+
             need++
 
-            const dx = Math.round((e.rect.x - minX) * scaleMax)
-            const dy = Math.round((e.rect.y - minY) * scaleMax)
-            const dw = Math.round(e.rect.w * scaleMax)
-            const dh = Math.round(e.rect.h * scaleMax)
+            const dx = Math.round(e.rect.x - minX)
+            const dy = Math.round(e.rect.y - minY) + topMargin
+            const dw = Math.round(e.rect.w)
+            const dh = Math.round(e.rect.h)
 
             const img = Qt.createQmlObject(
                 'import QtQuick 2.15; Image {' +
-                '  asynchronous: false; cache: false; smooth: true; mipmap: true;' +
-                '  fillMode: Image.Stretch; visible: true;' +
+                'asynchronous:false;' +
+                'cache:false;' +
+                'smooth:true;' +
+                'mipmap:true;' +
+                'fillMode: Image.Stretch;' +
+                'visible:true;' +
                 '}',
                 stage
             )
-            img.x = dx; img.y = dy; img.width = dw; img.height = dh
+
+            img.x = dx
+            img.y = dy
+            img.width = dw
+            img.height = dh
+
             img.sourceSize = Qt.size(dw, dh)
             img.source = e.url
 
-            // Event-Handler: nur für die aktuelle Generation zählen
             function onStatus() {
-                if (myGen !== composeGen) return
-                if (img.status === Image.Ready || img.status === Image.Error) {
+
+                if (myGen !== composeGen)
+                    return
+
+                if (img.status === Image.Ready ||
+                    img.status === Image.Error) {
+
                     ready++
-                    if (ready >= need) finalizeOnce()
+
+                    if (ready >= need)
+                        finalizeOnce()
                 }
             }
-            if (img.status === Image.Ready || img.status === Image.Error) {
+
+            if (img.status === Image.Ready ||
+                img.status === Image.Error) {
+
                 onStatus()
             } else {
                 img.statusChanged.connect(onStatus)
@@ -830,10 +933,13 @@ Window {
         }
 
         if (need === 0) {
-            console.warn("Keine gültigen Einträge")
-            try { stage.destroy() } catch(e) {}
+
+            try {
+                stage.destroy()
+            } catch (e) {
+            }
+
             notifyDone(false, "")
-            return
         }
     }
 
