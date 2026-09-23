@@ -378,6 +378,31 @@ Item {
             }
         }
 
+        Canvas {
+            id: transparencyChecker
+            anchors.fill: parent
+            visible: image.status === Image.Ready
+
+            function repaint() { requestPaint() }
+            onWidthChanged: repaint()
+            onHeightChanged: repaint()
+            onVisibleChanged: if (visible) repaint()
+            Component.onCompleted: repaint()
+
+            onPaint: {
+                const ctx = getContext("2d")
+                const size = 10
+                ctx.clearRect(0, 0, width, height)
+                for (let yy = 0; yy < height; yy += size) {
+                    for (let xx = 0; xx < width; xx += size) {
+                        ctx.fillStyle = ((xx / size + yy / size) % 2 === 0)
+                                        ? "#d0d0d0" : "#f2f2f2"
+                        ctx.fillRect(xx, yy, size, size)
+                    }
+                }
+            }
+        }
+
         Image {
             id: image
             anchors.fill: parent

@@ -82,6 +82,8 @@ Window {
 
     property var dynamicMenu
     property var lastContextMenuPosition
+    property var lastContextImageRect: null
+    property string lastContextBackgroundColor: ""
     property bool pageReady: false
     property var pendingTransparentColorRect: null
     property point pendingTransparentColorPoint: Qt.point(0, 0)
@@ -285,6 +287,8 @@ Window {
         const rx = rect.x, ry = rect.y, rw = rect.width, rh = rect.height;
         const transparentColor = transparentBg ? String(rect.transparentColor) : "";
 
+        if (rect.cancelTransparentPreview)
+            rect.cancelTransparentPreview();
         rect.visible = false;
         urlWindow.requestUpdate();  // ⬅️ sorgt für Redraw ohne das Rechteck
 
@@ -293,6 +297,28 @@ Window {
             rect.destroy();
         };
 
+        nextFrameTimer.interval = 16;
+        nextFrameTimer.start();
+    }
+
+    function updateTransparentPreview(rect) {
+        if (!rect || !rect.transparentBackground || rect.pointerInteractionActive)
+            return;
+
+        const rx = rect.x, ry = rect.y, rw = rect.width, rh = rect.height;
+        const transparentColor = String(rect.transparentColor);
+        rect.visible = false;
+        urlWindow.requestUpdate();
+
+        nextFrameTimer.callback = function() {
+            const preview = imgDownloader.grabTransparentPreview(
+                                urlWindow, rx, ry, rw, rh, transparentColor,
+                                rect.sourceImageRect.x, rect.sourceImageRect.y,
+                                rect.sourceImageRect.width, rect.sourceImageRect.height);
+            rect.applyTransparentPreview(preview);
+            rect.visible = true;
+            rect.forceActiveFocus();
+        };
         nextFrameTimer.interval = 16;
         nextFrameTimer.start();
     }
@@ -317,7 +343,7 @@ Window {
                                                           pendingTransparentColorPoint.y);
             rect.visible = true;
             if (color && color.length > 0) {
-                rect.transparentColor = color;
+                rect.setTransparentColor(color);
                 rect.forceActiveFocus();
             }
         };
@@ -333,7 +359,7 @@ Window {
         onTriggered: { if (callback) callback(); callback = null }
     }
 
-    function handleRechteckErzeugen(info, transparentBg) {
+    function handleRechteckErzeugen(info, transparentBg, initialTransparentColor) {
         console.log("🟩 Rechteck erzeugen gewählt");
 
         // Menü vor dem Erzeugen schließen, damit es nicht im Screenshot landet
@@ -342,6 +368,10 @@ Window {
             urlWindow.dynamicMenu = null;
         }
         if (info) currentImageLicenceInfo = info;
+
+        const sourceRect = lastContextImageRect || { "x": -1, "y": -1, "width": 0, "height": 0 };
+        const initialColor = initialTransparentColor ? String(initialTransparentColor) : "";
+        const previewInitiallyEnabled = transparentBg && initialColor.length > 0;
 
         var rect = Qt.createQmlObject(`
             import QtQuick 2.15
@@ -354,7 +384,73 @@ Window {
                 height: 100
 
                 property bool transparentBackground: ${transparentBg}
-                property color transparentColor: "#ffffff"
+                // Leer bedeutet: dominante, mit dem Rand verbundene
+                // Hintergrundfarbe automatisch bestimmen. Eine mit der
+                // Pipette gewaehlte Farbe ueberschreibt die Automatik.
+                property string transparentColor: "${initialColor}"
+                property string transparentPreviewSource: ""
+                property bool componentReady: false
+                property bool transparentColorLocked: ${initialColor.length > 0}
+                property bool assigningDetectedColor: false
+                property bool transparentPreviewEnabled: ${previewInitiallyEnabled}
+                property bool pointerInteractionActive: false
+                property rect sourceImageRect: Qt.rect(${sourceRect.x}, ${sourceRect.y}, ${sourceRect.width}, ${sourceRect.height})
+
+                function applyTransparentPreview(preview) {
+                    if (!preview)
+                        return;
+                    if (!transparentColorLocked && preview.backgroundColor) {
+                        assigningDetectedColor = true;
+                        transparentColor = String(preview.backgroundColor);
+                        transparentColorLocked = true;
+                        assigningDetectedColor = false;
+                    }
+                    transparentPreviewSource = preview.source ? String(preview.source) : "";
+                }
+
+                function setTransparentColor(color) {
+                    assigningDetectedColor = true;
+                    transparentColor = String(color);
+                    transparentColorLocked = true;
+                    assigningDetectedColor = false;
+                    transparentPreviewEnabled = true;
+                    scheduleTransparentPreview();
+                }
+
+                function enableTransparentPreview() {
+                    transparentPreviewEnabled = true;
+                    scheduleTransparentPreview();
+                }
+
+                function maybeEnableTransparentPreview() {
+                    if (!componentReady || !transparentBackground || transparentPreviewEnabled
+                            || sourceImageRect.width <= 0 || sourceImageRect.height <= 0)
+                        return;
+                    const margin = 2;
+                    const outside = x < sourceImageRect.x - margin
+                                 || y < sourceImageRect.y - margin
+                                 || x + width > sourceImageRect.x + sourceImageRect.width + margin
+                                 || y + height > sourceImageRect.y + sourceImageRect.height + margin;
+                    if (outside) {
+                        transparentPreviewEnabled = true;
+                        scheduleTransparentPreview();
+                    }
+                }
+
+                function scheduleTransparentPreview() {
+                    if (!componentReady || !transparentBackground || !transparentPreviewEnabled)
+                        return;
+                    if (pointerInteractionActive) {
+                        previewRefreshTimer.stop();
+                        return;
+                    }
+                    transparentPreviewSource = "";
+                    previewRefreshTimer.restart();
+                }
+
+                function cancelTransparentPreview() {
+                    previewRefreshTimer.stop();
+                }
 
                 // Keine halbtransparente Überlagerung mehr.
                 // Der Webseiteninhalt bleibt optisch unverändert.
@@ -377,15 +473,39 @@ Window {
                 property int keyStep: 1
                 property int minRectSize: 20
 
-                onXChanged: if (urlWindow.debugRectangleKeys) console.log("[URLComponent][rectKeys] rectItem xChanged", x)
-                onYChanged: if (urlWindow.debugRectangleKeys) console.log("[URLComponent][rectKeys] rectItem yChanged", y)
-                onWidthChanged: if (urlWindow.debugRectangleKeys) console.log("[URLComponent][rectKeys] rectItem widthChanged", width)
-                onHeightChanged: if (urlWindow.debugRectangleKeys) console.log("[URLComponent][rectKeys] rectItem heightChanged", height)
+                onXChanged: {
+                    if (urlWindow.debugRectangleKeys) console.log("[URLComponent][rectKeys] rectItem xChanged", x)
+                    maybeEnableTransparentPreview()
+                    scheduleTransparentPreview()
+                }
+                onYChanged: {
+                    if (urlWindow.debugRectangleKeys) console.log("[URLComponent][rectKeys] rectItem yChanged", y)
+                    maybeEnableTransparentPreview()
+                    scheduleTransparentPreview()
+                }
+                onWidthChanged: {
+                    if (urlWindow.debugRectangleKeys) console.log("[URLComponent][rectKeys] rectItem widthChanged", width)
+                    maybeEnableTransparentPreview()
+                    scheduleTransparentPreview()
+                }
+                onHeightChanged: {
+                    if (urlWindow.debugRectangleKeys) console.log("[URLComponent][rectKeys] rectItem heightChanged", height)
+                    maybeEnableTransparentPreview()
+                    scheduleTransparentPreview()
+                }
+                onTransparentColorChanged: {
+                    if (!assigningDetectedColor) {
+                        transparentColorLocked = transparentColor.length > 0
+                        scheduleTransparentPreview()
+                    }
+                }
 
                 onActiveFocusChanged: if (activeFocus) urlWindow.activeRectangle = rectItem
                 Component.onCompleted: {
+                    componentReady = true
                     urlWindow.activeRectangle = rectItem
                     urlWindow.focusRectangleKeyCatcher()
+                    scheduleTransparentPreview()
                 }
                 Component.onDestruction: {
                     if (urlWindow.activeRectangle === rectItem)
@@ -408,6 +528,49 @@ Window {
                     }
                 }
 
+                Timer {
+                    id: previewRefreshTimer
+                    interval: 180
+                    repeat: false
+                    onTriggered: {
+                        if (!rectItem.pointerInteractionActive)
+                            urlWindow.updateTransparentPreview(rectItem)
+                    }
+                }
+
+                Canvas {
+                    id: transparencyChecker
+                    anchors.fill: parent
+                    anchors.margins: 1
+                    visible: rectItem.transparentPreviewSource.length > 0
+
+                    function repaint() { requestPaint() }
+                    onWidthChanged: repaint()
+                    onHeightChanged: repaint()
+                    onVisibleChanged: if (visible) repaint()
+                    onPaint: {
+                        const ctx = getContext("2d")
+                        const size = 10
+                        ctx.clearRect(0, 0, width, height)
+                        for (let yy = 0; yy < height; yy += size) {
+                            for (let xx = 0; xx < width; xx += size) {
+                                ctx.fillStyle = ((xx / size + yy / size) % 2 === 0)
+                                                ? "#d0d0d0" : "#f2f2f2"
+                                ctx.fillRect(xx, yy, size, size)
+                            }
+                        }
+                    }
+                }
+
+                Image {
+                    anchors.fill: parent
+                    anchors.margins: 1
+                    source: rectItem.transparentPreviewSource
+                    fillMode: Image.Stretch
+                    cache: false
+                    visible: source.toString().length > 0
+                }
+
                 MouseArea {
                     anchors.fill: parent
                     drag.target: parent
@@ -417,6 +580,23 @@ Window {
                     onPressed: function(mouse) {
                         urlWindow.activeRectangle = parent;
                         urlWindow.focusRectangleKeyCatcher();
+                        if (mouse.button === Qt.LeftButton) {
+                            parent.pointerInteractionActive = true;
+                            parent.cancelTransparentPreview();
+                            parent.transparentPreviewSource = "";
+                        }
+                    }
+
+                    onReleased: function(mouse) {
+                        if (mouse.button === Qt.LeftButton) {
+                            parent.pointerInteractionActive = false;
+                            parent.scheduleTransparentPreview();
+                        }
+                    }
+
+                    onCanceled: {
+                        parent.pointerInteractionActive = false;
+                        parent.scheduleTransparentPreview();
                     }
 
                     onClicked: function(mouse) {
@@ -449,8 +629,21 @@ Window {
 
                                 console.log("💾 Bereich speichern als (temporär):", savePath);
 
-                                // Rahmen/Griff verschwinden lassen und erst NACH dem nächsten Frame grabben
-                                grabAreaWithoutOverlay(parent, savePath, ${transparentBg});
+                                // Bei Transparenz exakt die bereits sichtbare Vorschau speichern.
+                                // Damit stimmen Alpha-Bereiche in Vorschau, Datei und Editor ueberein.
+                                if (parent.transparentBackground
+                                        && parent.transparentPreviewSource.length > 0) {
+                                    parent.cancelTransparentPreview();
+                                    if (imgDownloader.saveDataUrlImage(parent.transparentPreviewSource,
+                                                                       savePath)) {
+                                        parent.destroy();
+                                    } else {
+                                        grabAreaWithoutOverlay(parent, savePath, true);
+                                    }
+                                } else {
+                                    // Ohne Vorschau den Bereich wie bisher direkt aufnehmen.
+                                    grabAreaWithoutOverlay(parent, savePath, ${transparentBg});
+                                }
                             });
                             urlWindow.dynamicMenu.addItem(saveItem);
 
@@ -491,8 +684,21 @@ Window {
                     onPressed: function(mouse) {
                         urlWindow.activeRectangle = parent;
                         urlWindow.focusRectangleKeyCatcher();
+                        parent.pointerInteractionActive = true;
+                        parent.cancelTransparentPreview();
+                        parent.transparentPreviewSource = "";
                         dragXStart = mouse.x;
                         dragYStart = mouse.y;
+                    }
+
+                    onReleased: {
+                        parent.pointerInteractionActive = false;
+                        parent.scheduleTransparentPreview();
+                    }
+
+                    onCanceled: {
+                        parent.pointerInteractionActive = false;
+                        parent.scheduleTransparentPreview();
                     }
 
                     Rectangle {
@@ -523,7 +729,7 @@ Window {
             return;
         }
         currentImageLicenceInfo = null;
-        if (imageUrl.includes("upload.wikimedia.org")) {
+        if (isWikimediaImageUrl(imageUrl)) {
             var fileTitle = extractOriginalFileTitle(imageUrl);
             if (!fileTitle || fileTitle === "File:") {
                 console.warn("❌ Kein gültiger Dateititel extrahiert.");
@@ -547,7 +753,7 @@ Window {
 
         currentImageLicenceInfo = null;
 
-        if (imageUrl.includes("upload.wikimedia.org")) {
+        if (isWikimediaImageUrl(imageUrl)) {
             var fileTitle = extractOriginalFileTitle(imageUrl);
             if (!fileTitle || fileTitle === "File:") {
                 console.warn("❌ Kein gültiger Dateititel extrahiert.");
@@ -571,7 +777,7 @@ Window {
 
         currentImageLicenceInfo = null;
 
-        if (imageUrl.includes("upload.wikimedia.org")) {
+        if (isWikimediaImageUrl(imageUrl)) {
             var fileTitle = extractOriginalFileTitle(imageUrl);
             if (!fileTitle || fileTitle === "File:") {
                 console.warn("❌ Kein gültiger Dateititel extrahiert.");
@@ -587,8 +793,14 @@ Window {
     }
 
 
+    function isWikimediaImageUrl(imageUrl) {
+        return /^https?:\/\/(upload|thumb)\.wikimedia\.org\//i.test(String(imageUrl));
+    }
+
     function extractOriginalFileTitle(imageUrl) {
-        var parts = imageUrl.split('/');
+        // Query- und Fragmentteil gehoeren nicht zum Wikimedia-Dateinamen.
+        var cleanUrl = String(imageUrl).split(/[?#]/)[0];
+        var parts = cleanUrl.split('/');
         var fileName = parts[parts.length - 1];
 
         // Entferne Thumbnail-Prefix (z.B. 300px-)
@@ -758,6 +970,11 @@ Window {
                     request.accepted = true;
 
                     lastContextMenuPosition = { "x": request.position.x, "y": request.position.y };
+                    lastContextImageRect = null;
+                    lastContextBackgroundColor = imgDownloader.sampleWindowColor(
+                                                    urlWindow,
+                                                    request.position.x,
+                                                    request.position.y);
 
                     var viewX = request.position.x / webView.zoomFactor;
                     var viewY = request.position.y / webView.zoomFactor;
@@ -766,7 +983,16 @@ Window {
                         (function() {
                             var elem = document.elementFromPoint(${viewX}, ${viewY});
                             if (!elem) return "";
-                            if (elem.tagName === "IMG") return elem.src;
+                            if (elem.tagName === "IMG") {
+                                var rect = elem.getBoundingClientRect();
+                                return {
+                                    src: elem.currentSrc || elem.src,
+                                    x: rect.left,
+                                    y: rect.top,
+                                    width: rect.width,
+                                    height: rect.height
+                                };
+                            }
                             return "";
                         })();
                     `;
@@ -779,28 +1005,34 @@ Window {
                         dynamicMenu = Qt.createQmlObject('import QtQuick.Controls 2.15; Menu {}', urlWindow);
                         var hasItem = false;
 
-                        if (result !== "") {
+                        if (result && result.src) {
+                            lastContextImageRect = {
+                                "x": result.x * webView.zoomFactor,
+                                "y": result.y * webView.zoomFactor,
+                                "width": result.width * webView.zoomFactor,
+                                "height": result.height * webView.zoomFactor
+                            };
                             var imgItem = Qt.createQmlObject('import QtQuick.Controls 2.15; MenuItem { text: "Bild laden" }', dynamicMenu);
                             imgItem.triggered.connect(function() {
-                                handleBildLaden(result);
+                                handleBildLaden(result.src);
                             });
                             dynamicMenu.addItem(imgItem);
 
                             var licenceInfoItem = Qt.createQmlObject('import QtQuick.Controls 2.15; MenuItem { text: "Erzeuge Lizenz Infos" }', dynamicMenu);
                             licenceInfoItem.triggered.connect(function() {
-                                handleErzeugeLizenzInfos(result);
+                                handleErzeugeLizenzInfos(result.src);
                             });
                             dynamicMenu.addItem(licenceInfoItem);
 
                             var rectImageItem = Qt.createQmlObject('import QtQuick.Controls 2.15; MenuItem { text: "Rechteck erzeugen (mit Bild)" }', dynamicMenu);
                             rectImageItem.triggered.connect(function() {
-                                handleRechteckMitBild(result);
+                                handleRechteckMitBild(result.src);
                             });
                             dynamicMenu.addItem(rectImageItem);
 
                             var rectImageTranspItem = Qt.createQmlObject('import QtQuick.Controls 2.15; MenuItem { text: "Rechteck erzeugen (mit Bild) transp.Hg" }', dynamicMenu);
                             rectImageTranspItem.triggered.connect(function() {
-                                handleRechteckMitBild(result, true);
+                                handleRechteckMitBild(result.src, true);
                             });
                             dynamicMenu.addItem(rectImageTranspItem);
 
@@ -809,13 +1041,15 @@ Window {
 
                         var rectItem = Qt.createQmlObject('import QtQuick.Controls 2.15; MenuItem { text: "Rechteck erzeugen" }', dynamicMenu);
                         rectItem.triggered.connect(function() {
+                            lastContextImageRect = null;
                             handleRechteckErzeugen(null, false);
                         });
                         dynamicMenu.addItem(rectItem);
 
                         var rectTranspItem = Qt.createQmlObject('import QtQuick.Controls 2.15; MenuItem { text: "Rechteck erzeugen transp.Hg" }', dynamicMenu);
                         rectTranspItem.triggered.connect(function() {
-                            handleRechteckErzeugen(null, true);
+                            lastContextImageRect = null;
+                            handleRechteckErzeugen(null, true, lastContextBackgroundColor);
                         });
                         dynamicMenu.addItem(rectTranspItem);
 

@@ -8,6 +8,9 @@
 #include <QImageWriter>
 #include <QColor>
 #include <QHash>
+#include <QBuffer>
+#include <QQueue>
+#include <QVector>
 
 ImageDownloader::ImageDownloader(QObject *parent)
     : QObject(parent)
@@ -93,21 +96,27 @@ static QColor detectDominantEdgeColor(const QImage &img,
         return (r << 10) | (g << 5) | b;
     };
 
+    // Nicht nur die aeusserste Pixelreihe betrachten: Liegt die Auswahl
+    // exakt auf einer Rahmenlinie, soll die wenige Pixel weiter innen
+    // liegende Hintergrundfarbe trotzdem erkannt werden.
+    const int edgeDepth = qMax(1, qMin(6, qMin(w, h) / 4));
+
     QHash<int, int> hist;
-    hist.reserve((w + h) * 2 / step + 4);
+    hist.reserve((w + h) * edgeDepth / step + 4);
 
     auto addEdgePixel = [&](int x, int y) {
         hist[keyOf(img.pixel(x, y))]++;
     };
 
-    for (int x = 0; x < w; x += step) {
-        addEdgePixel(x, 0);
-        addEdgePixel(x, h - 1);
-    }
-
-    for (int y = 0; y < h; y += step) {
-        addEdgePixel(0, y);
-        addEdgePixel(w - 1, y);
+    for (int depth = 0; depth < edgeDepth; ++depth) {
+        for (int x = 0; x < w; x += step) {
+            addEdgePixel(x, depth);
+            addEdgePixel(x, h - 1 - depth);
+        }
+        for (int y = 0; y < h; y += step) {
+            addEdgePixel(depth, y);
+            addEdgePixel(w - 1 - depth, y);
+        }
     }
 
     int bestKey = 0;
@@ -139,43 +148,41 @@ static QColor detectDominantEdgeColor(const QImage &img,
             && ((qBlue(c) >> 3) == bb);
     };
 
-    for (int x = 0; x < w; x += step) {
-        QRgb c1 = img.pixel(x, 0);
+    for (int depth = 0; depth < edgeDepth; ++depth) {
+        for (int x = 0; x < w; x += step) {
+            const QRgb c1 = img.pixel(x, depth);
+            if (inBin(c1)) {
+                tr += qRed(c1);
+                tg += qGreen(c1);
+                tb += qBlue(c1);
+                count++;
+            }
 
-        if (inBin(c1)) {
-            tr += qRed(c1);
-            tg += qGreen(c1);
-            tb += qBlue(c1);
-            count++;
+            const QRgb c2 = img.pixel(x, h - 1 - depth);
+            if (inBin(c2)) {
+                tr += qRed(c2);
+                tg += qGreen(c2);
+                tb += qBlue(c2);
+                count++;
+            }
         }
 
-        QRgb c2 = img.pixel(x, h - 1);
+        for (int y = 0; y < h; y += step) {
+            const QRgb c1 = img.pixel(depth, y);
+            if (inBin(c1)) {
+                tr += qRed(c1);
+                tg += qGreen(c1);
+                tb += qBlue(c1);
+                count++;
+            }
 
-        if (inBin(c2)) {
-            tr += qRed(c2);
-            tg += qGreen(c2);
-            tb += qBlue(c2);
-            count++;
-        }
-    }
-
-    for (int y = 0; y < h; y += step) {
-        QRgb c1 = img.pixel(0, y);
-
-        if (inBin(c1)) {
-            tr += qRed(c1);
-            tg += qGreen(c1);
-            tb += qBlue(c1);
-            count++;
-        }
-
-        QRgb c2 = img.pixel(w - 1, y);
-
-        if (inBin(c2)) {
-            tr += qRed(c2);
-            tg += qGreen(c2);
-            tb += qBlue(c2);
-            count++;
+            const QRgb c2 = img.pixel(w - 1 - depth, y);
+            if (inBin(c2)) {
+                tr += qRed(c2);
+                tg += qGreen(c2);
+                tb += qBlue(c2);
+                count++;
+            }
         }
     }
 
@@ -191,24 +198,14 @@ static QColor detectDominantEdgeColor(const QImage &img,
 
 
 // ---------------------------------------------------------------------
-// Hintergrundfarbe transparent machen
-//
-// Wichtig:
-// Es gibt KEINEN weichen Alpha-Übergang mehr.
-//
-// Pixel nahe der Hintergrundfarbe:
-//     alpha = 0
-//
-// Alle anderen Pixel:
-//     alpha = 255
-//
-// RGB-Werte des eigentlichen Inhalts bleiben unverändert.
-// Dadurch bleiben Schrift, Linien und Grafiken scharf.
+// Nur farblich passende Pixel entfernen, die ueber gleichfarbige Nachbarn mit
+// dem Bildrand verbunden sind. Gleichfarbige Flaechen innerhalb des Motivs
+// bleiben dadurch erhalten.
 // ---------------------------------------------------------------------
 
-static void colorToAlphaAgainstBg(QImage &img,
-                                  const QColor &bg,
-                                  int tolerance = 10)
+static void edgeConnectedColorToAlpha(QImage &img,
+                                      const QColor &bg,
+                                      int tolerance = 18)
 {
     if (img.isNull())
         return;
@@ -223,59 +220,118 @@ static void colorToAlphaAgainstBg(QImage &img,
     const int bgc = bg.green();
     const int bb = bg.blue();
 
-    const int toleranceSquared =
-        tolerance * tolerance;
+    const int toleranceSquared = tolerance * tolerance;
+    const int pixelCount = w * h;
+    const int seedDepth = qMax(1, qMin(6, qMin(w, h) / 4));
+    QVector<quint8> visited(pixelCount, 0);
+    QQueue<int> pending;
 
-    for (int y = 0; y < h; ++y) {
+    auto matchesBackground = [&](int x, int y) {
+        const QRgb pixel = img.pixel(x, y);
+        const int dr = qRed(pixel) - br;
+        const int dg = qGreen(pixel) - bgc;
+        const int db = qBlue(pixel) - bb;
+        return dr * dr + dg * dg + db * db <= toleranceSquared;
+    };
 
-        QRgb *line =
-            reinterpret_cast<QRgb *>(img.scanLine(y));
+    auto enqueue = [&](int x, int y) {
+        const int index = y * w + x;
+        if (visited[index] || !matchesBackground(x, y))
+            return;
+        visited[index] = 1;
+        pending.enqueue(index);
+    };
 
+    // Aus einem schmalen Randstreifen starten. So kann eine Rahmenlinie auf
+    // der exakten Auswahlkante die innenliegende Hintergrundflaeche nicht
+    // von der Transparenzsuche abschneiden.
+    for (int depth = 0; depth < seedDepth; ++depth) {
         for (int x = 0; x < w; ++x) {
-
-            const QRgb pixel = line[x];
-
-            const int r = qRed(pixel);
-            const int g = qGreen(pixel);
-            const int b = qBlue(pixel);
-
-            const int dr = r - br;
-            const int dg = g - bgc;
-            const int db = b - bb;
-
-            const int distanceSquared =
-                dr * dr +
-                dg * dg +
-                db * db;
-
-            if (distanceSquared <= toleranceSquared) {
-
-                // Hintergrund vollständig transparent.
-                //
-                // RGB trotzdem erhalten. Das vermeidet unnötige
-                // Farbänderungen im Bild.
-                line[x] = qRgba(
-                    r,
-                    g,
-                    b,
-                    0
-                    );
-
-            } else {
-
-                // Inhalt vollständig deckend lassen.
-                //
-                // Besonders wichtig für Schrift-Antialiasing,
-                // dünne Linien und kleine Symbole.
-                line[x] = qRgba(
-                    r,
-                    g,
-                    b,
-                    255
-                    );
-            }
+            enqueue(x, depth);
+            enqueue(x, h - 1 - depth);
+        }
+        for (int y = 0; y < h; ++y) {
+            enqueue(depth, y);
+            enqueue(w - 1 - depth, y);
         }
     }
+
+    while (!pending.isEmpty()) {
+        const int index = pending.dequeue();
+        const int x = index % w;
+        const int y = index / w;
+        const QRgb pixel = img.pixel(x, y);
+        img.setPixel(x, y, qRgba(qRed(pixel), qGreen(pixel), qBlue(pixel), 0));
+
+        if (x > 0)
+            enqueue(x - 1, y);
+        if (x + 1 < w)
+            enqueue(x + 1, y);
+        if (y > 0)
+            enqueue(x, y - 1);
+        if (y + 1 < h)
+            enqueue(x, y + 1);
+    }
+}
+
+static QColor detectDominantColorOutsideRect(const QImage &img,
+                                             const QRect &excludedRect,
+                                             int step = 2)
+{
+    QHash<int, int> histogram;
+    auto keyOf = [](QRgb color) {
+        return ((qRed(color) >> 3) << 10)
+            | ((qGreen(color) >> 3) << 5)
+            | (qBlue(color) >> 3);
+    };
+
+    for (int y = 0; y < img.height(); y += step) {
+        for (int x = 0; x < img.width(); x += step) {
+            if (!excludedRect.contains(x, y))
+                ++histogram[keyOf(img.pixel(x, y))];
+        }
+    }
+
+    if (histogram.isEmpty())
+        return detectDominantEdgeColor(img, step);
+
+    int bestKey = 0;
+    int bestCount = -1;
+    for (auto it = histogram.constBegin(); it != histogram.constEnd(); ++it) {
+        if (it.value() > bestCount) {
+            bestKey = it.key();
+            bestCount = it.value();
+        }
+    }
+
+    const int binR = (bestKey >> 10) & 31;
+    const int binG = (bestKey >> 5) & 31;
+    const int binB = bestKey & 31;
+    qint64 totalR = 0;
+    qint64 totalG = 0;
+    qint64 totalB = 0;
+    int count = 0;
+
+    for (int y = 0; y < img.height(); y += step) {
+        for (int x = 0; x < img.width(); x += step) {
+            if (excludedRect.contains(x, y))
+                continue;
+            const QRgb color = img.pixel(x, y);
+            if ((qRed(color) >> 3) != binR
+                || (qGreen(color) >> 3) != binG
+                || (qBlue(color) >> 3) != binB) {
+                continue;
+            }
+            totalR += qRed(color);
+            totalG += qGreen(color);
+            totalB += qBlue(color);
+            ++count;
+        }
+    }
+
+    if (count == 0)
+        return detectDominantEdgeColor(img, step);
+    return QColor(totalR / count, totalG / count, totalB / count);
 }
 
 
@@ -314,6 +370,90 @@ QString ImageDownloader::sampleWindowColor(QQuickWindow *window,
     return QColor::fromRgb(
                fb.pixel(px, py)
                ).name(QColor::HexRgb);
+}
+
+QVariantMap ImageDownloader::grabTransparentPreview(QQuickWindow *window,
+                                                    int x,
+                                                    int y,
+                                                    int w,
+                                                    int h,
+                                                    const QString &transparentColor,
+                                                    int imageX,
+                                                    int imageY,
+                                                    int imageW,
+                                                    int imageH)
+{
+    QVariantMap result;
+    if (!window || w <= 0 || h <= 0)
+        return result;
+
+    QImage frame = window->grabWindow();
+    if (frame.isNull())
+        return result;
+
+    const qreal dpr = frame.devicePixelRatio() > 0 ? frame.devicePixelRatio() : 1.0;
+    QRect crop(qRound(x * dpr), qRound(y * dpr), qRound(w * dpr), qRound(h * dpr));
+    crop = crop.intersected(QRect(QPoint(0, 0), frame.size()));
+    if (crop.isEmpty())
+        return result;
+
+    QImage preview = frame.copy(crop).convertToFormat(QImage::Format_ARGB32);
+    preview.setDevicePixelRatio(1.0);
+
+    QColor background(transparentColor);
+    if (!background.isValid()) {
+        const QRect imageRectInPreview(
+            qRound((imageX - x) * dpr),
+            qRound((imageY - y) * dpr),
+            qRound(imageW * dpr),
+            qRound(imageH * dpr));
+        background = imageW > 0 && imageH > 0
+            ? detectDominantColorOutsideRect(preview, imageRectInPreview)
+            : detectDominantEdgeColor(preview);
+    }
+    result.insert(QStringLiteral("backgroundColor"), background.name(QColor::HexRgb));
+    edgeConnectedColorToAlpha(preview, background, 18);
+
+    QByteArray png;
+    QBuffer buffer(&png);
+    if (!buffer.open(QIODevice::WriteOnly) || !preview.save(&buffer, "PNG"))
+        return QVariantMap();
+
+    result.insert(QStringLiteral("source"),
+                  QStringLiteral("data:image/png;base64,")
+                      + QString::fromLatin1(png.toBase64()));
+    return result;
+}
+
+bool ImageDownloader::saveDataUrlImage(const QString &dataUrl,
+                                       const QString &path)
+{
+    const int comma = dataUrl.indexOf(QLatin1Char(','));
+    if (comma < 0) {
+        emit downloadFailed(QStringLiteral("Transparenzvorschau ist ungültig"));
+        return false;
+    }
+
+    const QByteArray encoded = dataUrl.mid(comma + 1).toLatin1();
+    const QByteArray png = QByteArray::fromBase64(encoded);
+    QImage image;
+    if (png.isEmpty() || !image.loadFromData(png, "PNG")) {
+        emit downloadFailed(QStringLiteral("Transparenzvorschau konnte nicht gelesen werden"));
+        return false;
+    }
+
+    const QFileInfo fi(path);
+    const QString outPath = fi.path() + QLatin1Char('/')
+                            + fi.completeBaseName() + QStringLiteral(".png");
+    QImageWriter writer(outPath, "png");
+    writer.setCompression(9);
+    if (!writer.write(image)) {
+        emit downloadFailed(QStringLiteral("Transparenzvorschau konnte nicht gespeichert werden"));
+        return false;
+    }
+
+    emit downloadSucceeded(outPath);
+    return true;
 }
 
 
@@ -403,17 +543,17 @@ bool ImageDownloader::grabAndSaveCropped(
         qDebug()
             << "Transparent background:"
             << bg.name()
-            << "tolerance = 10";
+            << "tolerance = 18";
 
         /*
          * Nur echte bzw. sehr ähnliche Hintergrundpixel entfernen.
          *
          * Kein Alpha-Verlauf und keine RGB-Farbkorrektur.
          */
-        colorToAlphaAgainstBg(
+        edgeConnectedColorToAlpha(
             img,
             bg,
-            10
+            18
             );
     }
 

@@ -10,6 +10,7 @@
 #include <QDir>
 #include <QMimeData>
 #include <QPixmap>
+#include <QPainter>
 #include <QUrl>
 #include <QVariant>
 
@@ -224,6 +225,59 @@ bool FileHelper::clipboardHasImage()
     }
 
     return false;
+}
+
+bool FileHelper::imageHasTransparency(const QString &path)
+{
+    const QString filePath = localFilePathFromString(path);
+    if (filePath.isEmpty())
+        return false;
+
+    QImage image(filePath);
+    if (image.isNull() || !image.hasAlphaChannel())
+        return false;
+
+    image = image.convertToFormat(QImage::Format_ARGB32);
+    for (int y = 0; y < image.height(); ++y) {
+        const QRgb *line = reinterpret_cast<const QRgb *>(image.constScanLine(y));
+        for (int x = 0; x < image.width(); ++x) {
+            if (qAlpha(line[x]) < 255)
+                return true;
+        }
+    }
+
+    return false;
+}
+
+bool FileHelper::flattenImageTransparencyOnWhite(const QString &path)
+{
+    const QString filePath = localFilePathFromString(path);
+    if (filePath.isEmpty()) {
+        qWarning() << "Transparenz aus: Kein Bildpfad angegeben";
+        return false;
+    }
+
+    const QImage source(filePath);
+    if (source.isNull()) {
+        qWarning() << "Transparenz aus: Bild kann nicht geladen werden:" << filePath;
+        return false;
+    }
+
+    QImage flattened(source.size(), QImage::Format_RGB32);
+    flattened.fill(Qt::white);
+    {
+        QPainter painter(&flattened);
+        painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
+        painter.drawImage(0, 0, source);
+    }
+
+    if (!flattened.save(filePath, "PNG")) {
+        qWarning() << "Transparenz aus: Speichern fehlgeschlagen:" << filePath;
+        return false;
+    }
+
+    qDebug() << "Transparenz durch Weiss ersetzt:" << filePath;
+    return true;
 }
 
 bool FileHelper::makeImageColorTransparent(const QString &path, int imageX, int imageY)

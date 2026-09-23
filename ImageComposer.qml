@@ -308,6 +308,24 @@ Window {
         return false;
     }
 
+    function selectedImageHasTransparency() {
+        const part = selectedPart();
+        return part && part.imageSource && part.imageSource !== ""
+                && FileHelper.imageHasTransparency(String(part.imageSource));
+    }
+
+    function disableSelectedImageTransparency() {
+        const part = selectedPart();
+        if (!part || !part.imageSource || part.imageSource === "")
+            return;
+
+        const sourcePath = String(part.imageSource);
+        if (FileHelper.flattenImageTransparencyOnWhite(sourcePath)) {
+            reloadImageInPart(part.index, sourcePath);
+            contentChanged();
+        }
+    }
+
     function startTransparentBackgroundPick() {
         if (!anyPartHasImage()) {
             console.warn("Hintergrund transparent: Es ist kein Bild geladen");
@@ -618,6 +636,11 @@ Window {
         onPressed: (mouse) => {
             if (mouse.button !== Qt.RightButton) return
 
+            const selectedHasTransparency = composerWindow.selectedImageHasTransparency()
+            const transparencyMenuText = selectedHasTransparency
+                                         ? "Transparenz aus"
+                                         : "Hintergrund transparent"
+
             // 1) alte dynamische Items entsorgen
             if (customContextMenu.dynamicItems && customContextMenu.dynamicItems.length) {
                 for (let i = 0; i < customContextMenu.dynamicItems.length; ++i) {
@@ -627,7 +650,7 @@ Window {
             customContextMenu.dynamicItems = []
 
             // 2) Texte für normale Layout-Einträge
-            let texts = ["Aus Zwischenablage einfügen", "Hintergrund transparent"]
+            let texts = ["Aus Zwischenablage einfügen", transparencyMenuText]
             if (anzeigeZustand === 2) {
                 texts.push("Zweiteilung Vertikal")
                 texts.push("Zweiteilung Horizontal")
@@ -668,9 +691,11 @@ Window {
             addMenuItem("Aus Zwischenablage einfügen",
                         () => composerWindow.pasteImageFromClipboard(),
                         FileHelper.clipboardHasImage())
-            addMenuItem("Hintergrund transparent",
-                        () => composerWindow.startTransparentBackgroundPick(),
-                        composerWindow.anyPartHasImage())
+            addMenuItem(transparencyMenuText,
+                        selectedHasTransparency
+                            ? () => composerWindow.disableSelectedImageTransparency()
+                            : () => composerWindow.startTransparentBackgroundPick(),
+                        selectedHasTransparency || composerWindow.anyPartHasImage())
 
             if (anzeigeZustand === 2 || anzeigeZustand === 3)
                 addSeparator()

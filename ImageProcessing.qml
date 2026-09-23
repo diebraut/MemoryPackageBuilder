@@ -4,6 +4,7 @@ import QtQuick.Layouts 1.15
 import QtQuick.Window 2.15
 import QtQuick.Shapes 1.15
 import QtCore
+import FileHelper 1.0
 
 
 Window {
@@ -22,6 +23,61 @@ Window {
 
     property real minRectSize: 4
     property bool debugKeyboard: false
+    property bool transparentColorPickMode: false
+    property bool currentImageHasTransparency: false
+
+    function refreshTransparencyState() {
+        const sourcePath = String(imagePreview.source)
+        currentImageHasTransparency = sourcePath !== ""
+                && FileHelper.imageHasTransparency(sourcePath)
+    }
+
+    function reloadCurrentImage() {
+        const sourcePath = String(imagePreview.source)
+        if (sourcePath === "")
+            return
+        imagePreview.source = ""
+        Qt.callLater(function() {
+            imagePreview.source = sourcePath
+        })
+    }
+
+    function disableImageTransparency() {
+        const sourcePath = String(imagePreview.source)
+        if (sourcePath === "")
+            return
+        if (FileHelper.flattenImageTransparencyOnWhite(sourcePath)) {
+            transparentColorPickMode = false
+            currentImageHasTransparency = false
+            reloadCurrentImage()
+        }
+    }
+
+    function enableTransparentColorPick() {
+        if (imagePreview.status === Image.Ready)
+            transparentColorPickMode = true
+    }
+
+    function applyTransparentColorAt(x, y) {
+        if (!transparentColorPickMode || imagePreview.status !== Image.Ready)
+            return
+
+        transparentColorPickMode = false
+        const sourceW = imagePreview.sourceSize.width
+        const sourceH = imagePreview.sourceSize.height
+        if (sourceW <= 0 || sourceH <= 0)
+            return
+
+        const imageX = Math.max(0, Math.min(sourceW - 1,
+                            Math.floor(x / transparencyPickArea.width * sourceW)))
+        const imageY = Math.max(0, Math.min(sourceH - 1,
+                            Math.floor(y / transparencyPickArea.height * sourceH)))
+        const sourcePath = String(imagePreview.source)
+        if (FileHelper.makeImageColorTransparent(sourcePath, imageX, imageY)) {
+            currentImageHasTransparency = true
+            reloadCurrentImage()
+        }
+    }
 
     Settings {
         id: ipSettings
@@ -125,6 +181,8 @@ Window {
 
         rectanglesModel.clear();
         arrowModel.clear();
+        transparentColorPickMode = false;
+        currentImageHasTransparency = false;
         imagePreview.source = "";
         imageWindow.visible = false;
 
@@ -151,6 +209,7 @@ Window {
 
                 imagePreview.originalImageWidth = imagePreview.sourceSize.width;
                 imagePreview.originalImageHeight = imagePreview.sourceSize.height;
+                refreshTransparencyState();
 
                 const availableWidth = screenW || Screen.desktopAvailableWidth;
                 const availableHeight = screenH || Screen.desktopAvailableHeight;
@@ -414,15 +473,77 @@ Window {
                 border.color: "green"
                 border.width: 1
 
+                Canvas {
+                    id: transparencyChecker
+                    x: (parent.width - imagePreview.paintedWidth) / 2
+                    y: (parent.height - imagePreview.paintedHeight) / 2
+                    width: imagePreview.paintedWidth
+                    height: imagePreview.paintedHeight
+                    visible: imagePreview.status === Image.Ready
+
+                    function repaint() { requestPaint() }
+                    onWidthChanged: repaint()
+                    onHeightChanged: repaint()
+                    onVisibleChanged: if (visible) repaint()
+                    Component.onCompleted: repaint()
+
+                    onPaint: {
+                        const ctx = getContext("2d")
+                        const size = 10
+                        ctx.clearRect(0, 0, width, height)
+                        for (let yy = 0; yy < height; yy += size) {
+                            for (let xx = 0; xx < width; xx += size) {
+                                ctx.fillStyle = ((xx / size + yy / size) % 2 === 0)
+                                                ? "#d0d0d0" : "#f2f2f2"
+                                ctx.fillRect(xx, yy, size, size)
+                            }
+                        }
+                    }
+                }
+
                 Image {
                     id: imagePreview
                     anchors.fill: parent
                     fillMode: Image.PreserveAspectFit
                     asynchronous: true
+                    cache: false
                     source: ""
                     property int originalImageWidth: 0
                     property int originalImageHeight: 0
 
+                }
+
+                MouseArea {
+                    id: imageTransparencyMenuArea
+                    x: (parent.width - imagePreview.paintedWidth) / 2
+                    y: (parent.height - imagePreview.paintedHeight) / 2
+                    width: imagePreview.paintedWidth
+                    height: imagePreview.paintedHeight
+                    z: 1
+                    acceptedButtons: Qt.RightButton
+
+                    onPressed: function(mouse) {
+                        imageWindow.refreshTransparencyState()
+                        imageTransparencyMenu.x = x + mouse.x
+                        imageTransparencyMenu.y = y + mouse.y
+                        imageTransparencyMenu.open()
+                    }
+                }
+
+                Menu {
+                    id: imageTransparencyMenu
+
+                    MenuItem {
+                        text: imageWindow.currentImageHasTransparency
+                              ? "Transparenz aus"
+                              : "Hintergrund transparent"
+                        onTriggered: {
+                            if (imageWindow.currentImageHasTransparency)
+                                imageWindow.disableImageTransparency()
+                            else
+                                imageWindow.enableTransparentColorPick()
+                        }
+                    }
                 }
 
                 // =======================
@@ -1637,6 +1758,23 @@ Window {
                             onColorChanged: source = "qrc:/icons/arrow-right-" + color + ".png"
                             Component.onCompleted: source = "qrc:/icons/arrow-right-" + color + ".png"
                         }
+                    }
+                }
+
+                MouseArea {
+                    id: transparencyPickArea
+                    x: (parent.width - imagePreview.paintedWidth) / 2
+                    y: (parent.height - imagePreview.paintedHeight) / 2
+                    width: imagePreview.paintedWidth
+                    height: imagePreview.paintedHeight
+                    z: 10000
+                    enabled: imageWindow.transparentColorPickMode
+                    visible: enabled
+                    acceptedButtons: Qt.LeftButton
+                    cursorShape: Qt.CrossCursor
+
+                    onClicked: function(mouse) {
+                        imageWindow.applyTransparentColorAt(mouse.x, mouse.y)
                     }
                 }
             }
