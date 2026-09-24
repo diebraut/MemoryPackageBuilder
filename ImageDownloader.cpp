@@ -9,8 +9,6 @@
 #include <QColor>
 #include <QHash>
 #include <QBuffer>
-#include <QQueue>
-#include <QVector>
 
 ImageDownloader::ImageDownloader(QObject *parent)
     : QObject(parent)
@@ -198,14 +196,15 @@ static QColor detectDominantEdgeColor(const QImage &img,
 
 
 // ---------------------------------------------------------------------
-// Nur farblich passende Pixel entfernen, die ueber gleichfarbige Nachbarn mit
-// dem Bildrand verbunden sind. Gleichfarbige Flaechen innerhalb des Motivs
-// bleiben dadurch erhalten.
+// Alle farblich passenden Pixel entfernen. Die Hintergrundfarbe selbst wird
+// weiterhin am Rand bzw. ausserhalb des Quellbildes bestimmt. Die globale
+// Ersetzung erfasst aber auch eingeschlossene Flaechen, beispielsweise die
+// Innenraeume von Buchstaben und Ziffern.
 // ---------------------------------------------------------------------
 
-static void edgeConnectedColorToAlpha(QImage &img,
-                                      const QColor &bg,
-                                      int tolerance = 18)
+static void matchingColorToAlpha(QImage &img,
+                                 const QColor &bg,
+                                 int tolerance = 16)
 {
     if (img.isNull())
         return;
@@ -213,64 +212,20 @@ static void edgeConnectedColorToAlpha(QImage &img,
     if (img.format() != QImage::Format_ARGB32)
         img = img.convertToFormat(QImage::Format_ARGB32);
 
-    const int w = img.width();
-    const int h = img.height();
-
     const int br = bg.red();
     const int bgc = bg.green();
     const int bb = bg.blue();
 
-    const int toleranceSquared = tolerance * tolerance;
-    const int pixelCount = w * h;
-    const int seedDepth = qMax(1, qMin(6, qMin(w, h) / 4));
-    QVector<quint8> visited(pixelCount, 0);
-    QQueue<int> pending;
-
-    auto matchesBackground = [&](int x, int y) {
-        const QRgb pixel = img.pixel(x, y);
-        const int dr = qRed(pixel) - br;
-        const int dg = qGreen(pixel) - bgc;
-        const int db = qBlue(pixel) - bb;
-        return dr * dr + dg * dg + db * db <= toleranceSquared;
-    };
-
-    auto enqueue = [&](int x, int y) {
-        const int index = y * w + x;
-        if (visited[index] || !matchesBackground(x, y))
-            return;
-        visited[index] = 1;
-        pending.enqueue(index);
-    };
-
-    // Aus einem schmalen Randstreifen starten. So kann eine Rahmenlinie auf
-    // der exakten Auswahlkante die innenliegende Hintergrundflaeche nicht
-    // von der Transparenzsuche abschneiden.
-    for (int depth = 0; depth < seedDepth; ++depth) {
-        for (int x = 0; x < w; ++x) {
-            enqueue(x, depth);
-            enqueue(x, h - 1 - depth);
+    for (int y = 0; y < img.height(); ++y) {
+        QRgb *line = reinterpret_cast<QRgb *>(img.scanLine(y));
+        for (int x = 0; x < img.width(); ++x) {
+            const QRgb pixel = line[x];
+            if (qAbs(qRed(pixel) - br) <= tolerance
+                    && qAbs(qGreen(pixel) - bgc) <= tolerance
+                    && qAbs(qBlue(pixel) - bb) <= tolerance) {
+                line[x] = qRgba(qRed(pixel), qGreen(pixel), qBlue(pixel), 0);
+            }
         }
-        for (int y = 0; y < h; ++y) {
-            enqueue(depth, y);
-            enqueue(w - 1 - depth, y);
-        }
-    }
-
-    while (!pending.isEmpty()) {
-        const int index = pending.dequeue();
-        const int x = index % w;
-        const int y = index / w;
-        const QRgb pixel = img.pixel(x, y);
-        img.setPixel(x, y, qRgba(qRed(pixel), qGreen(pixel), qBlue(pixel), 0));
-
-        if (x > 0)
-            enqueue(x - 1, y);
-        if (x + 1 < w)
-            enqueue(x + 1, y);
-        if (y > 0)
-            enqueue(x, y - 1);
-        if (y + 1 < h)
-            enqueue(x, y + 1);
     }
 }
 
@@ -412,7 +367,7 @@ QVariantMap ImageDownloader::grabTransparentPreview(QQuickWindow *window,
             : detectDominantEdgeColor(preview);
     }
     result.insert(QStringLiteral("backgroundColor"), background.name(QColor::HexRgb));
-    edgeConnectedColorToAlpha(preview, background, 18);
+    matchingColorToAlpha(preview, background, 16);
 
     QByteArray png;
     QBuffer buffer(&png);
@@ -543,17 +498,17 @@ bool ImageDownloader::grabAndSaveCropped(
         qDebug()
             << "Transparent background:"
             << bg.name()
-            << "tolerance = 18";
+            << "tolerance = 16";
 
         /*
          * Nur echte bzw. sehr ähnliche Hintergrundpixel entfernen.
          *
          * Kein Alpha-Verlauf und keine RGB-Farbkorrektur.
          */
-        edgeConnectedColorToAlpha(
+        matchingColorToAlpha(
             img,
             bg,
-            18
+            16
             );
     }
 

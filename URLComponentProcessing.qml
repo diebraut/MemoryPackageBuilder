@@ -36,6 +36,95 @@ Window {
         win.y = Math.max(0, Math.min(win.y, dh - win.height))
     }
 
+    property bool pairLayoutScheduled: false
+    property bool arrangingWindowPair: false
+    property real normalUrlWidth: 800
+    property real normalUrlHeight: 600
+
+    Timer {
+        id: normalGeometrySaveTimer
+        interval: 120
+        repeat: false
+        onTriggered: {
+            if (urlWindow.arrangingWindowPair
+                    || urlWindow.visibility !== Window.Windowed)
+                return
+
+            urlWindow.normalUrlWidth = urlWindow.width
+            urlWindow.normalUrlHeight = urlWindow.height
+            urlState.x = urlWindow.x
+            urlState.y = urlWindow.y
+            urlState.w = urlWindow.width
+            urlState.h = urlWindow.height
+        }
+    }
+
+    function arrangeWindowPair() {
+        pairLayoutScheduled = false
+        if (!composer)
+            return
+
+        const desktopWidth = Math.max(800, Screen.desktopAvailableWidth)
+        const desktopHeight = Math.max(600, Screen.desktopAvailableHeight)
+        const margin = 10
+        const gap = 10
+        const usableWidth = desktopWidth - 2 * margin - gap
+        const usableHeight = desktopHeight - 2 * margin
+
+        // Beide Fenster mit demselben Faktor skalieren. Dadurch bleiben ihre
+        // bisherigen Groessenverhaeltnisse erhalten und keines wird zugunsten
+        // des anderen auf einen festen Prozentwert gezwungen.
+        const sourceBrowserWidth = Math.max(320, normalUrlWidth)
+        const sourceBrowserHeight = Math.max(240, normalUrlHeight)
+        const sourceComposerWidth = Math.max(320, composer.width)
+        const sourceComposerHeight = Math.max(240, composer.height)
+        const widthScale = usableWidth
+                           / (sourceBrowserWidth + sourceComposerWidth)
+        const heightScale = usableHeight
+                            / Math.max(sourceBrowserHeight, sourceComposerHeight)
+        const scale = Math.min(widthScale, heightScale)
+        const browserWidth = Math.floor(sourceBrowserWidth * scale)
+        const browserHeight = Math.floor(sourceBrowserHeight * scale)
+        const composerWidth = Math.floor(sourceComposerWidth * scale)
+        const composerHeight = Math.floor(sourceComposerHeight * scale)
+
+        arrangingWindowPair = true
+
+        // Ein maximiertes Elternfenster kann sein modales Zusatzfenster unter
+        // Windows vollständig verdecken. Deshalb beide Fenster in den
+        // normalen Zustand zurückholen und gemeinsam auf dem Desktop anordnen.
+        urlWindow.showNormal()
+        composer.showNormal()
+
+        urlWindow.x = margin
+        urlWindow.y = margin + Math.floor((usableHeight - browserHeight) / 2)
+        urlWindow.width = browserWidth
+        urlWindow.height = browserHeight
+
+        composer.x = margin + browserWidth + gap
+        composer.y = margin + Math.floor((usableHeight - composerHeight) / 2)
+        composer.width = composerWidth
+        composer.height = composerHeight
+        composer.visible = true
+        composer.raise()
+        composer.requestActivate()
+
+        normalUrlWidth = browserWidth
+        normalUrlHeight = browserHeight
+        urlState.x = urlWindow.x
+        urlState.y = urlWindow.y
+        urlState.w = browserWidth
+        urlState.h = browserHeight
+        arrangingWindowPair = false
+    }
+
+    function scheduleWindowPair() {
+        if (pairLayoutScheduled)
+            return
+        pairLayoutScheduled = true
+        Qt.callLater(arrangeWindowPair)
+    }
+
     Timer {
         id: scrollPoll
         interval: 400
@@ -55,17 +144,24 @@ Window {
         }
     }
 
-    // Geometrie in Settings zurückschreiben
-    onXChanged:      urlState.x = x
-    onYChanged:      urlState.y = y
-    onWidthChanged:  urlState.w = width
-    onHeightChanged: urlState.h = height
+    // Nur stabile Geometrie im normalen Fensterzustand speichern. Beim
+    // Maximieren meldet Windows Zwischenwerte, die sonst beim naechsten Start
+    // als unbrauchbare Vollbildgeometrie wiederhergestellt werden.
+    onXChanged:      normalGeometrySaveTimer.restart()
+    onYChanged:      normalGeometrySaveTimer.restart()
+    onWidthChanged:  normalGeometrySaveTimer.restart()
+    onHeightChanged: normalGeometrySaveTimer.restart()
 
     title: "Webseite ansehen"
     width: 800
     height: 600
     modality: Qt.ApplicationModal
     visible: true
+
+    onVisibilityChanged: {
+        if (visibility === Window.Maximized || visibility === Window.FullScreen)
+            scheduleWindowPair()
+    }
 
     property bool isMultiEdit: false
     property int multiEditCurrentIndex: -1
@@ -193,11 +289,19 @@ Window {
     Component.onCompleted: {
         const composerComponent = Qt.createComponent("qrc:/MemoryPackagesBuilder/ImageComposer.qml");
 
+        const desktopWidth = Math.max(800, Screen.desktopAvailableWidth)
+        const desktopHeight = Math.max(600, Screen.desktopAvailableHeight)
+        const restoreAsPair = urlState.w >= desktopWidth * 0.90
+                              || urlState.h >= desktopHeight * 0.90
+
+        normalUrlWidth = restoreAsPair ? 800 : urlState.w
+        normalUrlHeight = restoreAsPair ? 600 : urlState.h
+
         // Geometrie wiederherstellen
-        urlWindow.x = urlState.x
-        urlWindow.y = urlState.y
-        urlWindow.width  = urlState.w
-        urlWindow.height = urlState.h
+        urlWindow.x = restoreAsPair ? 100 : urlState.x
+        urlWindow.y = restoreAsPair ? 100 : urlState.y
+        urlWindow.width = normalUrlWidth
+        urlWindow.height = normalUrlHeight
         clampToDesktop(urlWindow)
         // Zoom wiederherstellen
         zoomSlider.value = urlState.zoom
@@ -235,6 +339,12 @@ Window {
                 composer.visible = true;
                 composer.raise();
                 composer.requestActivate();
+
+                // Wurde das Webseitenfenster zuvor maximiert bzw. annähernd
+                // bildschirmfüllend gespeichert, beim nächsten Aufruf beide
+                // Fenster wieder sichtbar nebeneinander anordnen.
+                if (restoreAsPair)
+                    scheduleWindowPair();
             } else {
                 console.warn("❌ Fehler beim Laden von ImageComposer:", composerComponent.errorString());
             }

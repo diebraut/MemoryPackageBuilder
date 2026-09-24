@@ -20,6 +20,7 @@ Window {
     property int currentUnitIndex: 0
     property bool reversePreview: false
     property string webUrl: ""
+    property string imageCacheToken: "0"
     readonly property var currentUnit: units.length > 0 ? units[currentUnitIndex] : ({ exercises: [] })
     readonly property var currentExercises: currentUnit.exercises || []
     readonly property var currentExercise: currentExercises.length > 0 ? currentExercises[currentExerciseIndex] : ({})
@@ -30,6 +31,9 @@ Window {
     minimumHeight: 820
 
     function open() {
+        // XML-Daten und Bilddateien bei jedem Aufruf neu einlesen. Bilder
+        // koennen unter demselben Dateinamen inzwischen ersetzt worden sein.
+        loadExercises()
         show()
         raise()
         requestActivate()
@@ -46,6 +50,8 @@ Window {
     function loadExercises() {
         if (packagePath === "")
             return
+
+        imageCacheToken = String(Date.now())
 
         let files = FileHelper.directoryEntries(packagePath).filter(function(fileName) {
             return /^package(_\d+)?\.xml$/i.test(fileName)
@@ -110,7 +116,7 @@ Window {
             return ""
 
         const normalized = (packagePath + "/" + fileName).replace(/\\/g, "/")
-        return "file:///" + normalized
+        return "file:///" + normalized + "?refresh=" + imageCacheToken
     }
 
     function parseExcludeAreas(value) {
@@ -608,6 +614,7 @@ Window {
                     id: imagePreview
                     anchors.fill: parent
                     source: previewRoot.imageSource
+                    cache: false
                     fillMode: Image.PreserveAspectFit
                     smooth: true
                     asynchronous: true
