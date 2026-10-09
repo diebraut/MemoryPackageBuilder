@@ -1,0 +1,393 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Daten>
+    <Übungen frageType="Bundesland zur Person" hideAuthorByQuestion="false" name="Ministerpräsidenten 01.19.2026" sequentiell="true" umgekehrt="false">
+        <MainÜbungsliste>
+            <FrageText>Welches Bundesland wird von[FrageSubjekt] regiert?</FrageText>
+            <FrageTextUmgekehrt></FrageTextUmgekehrt>
+            <Übung nummer="1">
+                <FrageSubjekt>Cem Özdemir</FrageSubjekt>
+                <AntwortSubjekt>Baden-Württemberg</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Cem Özdemir (Güne).jpg</ImagefileFrage>
+                <ImagefileAntwort>Baden-Württemberg.png</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Cem_%C3%96zdemir</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Baden-W%C3%BCrttemberg</InfoURLAntwort>
+                <ImageFrageAuthor>&lt;bdi>&lt;a href="https://www.wikidata.org/wiki/Q108103612" class="extiw" title="d:Q108103612">&lt;span title="Wikipedian and OpenStreetMap mapper from Cologne, Open Data activist">Raimond Spekking&lt;/span>&lt;/a>&lt;/bdi>[]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 4.0[https://creativecommons.org/licenses/by-sa/4.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription></ImageFrageBildDescription>
+                <ImageAntwortBildDescription></ImageAntwortBildDescription>
+                <ImageFrageUrl></ImageFrageUrl>
+                <ImageAntwortUrl></ImageAntwortUrl>
+                <ArrowDescFra></ArrowDescFra>
+                <ArrowDescAnt></ArrowDescAnt>
+            </Übung>
+            <Übung nummer="2">
+                <FrageSubjekt>Markus Söder</FrageSubjekt>
+                <AntwortSubjekt>Bayern</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Markus Söder (CSU).jpg</ImagefileFrage>
+                <ImagefileAntwort>Bayern.png</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Markus_S%C3%B6der</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Bayern</InfoURLAntwort>
+                <ImageFrageAuthor>PantheraLeo1359531[//commons.wikimedia.org/wiki/User:PantheraLeo1359531]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 4.0[https://creativecommons.org/licenses/by-sa/4.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription></ImageFrageBildDescription>
+                <ImageAntwortBildDescription></ImageAntwortBildDescription>
+                <ImageFrageUrl></ImageFrageUrl>
+                <ImageAntwortUrl></ImageAntwortUrl>
+                <ArrowDescFra></ArrowDescFra>
+                <ArrowDescAnt></ArrowDescAnt>
+            </Übung>
+            <Übung nummer="3">
+                <FrageSubjekt>Kai Wegner</FrageSubjekt>
+                <AntwortSubjekt>Berlin</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Kai Wegner (CDU).jpg</ImagefileFrage>
+                <ImagefileAntwort>Berlin.png</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Kai_Wegner</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Berlin</InfoURLAntwort>
+                <ImageFrageAuthor>Sandro Halank, Wikimedia Commons[//commons.wikimedia.org/wiki/User:Sandro_Halank]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 4.0[https://creativecommons.org/licenses/by-sa/4.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription></ImageFrageBildDescription>
+                <ImageAntwortBildDescription></ImageAntwortBildDescription>
+                <ImageFrageUrl></ImageFrageUrl>
+                <ImageAntwortUrl></ImageAntwortUrl>
+                <ArrowDescFra></ArrowDescFra>
+                <ArrowDescAnt></ArrowDescAnt>
+            </Übung>
+            <Übung nummer="4">
+                <FrageSubjekt>Dietmar Woidke</FrageSubjekt>
+                <AntwortSubjekt>Brandenburg</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Dietmar Woidke (SPD).jpg</ImagefileFrage>
+                <ImagefileAntwort>Brandenburg.png</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Dietmar_Woidke</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Brandenburg</InfoURLAntwort>
+                <ImageFrageAuthor>Sandro Halank[//commons.wikimedia.org/wiki/User:Sandro_Halank]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 4.0[https://creativecommons.org/licenses/by-sa/4.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription></ImageFrageBildDescription>
+                <ImageAntwortBildDescription></ImageAntwortBildDescription>
+                <ImageFrageUrl></ImageFrageUrl>
+                <ImageAntwortUrl></ImageAntwortUrl>
+                <ArrowDescFra></ArrowDescFra>
+                <ArrowDescAnt></ArrowDescAnt>
+            </Übung>
+            <Übung nummer="5">
+                <FrageSubjekt>Andreas Bovenschulte</FrageSubjekt>
+                <AntwortSubjekt>Bremen</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Andreas Bovenschulte (SPD).jpg</ImagefileFrage>
+                <ImagefileAntwort>Bremen.png</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Andreas_Bovenschulte</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Freie_Hansestadt_Bremen</InfoURLAntwort>
+                <ImageFrageAuthor>Superbass[//commons.wikimedia.org/wiki/User:Superbass]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 4.0[https://creativecommons.org/licenses/by-sa/4.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription></ImageFrageBildDescription>
+                <ImageAntwortBildDescription></ImageAntwortBildDescription>
+                <ImageFrageUrl></ImageFrageUrl>
+                <ImageAntwortUrl></ImageAntwortUrl>
+                <ArrowDescFra></ArrowDescFra>
+                <ArrowDescAnt></ArrowDescAnt>
+            </Übung>
+            <Übung nummer="6">
+                <FrageSubjekt>Peter Tschentscher</FrageSubjekt>
+                <AntwortSubjekt>Hamburg</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Peter Tschentscher (SPD).jpg</ImagefileFrage>
+                <ImagefileAntwort>Hamburg.png</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Peter_Tschentscher</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Hamburg</InfoURLAntwort>
+                <ImageFrageAuthor>Sandro Halank, Wikimedia Commons[//commons.wikimedia.org/wiki/User:Sandro_Halank]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 4.0[https://creativecommons.org/licenses/by-sa/4.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription></ImageFrageBildDescription>
+                <ImageAntwortBildDescription></ImageAntwortBildDescription>
+                <ImageFrageUrl></ImageFrageUrl>
+                <ImageAntwortUrl></ImageAntwortUrl>
+                <ArrowDescFra></ArrowDescFra>
+                <ArrowDescAnt></ArrowDescAnt>
+            </Übung>
+            <Übung nummer="7">
+                <FrageSubjekt>Boris Rhein</FrageSubjekt>
+                <AntwortSubjekt>Hessen</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Boris Rhein (CDU).jpg</ImagefileFrage>
+                <ImagefileAntwort>Hessen.png</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Boris_Rhein</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Hessen</InfoURLAntwort>
+                <ImageFrageAuthor>Hessischer Landtag[]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription></ImageFrageBildDescription>
+                <ImageAntwortBildDescription></ImageAntwortBildDescription>
+                <ImageFrageUrl></ImageFrageUrl>
+                <ImageAntwortUrl></ImageAntwortUrl>
+                <ArrowDescFra></ArrowDescFra>
+                <ArrowDescAnt></ArrowDescAnt>
+            </Übung>
+            <Übung nummer="8">
+                <FrageSubjekt>Manuela Schwesig</FrageSubjekt>
+                <AntwortSubjekt>Mecklenburg-Vorpommern</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Manuela Schwesig (SPD).jpg</ImagefileFrage>
+                <ImagefileAntwort>Mecklenburg-Vorpommern.png</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Manuela_Schwesig</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Mecklenburg-Vorpommern</InfoURLAntwort>
+                <ImageFrageAuthor>&lt;bdi>&lt;a href="https://www.wikidata.org/wiki/Q15080600" class="extiw" title="d:Q15080600">&lt;span title="German civil engineer and photographer">Ralf Roletschek&lt;/span>&lt;/a>&lt;/bdi>[]</ImageFrageAuthor>
+                <ImageFrageLizenz>GFDL 1.2[http://www.gnu.org/licenses/old-licenses/fdl-1.2.html]</ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription></ImageFrageBildDescription>
+                <ImageAntwortBildDescription></ImageAntwortBildDescription>
+                <ImageFrageUrl></ImageFrageUrl>
+                <ImageAntwortUrl></ImageAntwortUrl>
+                <ArrowDescFra></ArrowDescFra>
+                <ArrowDescAnt></ArrowDescAnt>
+            </Übung>
+            <Übung nummer="9">
+                <FrageSubjekt>Olaf Lies</FrageSubjekt>
+                <AntwortSubjekt>Niedersachsen</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Olaf Lies (SPD).jpg</ImagefileFrage>
+                <ImagefileAntwort>Niedersachsen.png</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Olaf_Lies</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Niedersachsen</InfoURLAntwort>
+                <ImageFrageAuthor>MW[//commons.wikimedia.org/w/index.php?title=User:Chris31181&amp;amp;action=edit&amp;amp;redlink=1]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 4.0[https://creativecommons.org/licenses/by-sa/4.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription></ImageFrageBildDescription>
+                <ImageAntwortBildDescription></ImageAntwortBildDescription>
+                <ImageFrageUrl></ImageFrageUrl>
+                <ImageAntwortUrl></ImageAntwortUrl>
+                <ArrowDescFra></ArrowDescFra>
+                <ArrowDescAnt></ArrowDescAnt>
+            </Übung>
+            <Übung nummer="10">
+                <FrageSubjekt>Hendrik Wüst</FrageSubjekt>
+                <AntwortSubjekt>Nordrhein-Westfalen</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Hendrik Wüst (CDU).jpg</ImagefileFrage>
+                <ImagefileAntwort>Nordrhein-Westfalen.png</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Hendrik_W%C3%BCst</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Nordrhein-Westfalen</InfoURLAntwort>
+                <ImageFrageAuthor>&lt;bdi>&lt;a href="https://www.wikidata.org/wiki/Q108103612" class="extiw" title="d:Q108103612">&lt;span title="Wikipedian and OpenStreetMap mapper from Cologne, Open Data activist">Raimond Spekking&lt;/span>&lt;/a>&lt;/bdi>[]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 4.0[https://creativecommons.org/licenses/by-sa/4.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription></ImageFrageBildDescription>
+                <ImageAntwortBildDescription></ImageAntwortBildDescription>
+                <ImageFrageUrl></ImageFrageUrl>
+                <ImageAntwortUrl></ImageAntwortUrl>
+                <ArrowDescFra></ArrowDescFra>
+                <ArrowDescAnt></ArrowDescAnt>
+            </Übung>
+            <Übung nummer="11">
+                <FrageSubjekt>Gordon Schnieder</FrageSubjekt>
+                <AntwortSubjekt>Rheinland-Pfalz</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Gordon Schnieder (CDU).jpg</ImagefileFrage>
+                <ImagefileAntwort>Rheinland-Pfalz.png</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Gordon_Schnieder</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Rheinland-Pfalz</InfoURLAntwort>
+                <ImageFrageAuthor>Olaf Kosinsky[]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 3.0 de[https://creativecommons.org/licenses/by-sa/3.0/de/deed.en]</ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription></ImageFrageBildDescription>
+                <ImageAntwortBildDescription></ImageAntwortBildDescription>
+                <ImageFrageUrl></ImageFrageUrl>
+                <ImageAntwortUrl></ImageAntwortUrl>
+                <ArrowDescFra></ArrowDescFra>
+                <ArrowDescAnt></ArrowDescAnt>
+            </Übung>
+            <Übung nummer="12">
+                <FrageSubjekt>Anke Rehlinger</FrageSubjekt>
+                <AntwortSubjekt>Saarland</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Anke Rehlinger (SPD).jpg</ImagefileFrage>
+                <ImagefileAntwort>Saarland.png</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Anke_Rehlinger</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Saarland</InfoURLAntwort>
+                <ImageFrageAuthor>&lt;bdi>&lt;a href="https://www.wikidata.org/wiki/Q108103612" class="extiw" title="d:Q108103612">&lt;span title="Wikipedian and OpenStreetMap mapper from Cologne, Open Data activist">Raimond Spekking&lt;/span>&lt;/a>&lt;/bdi>[]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 4.0[https://creativecommons.org/licenses/by-sa/4.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription></ImageFrageBildDescription>
+                <ImageAntwortBildDescription></ImageAntwortBildDescription>
+                <ImageFrageUrl></ImageFrageUrl>
+                <ImageAntwortUrl></ImageAntwortUrl>
+                <ArrowDescFra></ArrowDescFra>
+                <ArrowDescAnt></ArrowDescAnt>
+            </Übung>
+            <Übung nummer="13">
+                <FrageSubjekt>Michael Kretschmer</FrageSubjekt>
+                <AntwortSubjekt>Sachsen</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Michael Kretschmer (CDU).jpg</ImagefileFrage>
+                <ImagefileAntwort>Sachsen.png</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Michael_Kretschmer</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Sachsen</InfoURLAntwort>
+                <ImageFrageAuthor>Sandro Halank, Wikimedia Commons[//commons.wikimedia.org/wiki/User:Sandro_Halank]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 4.0[https://creativecommons.org/licenses/by-sa/4.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription></ImageFrageBildDescription>
+                <ImageAntwortBildDescription></ImageAntwortBildDescription>
+                <ImageFrageUrl></ImageFrageUrl>
+                <ImageAntwortUrl></ImageAntwortUrl>
+                <ArrowDescFra></ArrowDescFra>
+                <ArrowDescAnt></ArrowDescAnt>
+            </Übung>
+            <Übung nummer="14">
+                <FrageSubjekt>Sven Schulze</FrageSubjekt>
+                <AntwortSubjekt>Sachsen-Anhalt</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Sven Schulze (CDU).jpg</ImagefileFrage>
+                <ImagefileAntwort>Sachsen-Anhalt.png</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Sven_Schulze_%28Politiker%2C_1979%29</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Sachsen-Anhalt</InfoURLAntwort>
+                <ImageFrageAuthor>Steffen Prößdorf[//commons.wikimedia.org/wiki/User:Stepro]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 4.0[https://creativecommons.org/licenses/by-sa/4.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription></ImageFrageBildDescription>
+                <ImageAntwortBildDescription></ImageAntwortBildDescription>
+                <ImageFrageUrl></ImageFrageUrl>
+                <ImageAntwortUrl></ImageAntwortUrl>
+                <ArrowDescFra></ArrowDescFra>
+                <ArrowDescAnt></ArrowDescAnt>
+            </Übung>
+            <Übung nummer="15">
+                <FrageSubjekt>Daniel Günther</FrageSubjekt>
+                <AntwortSubjekt>Schleswig-Holstein</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Daniel Günther (CDU).jpg</ImagefileFrage>
+                <ImagefileAntwort>Schleswig-Holstein.png</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Daniel_G%C3%BCnther</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Schleswig-Holstein</InfoURLAntwort>
+                <ImageFrageAuthor>Staatskanzlei Schleswig-Holstein, Presse- und Informationsstelle der Landesregierung[//commons.wikimedia.org/wiki/User:Staatskanzlei_Schleswig-Holstein,_Presse-_und_Informationsstelle_der_Landesregierung]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 4.0[https://creativecommons.org/licenses/by-sa/4.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription></ImageFrageBildDescription>
+                <ImageAntwortBildDescription></ImageAntwortBildDescription>
+                <ImageFrageUrl></ImageFrageUrl>
+                <ImageAntwortUrl></ImageAntwortUrl>
+                <ArrowDescFra></ArrowDescFra>
+                <ArrowDescAnt></ArrowDescAnt>
+            </Übung>
+            <Übung nummer="16">
+                <FrageSubjekt>Mario Voigt</FrageSubjekt>
+                <AntwortSubjekt>Thüringen</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Mario Voigt (CDU).jpg</ImagefileFrage>
+                <ImagefileAntwort>Thüringen.png</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Mario_Voigt</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Th%C3%BCringen</InfoURLAntwort>
+                <ImageFrageAuthor>Sandro Halank, Wikimedia Commons[//commons.wikimedia.org/wiki/User:Sandro_Halank]</ImageFrageAuthor>
+                <ImageFrageLizenz>CC BY-SA 4.0[https://creativecommons.org/licenses/by-sa/4.0]</ImageFrageLizenz>
+                <ImageAntwortAuthor></ImageAntwortAuthor>
+                <ImageAntwortLizenz></ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription></ImageFrageBildDescription>
+                <ImageAntwortBildDescription></ImageAntwortBildDescription>
+                <ImageFrageUrl></ImageFrageUrl>
+                <ImageAntwortUrl></ImageAntwortUrl>
+                <ArrowDescFra></ArrowDescFra>
+                <ArrowDescAnt></ArrowDescAnt>
+            </Übung>
+        </MainÜbungsliste>
+    </Übungen>
+</Daten>

@@ -1795,6 +1795,15 @@ Window {
                 const extraProp = (role === "infoURLFrage")
                                   ? uebungModel.get(index).frageSubjekt
                                   : uebungModel.get(index).antwortSubjekt;
+                const imageFileKey = role === "infoURLFrage" ? "imagefileFrage" : "imagefileAntwort";
+                const existingImageName = uebungModel.get(index)[imageFileKey] || "";
+                const dotIndex = existingImageName.lastIndexOf(".");
+                const existingBaseName = dotIndex > 0
+                                       ? existingImageName.substring(0, dotIndex)
+                                       : existingImageName;
+                const safeImageBaseName = String(existingBaseName || extraProp || "Bild")
+                    .trim().replace(/[<>:"/\\|?*\u0000-\u001F]/g, "_")
+                    .replace(/[. ]+$/g, "") || "Bild";
 
                 listView.editingRowIndex = index
                 listView.currentIndex = index
@@ -1809,7 +1818,7 @@ Window {
 
                 const win = component.createObject(null, {
                     urlString: url,
-                    subjektName: extraProp,
+                    subjektName: safeImageBaseName,
                     packagePath: packagePath,
                     isMultiEdit: true,
                     multiEditCurrentIndex: current,
@@ -1845,21 +1854,8 @@ Window {
 
                     if (prefix) {
                         const imageFileKey = (prefix === "imageFrage") ? "imagefileFrage" : "imagefileAntwort";
-                        let currentFileName = uebungModel.get(index)[imageFileKey];
-                        const subjectKey = (prefix === "imageFrage") ? "frageSubjekt" : "antwortSubjekt";
-                        const subjectValue = uebungModel.get(index)[subjectKey] || "";
-
-                        if (currentFileName && currentFileName.trim() !== "") {
-                            const baseName = currentFileName.substring(0, currentFileName.lastIndexOf("."));
-                            const currentExt = currentFileName.split(".").pop().toLowerCase();
-                            if (currentExt !== savedFileExtension.toLowerCase()) {
-                                const newName = baseName + "." + savedFileExtension;
-                                uebungModel.setProperty(index, imageFileKey, newName);
-                            }
-                        } else {
-                            const newName = subjectValue.trim() + "." + savedFileExtension;
-                            uebungModel.setProperty(index, imageFileKey, newName);
-                        }
+                        const newName = safeImageBaseName + "." + savedFileExtension;
+                        uebungModel.setProperty(index, imageFileKey, newName);
                     }
 
                     saveCurrentModelToXml();

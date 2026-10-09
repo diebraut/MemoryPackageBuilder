@@ -1,0 +1,393 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Daten>
+    <Übungen frageType="Regierungschef nach Bundesland" hideAuthorByQuestion="false" name="Ministerpräsidenten 01.10.2026" sequentiell="true" umgekehrt="true">
+        <MainÜbungsliste>
+            <FrageText>Welche Person regiert [FrageSubjekt]?</FrageText>
+            <FrageTextUmgekehrt>Welches Bundesland wird von  [FrageSubjekt] regiert?</FrageTextUmgekehrt>
+            <Übung nummer="1">
+                <FrageSubjekt>Baden-Württemberg</FrageSubjekt>
+                <AntwortSubjekt>Cem Özdemir (Grüne)</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Baden-Württemberg.png</ImagefileFrage>
+                <ImagefileAntwort>Cem Özdemir (Güne).jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Baden-Württemberg</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Cem_Özdemir</InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor>&lt;bdi>&lt;a href="https://www.wikidata.org/wiki/Q108103612" class="extiw" title="d:Q108103612">&lt;span title="Wikipedian and OpenStreetMap mapper from Cologne, Open Data activist">Raimond Spekking&lt;/span>&lt;/a>&lt;/bdi>[]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 4.0[https://creativecommons.org/licenses/by-sa/4.0]</ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription></ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Hart_aber_fair_-_2020-02-10-4295.jpg</ImageAntwortBildDescription>
+                <ImageFrageUrl></ImageFrageUrl>
+                <ImageAntwortUrl></ImageAntwortUrl>
+                <ArrowDescFra></ArrowDescFra>
+                <ArrowDescAnt></ArrowDescAnt>
+            </Übung>
+            <Übung nummer="2">
+                <FrageSubjekt>Bayern</FrageSubjekt>
+                <AntwortSubjekt>Markus Söder (CSU)</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Bayern.png</ImagefileFrage>
+                <ImagefileAntwort>Markus Söder (CSU).jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Bayern</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Markus_Söder</InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor>PantheraLeo1359531[//commons.wikimedia.org/wiki/User:PantheraLeo1359531]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 4.0[https://creativecommons.org/licenses/by-sa/4.0]</ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription></ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:2026-03-20_Besuch_von_Dr._Markus_Söder_vor_der_Oberbürgermeisterstichwahl_in_Hof_(Saale)_HOF9967_RAW-Export_(cropped).jpg</ImageAntwortBildDescription>
+                <ImageFrageUrl></ImageFrageUrl>
+                <ImageAntwortUrl></ImageAntwortUrl>
+                <ArrowDescFra></ArrowDescFra>
+                <ArrowDescAnt></ArrowDescAnt>
+            </Übung>
+            <Übung nummer="3">
+                <FrageSubjekt>Berlin</FrageSubjekt>
+                <AntwortSubjekt>Kai Wegner (CDU)</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Berlin.png</ImagefileFrage>
+                <ImagefileAntwort>Kai Wegner (CDU).jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Berlin</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Kai_Wegner</InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor>Sandro Halank, Wikimedia Commons[//commons.wikimedia.org/wiki/User:Sandro_Halank]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 4.0[https://creativecommons.org/licenses/by-sa/4.0]</ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription></ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:2025-12-18_Sitzung_des_Abgeordnetenhauses_von_Berlin_by_Sandro_Halank–056.jpg</ImageAntwortBildDescription>
+                <ImageFrageUrl></ImageFrageUrl>
+                <ImageAntwortUrl></ImageAntwortUrl>
+                <ArrowDescFra></ArrowDescFra>
+                <ArrowDescAnt></ArrowDescAnt>
+            </Übung>
+            <Übung nummer="4">
+                <FrageSubjekt>Brandenburg</FrageSubjekt>
+                <AntwortSubjekt>Dietmar Woidke (SPD)</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Brandenburg.png</ImagefileFrage>
+                <ImagefileAntwort>Dietmar Woidke (SPD).jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Brandenburg</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Dietmar_Woidke</InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor>Sandro Halank[//commons.wikimedia.org/wiki/User:Sandro_Halank]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 4.0[https://creativecommons.org/licenses/by-sa/4.0]</ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription></ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:2021-12-21_Sitzung_des_Abgeordnetenhauses_von_Berlin_by_Sandro_Halank–093_(cropped).jpg</ImageAntwortBildDescription>
+                <ImageFrageUrl></ImageFrageUrl>
+                <ImageAntwortUrl></ImageAntwortUrl>
+                <ArrowDescFra></ArrowDescFra>
+                <ArrowDescAnt></ArrowDescAnt>
+            </Übung>
+            <Übung nummer="5">
+                <FrageSubjekt>Bremen</FrageSubjekt>
+                <AntwortSubjekt>Andreas Bovenschulte (SPD)</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Bremen.png</ImagefileFrage>
+                <ImagefileAntwort>Andreas Bovenschulte (SPD).jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Freie_Hansestadt_Bremen</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Andreas_Bovenschulte</InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor>Superbass[//commons.wikimedia.org/wiki/User:Superbass]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 4.0[https://creativecommons.org/licenses/by-sa/4.0]</ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription></ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:2025-10-27-Andreas_Bovenschulte-Hart_aber_fair-6935.jpg</ImageAntwortBildDescription>
+                <ImageFrageUrl></ImageFrageUrl>
+                <ImageAntwortUrl></ImageAntwortUrl>
+                <ArrowDescFra></ArrowDescFra>
+                <ArrowDescAnt></ArrowDescAnt>
+            </Übung>
+            <Übung nummer="6">
+                <FrageSubjekt>Hamburg</FrageSubjekt>
+                <AntwortSubjekt>Peter Tschentscher (SPD)</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Hamburg.png</ImagefileFrage>
+                <ImagefileAntwort>Peter Tschentscher (SPD).jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Hamburg</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Peter_Tschentscher</InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor>Sandro Halank, Wikimedia Commons[//commons.wikimedia.org/wiki/User:Sandro_Halank]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 4.0[https://creativecommons.org/licenses/by-sa/4.0]</ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription></ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:2025-03-02_Wahlabend_Hamburg_by_Sandro_Halank–054.jpg</ImageAntwortBildDescription>
+                <ImageFrageUrl></ImageFrageUrl>
+                <ImageAntwortUrl></ImageAntwortUrl>
+                <ArrowDescFra></ArrowDescFra>
+                <ArrowDescAnt></ArrowDescAnt>
+            </Übung>
+            <Übung nummer="7">
+                <FrageSubjekt>Hessen</FrageSubjekt>
+                <AntwortSubjekt>Boris Rhein (CDU)</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Hessen.png</ImagefileFrage>
+                <ImagefileAntwort>Boris Rhein (CDU).jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Hessen</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Boris_Rhein</InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor>Hessischer Landtag[]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0[https://creativecommons.org/licenses/by-sa/3.0]</ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription></ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Boris-Rhein-Passbild2sw2.jpg</ImageAntwortBildDescription>
+                <ImageFrageUrl></ImageFrageUrl>
+                <ImageAntwortUrl></ImageAntwortUrl>
+                <ArrowDescFra></ArrowDescFra>
+                <ArrowDescAnt></ArrowDescAnt>
+            </Übung>
+            <Übung nummer="8">
+                <FrageSubjekt>Mecklenburg-Vorpommern</FrageSubjekt>
+                <AntwortSubjekt>Manuela Schwesig (SPD)</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Mecklenburg-Vorpommern.png</ImagefileFrage>
+                <ImagefileAntwort>Manuela Schwesig (SPD).jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Mecklenburg-Vorpommern</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Manuela_Schwesig</InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor>&lt;bdi>&lt;a href="https://www.wikidata.org/wiki/Q15080600" class="extiw" title="d:Q15080600">&lt;span title="German civil engineer and photographer">Ralf Roletschek&lt;/span>&lt;/a>&lt;/bdi>[]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>GFDL 1.2[http://www.gnu.org/licenses/old-licenses/fdl-1.2.html]</ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription></ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Manuela_Schwesig_2023_2.jpg</ImageAntwortBildDescription>
+                <ImageFrageUrl></ImageFrageUrl>
+                <ImageAntwortUrl></ImageAntwortUrl>
+                <ArrowDescFra></ArrowDescFra>
+                <ArrowDescAnt></ArrowDescAnt>
+            </Übung>
+            <Übung nummer="9">
+                <FrageSubjekt>Niedersachsen</FrageSubjekt>
+                <AntwortSubjekt>Olaf Lies (SPD)</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Niedersachsen.png</ImagefileFrage>
+                <ImagefileAntwort>Olaf Lies (SPD).jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Niedersachsen</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Olaf_Lies</InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor>MW[//commons.wikimedia.org/w/index.php?title=User:Chris31181&amp;amp;action=edit&amp;amp;redlink=1]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 4.0[https://creativecommons.org/licenses/by-sa/4.0]</ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription></ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Olaf_Lies_(2023)_(cropped_3x4).jpg</ImageAntwortBildDescription>
+                <ImageFrageUrl></ImageFrageUrl>
+                <ImageAntwortUrl></ImageAntwortUrl>
+                <ArrowDescFra></ArrowDescFra>
+                <ArrowDescAnt></ArrowDescAnt>
+            </Übung>
+            <Übung nummer="10">
+                <FrageSubjekt>Nordrhein-Westfalen</FrageSubjekt>
+                <AntwortSubjekt>Hendrik Wüst (CDU)</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Nordrhein-Westfalen.png</ImagefileFrage>
+                <ImagefileAntwort>Hendrik Wüst (CDU).jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Nordrhein-Westfalen</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Hendrik_Wüst</InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor>&lt;bdi>&lt;a href="https://www.wikidata.org/wiki/Q108103612" class="extiw" title="d:Q108103612">&lt;span title="Wikipedian and OpenStreetMap mapper from Cologne, Open Data activist">Raimond Spekking&lt;/span>&lt;/a>&lt;/bdi>[]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 4.0[https://creativecommons.org/licenses/by-sa/4.0]</ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription></ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Inauguration_of_the_LUNA_Analog_Facility-4541_(cropped).jpg</ImageAntwortBildDescription>
+                <ImageFrageUrl></ImageFrageUrl>
+                <ImageAntwortUrl></ImageAntwortUrl>
+                <ArrowDescFra></ArrowDescFra>
+                <ArrowDescAnt></ArrowDescAnt>
+            </Übung>
+            <Übung nummer="11">
+                <FrageSubjekt>Rheinland-Pfalz</FrageSubjekt>
+                <AntwortSubjekt>Gordon Schnieder (CDU)</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Rheinland-Pfalz.png</ImagefileFrage>
+                <ImagefileAntwort>Gordon Schnieder (CDU).jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Rheinland-Pfalz</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Gordon_Schnieder</InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor>Olaf Kosinsky[]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 3.0 de[https://creativecommons.org/licenses/by-sa/3.0/de/deed.en]</ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription></ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:2021-01-28_Gordon_Schnieder_CDU_MdL_by_OlafKosinsky_MG_7181.jpg</ImageAntwortBildDescription>
+                <ImageFrageUrl></ImageFrageUrl>
+                <ImageAntwortUrl></ImageAntwortUrl>
+                <ArrowDescFra></ArrowDescFra>
+                <ArrowDescAnt></ArrowDescAnt>
+            </Übung>
+            <Übung nummer="12">
+                <FrageSubjekt>Saarland</FrageSubjekt>
+                <AntwortSubjekt>Anke Rehlinger (SPD)</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Saarland.png</ImagefileFrage>
+                <ImagefileAntwort>Anke Rehlinger (SPD).jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Saarland</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Anke_Rehlinger</InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor>&lt;bdi>&lt;a href="https://www.wikidata.org/wiki/Q108103612" class="extiw" title="d:Q108103612">&lt;span title="Wikipedian and OpenStreetMap mapper from Cologne, Open Data activist">Raimond Spekking&lt;/span>&lt;/a>&lt;/bdi>[]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 4.0[https://creativecommons.org/licenses/by-sa/4.0]</ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription></ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Hart_aber_fair_2025-03-10-1292.jpg</ImageAntwortBildDescription>
+                <ImageFrageUrl></ImageFrageUrl>
+                <ImageAntwortUrl></ImageAntwortUrl>
+                <ArrowDescFra></ArrowDescFra>
+                <ArrowDescAnt></ArrowDescAnt>
+            </Übung>
+            <Übung nummer="13">
+                <FrageSubjekt>Sachsen</FrageSubjekt>
+                <AntwortSubjekt>Michael Kretschmer (CDU)</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Sachsen.png</ImagefileFrage>
+                <ImagefileAntwort>Michael Kretschmer (CDU).jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Sachsen</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Michael_Kretschmer</InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor>Sandro Halank, Wikimedia Commons[//commons.wikimedia.org/wiki/User:Sandro_Halank]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 4.0[https://creativecommons.org/licenses/by-sa/4.0]</ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription></ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:2024-09-01_Wahlabend_Sachsen_by_Sandro_Halank–049.jpg</ImageAntwortBildDescription>
+                <ImageFrageUrl></ImageFrageUrl>
+                <ImageAntwortUrl></ImageAntwortUrl>
+                <ArrowDescFra></ArrowDescFra>
+                <ArrowDescAnt></ArrowDescAnt>
+            </Übung>
+            <Übung nummer="14">
+                <FrageSubjekt>Sachsen-Anhalt</FrageSubjekt>
+                <AntwortSubjekt>Sven Schulze (CDU)</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Sachsen-Anhalt.png</ImagefileFrage>
+                <ImagefileAntwort>Sven Schulze (CDU).jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Sachsen-Anhalt</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Sven_Schulze_%28Politiker%2C_1979%29</InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor>Steffen Prößdorf[//commons.wikimedia.org/wiki/User:Stepro]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 4.0[https://creativecommons.org/licenses/by-sa/4.0]</ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription></ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:2024-08-21_Event,_CDU,_Wahlkampf_mit_Friedrich_Merz_in_Erfurt_2024_STP_3079_by_Stepro_(cropped).jpg</ImageAntwortBildDescription>
+                <ImageFrageUrl></ImageFrageUrl>
+                <ImageAntwortUrl></ImageAntwortUrl>
+                <ArrowDescFra></ArrowDescFra>
+                <ArrowDescAnt></ArrowDescAnt>
+            </Übung>
+            <Übung nummer="15">
+                <FrageSubjekt>Schleswig-Holstein</FrageSubjekt>
+                <AntwortSubjekt>Daniel Günther (CDU)</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Schleswig-Holstein.png</ImagefileFrage>
+                <ImagefileAntwort>Daniel Günther (CDU).jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Schleswig-Holstein</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Daniel_Günther</InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor>Staatskanzlei Schleswig-Holstein, Presse- und Informationsstelle der Landesregierung[//commons.wikimedia.org/wiki/User:Staatskanzlei_Schleswig-Holstein,_Presse-_und_Informationsstelle_der_Landesregierung]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 4.0[https://creativecommons.org/licenses/by-sa/4.0]</ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription></ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:Daniel_Günther_(2017).jpg</ImageAntwortBildDescription>
+                <ImageFrageUrl></ImageFrageUrl>
+                <ImageAntwortUrl></ImageAntwortUrl>
+                <ArrowDescFra></ArrowDescFra>
+                <ArrowDescAnt></ArrowDescAnt>
+            </Übung>
+            <Übung nummer="16">
+                <FrageSubjekt>Thüringen</FrageSubjekt>
+                <AntwortSubjekt>Mario Voigt (CDU)</AntwortSubjekt>
+                <SubjektPrefixFrage></SubjektPrefixFrage>
+                <SubjektPrefixAntwort></SubjektPrefixAntwort>
+                <ImagefileFrage>Thüringen.png</ImagefileFrage>
+                <ImagefileAntwort>Mario Voigt (CDU).jpg</ImagefileAntwort>
+                <InfoURLFrage>https://de.wikipedia.org/wiki/Thüringen</InfoURLFrage>
+                <InfoURLAntwort>https://de.wikipedia.org/wiki/Mario_Voigt</InfoURLAntwort>
+                <ImageFrageAuthor></ImageFrageAuthor>
+                <ImageFrageLizenz></ImageFrageLizenz>
+                <ImageAntwortAuthor>Sandro Halank, Wikimedia Commons[//commons.wikimedia.org/wiki/User:Sandro_Halank]</ImageAntwortAuthor>
+                <ImageAntwortLizenz>CC BY-SA 4.0[https://creativecommons.org/licenses/by-sa/4.0]</ImageAntwortLizenz>
+                <WikiPageFraVers></WikiPageFraVers>
+                <WikiPageAntVers></WikiPageAntVers>
+                <ExcludeAereaFra></ExcludeAereaFra>
+                <ExcludeAereaAnt></ExcludeAereaAnt>
+                <ImageFrageBildDescription></ImageFrageBildDescription>
+                <ImageAntwortBildDescription>https://commons.wikimedia.org/wiki/File:2024-12-12_Landtag_Thüringen_–_Wahl_des_Ministerpräsidenten_by_Sandro_Halank–049.jpg</ImageAntwortBildDescription>
+                <ImageFrageUrl></ImageFrageUrl>
+                <ImageAntwortUrl></ImageAntwortUrl>
+                <ArrowDescFra></ArrowDescFra>
+                <ArrowDescAnt></ArrowDescAnt>
+            </Übung>
+        </MainÜbungsliste>
+    </Übungen>
+</Daten>
