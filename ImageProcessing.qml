@@ -3,6 +3,7 @@ import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 import QtQuick.Window 2.15
 import QtQuick.Shapes 1.15
+import QtQuick.Dialogs as Dialogs
 import QtCore
 import FileHelper 1.0
 
@@ -1270,8 +1271,27 @@ Window {
                                                 if (rectItem.modelIndex < 0 || rectItem.modelIndex >= rectanglesModel.count) return;
                                                 rectanglesModel.setProperty(rectItem.modelIndex, "color", c);
                                                 drawLayer.defaultRectColor = c;
+                                                rectanglesModel.setProperty(rectItem.modelIndex, "rectTranspWithLine", false);
+                                                drawLayer.defaultRectTranspWithLine = false;
                                             }
 
+                                            Dialogs.ColorDialog {
+                                                id: rectangleColorDialog
+                                                title: "Eigene Farbe"
+                                                parentWindow: imageWindow
+                                                onAccepted: {
+                                                    rectMenu.setColor(String(selectedColor));
+                                                }
+                                            }
+
+                                            MenuItem {
+                                                text: "Eigene Farbe"
+                                                onTriggered: {
+                                                    const r = rectMenu.currentRect();
+                                                    rectangleColorDialog.selectedColor = r.color || drawLayer.defaultRectColor;
+                                                    rectangleColorDialog.open();
+                                                }
+                                            }
                                             MenuItem { text: "Schwarz"; checkable: true;
                                                 checked: (rectMenu.currentRect().color !== undefined && rectMenu.currentRect().color !== "" ? rectMenu.currentRect().color : drawLayer.defaultRectColor) === "black";
                                                 onTriggered: rectMenu.setColor("black")

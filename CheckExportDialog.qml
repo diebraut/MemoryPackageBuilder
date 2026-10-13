@@ -657,8 +657,7 @@ Window {
                             transformOrigin: Item.Center
                             antialiasing: false
                             color: drawAsBackground ? imageArea.backgroundColor : modelData.color
-                            border.color: drawAsBackground ? imageArea.backgroundColor : "black"
-                            border.width: drawAsBackground ? 0 : 2
+                            border.width: 0
                             z: 10
                         }
                     }
