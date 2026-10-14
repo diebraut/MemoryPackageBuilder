@@ -196,15 +196,13 @@ static QColor detectDominantEdgeColor(const QImage &img,
 
 
 // ---------------------------------------------------------------------
-// Alle farblich passenden Pixel entfernen. Die Hintergrundfarbe selbst wird
-// weiterhin am Rand bzw. ausserhalb des Quellbildes bestimmt. Die globale
-// Ersetzung erfasst aber auch eingeschlossene Flaechen, beispielsweise die
-// Innenraeume von Buchstaben und Ziffern.
+// Passende Hintergrundpixel nur ausserhalb des geschuetzten Quellbildes entfernen.
+// Motivfarben bleiben unveraendert.
 // ---------------------------------------------------------------------
 
 static void matchingColorToAlpha(QImage &img,
                                  const QColor &bg,
-                                 int tolerance = 16)
+                                 int tolerance = 16, const QRect &protectedRect = QRect())
 {
     if (img.isNull())
         return;
@@ -219,6 +217,8 @@ static void matchingColorToAlpha(QImage &img,
     for (int y = 0; y < img.height(); ++y) {
         QRgb *line = reinterpret_cast<QRgb *>(img.scanLine(y));
         for (int x = 0; x < img.width(); ++x) {
+            if (protectedRect.contains(x, y))
+                continue;
             const QRgb pixel = line[x];
             if (qAbs(qRed(pixel) - br) <= tolerance
                     && qAbs(qGreen(pixel) - bgc) <= tolerance
@@ -355,6 +355,9 @@ QVariantMap ImageDownloader::grabTransparentPreview(QQuickWindow *window,
     QImage preview = frame.copy(crop).convertToFormat(QImage::Format_ARGB32);
     preview.setDevicePixelRatio(1.0);
 
+    const QRect protectedRect(qRound(imageX * dpr) - crop.x(),
+                              qRound(imageY * dpr) - crop.y(),
+                              qRound(imageW * dpr), qRound(imageH * dpr));
     QColor background(transparentColor);
     if (!background.isValid()) {
         const QRect imageRectInPreview(
@@ -367,7 +370,7 @@ QVariantMap ImageDownloader::grabTransparentPreview(QQuickWindow *window,
             : detectDominantEdgeColor(preview);
     }
     result.insert(QStringLiteral("backgroundColor"), background.name(QColor::HexRgb));
-    matchingColorToAlpha(preview, background, 16);
+    matchingColorToAlpha(preview, background, 16, protectedRect);
 
     QByteArray png;
     QBuffer buffer(&png);
@@ -424,7 +427,8 @@ bool ImageDownloader::grabAndSaveCropped(
     int h,
     const QString &path,
     bool transparentBackground,
-    const QString &transparentColor)
+    const QString &transparentColor,
+    int imageX, int imageY, int imageW, int imageH)
 {
     if (!window || w <= 0 || h <= 0) {
 
@@ -505,11 +509,7 @@ bool ImageDownloader::grabAndSaveCropped(
          *
          * Kein Alpha-Verlauf und keine RGB-Farbkorrektur.
          */
-        matchingColorToAlpha(
-            img,
-            bg,
-            16
-            );
+        matchingColorToAlpha(img, bg, 16, QRect(qRound(imageX * dpr) - crop.x(), qRound(imageY * dpr) - crop.y(), qRound(imageW * dpr), qRound(imageH * dpr)));
     }
 
     // -------------------------------------------------------------

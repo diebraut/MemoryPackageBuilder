@@ -403,7 +403,7 @@ Window {
         urlWindow.requestUpdate();  // ⬅️ sorgt für Redraw ohne das Rechteck
 
         nextFrameTimer.callback = function() {
-            imgDownloader.grabAndSaveCropped(urlWindow, rx, ry, rw, rh, savePath, transparentBg, transparentColor);
+            imgDownloader.grabAndSaveCropped(urlWindow, rx, ry, rw, rh, savePath, transparentBg, transparentColor, rect.sourceImageRect.x, rect.sourceImageRect.y, rect.sourceImageRect.width, rect.sourceImageRect.height);
             rect.destroy();
         };
 
