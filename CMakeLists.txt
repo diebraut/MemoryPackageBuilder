@@ -36,6 +36,7 @@ qt_add_qml_module(appMemoryPackagesBuilder
     QML_FILES
         Main.qml
         CheckExportDialog.qml
+        ImageInformationBox.qml
         UebungenDialog.qml
         EditExersizeDialog.qml
         ImageProcessing.qml
@@ -50,7 +51,7 @@ qt_add_qml_module(appMemoryPackagesBuilder
         QML_FILES
         SOURCES
         SOURCES licenceinfowiki.h licenceinfowiki.cpp
-        SOURCES filehelper.h filehelper.cpp
+        SOURCES filehelper.h filehelper.cpp imageinformation.h imageinformation.cpp
         SOURCES buildexercisepackage.h buildexercisepackage.cpp
         SOURCES rectanglekeyfilter.h rectanglekeyfilter.cpp
         QML_FILES MultiSelectListView.qml

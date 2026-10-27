@@ -357,6 +357,12 @@ Window {
 
     Component.onCompleted: loadExercises()
     onPackagePathChanged: loadExercises()
+    onVisibleChanged: {
+        if (!visible) {
+            questionImageInformation.discardPreview()
+            answerImageInformation.discardPreview()
+        }
+    }
 
     ColumnLayout {
         anchors.fill: parent
@@ -459,7 +465,8 @@ Window {
                         Layout.fillHeight: true
                         Layout.preferredHeight: parent.height * 0.58
                         caption: "Frage: " + root.currentQuestionText()
-                        imageSource: root.imageUrl(root.questionImageFile())
+                        imageSource: questionImageInformation.previewUrl || (root.hasQuestionImage()
+                            ? root.imageUrl(root.questionImageFile()) + "&revision=" + questionImageInformation.imageRevision : "")
                         excludeAreas: root.questionExcludeAreas()
                         arrows: root.questionArrows()
                     }
@@ -469,9 +476,46 @@ Window {
                         Layout.fillHeight: true
                         Layout.preferredHeight: parent.height * 0.58
                         caption: "Antwort: " + root.currentAnswerText()
-                        imageSource: root.imageUrl(root.answerImageFile())
+                        imageSource: answerImageInformation.previewUrl || (root.hasAnswerImage()
+                            ? root.imageUrl(root.answerImageFile()) + "&revision=" + answerImageInformation.imageRevision : "")
                         excludeAreas: root.answerExcludeAreas()
                         arrows: root.answerArrows()
+                    }
+                }
+
+                RowLayout {
+                    Layout.fillWidth: true
+                    Layout.preferredHeight: 80
+                    Layout.minimumHeight: 80
+                    Layout.maximumHeight: 80
+                    spacing: 10
+                    visible: root.hasQuestionImage() || root.hasAnswerImage()
+
+                    Item {
+                        Layout.fillWidth: true
+                        Layout.fillHeight: true
+                        Layout.preferredWidth: 1
+                        ImageInformationBox {
+                            anchors.fill: parent
+                            id: questionImageInformation
+                            visible: root.hasQuestionImage()
+                            filePath: root.hasQuestionImage() ? root.packagePath + "/" + root.questionImageFile() : ""
+                            refreshToken: root.imageCacheToken
+                            imageContext: root.currentUnitIndex + ":" + root.currentExerciseIndex + ":" + root.reversePreview
+                        }
+                    }
+                    Item {
+                        Layout.fillWidth: true
+                        Layout.fillHeight: true
+                        Layout.preferredWidth: 1
+                        ImageInformationBox {
+                            anchors.fill: parent
+                            id: answerImageInformation
+                            visible: root.hasAnswerImage()
+                            filePath: root.hasAnswerImage() ? root.packagePath + "/" + root.answerImageFile() : ""
+                            refreshToken: root.imageCacheToken
+                            imageContext: root.currentUnitIndex + ":" + root.currentExerciseIndex + ":" + root.reversePreview
+                        }
                     }
                 }
 

@@ -13,6 +13,13 @@
 #include <QPainter>
 #include <QUrl>
 #include <QVariant>
+#include <QDateTime>
+#include <QPointer>
+#include <QTimer>
+#include <QCryptographicHash>
+#include <QTemporaryFile>
+#include <QSaveFile>
+#include "imageinformation.h"
 
 namespace {
 QString localFilePathFromString(const QString &path)
@@ -22,6 +29,183 @@ QString localFilePathFromString(const QString &path)
         return url.toLocalFile();
     return path;
 }
+}
+
+FileHelper::FileHelper(QObject *parent) : QObject(parent)
+{
+    m_imageInformationPool.setMaxThreadCount(1);
+}
+
+void FileHelper::requestImageInformation(const QString &path, const QString &requestToken)
+{
+    const QFileInfo file(localFilePathFromString(path));
+    QVariantMap information;
+    if (file.isFile()) {
+        information = {{QStringLiteral("state"), QStringLiteral("ready")},
+                       {QStringLiteral("sizeBytes"), file.size()}};
+    } else {
+        information = {{QStringLiteral("state"), QStringLiteral("error")},
+                       {QStringLiteral("message"), QStringLiteral("Bilddatei nicht gefunden")}};
+    }
+    QTimer::singleShot(0, this, [this, requestToken, information]() {
+        emit imageInformationReady(requestToken, information);
+    });
+}
+
+bool FileHelper::compressPackageImages(const QString &path)
+{
+    const QString directory = localFilePathFromString(path);
+    if (m_imageCompressionRunning || !QDir(directory).exists())
+        return false;
+    m_imageCompressionRunning = true;
+    emit imageCompressionRunningChanged();
+    const QPointer<FileHelper> guard(this);
+    m_imageInformationPool.start([guard, directory]() {
+        QFileInfoList images;
+        const auto formats = QImageReader::supportedImageFormats();
+        // Package images are stored directly in this directory. Leave backup folders alone.
+        for (const QFileInfo &file : QDir(directory).entryInfoList(QDir::Files | QDir::NoSymLinks, QDir::Name)) {
+            const QByteArray suffix = file.suffix().toLower().toLatin1();
+            QImageReader reader(file.absoluteFilePath());
+            reader.setDecideFormatFromContent(true);
+            if (formats.contains(suffix) || suffix == "jpg" || suffix == "jpeg"
+                || suffix == "png" || reader.canRead())
+                images.append(file);
+        }
+        const int total = int(images.size());
+        const auto progress = [guard, total](int processed, const QString &name) {
+            if (guard)
+                QMetaObject::invokeMethod(guard.data(), [guard, processed, total, name]() {
+                    if (guard) emit guard->imageCompressionProgress(processed, total, name);
+                }, Qt::QueuedConnection);
+        };
+        int processed = 0, compressed = 0, unchanged = 0, unsupported = 0;
+        qint64 saved = 0;
+        QStringList errors;
+        for (const QFileInfo &file : images) {
+            progress(processed, file.fileName());
+            const QVariantMap result = compressImageLosslessly(file.absoluteFilePath());
+            const QString state = result.value(QStringLiteral("state")).toString();
+            if (state == QStringLiteral("compressed")) {
+                ++compressed;
+                saved += result.value(QStringLiteral("savingBytes")).toLongLong();
+            } else if (state == QStringLiteral("ready")) {
+                ++unchanged;
+            } else if (state == QStringLiteral("unsupported")) {
+                ++unsupported;
+            } else {
+                errors.append(file.fileName() + QStringLiteral(": ")
+                              + result.value(QStringLiteral("message")).toString());
+            }
+            if (guard)
+                QMetaObject::invokeMethod(guard.data(), [guard, name = file.fileName(), result]() {
+                    if (guard) emit guard->imageCompressionFileFinished(name, result);
+                }, Qt::QueuedConnection);
+            progress(++processed, file.fileName());
+        }
+        const QVariantMap summary{{QStringLiteral("total"), total},
+            {QStringLiteral("compressed"), compressed}, {QStringLiteral("unchanged"), unchanged},
+            {QStringLiteral("unsupported"), unsupported}, {QStringLiteral("savedBytes"), saved},
+            {QStringLiteral("errors"), errors}, {QStringLiteral("errorCount"), int(errors.size())}};
+        if (guard)
+            QMetaObject::invokeMethod(guard.data(), [guard, summary]() {
+                if (!guard) return;
+                guard->m_imageCompressionRunning = false;
+                emit guard->imageCompressionRunningChanged();
+                emit guard->imageCompressionFinished(summary);
+            }, Qt::QueuedConnection);
+    });
+    return true;
+}
+
+void FileHelper::requestImageCompressionPreview(const QString &path, int quality, const QString &token)
+{
+    discardImageCompressionPreview(token);
+    const QString localPath = QFileInfo(localFilePathFromString(path)).absoluteFilePath();
+    if (!m_imagePreviewDirectory.isValid() || QFileInfo(localPath).isSymLink()) {
+        emit imageCompressionPreviewReady(token, {{QStringLiteral("state"), QStringLiteral("error")},
+            {QStringLiteral("message"), QStringLiteral("Temporäre Vorschau kann nicht angelegt werden.")}});
+        return;
+    }
+    m_imagePreviews.insert(token, {{QStringLiteral("originalPath"), localPath}});
+    const QString temporaryDirectory = m_imagePreviewDirectory.path();
+    const QPointer<FileHelper> guard(this);
+    m_imageInformationPool.start([guard, localPath, quality, token, temporaryDirectory]() {
+        QByteArray original, encoded;
+        QVariantMap result = prepareImageCompressionPreview(localPath, quality, original, encoded);
+        QVariantMap record;
+        if (result.value(QStringLiteral("state")).toString() == QStringLiteral("ready")) {
+            QTemporaryFile preview(temporaryDirectory + QStringLiteral("/preview-XXXXXX.")
+                                   + result.value(QStringLiteral("format")).toString());
+            if (!preview.open() || preview.write(encoded) != encoded.size() || !preview.flush()) {
+                result[QStringLiteral("state")] = QStringLiteral("error");
+                result[QStringLiteral("message")] = preview.errorString();
+            } else {
+                preview.setAutoRemove(false);
+                const QString temporaryPath = preview.fileName();
+                preview.close();
+                record = {{QStringLiteral("originalPath"), localPath},
+                    {QStringLiteral("temporaryPath"), temporaryPath},
+                    {QStringLiteral("originalHash"), QCryptographicHash::hash(original, QCryptographicHash::Sha256)},
+                    {QStringLiteral("previewHash"), QCryptographicHash::hash(encoded, QCryptographicHash::Sha256)}};
+                result[QStringLiteral("previewUrl")] = QUrl::fromLocalFile(temporaryPath).toString();
+            }
+        }
+        if (guard)
+            QMetaObject::invokeMethod(guard.data(), [guard, token, record, result]() {
+                if (!guard || !guard->m_imagePreviews.contains(token)) {
+                    if (!record.isEmpty()) QFile::remove(record.value(QStringLiteral("temporaryPath")).toString());
+                    return;
+                }
+                if (!record.isEmpty()) guard->m_imagePreviews.insert(token, record);
+                else guard->m_imagePreviews.remove(token);
+                emit guard->imageCompressionPreviewReady(token, result);
+            }, Qt::QueuedConnection);
+    });
+}
+
+void FileHelper::discardImageCompressionPreview(const QString &token)
+{
+    const QVariantMap record = m_imagePreviews.take(token);
+    const QString path = record.value(QStringLiteral("temporaryPath")).toString();
+    if (!path.isEmpty()) QFile::remove(path);
+}
+
+QVariantMap FileHelper::applyImageCompressionPreview(const QString &token)
+{
+    const auto fail = [](const QString &message) {
+        return QVariantMap{{QStringLiteral("state"), QStringLiteral("error")},
+                           {QStringLiteral("message"), message}};
+    };
+    const QVariantMap record = m_imagePreviews.value(token);
+    const QString path = record.value(QStringLiteral("originalPath")).toString();
+    const QString temporaryPath = record.value(QStringLiteral("temporaryPath")).toString();
+    if (path.isEmpty() || temporaryPath.isEmpty()) return fail(QStringLiteral("Keine komprimierte Vorschau vorhanden."));
+    QFile current(path), preview(temporaryPath);
+    if (QFileInfo(path).isSymLink() || !current.open(QIODevice::ReadOnly) || !preview.open(QIODevice::ReadOnly))
+        return fail(QStringLiteral("Original oder Vorschau kann nicht gelesen werden."));
+    const QByteArray original = current.readAll();
+    if (current.error() != QFileDevice::NoError
+        || QCryptographicHash::hash(original, QCryptographicHash::Sha256) != record.value(QStringLiteral("originalHash")).toByteArray())
+        return fail(QStringLiteral("Das Original wurde inzwischen geändert. Bitte eine neue Vorschau erzeugen."));
+    const QByteArray encoded = preview.readAll();
+    if (preview.error() != QFileDevice::NoError
+        || QCryptographicHash::hash(encoded, QCryptographicHash::Sha256) != record.value(QStringLiteral("previewHash")).toByteArray())
+        return fail(QStringLiteral("Die Vorschau wurde inzwischen geändert. Bitte neu komprimieren."));
+    current.close();
+    preview.close();
+    QSaveFile output(path);
+    output.setDirectWriteFallback(false);
+    if (!output.open(QIODevice::WriteOnly)) return fail(output.errorString());
+    if (output.write(encoded) != encoded.size()) {
+        const QString error = output.errorString();
+        output.cancelWriting();
+        return fail(error);
+    }
+    if (!output.commit()) return fail(output.errorString());
+    discardImageCompressionPreview(token);
+    emit imageFileReplaced(path);
+    return {{QStringLiteral("state"), QStringLiteral("ready")}};
 }
 
 bool FileHelper::removeFile(const QString &path) {

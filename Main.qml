@@ -85,6 +85,195 @@ Window {
         }
     }
 
+    function startImageCompression(packageData) {
+        imageCompressionWindow.packageName = packageData.displayName
+        imageCompressionWindow.processed = 0
+        imageCompressionWindow.total = 0
+        imageCompressionWindow.fileName = "Bilder werden gesucht …"
+        imageCompressionWindow.resultText = ""
+        completedCompressionFiles.clear()
+        compressionNotice.text = ""
+        compressionNoticeTimer.stop()
+        imageCompressionWindow.show()
+        if (!FileHelper.compressPackageImages(packageData.path))
+            imageCompressionWindow.resultText = "Die Komprimierung konnte nicht gestartet werden. Bitte den Paketordner prüfen."
+    }
+
+    onClosing: function(event) {
+        if (FileHelper.imageCompressionRunning) event.accepted = false
+    }
+
+    ListModel { id: completedCompressionFiles }
+
+    Window {
+        id: imageCompressionWindow
+        transientParent: window
+        modality: Qt.ApplicationModal
+        title: "Bilder verlustfrei komprimieren"
+        width: 480
+        height: 310
+        minimumWidth: 440
+        minimumHeight: 280
+        color: "#f5f7fa"
+        property string packageName: ""
+        property int processed: 0
+        property int total: 0
+        property string fileName: ""
+        property string resultText: ""
+        onClosing: function(event) {
+            if (FileHelper.imageCompressionRunning) event.accepted = false
+        }
+        ColumnLayout {
+            anchors.fill: parent
+            anchors.margins: 16
+            spacing: 8
+            Label {
+                text: imageCompressionWindow.packageName
+                font.bold: true
+                font.pixelSize: 15
+                Layout.fillWidth: true
+                elide: Text.ElideRight
+            }
+            RowLayout {
+                Layout.fillWidth: true
+                Label {
+                    text: imageCompressionWindow.total > 0
+                        ? imageCompressionWindow.processed + " von " + imageCompressionWindow.total + " Dateien bearbeitet"
+                        : "Bilddateien werden gesucht …"
+                    Layout.fillWidth: true
+                }
+                Label {
+                    text: imageCompressionWindow.total > 0
+                        ? Math.round(100 * imageCompressionWindow.processed / imageCompressionWindow.total) + " %" : ""
+                    font.bold: true
+                    color: "#2867aa"
+                }
+            }
+            ProgressBar {
+                id: compressionProgressBar
+                Layout.fillWidth: true
+                from: 0
+                to: Math.max(1, imageCompressionWindow.total)
+                value: imageCompressionWindow.processed
+                visible: imageCompressionWindow.total > 0
+                background: Rectangle { implicitHeight: 10; radius: 5; color: "#dce4ed" }
+                contentItem: Item {
+                    implicitHeight: 10
+                    Rectangle {
+                        width: compressionProgressBar.visualPosition * parent.width
+                        height: parent.height
+                        radius: 5
+                        color: "#387fca"
+                        Behavior on width { NumberAnimation { duration: 120 } }
+                    }
+                }
+            }
+            Label {
+                Layout.fillWidth: true
+                text: imageCompressionWindow.resultText || "Aktuell: " + imageCompressionWindow.fileName
+                elide: Text.ElideMiddle
+                color: imageCompressionWindow.resultText ? "#a02020" : "#526175"
+            }
+            Rectangle {
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                color: "white"
+                radius: 5
+                border.color: "#dce4ed"
+                ListView {
+                    id: completedCompressionList
+                    anchors.fill: parent
+                    anchors.margins: 8
+                    clip: true
+                    model: completedCompressionFiles
+                    spacing: 4
+                    ScrollBar.vertical: ScrollBar { }
+                    delegate: RowLayout {
+                        width: completedCompressionList.width
+                        spacing: 8
+                        Label { text: model.status; color: model.statusColor; font.pixelSize: 11 }
+                        Label { text: model.fileName; Layout.fillWidth: true; elide: Text.ElideMiddle; font.pixelSize: 12 }
+                    }
+                }
+                Label {
+                    anchors.centerIn: parent
+                    visible: completedCompressionFiles.count === 0
+                    text: "Fertig bearbeitete Dateien erscheinen hier."
+                    color: "#778394"
+                    font.pixelSize: 12
+                }
+            }
+            Button {
+                text: "Schließen"
+                Layout.alignment: Qt.AlignRight
+                visible: !FileHelper.imageCompressionRunning && imageCompressionWindow.resultText !== ""
+                onClicked: imageCompressionWindow.close()
+            }
+        }
+    }
+
+    Rectangle {
+        id: compressionNotice
+        property string text: ""
+        property string details: ""
+        visible: text !== ""
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 12
+        width: Math.min(window.width - 24, 620)
+        height: compressionNoticeLabel.implicitHeight + 20
+        z: 1000
+        color: "#edf4fc"
+        border.color: "#a9c4e2"
+        radius: 6
+        Label {
+            id: compressionNoticeLabel
+            anchors.centerIn: parent
+            width: parent.width - 24
+            text: compressionNotice.text
+            wrapMode: Text.WordWrap
+        }
+        MouseArea { anchors.fill: parent; onClicked: compressionNotice.text = "" }
+        ToolTip.visible: compressionNoticeHover.hovered && compressionNotice.details !== ""
+        ToolTip.text: compressionNotice.details
+        HoverHandler { id: compressionNoticeHover }
+    }
+    Timer {
+        id: compressionNoticeTimer
+        interval: 8000
+        onTriggered: compressionNotice.text = ""
+    }
+
+    Connections {
+        target: FileHelper
+        function onImageCompressionProgress(processed, total, fileName) {
+            imageCompressionWindow.processed = processed
+            imageCompressionWindow.total = total
+            imageCompressionWindow.fileName = fileName
+        }
+        function onImageCompressionFileFinished(fileName, result) {
+            let status = "Fehler"
+            let color = "#b42318"
+            if (result.state === "compressed") { status = "Komprimiert"; color = "#237343" }
+            else if (result.state === "ready") { status = "Bereits optimal"; color = "#526175" }
+            else if (result.state === "unsupported") { status = "Übersprungen"; color = "#936519" }
+            completedCompressionFiles.append({ fileName: fileName, status: status, statusColor: color })
+            completedCompressionList.positionViewAtEnd()
+        }
+        function onImageCompressionFinished(result) {
+            imageCompressionWindow.total = result.total
+            imageCompressionWindow.processed = result.total
+            imageCompressionWindow.close()
+            compressionNotice.text = result.total + " Dateien bearbeitet: " + result.compressed
+                + " komprimiert, " + result.unchanged + " ohne weitere Ersparnis, "
+                + result.unsupported + " übersprungen, " + result.errorCount + " Fehler. Eingespart: "
+                + (Number(result.savedBytes) / 1024).toLocaleString(Qt.locale(), "f", 1) + " KB."
+            compressionNotice.details = result.errorCount > 0 ? result.errors.join("\n") : ""
+            if (result.errorCount > 0) console.warn("Bildkomprimierung:", compressionNotice.details)
+            compressionNoticeTimer.restart()
+        }
+    }
+
     FileDialog {
         id: csvFileDialog
         title: "CSV-Datei auswählen"
@@ -348,6 +537,15 @@ Window {
 
                 Menu {
                     id: packageContextMenu
+
+                    MenuItem {
+                        text: "Bilder verlustfrei komprimieren"
+                        enabled: !FileHelper.imageCompressionRunning
+                        onTriggered: {
+                            packageListView.currentIndex = index
+                            window.startImageCompression(packageModel.get(index))
+                        }
+                    }
 
                     MenuItem {
                         text: "Pr\u00fcfen/Exportieren"

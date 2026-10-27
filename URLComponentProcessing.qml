@@ -393,6 +393,7 @@ Window {
 
     // Wartet einen Render-Tick, nachdem 'rect' ausgeblendet wurde, und grabbt dann.
     function grabAreaWithoutOverlay(rect, savePath, transparentBg) {
+        console.log("[crop] requested", savePath, "transparent", transparentBg, "rect", rect.x, rect.y, rect.width, rect.height);
         // Koordinaten sichern (da 'rect' gleich zerstört wird)
         const rx = rect.x, ry = rect.y, rw = rect.width, rh = rect.height;
         const transparentColor = transparentBg ? String(rect.transparentColor) : "";
@@ -466,7 +467,12 @@ Window {
         interval: 16
         repeat: false
         property var callback: null
-        onTriggered: { if (callback) callback(); callback = null }
+        onTriggered: {
+            console.log("[capture-timer] callback BEGIN");
+            if (callback) callback();
+            callback = null;
+            console.log("[capture-timer] callback END");
+        }
     }
 
     function handleRechteckErzeugen(info, transparentBg, initialTransparentColor) {
@@ -1060,7 +1066,12 @@ Window {
                     console.log("🌐 Lade Seite:", pageToLoad);
                 }
 
+                onRenderProcessTerminated: function(terminationStatus, exitCode) {
+                    console.error("[web] renderer terminated", terminationStatus, "exitCode", exitCode, "url", webView.url);
+                }
+
                 onLoadingChanged: function(request) {
+                    console.log("[web] loading", request.status, request.url, request.errorCode, request.errorString);
                     if (request.status === 2 && request.isMainFrame) {
                         errorLabel.visible = true;
                         console.log("❌ Fehler beim Laden der Hauptseite:", request.url);
@@ -1078,16 +1089,22 @@ Window {
 
                 onContextMenuRequested: function(request) {
                     request.accepted = true;
+                    // Copy values while the WebEngine request is valid. Never retain the request.
+                    const contextPosition = Qt.point(request.position.x, request.position.y);
+                    Qt.callLater(function() {
+                        if (!urlWindow.visible)
+                            return;
+                        console.log("[context-menu] deferred color capture BEGIN");
 
-                    lastContextMenuPosition = { "x": request.position.x, "y": request.position.y };
+                    lastContextMenuPosition = { "x": contextPosition.x, "y": contextPosition.y };
                     lastContextImageRect = null;
                     lastContextBackgroundColor = imgDownloader.sampleWindowColor(
                                                     urlWindow,
-                                                    request.position.x,
-                                                    request.position.y);
+                                                    contextPosition.x,
+                                                    contextPosition.y);
 
-                    var viewX = request.position.x / webView.zoomFactor;
-                    var viewY = request.position.y / webView.zoomFactor;
+                    var viewX = contextPosition.x / webView.zoomFactor;
+                    var viewY = contextPosition.y / webView.zoomFactor;
 
                     var js = `
                         (function() {
@@ -1166,12 +1183,13 @@ Window {
                         hasItem = true;
 
                         if (hasItem) {
-                            dynamicMenu.x = request.position.x;
-                            dynamicMenu.y = request.position.y;
+                            dynamicMenu.x = contextPosition.x;
+                            dynamicMenu.y = contextPosition.y;
                             dynamicMenu.open();
                         }
                     });
 
+                    }); // Run capture and menu preparation after the WebEngine callback returns.
                 }
             }
 

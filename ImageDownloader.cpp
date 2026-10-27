@@ -9,6 +9,9 @@
 #include <QColor>
 #include <QHash>
 #include <QBuffer>
+#include <QScreen>
+#include <QPixmap>
+#include <QGuiApplication>
 
 ImageDownloader::ImageDownloader(QObject *parent)
     : QObject(parent)
@@ -298,35 +301,30 @@ QString ImageDownloader::sampleWindowColor(QQuickWindow *window,
                                            int x,
                                            int y)
 {
-    if (!window)
+    if (!window || !window->isVisible() || x < 0 || y < 0
+        || x >= window->width() || y >= window->height())
         return QString();
 
-    QImage fb = window->grabWindow();
-
-    if (fb.isNull())
+    const QPoint globalPosition = window->mapToGlobal(QPoint(x, y));
+    QScreen *screen = QGuiApplication::screenAt(globalPosition);
+    if (!screen)
         return QString();
 
-    const qreal dpr =
-        fb.devicePixelRatio() > 0
-            ? fb.devicePixelRatio()
-            : 1.0;
-
-    const int px = qRound(x * dpr);
-    const int py = qRound(y * dpr);
-
-    if (px < 0 ||
-        py < 0 ||
-        px >= fb.width() ||
-        py >= fb.height()) {
-
+    // Capture the displayed pixel through the platform screen API. Do not force
+    // a Qt Quick render/readback: that path destabilizes the WebEngine compositor.
+    qInfo() << "[color-sample] QScreen capture BEGIN" << "position" << globalPosition;
+    const QPoint screenPosition = globalPosition - screen->geometry().topLeft();
+    const QImage pixel = screen->grabWindow(0, screenPosition.x(), screenPosition.y(), 1, 1).toImage();
+    qInfo() << "[color-sample] QScreen capture END" << "size" << pixel.size()
+            << "dpr" << pixel.devicePixelRatio();
+    if (pixel.isNull()) {
+        qWarning() << "[color-sample] Screen capture unavailable";
         return QString();
     }
-
-    return QColor::fromRgb(
-               fb.pixel(px, py)
-               ).name(QColor::HexRgb);
+    const QString color = pixel.pixelColor(0, 0).name(QColor::HexRgb);
+    qInfo() << "[color-sample] Desktop color" << color;
+    return color;
 }
-
 QVariantMap ImageDownloader::grabTransparentPreview(QQuickWindow *window,
                                                     int x,
                                                     int y,
@@ -342,7 +340,9 @@ QVariantMap ImageDownloader::grabTransparentPreview(QQuickWindow *window,
     if (!window || w <= 0 || h <= 0)
         return result;
 
+    qInfo() << "[preview] grabWindow BEGIN" << "crop" << QRect(x, y, w, h);
     QImage frame = window->grabWindow();
+    qInfo() << "[preview] grabWindow END" << "size" << frame.size() << "dpr" << frame.devicePixelRatio();
     if (frame.isNull())
         return result;
 
@@ -370,7 +370,9 @@ QVariantMap ImageDownloader::grabTransparentPreview(QQuickWindow *window,
             : detectDominantEdgeColor(preview);
     }
     result.insert(QStringLiteral("backgroundColor"), background.name(QColor::HexRgb));
+    qInfo() << "[preview] transparency BEGIN" << "background" << background << "protected" << protectedRect;
     matchingColorToAlpha(preview, background, 16, protectedRect);
+    qInfo() << "[preview] transparency END";
 
     QByteArray png;
     QBuffer buffer(&png);
@@ -386,6 +388,7 @@ QVariantMap ImageDownloader::grabTransparentPreview(QQuickWindow *window,
 bool ImageDownloader::saveDataUrlImage(const QString &dataUrl,
                                        const QString &path)
 {
+    qInfo() << "[save-preview] BEGIN" << "path" << path << "encoded characters" << dataUrl.size();
     const int comma = dataUrl.indexOf(QLatin1Char(','));
     if (comma < 0) {
         emit downloadFailed(QStringLiteral("Transparenzvorschau ist ungültig"));
@@ -410,6 +413,7 @@ bool ImageDownloader::saveDataUrlImage(const QString &dataUrl,
         return false;
     }
 
+    qInfo() << "[save-preview] END" << outPath << "size" << image.size();
     emit downloadSucceeded(outPath);
     return true;
 }
@@ -430,6 +434,7 @@ bool ImageDownloader::grabAndSaveCropped(
     const QString &transparentColor,
     int imageX, int imageY, int imageW, int imageH)
 {
+    qInfo() << "[crop-save] BEGIN" << "path" << path << "crop" << QRect(x, y, w, h) << "transparent" << transparentBackground;
     if (!window || w <= 0 || h <= 0) {
 
         qWarning()
@@ -439,7 +444,9 @@ bool ImageDownloader::grabAndSaveCropped(
     }
 
     // Qt Quick Fenster vollständig rendern.
+    qInfo() << "[capture] grabWindow BEGIN" << "window" << window << "size" << window->size();
     QImage fb = window->grabWindow();
+    qInfo() << "[capture] grabWindow END" << "size" << fb.size() << "dpr" << fb.devicePixelRatio();
 
     if (fb.isNull()) {
 
@@ -554,6 +561,7 @@ bool ImageDownloader::grabAndSaveCropped(
                 ? "(transparent)"
                 : "");
 
+    qInfo() << "[crop-save] END" << outPath << "size" << img.size();
     emit downloadSucceeded(outPath);
 
     return true;
